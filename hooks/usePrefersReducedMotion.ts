@@ -1,15 +1,17 @@
+// hooks/usePrefersReducedMotion.ts
 "use client";
 
 import { useEffect, useState } from "react";
 
-export function usePrefersReducedMotion() {
+export function usePrefersReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
-    const mq = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (!mq) return;
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
 
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const onChange = () => setReduced(Boolean(mq.matches));
+
     onChange();
 
     if (typeof mq.addEventListener === "function") {
@@ -17,9 +19,7 @@ export function usePrefersReducedMotion() {
       return () => mq.removeEventListener("change", onChange);
     }
 
-    // @ts-expect-error legacy
     mq.addListener(onChange);
-    // @ts-expect-error legacy
     return () => mq.removeListener(onChange);
   }, []);
 
