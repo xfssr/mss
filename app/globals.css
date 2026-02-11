@@ -35,14 +35,6 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 
   .cc-tilt { transform: none !important; transition: none !important; }
-<<<<<<< HEAD
-=======
-}
-
-@media (max-width: 640px) {
-  .cc-glare { opacity: 0.18 !important; }
-  .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
->>>>>>> 9544c20bb8dc9b0560553b1a2d0d7ce5bad960b8
 }
 
 
