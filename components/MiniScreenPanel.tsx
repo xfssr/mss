@@ -1,3 +1,4 @@
+// components/MiniScreenPanel.tsx
 "use client";
 
 import Image from "next/image";
@@ -94,8 +95,23 @@ export function MiniScreenPanel(props: {
   const promoDesc = (props.catalog.promoVideoDescription?.[props.lang] || activeExample?.description?.[props.lang] || "").trim();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-3 sm:px-6" role="dialog" aria-modal="true">
-      <button type="button" aria-label="Close" className="absolute inset-0 bg-black/55 backdrop-blur-sm" onClick={props.onClose} />
+    <div
+      className={[
+        "fixed inset-0 z-50",
+        "flex items-start sm:items-center justify-center",
+        "px-3 sm:px-6",
+        "pt-[calc(env(safe-area-inset-top)+0.75rem)]",
+        "pb-[calc(env(safe-area-inset-bottom)+0.75rem)]",
+      ].join(" ")}
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        className="absolute inset-0 bg-black/45 sm:bg-black/60 backdrop-blur-[2px] sm:backdrop-blur-sm"
+        onClick={props.onClose}
+      />
 
       <div
         ref={panelRef}
@@ -103,17 +119,28 @@ export function MiniScreenPanel(props: {
         onMouseLeave={onMouseLeave}
         style={panelStyle}
         className={[
-          "relative w-full max-w-5xl rounded-[28px] border border-white/10 bg-gradient-to-b from-white/[0.08] via-white/[0.06] to-black/50 shadow-2xl",
+          "relative w-full max-w-5xl",
+          "max-h-[calc(100dvh-7rem)] sm:max-h-[calc(100dvh-8rem)]",
+          "rounded-2xl sm:rounded-[28px]",
+          "border border-white/10 shadow-2xl overflow-hidden",
+          "bg-[#0b0f14]/96 sm:bg-gradient-to-b sm:from-white/[0.08] sm:via-white/[0.06] sm:to-black/50",
           "transition-transform duration-300 will-change-transform",
-          reducedMotion ? "" : "cc-tilt",
+          reducedMotion ? "" : "sm:cc-tilt",
         ].join(" ")}
       >
-        <div className="px-4 sm:px-6 pt-5 pb-4 border-b border-white/10">
+        {/* Header */}
+        <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-[#0b0f14]/92 backdrop-blur">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/55">{props.lang === "he" ? "קטלוג" : "Catalog"}</div>
-              <div className="mt-1 text-xl sm:text-2xl font-semibold text-[rgb(var(--blue))] cc-z2">{props.catalog.title[props.lang]}</div>
-              <div className="mt-2 text-sm text-white/65 whitespace-pre-line">{props.catalog.longDescription[props.lang]}</div>
+              <div className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))] cc-z2">
+                {props.catalog.title[props.lang]}
+              </div>
+
+              {/* Mobile: clamp height so header doesn't eat the screen */}
+              <div className="mt-2 text-sm text-white/65 sm:whitespace-pre-line max-h-[4.5rem] overflow-hidden sm:max-h-none">
+                {props.catalog.longDescription[props.lang]}
+              </div>
             </div>
 
             <button
@@ -125,9 +152,9 @@ export function MiniScreenPanel(props: {
             </button>
           </div>
 
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="mt-3 sm:mt-4 flex items-center justify-between gap-3">
             <Tabs lang={props.lang} value={props.tab} onChange={props.onTabChange} />
-            <div className="text-xs text-white/45">
+            <div className="hidden sm:block text-xs text-white/45">
               {props.tab === "examples" ? t(props.lang, "examplesHint") : null}
               {props.tab === "package" ? t(props.lang, "packageHint") : null}
               {props.tab === "reserve" ? t(props.lang, "reserveHint") : null}
@@ -135,9 +162,10 @@ export function MiniScreenPanel(props: {
           </div>
         </div>
 
-        <div className="px-4 sm:px-6 py-5">
+        {/* Scrollable body */}
+        <div className="min-h-0 flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5">
           {props.tab === "examples" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
                 <div className="cc-glass rounded-2xl p-3 sm:p-4">
                   <div className="text-sm font-medium text-white/90 cc-z1">{t(props.lang, "tabExamples")}</div>
@@ -209,15 +237,13 @@ export function MiniScreenPanel(props: {
 
                   <div className="mt-3 text-sm text-white/80">{promoTitle || "—"}</div>
                   <div className="mt-2 text-sm text-white/65 whitespace-pre-line">{promoDesc || "—"}</div>
-
-                  <div className="mt-4 text-xs text-white/45">Autoplay + loop. (prefers-reduced-motion → controls)</div>
                 </div>
               </div>
             </div>
           ) : null}
 
           {props.tab === "package" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
                 <PackageBuilder
                   lang={props.lang}
@@ -248,7 +274,7 @@ export function MiniScreenPanel(props: {
           ) : null}
 
           {props.tab === "reserve" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
                 <div className="cc-glass rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "reserveTitle")}</div>
@@ -270,39 +296,40 @@ export function MiniScreenPanel(props: {
               </div>
             </div>
           ) : null}
+        </div>
 
-          {props.tab === "reserve" ? (
-            <div className="sticky bottom-0 mt-5 -mx-4 sm:-mx-6 px-4 sm:px-6 pb-4 pt-3 bg-gradient-to-t from-black/65 via-black/35 to-transparent">
-              <div className="cc-z3 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+        {/* Footer actions (always visible, no overlap) */}
+        {props.tab === "reserve" ? (
+          <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/92 backdrop-blur px-4 sm:px-6 py-3">
+            <div className="cc-z3 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
+              <button
+                type="button"
+                onClick={props.onGenerate}
+                className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+              >
+                {t(props.lang, "generate")}
+              </button>
+
+              <div className="flex flex-col sm:flex-row gap-2">
                 <button
                   type="button"
-                  onClick={props.onGenerate}
-                  className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+                  onClick={props.onCopy}
+                  className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06]"
                 >
-                  {t(props.lang, "generate")}
+                  {props.copiedState === "copied" ? t(props.lang, "copied") : t(props.lang, "copy")}
                 </button>
 
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <button
-                    type="button"
-                    onClick={props.onCopy}
-                    className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06]"
-                  >
-                    {props.copiedState === "copied" ? t(props.lang, "copied") : t(props.lang, "copy")}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={props.onSend}
-                    className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
-                  >
-                    {t(props.lang, "send")}
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={props.onSend}
+                  className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+                >
+                  {t(props.lang, "send")}
+                </button>
               </div>
             </div>
-          ) : null}
-        </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
