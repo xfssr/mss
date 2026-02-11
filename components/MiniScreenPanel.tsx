@@ -52,7 +52,9 @@ export function MiniScreenPanel(props: {
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const [activeExampleIndex, setActiveExampleIndex] = useState(0);
 
-  const activeExample = props.catalog.examples[clamp(activeExampleIndex, 0, Math.max(0, props.catalog.examples.length - 1))];
+  const activeExample = props.catalog.examples[
+    clamp(activeExampleIndex, 0, Math.max(0, props.catalog.examples.length - 1))
+  ];
 
   useEffect(() => {
     if (!props.open) return;
@@ -68,7 +70,9 @@ export function MiniScreenPanel(props: {
 
   const panelStyle = useMemo(() => {
     if (reducedMotion) return {};
-    return { transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) translateZ(0)` } as const;
+    return {
+      transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) translateZ(0)`,
+    } as const;
   }, [reducedMotion, tilt.rx, tilt.ry]);
 
   function onMouseMove(e: MouseEvent) {
@@ -86,13 +90,24 @@ export function MiniScreenPanel(props: {
     setTilt({ rx: 0, ry: 0 });
   }
 
-  const pkgCalc = useMemo(() => calcPackage(props.lang, props.packageDraft, props.pricing), [props.lang, props.packageDraft, props.pricing]);
+  const pkgCalc = useMemo(
+    () => calcPackage(props.lang, props.packageDraft, props.pricing),
+    [props.lang, props.packageDraft, props.pricing],
+  );
 
   if (!props.open) return null;
 
   const promoVideo = props.catalog.promoVideoUrl || activeExample?.videoUrl || "";
-  const promoTitle = (props.catalog.promoVideoTitle?.[props.lang] || activeExample?.title?.[props.lang] || "").trim();
-  const promoDesc = (props.catalog.promoVideoDescription?.[props.lang] || activeExample?.description?.[props.lang] || "").trim();
+  const promoTitle = (
+    props.catalog.promoVideoTitle?.[props.lang] ||
+    activeExample?.title?.[props.lang] ||
+    ""
+  ).trim();
+  const promoDesc = (
+    props.catalog.promoVideoDescription?.[props.lang] ||
+    activeExample?.description?.[props.lang] ||
+    ""
+  ).trim();
 
   return (
     <div
@@ -109,7 +124,7 @@ export function MiniScreenPanel(props: {
       <button
         type="button"
         aria-label="Close"
-        className="absolute inset-0 bg-black/45 sm:bg-black/60 backdrop-blur-[2px] sm:backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 sm:bg-black/60 backdrop-blur-[1px] sm:backdrop-blur-sm"
         onClick={props.onClose}
       />
 
@@ -120,25 +135,26 @@ export function MiniScreenPanel(props: {
         style={panelStyle}
         className={[
           "relative w-full max-w-5xl",
-          "max-h-[calc(100dvh-7rem)] sm:max-h-[calc(100dvh-8rem)]",
+          "max-h-[calc(100dvh-6.5rem)] sm:max-h-[calc(100dvh-8rem)]",
           "rounded-2xl sm:rounded-[28px]",
-          "border border-white/10 shadow-2xl overflow-hidden",
-          "bg-[#0b0f14]/96 sm:bg-gradient-to-b sm:from-white/[0.08] sm:via-white/[0.06] sm:to-black/50",
+          "border border-white/12 shadow-2xl overflow-hidden",
+          "bg-[#0b0f14]/98 sm:bg-gradient-to-b sm:from-white/[0.08] sm:via-white/[0.06] sm:to-black/50",
+          "flex flex-col min-h-0",
           "transition-transform duration-300 will-change-transform",
           reducedMotion ? "" : "sm:cc-tilt",
         ].join(" ")}
       >
         {/* Header */}
-        <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-[#0b0f14]/92 backdrop-blur">
+        <div className="shrink-0 px-3 sm:px-6 pt-3.5 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-[#0b0f14]/96 backdrop-blur">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/55">{props.lang === "he" ? "קטלוג" : "Catalog"}</div>
+
               <div className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))] cc-z2">
                 {props.catalog.title[props.lang]}
               </div>
 
-              {/* Mobile: clamp height so header doesn't eat the screen */}
-              <div className="mt-2 text-sm text-white/65 sm:whitespace-pre-line max-h-[4.5rem] overflow-hidden sm:max-h-none">
+              <div className="mt-1.5 text-sm text-white/70 leading-snug sm:whitespace-pre-line max-h-[3.25rem] overflow-hidden sm:max-h-none">
                 {props.catalog.longDescription[props.lang]}
               </div>
             </div>
@@ -146,14 +162,19 @@ export function MiniScreenPanel(props: {
             <button
               type="button"
               onClick={props.onClose}
-              className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-sm text-white/80 hover:bg-white/[0.06] hover:border-white/20"
+              className="rounded-xl border border-white/12 bg-black/30 px-3 py-2 text-sm text-white/85 hover:bg-white/[0.07] hover:border-white/20"
             >
               {t(props.lang, "close")}
             </button>
           </div>
 
-          <div className="mt-3 sm:mt-4 flex items-center justify-between gap-3">
-            <Tabs lang={props.lang} value={props.tab} onChange={props.onTabChange} />
+          <div className="mt-3 flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1 overflow-x-auto">
+              <div className="inline-block min-w-max">
+                <Tabs lang={props.lang} value={props.tab} onChange={props.onTabChange} />
+              </div>
+            </div>
+
             <div className="hidden sm:block text-xs text-white/45">
               {props.tab === "examples" ? t(props.lang, "examplesHint") : null}
               {props.tab === "package" ? t(props.lang, "packageHint") : null}
@@ -163,17 +184,21 @@ export function MiniScreenPanel(props: {
         </div>
 
         {/* Scrollable body */}
-        <div className="min-h-0 flex-1 overflow-y-auto px-4 sm:px-6 py-4 sm:py-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 sm:px-6 py-3 sm:py-5">
           {props.tab === "examples" ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
-                <div className="cc-glass rounded-2xl p-3 sm:p-4">
+                <div className="cc-glass bg-black/35 rounded-2xl p-3 sm:p-4">
                   <div className="text-sm font-medium text-white/90 cc-z1">{t(props.lang, "tabExamples")}</div>
 
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
                     <div className="relative aspect-[16/9]">
                       <Image
-                        src={activeExample?.previewImage || props.catalog.examples[0]?.previewImage || "https://picsum.photos/seed/fallback/900/600"}
+                        src={
+                          activeExample?.previewImage ||
+                          props.catalog.examples[0]?.previewImage ||
+                          "https://picsum.photos/seed/fallback/900/600"
+                        }
                         alt={promoTitle || "Preview"}
                         fill
                         sizes="(max-width: 1024px) 100vw, 66vw"
@@ -206,10 +231,10 @@ export function MiniScreenPanel(props: {
               </div>
 
               <div className="lg:col-span-1">
-                <div className="cc-glass rounded-2xl p-4">
+                <div className="cc-glass bg-black/35 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "breakdownTitle")}</div>
 
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/20">
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
                     <div className="relative aspect-[16/9]">
                       {promoVideo ? (
                         <video
@@ -235,8 +260,8 @@ export function MiniScreenPanel(props: {
                     </div>
                   </div>
 
-                  <div className="mt-3 text-sm text-white/80">{promoTitle || "—"}</div>
-                  <div className="mt-2 text-sm text-white/65 whitespace-pre-line">{promoDesc || "—"}</div>
+                  <div className="mt-3 text-sm text-white/85">{promoTitle || "—"}</div>
+                  <div className="mt-2 text-sm text-white/70 whitespace-pre-line">{promoDesc || "—"}</div>
                 </div>
               </div>
             </div>
@@ -255,19 +280,19 @@ export function MiniScreenPanel(props: {
               </div>
 
               <div className="lg:col-span-1">
-                <div className="cc-glass rounded-2xl p-4">
+                <div className="cc-glass bg-black/35 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "packageSummaryTitle")}</div>
 
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-3">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3">
                     <div className="text-xs text-white/55">{props.lang === "he" ? "סיכום" : "Summary"}</div>
-                    <div className="mt-2 space-y-1 text-sm text-white/80">
+                    <div className="mt-2 space-y-1 text-sm text-white/85">
                       {pkgCalc.summaryLines.map((s) => (
                         <div key={s}>{s}</div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="mt-4 text-xs text-white/45">{t(props.lang, "packageNote")}</div>
+                  <div className="mt-4 text-xs text-white/50">{t(props.lang, "packageNote")}</div>
                 </div>
               </div>
             </div>
@@ -276,7 +301,7 @@ export function MiniScreenPanel(props: {
           {props.tab === "reserve" ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
-                <div className="cc-glass rounded-2xl p-4">
+                <div className="cc-glass bg-black/35 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "reserveTitle")}</div>
 
                   <div className="mt-4">
@@ -298,14 +323,14 @@ export function MiniScreenPanel(props: {
           ) : null}
         </div>
 
-        {/* Footer actions (always visible, no overlap) */}
+        {/* Footer actions (always visible) */}
         {props.tab === "reserve" ? (
-          <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/92 backdrop-blur px-4 sm:px-6 py-3">
+          <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/96 backdrop-blur px-3 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
             <div className="cc-z3 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
               <button
                 type="button"
                 onClick={props.onGenerate}
-                className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+                className="rounded-xl border border-white/12 bg-white/[0.07] px-4 py-3 text-sm text-white/90 hover:bg-white/[0.11]"
               >
                 {t(props.lang, "generate")}
               </button>
@@ -314,7 +339,7 @@ export function MiniScreenPanel(props: {
                 <button
                   type="button"
                   onClick={props.onCopy}
-                  className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-white/85 hover:bg-white/[0.06]"
+                  className="rounded-xl border border-white/12 bg-black/30 px-4 py-3 text-sm text-white/90 hover:bg-white/[0.07]"
                 >
                   {props.copiedState === "copied" ? t(props.lang, "copied") : t(props.lang, "copy")}
                 </button>
@@ -322,7 +347,7 @@ export function MiniScreenPanel(props: {
                 <button
                   type="button"
                   onClick={props.onSend}
-                  className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+                  className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/35"
                 >
                   {t(props.lang, "send")}
                 </button>

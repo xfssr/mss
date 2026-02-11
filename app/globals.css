@@ -24,11 +24,11 @@ body {
 
 ::selection { background: rgba(var(--red) / 0.35); }
 
-.cc-glass {
-  background: rgba(255 255 255 / 0.06);
-  border: 1px solid rgba(var(--stroke) / 0.10);
-  box-shadow: 0 18px 70px rgba(0 0 0 / 0.45);
-  backdrop-filter: blur(10px);
+@media (max-width: 640px) {
+  .cc-glass {
+    background: rgba(11, 15, 20, 0.88) !important;
+    backdrop-filter: blur(6px) !important;
+  }
 }
 
 .cc-panel { transform-style: preserve-3d; will-change: transform; }
