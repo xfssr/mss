@@ -2,11 +2,10 @@
   "name": "micro-screen-studio",
   "private": true,
   "version": "0.3.0",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "postinstall": "prisma generate && prisma migrate deploy && prisma db seed && next build"
+    "scripts": {
+    "postinstall": "prisma generate",
+    "vercel-build": "prisma generate && prisma migrate deploy && prisma db seed && next build",
+    "build": "next build"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
