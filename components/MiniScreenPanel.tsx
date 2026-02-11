@@ -52,18 +52,21 @@ export function MiniScreenPanel(props: {
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
   const [activeExampleIndex, setActiveExampleIndex] = useState(0);
 
-  const activeExample = props.catalog.examples[
-    clamp(activeExampleIndex, 0, Math.max(0, props.catalog.examples.length - 1))
-  ];
+  const activeExample =
+    props.catalog.examples[
+      clamp(activeExampleIndex, 0, Math.max(0, props.catalog.examples.length - 1))
+    ];
 
   useEffect(() => {
     if (!props.open) return;
+
     setActiveExampleIndex(0);
     setTilt({ rx: 0, ry: 0 });
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") props.onClose();
     };
+
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [props.open, props.onClose]);
@@ -79,9 +82,11 @@ export function MiniScreenPanel(props: {
     if (reducedMotion) return;
     const el = panelRef.current;
     if (!el) return;
+
     const r = el.getBoundingClientRect();
     const dx = (e.clientX - r.left) / r.width - 0.5;
     const dy = (e.clientY - r.top) / r.height - 0.5;
+
     setTilt({ rx: clamp(-dy * 6, -6, 6), ry: clamp(dx * 8, -8, 8) });
   }
 
@@ -124,7 +129,7 @@ export function MiniScreenPanel(props: {
       <button
         type="button"
         aria-label="Close"
-        className="absolute inset-0 bg-black/70 sm:bg-black/60 backdrop-blur-[1px] sm:backdrop-blur-sm"
+        className="absolute inset-0 bg-black/75 sm:bg-black/60 backdrop-blur-[1px] sm:backdrop-blur-sm"
         onClick={props.onClose}
       />
 
@@ -134,12 +139,12 @@ export function MiniScreenPanel(props: {
         onMouseLeave={onMouseLeave}
         style={panelStyle}
         className={[
-          "relative w-full max-w-5xl",
-          "max-h-[calc(100dvh-6.5rem)] sm:max-h-[calc(100dvh-8rem)]",
+          "relative w-full max-w-5xl overflow-hidden border border-white/12 shadow-2xl",
           "rounded-2xl sm:rounded-[28px]",
-          "border border-white/12 shadow-2xl overflow-hidden",
           "bg-[#0b0f14]/98 sm:bg-gradient-to-b sm:from-white/[0.08] sm:via-white/[0.06] sm:to-black/50",
           "flex flex-col min-h-0",
+          // iOS: даём реальную высоту — иначе inner scroll часто “не включается”
+          "h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]",
           "transition-transform duration-300 will-change-transform",
           reducedMotion ? "" : "sm:cc-tilt",
         ].join(" ")}
@@ -149,7 +154,6 @@ export function MiniScreenPanel(props: {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/55">{props.lang === "he" ? "קטלוג" : "Catalog"}</div>
-
               <div className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))] cc-z2">
                 {props.catalog.title[props.lang]}
               </div>
@@ -162,14 +166,14 @@ export function MiniScreenPanel(props: {
             <button
               type="button"
               onClick={props.onClose}
-              className="rounded-xl border border-white/12 bg-black/30 px-3 py-2 text-sm text-white/85 hover:bg-white/[0.07] hover:border-white/20"
+              className="rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07] hover:border-white/20"
             >
               {t(props.lang, "close")}
             </button>
           </div>
 
           <div className="mt-3 flex items-center justify-between gap-3">
-            <div className="min-w-0 flex-1 overflow-x-auto">
+            <div className="min-w-0 flex-1 overflow-x-auto [-webkit-overflow-scrolling:touch]">
               <div className="inline-block min-w-max">
                 <Tabs lang={props.lang} value={props.tab} onChange={props.onTabChange} />
               </div>
@@ -183,15 +187,15 @@ export function MiniScreenPanel(props: {
           </div>
         </div>
 
-        {/* Scrollable body */}
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 sm:px-6 py-3 sm:py-5">
+        {/* Body (scrollable) */}
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-3 sm:px-6 py-3 sm:py-5">
           {props.tab === "examples" ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
-                <div className="cc-glass bg-black/35 rounded-2xl p-3 sm:p-4">
+                <div className="cc-glass bg-black/40 rounded-2xl p-3 sm:p-4">
                   <div className="text-sm font-medium text-white/90 cc-z1">{t(props.lang, "tabExamples")}</div>
 
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/35">
                     <div className="relative aspect-[16/9]">
                       <Image
                         src={
@@ -231,10 +235,10 @@ export function MiniScreenPanel(props: {
               </div>
 
               <div className="lg:col-span-1">
-                <div className="cc-glass bg-black/35 rounded-2xl p-4">
+                <div className="cc-glass bg-black/40 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "breakdownTitle")}</div>
 
-                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                  <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/35">
                     <div className="relative aspect-[16/9]">
                       {promoVideo ? (
                         <video
@@ -260,8 +264,8 @@ export function MiniScreenPanel(props: {
                     </div>
                   </div>
 
-                  <div className="mt-3 text-sm text-white/85">{promoTitle || "—"}</div>
-                  <div className="mt-2 text-sm text-white/70 whitespace-pre-line">{promoDesc || "—"}</div>
+                  <div className="mt-3 text-sm text-white/90">{promoTitle || "—"}</div>
+                  <div className="mt-2 text-sm text-white/75 whitespace-pre-line">{promoDesc || "—"}</div>
                 </div>
               </div>
             </div>
@@ -280,19 +284,19 @@ export function MiniScreenPanel(props: {
               </div>
 
               <div className="lg:col-span-1">
-                <div className="cc-glass bg-black/35 rounded-2xl p-4">
+                <div className="cc-glass bg-black/40 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "packageSummaryTitle")}</div>
 
-                  <div className="mt-4 rounded-2xl border border-white/10 bg-black/30 p-3">
-                    <div className="text-xs text-white/55">{props.lang === "he" ? "סיכום" : "Summary"}</div>
-                    <div className="mt-2 space-y-1 text-sm text-white/85">
+                  <div className="mt-4 rounded-2xl border border-white/10 bg-black/35 p-3">
+                    <div className="text-xs text-white/60">{props.lang === "he" ? "סיכום" : "Summary"}</div>
+                    <div className="mt-2 space-y-1 text-sm text-white/90">
                       {pkgCalc.summaryLines.map((s) => (
                         <div key={s}>{s}</div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="mt-4 text-xs text-white/50">{t(props.lang, "packageNote")}</div>
+                  <div className="mt-4 text-xs text-white/55">{t(props.lang, "packageNote")}</div>
                 </div>
               </div>
             </div>
@@ -301,7 +305,7 @@ export function MiniScreenPanel(props: {
           {props.tab === "reserve" ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
               <div className="lg:col-span-2">
-                <div className="cc-glass bg-black/35 rounded-2xl p-4">
+                <div className="cc-glass bg-black/40 rounded-2xl p-4">
                   <div className="text-sm font-medium text-white/90 cc-z2">{t(props.lang, "reserveTitle")}</div>
 
                   <div className="mt-4">
@@ -323,14 +327,14 @@ export function MiniScreenPanel(props: {
           ) : null}
         </div>
 
-        {/* Footer actions (always visible) */}
+        {/* Footer actions */}
         {props.tab === "reserve" ? (
-          <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/96 backdrop-blur px-3 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.5rem)]">
+          <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/96 backdrop-blur px-3 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
             <div className="cc-z3 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
               <button
                 type="button"
                 onClick={props.onGenerate}
-                className="rounded-xl border border-white/12 bg-white/[0.07] px-4 py-3 text-sm text-white/90 hover:bg-white/[0.11]"
+                className="rounded-xl border border-white/12 bg-white/[0.08] px-4 py-3 text-sm text-white/95 hover:bg-white/[0.12]"
               >
                 {t(props.lang, "generate")}
               </button>
@@ -339,7 +343,7 @@ export function MiniScreenPanel(props: {
                 <button
                   type="button"
                   onClick={props.onCopy}
-                  className="rounded-xl border border-white/12 bg-black/30 px-4 py-3 text-sm text-white/90 hover:bg-white/[0.07]"
+                  className="rounded-xl border border-white/12 bg-black/35 px-4 py-3 text-sm text-white/95 hover:bg-white/[0.07]"
                 >
                   {props.copiedState === "copied" ? t(props.lang, "copied") : t(props.lang, "copy")}
                 </button>
@@ -347,7 +351,7 @@ export function MiniScreenPanel(props: {
                 <button
                   type="button"
                   onClick={props.onSend}
-                  className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/35"
+                  className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/28 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/38"
                 >
                   {t(props.lang, "send")}
                 </button>
