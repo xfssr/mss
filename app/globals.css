@@ -26,17 +26,17 @@ body {
 
 @media (max-width: 640px) {
   .cc-glass {
-    background: rgba(11, 15, 20, 0.88) !important;
-    backdrop-filter: blur(6px) !important;
+    background: rgba(11, 15, 20, 0.92) !important;
+    backdrop-filter: blur(4px) !important;
   }
+
+  .cc-glare { opacity: 0.18 !important; }
+
+  .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
+
+  .cc-tilt { transform: none !important; transition: none !important; }
 }
-@media (max-width: 640px) {
-  .cc-glass {
-    background: rgba(11, 15, 20, 0.88) !important;
-    backdrop-filter: blur(6px) !important;
-    
-  }
-}
+
 @media (max-width: 640px) {
   .cc-glare { opacity: 0.18 !important; }
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
