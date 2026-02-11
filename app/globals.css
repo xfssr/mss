@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg0: 18 18 20;
+  --bg1: 28 28 34;
+  --blue: 145 190 255;
+  --red: 255 107 107;
+  --text: 235 235 242;
+  --stroke: 255 255 255;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  color: rgb(var(--text));
+  background:
+    radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
+    radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
+    linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
+}
+
+::selection { background: rgba(var(--red) / 0.35); }
+
+.cc-glass {
+  background: rgba(255 255 255 / 0.06);
+  border: 1px solid rgba(var(--stroke) / 0.10);
+  box-shadow: 0 18px 70px rgba(0 0 0 / 0.45);
+  backdrop-filter: blur(10px);
+}
+
+.cc-panel { transform-style: preserve-3d; will-change: transform; }
+
+.cc-tilt {
+  --rx: 0deg; --ry: 0deg; --ty: 0px;
+  --mx: 50%; --my: 35%;
+  transform-style: preserve-3d;
+  transform: rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--ty));
+  transition: transform 220ms ease;
+}
+
+.cc-glare {
+  opacity: 0.85;
+  background: radial-gradient(640px 340px at var(--mx) var(--my), rgba(255 255 255 / 0.14), rgba(255 255 255 / 0.00) 60%);
+  box-shadow: inset 0 1px 0 rgba(255 255 255 / 0.14), inset 0 -1px 0 rgba(0 0 0 / 0.35);
+  transition: opacity 220ms ease;
+}
+
+.cc-z1 { transform: translateZ(10px); }
+.cc-z2 { transform: translateZ(18px); }
+.cc-z3 { transform: translateZ(26px); }
+.cc-z1, .cc-z2, .cc-z3 { transform-style: preserve-3d; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-tilt { transform: none !important; transition: none !important; }
+  .cc-glare { transition: none !important; }
+  .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
+}
