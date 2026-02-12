@@ -3,24 +3,57 @@
 import Image from "next/image";
 import { useId, useRef, useState } from "react";
 
-type Props = {
-  name: string;
-  defaultValue: string;
-  label: string;
-  accept: string;
-  preview: "image" | "video";
-  placeholder?: string;
-};
-
 type UploadResponse = { url: string };
+
+function isVideoUrl(url: string) {
+  const u = (url || "").toLowerCase();
+  return (
+    u.endsWith(".mp4") ||
+    u.endsWith(".webm") ||
+    u.endsWith(".mov") ||
+    u.endsWith(".m4v") ||
+    u.includes("video/upload") // cloudinary hint (не обязательно, просто помогает)
+  );
+}
+
+type Props =
+  | {
+      // ✅ Новый режим: один инпут, но пишет в 2 поля формы (previewImage/videoUrl)
+      label: string;
+      imageName: string;
+      videoName: string;
+      initialUrl?: string; // можно дать и видео, и фото — компонент сам поймет
+      placeholder?: string;
+      accept?: string; // default image/*,video/*
+    }
+  | {
+      // ✅ Старый режим (чтобы ничего не сломать в других местах)
+      name: string;
+      defaultValue: string;
+      label: string;
+      accept: string;
+      preview: "image" | "video";
+      placeholder?: string;
+    };
 
 export function UploadUrlInput(props: Props) {
   const id = useId();
   const fileRef = useRef<HTMLInputElement | null>(null);
 
-  const [value, setValue] = useState(props.defaultValue ?? "");
+  // --- normalize props
+  const mode = "imageName" in props ? "media" : "legacy";
+
+  const initial =
+    mode === "media" ? (props.initialUrl ?? "") : (props.defaultValue ?? "");
+
+  const [value, setValue] = useState(initial);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const accept = mode === "media" ? (props.accept ?? "image/*,video/*") : props.accept;
+
+  const hasPreview = value.startsWith("/") || value.startsWith("http");
+  const video = mode === "media" ? isVideoUrl(value) : props.preview === "video";
 
   async function upload(file: File) {
     setBusy(true);
@@ -33,9 +66,7 @@ export function UploadUrlInput(props: Props) {
       const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
       const json = (await res.json().catch(() => ({}))) as Partial<UploadResponse> & { error?: string };
 
-      if (!res.ok) {
-        throw new Error(json.error || `Upload failed (${res.status})`);
-      }
+      if (!res.ok) throw new Error(json.error || `Upload failed (${res.status})`);
       if (!json.url) throw new Error("Upload failed (no url)");
 
       setValue(json.url);
@@ -46,7 +77,9 @@ export function UploadUrlInput(props: Props) {
     }
   }
 
-  const hasPreview = value.startsWith("/") || value.startsWith("http");
+  // ✅ для media-mode: что писать в hidden inputs
+  const imageVal = mode === "media" ? (video ? "" : value) : "";
+  const videoVal = mode === "media" ? (video ? value : "") : "";
 
   return (
     <div>
@@ -54,10 +87,18 @@ export function UploadUrlInput(props: Props) {
         {props.label}
       </label>
 
+      {/* ✅ hidden inputs, чтобы action получил previewImage/videoUrl */}
+      {mode === "media" ? (
+        <>
+          <input type="hidden" name={props.imageName} value={imageVal} />
+          <input type="hidden" name={props.videoName} value={videoVal} />
+        </>
+      ) : null}
+
       <div className="mt-1 flex gap-2 items-center">
         <input
           id={id}
-          name={props.name}
+          name={mode === "legacy" ? props.name : undefined}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={props.placeholder ?? "URL или Upload"}
@@ -67,7 +108,7 @@ export function UploadUrlInput(props: Props) {
         <input
           ref={fileRef}
           type="file"
-          accept={props.accept}
+          accept={accept}
           className="hidden"
           onChange={async (e) => {
             const f = e.target.files?.[0];
@@ -92,10 +133,10 @@ export function UploadUrlInput(props: Props) {
       {hasPreview ? (
         <div className="mt-2 overflow-hidden rounded-xl border border-white/10 bg-black/20">
           <div className="relative aspect-[16/9]">
-            {props.preview === "image" ? (
-              <Image src={value} alt="preview" fill sizes="360px" className="object-cover" />
-            ) : (
+            {video ? (
               <video src={value} controls muted playsInline className="h-full w-full object-cover" />
+            ) : (
+              <Image src={value} alt="preview" fill sizes="360px" className="object-cover" />
             )}
           </div>
         </div>
