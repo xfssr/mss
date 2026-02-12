@@ -35,14 +35,7 @@ export const metadata: Metadata = {
     title: "Micro-Screen Studio",
     siteName: "Micro-Screen Studio",
     description: "Контент для бизнеса: reels, фото, съемка и ведение соцсетей. Быстрая заявка в WhatsApp.",
-    images: [
-      {
-        url: "/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Micro-Screen Studio",
-      },
-    ],
+    images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Micro-Screen Studio" }]
   },
 
   twitter: {
