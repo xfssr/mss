@@ -14,10 +14,15 @@ function getSiteUrl() {
   return "https://studioscreen.vercel.app";
 }
 
-function pickText(v: any) {
-  const a = typeof v?.en === "string" ? v.en.trim() : "";
-  const b = typeof v?.he === "string" ? v.he.trim() : "";
-  return a || b || "";
+function pickL10nFromRow(row: any, base: "title" | "note" | "details") {
+  const en =
+    (typeof row?.[`${base}En`] === "string" ? row[`${base}En`] : "") ||
+    (typeof row?.[base]?.en === "string" ? row[base].en : "") ||
+    (typeof row?.[base] === "string" ? row[base] : "");
+  const he =
+    (typeof row?.[`${base}He`] === "string" ? row[`${base}He`] : "") ||
+    (typeof row?.[base]?.he === "string" ? row[base].he : "");
+  return { en: (en || "").trim(), he: (he || "").trim() };
 }
 
 function parsePriceNumber(raw: string) {
@@ -41,19 +46,19 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Product · Micro-Screen Studio",
     description: "Content packages for businesses: reels, photos, shoots and social media management.",
-    robots: { index: false, follow: false },
+    robots: { index: true, follow: true }, // Canva/парсеры проще “видят”
     openGraph: {
-      type: "product",
+      type: "website",
       url: `${siteUrl}/product`,
       title: "Micro-Screen Studio — Content Packages",
       description: "Reels, photos, shoots and social media management. Contact via WhatsApp.",
-      images: [{ url: "/og.jpg", width: 1200, height: 630, alt: "Micro-Screen Studio" }],
+      images: [{ url: `${siteUrl}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio" }],
     },
     twitter: {
       card: "summary_large_image",
       title: "Micro-Screen Studio — Content Packages",
       description: "Reels, photos, shoots and social media management. Contact via WhatsApp.",
-      images: ["/og.jpg"],
+      images: [`${siteUrl}/og.jpg`],
     },
     other: {
       "og:type": "product",
@@ -71,29 +76,29 @@ export default async function ProductPage() {
   });
 
   const offers = prices
-    .map((p) => {
-      const title = pickText(p.title);
-      const note = pickText(p.note);
-      const details = pickText(p.details);
+    .map((p: any) => {
+      const title = pickL10nFromRow(p, "title");
+      const note = pickL10nFromRow(p, "note");
+      const details = pickL10nFromRow(p, "details");
       const priceNum = parsePriceNumber(p.price || "");
+      const name = title.en || title.he; // важно: name НЕ должен быть пустым
       return {
         id: p.id,
-        title,
-        note,
-        details,
-        priceRaw: p.price || "",
+        name,
+        note: note.en || note.he,
+        details: details.en || details.he,
+        priceRaw: (p.price || "").trim(),
         priceNum,
         currency: "ILS",
       };
     })
-    .filter((o) => o.title);
+    .filter((o) => o.name);
 
   const productJsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: "Micro-Screen Studio — Content Packages",
-    description:
-      "Content packages for businesses: reels, photos, shoots and social media management. Contact via WhatsApp.",
+    description: "Content packages for businesses: reels, photos, shoots and social media management. Contact via WhatsApp.",
     brand: { "@type": "Brand", name: "Micro-Screen Studio" },
     image: [`${siteUrl}/og.jpg`],
     url: `${siteUrl}/product`,
@@ -101,7 +106,7 @@ export default async function ProductPage() {
       .filter((o) => o.priceNum)
       .map((o) => ({
         "@type": "Offer",
-        name: o.title,
+        name: o.name,
         priceCurrency: o.currency,
         price: o.priceNum,
         availability: "https://schema.org/InStock",
@@ -109,8 +114,21 @@ export default async function ProductPage() {
       })),
   };
 
+  const lowestOffer = offers.find((o) => o.priceNum)?.priceNum ?? "350";
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white px-4 py-10">
+    <main
+      className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white px-4 py-10"
+      itemScope
+      itemType="https://schema.org/Product"
+    >
+      {/* microdata (помогает Canva) */}
+      <meta itemProp="name" content="Micro-Screen Studio — Content Packages" />
+      <meta itemProp="image" content={`${siteUrl}/og.jpg`} />
+      <meta itemProp="url" content={`${siteUrl}/product`} />
+      <meta itemProp="description" content="Content packages: reels, photos, shoots and social media management." />
+
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
@@ -124,10 +142,17 @@ export default async function ProductPage() {
           </div>
 
           <div className="min-w-0">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]">Micro-Screen Studio</h1>
+            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]" itemProp="name">
+              Micro-Screen Studio
+            </h1>
             <p className="mt-2 text-white/70">
-              Packages & pricing (auto from DB). This page is made for platforms that require product details (Canva/Meta).
+              Packages & pricing (from DB). Use this link in Canva: <span className="text-white/85">{siteUrl}/product</span>
             </p>
+
+            {/* Показываем “цену продукта” явно */}
+            <div className="mt-3 text-sm text-white/75">
+              From <span className="font-semibold text-white">ILS {lowestOffer}</span>
+            </div>
 
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">Packages</div>
@@ -138,20 +163,22 @@ export default async function ProductPage() {
                     <div key={o.id} className="rounded-xl border border-white/10 bg-black/25 p-3">
                       <div className="flex items-start justify-between gap-4">
                         <div className="min-w-0">
-                          <div className="text-sm text-white/90">{o.title}</div>
+                          <div className="text-sm text-white/90">{o.name}</div>
                           {o.note ? <div className="text-xs text-white/55">{o.note}</div> : null}
                         </div>
-                        <div className="text-sm font-semibold text-white whitespace-nowrap">{o.priceRaw || "—"}</div>
+                        <div className="text-sm font-semibold text-white whitespace-nowrap">
+                          {o.priceRaw || "—"}
+                        </div>
                       </div>
 
-                      {o.details ? <div className="mt-2 text-xs text-white/55 whitespace-pre-line">{o.details}</div> : null}
+                      {o.details ? (
+                        <div className="mt-2 text-xs text-white/55 whitespace-pre-line">{o.details}</div>
+                      ) : null}
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="mt-3 text-sm text-white/60">
-                  No packages in DB yet. Add them in Admin → Prices.
-                </div>
+                <div className="mt-3 text-sm text-white/60">No packages in DB yet. Add them in Admin → Prices.</div>
               )}
             </div>
 
@@ -169,10 +196,6 @@ export default async function ProductPage() {
               >
                 Contact (WhatsApp)
               </a>
-            </div>
-
-            <div className="mt-4 text-xs text-white/45">
-              Canva link: <span className="text-white/70">{siteUrl}/product</span>
             </div>
           </div>
         </div>
