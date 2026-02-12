@@ -18,6 +18,9 @@ import {
 } from "./actions";
 import { UploadUrlInput } from "@/components/admin/UploadUrlInput";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function tagsToCsv(tagsJson: string) {
   try {
     const v = JSON.parse(tagsJson);
