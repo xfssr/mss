@@ -211,7 +211,7 @@ export async function createExample(catalogId: number, formData: FormData) {
       catalogId,
       titleHe: s(formData.get("titleHe")),
       titleEn: s(formData.get("titleEn")),
-      previewImage: s(formData.get("previewImage")),
+      imageUrl: s(formData.get("imageUrl")),
       videoUrl: s(formData.get("videoUrl")),
       descriptionHe: s(formData.get("descriptionHe")),
       descriptionEn: s(formData.get("descriptionEn")),
