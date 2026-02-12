@@ -6,7 +6,7 @@ import { CatalogCard } from "./CatalogCard";
 
 export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSlug?: string; onSelect: (slug: string) => void }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
       {props.catalogs.map((c) => (
         <CatalogCard key={c.slug} lang={props.lang} catalog={c} selected={props.selectedSlug === c.slug} onClick={() => props.onSelect(c.slug)} />
       ))}
