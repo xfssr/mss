@@ -1,21 +1,61 @@
 # Micro-Screen Studio — HE/EN v1 (One‑page + 3D micro‑screens + Admin CMS)
 
-Next.js (App Router) + TypeScript + Tailwind + Prisma (SQLite).
+Next.js (App Router) + TypeScript + Tailwind + Prisma (PostgreSQL on Neon).
 
 ## 📚 Документация
 
+- 🚀 **[Инструкция по развертыванию Vercel + Neon](ИНСТРУКЦИЯ_VERCEL_NEON.md)** - пошаговая инструкция на русском
 - 🇷🇺 **[Как работать с Git](КАК_РАБОТАТЬ_С_GIT.md)** - полное руководство на русском
 - ⚡ **[Быстрая инструкция Git](БЫСТРАЯ_ИНСТРУКЦИЯ_GIT.md)** - краткий гайд за 5 шагов
 - 🎨 **[Визуальный Git Workflow](GIT_WORKFLOW_VISUAL.md)** - схемы и диаграммы
 - 🛠️ **[Настройка проекта](SETUP.md)** - установка и запуск
 - 🔧 **[Решение проблем](РЕШЕНИЕ_ПРОБЛЕМ.md)** - что было исправлено
 
-## 1) ENV
-Create `.env` in project root:
+## Развертывание на Vercel с Neon Database
+
+### 1) Создайте базу данных на Neon
+
+1. Зарегистрируйтесь на [Neon](https://neon.tech)
+2. Создайте новый проект
+3. Скопируйте строку подключения (Connection String)
+   - Формат: `postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require`
+
+### 2) Настройте переменные окружения в Vercel
+
+В настройках проекта Vercel добавьте следующие переменные:
 
 ```env
-# База данных SQLite
-DATABASE_URL="file:./dev.db"
+DATABASE_URL=postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require
+NEXT_PUBLIC_SITE_URL=https://your-site.vercel.app
+NEXT_PUBLIC_WHATSAPP_PHONE=972509656366
+ADMIN_PASSWORD=your-secure-password
+ADMIN_COOKIE_SECRET=your-long-random-string
+```
+
+Опционально для Cloudinary:
+```env
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+CLOUDINARY_FOLDER=micro-screen-studio
+```
+
+### 3) Разверните на Vercel
+
+1. Подключите GitHub репозиторий к Vercel
+2. Vercel автоматически запустит `vercel-build` скрипт
+3. База данных будет автоматически мигрирована и заполнена начальными данными
+
+## Локальная разработка (опционально)
+
+Если вы хотите запустить проект локально для разработки:
+
+### 1) ENV
+Создайте `.env` в корне проекта:
+
+```env
+# База данных PostgreSQL на Neon
+DATABASE_URL="postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require"
 
 # URL сайта
 NEXT_PUBLIC_SITE_URL="https://studioscreen.vercel.app"
@@ -32,14 +72,21 @@ CLOUDINARY_API_SECRET=
 CLOUDINARY_FOLDER=micro-screen-studio
 ```
 
-## 2) Install + DB
+### 2) Установка
 ```bash
 npm install
-npx prisma migrate dev
-# База данных автоматически заполнится тестовыми данными
 ```
 
-## 3) Run
+### 3) Миграция базы данных
+```bash
+# Применить миграции
+npx prisma migrate deploy
+
+# Заполнить базу данных начальными данными
+npx prisma db seed
+```
+
+### 4) Запуск
 ```bash
 # Development
 npm run dev
