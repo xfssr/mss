@@ -1,15 +1,25 @@
 "use client";
 
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CatalogExample, Catalog } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import { DescriptionClamp } from "./DescriptionClamp";
 
 function useIsMobile() {
-  if (typeof window === "undefined") return false;
-  return window.innerWidth < 640;
+  const [mobile, setMobile] = useState(false);
+
+  useEffect(() => {
+    function check() {
+      setMobile(window.innerWidth < 640);
+    }
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  return mobile;
 }
 
 export function ExamplesTab(props: {
