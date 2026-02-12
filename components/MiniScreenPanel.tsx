@@ -137,7 +137,7 @@ export function MiniScreenPanel(props: {
       <LightboxPreview
         lang={props.lang}
         open={lightboxOpen}
-        items={examples}
+        items={examples.map(ex => ({ ...ex, previewImage: ex.videoUrl || "" }))}
         index={safeIndex}
         onIndex={setActiveExampleIndex}
         onClose={() => setLightboxOpen(false)}
@@ -221,127 +221,113 @@ export function MiniScreenPanel(props: {
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-3 sm:px-6 py-3 sm:py-5">
           {/* ===== Examples: BOOKING STYLE ===== */}
           {props.tab === "examples" ? (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
-              {/* Left: hero preview + thumbs */}
-              <div className="lg:col-span-2">
-                <div className="cc-glass bg-black/45 rounded-2xl p-3 sm:p-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="text-sm font-medium text-white/90">{t(props.lang, "tabExamples")}</div>
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-5">
+    {/* Main preview + thumbs */}
+    <div className="lg:col-span-2">
+      <div className="cc-glass bg-black/45 rounded-2xl p-3 sm:p-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="text-sm font-medium text-white/90">{t(props.lang, "tabExamples")}</div>
 
-                    <button
-                      type="button"
-                      onClick={() => props.onTabChange("package")}
-                      className="sm:hidden rounded-xl border border-white/12 bg-white/[0.08] px-3 py-2 text-xs text-white/90"
-                    >
-                      {props.lang === "he" ? "הבא: חבילה" : "Next: package"}
-                    </button>
-                  </div>
+          <button
+            type="button"
+            onClick={() => props.onTabChange("package")}
+            className="sm:hidden rounded-xl border border-white/12 bg-white/[0.08] px-3 py-2 text-xs text-white/90"
+          >
+            {props.lang === "he" ? "הבא: חבילה" : "Next: package"}
+          </button>
+        </div>
 
-                  {/* HERO PREVIEW */}
-                  <button
-                    type="button"
-                    onClick={() => setLightboxOpen(true)}
-                    className="mt-3 w-full overflow-hidden rounded-2xl border border-white/10 bg-black/45 text-left"
-                    aria-label="Open preview"
-                  >
-                    <div className="relative aspect-[16/9]">
-                      {promoVideo ? (
-                        <video
-                          src={promoVideo}
-                          autoPlay={!reducedMotion}
-                          loop
-                          muted
-                          playsInline
-                          preload="metadata"
-                          controls={reducedMotion}
-                          poster={activeExample?.previewImage}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <Image
-                          src={activeExample?.previewImage || examples[0]?.previewImage || "https://picsum.photos/seed/fallback/900/600"}
-                          alt={promoTitle || "Preview"}
-                          fill
-                          sizes="(max-width: 1024px) 100vw, 66vw"
-                          className="object-cover"
-                        />
-                      )}
+        <div className="mt-3 overflow-hidden rounded-2xl border border-white/10 bg-black/45">
+          <div className="relative aspect-[16/9]">
+            {activeExample?.mediaType === "VIDEO" ? (
+              <video
+                src={activeExample.mediaUrl}
+                autoPlay={!reducedMotion}
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                controls={reducedMotion}
+                poster={activeExample.posterUrl || undefined}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <Image
+                src={activeExample?.mediaUrl || "https://picsum.photos/seed/fallback/900/600"}
+                alt={activeExample?.title?.[props.lang] || "Preview"}
+                fill
+                sizes="(max-width: 1024px) 100vw, 66vw"
+                className="object-cover"
+              />
+            )}
+          </div>
+        </div>
 
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent p-3">
-                        <div className="text-sm text-white/95">{promoTitle || "—"}</div>
-                        {promoDesc ? <div className="mt-1 text-xs text-white/65 line-clamp-2">{promoDesc}</div> : null}
-                      </div>
-                    </div>
-                  </button>
+        <div className="mt-3 grid grid-cols-3 sm:grid-cols-6 gap-2">
+          {examples.slice(0, 9).map((ex, idx) => {
+            const active = idx === activeExampleIndex;
+            const thumbSrc =
+              ex.mediaType === "VIDEO"
+                ? (ex.posterUrl || "https://picsum.photos/seed/video/400/250")
+                : ex.mediaUrl;
 
-                  {/* THUMB STRIP (booking style) */}
-                  {examples.length ? (
-                    <div className="mt-3 -mx-1 px-1 overflow-x-auto [-webkit-overflow-scrolling:touch]">
-                      <div className="flex gap-2 snap-x snap-mandatory">
-                        {examples.slice(0, 12).map((ex, idx) => {
-                          const active = idx === safeIndex;
-                          return (
-                            <button
-                              key={`${ex.previewImage}-${idx}`}
-                              type="button"
-                              onClick={() => setActiveExampleIndex(idx)}
-                              className={[
-                                "relative shrink-0 w-[120px] sm:w-[140px] aspect-[16/9] overflow-hidden rounded-xl border snap-start",
-                                active ? "border-[rgb(var(--red))]/60" : "border-white/10 hover:border-white/20",
-                              ].join(" ")}
-                              aria-label={ex.title?.[props.lang] || `Example ${idx + 1}`}
-                            >
-                              <Image src={ex.previewImage} alt={ex.title?.[props.lang] || "Example"} fill sizes="160px" className="object-cover" />
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="mt-3 text-sm text-white/60">{props.lang === "he" ? "אין דוגמאות עדיין." : "No examples yet."}</div>
-                  )}
-                </div>
-              </div>
-
-              {/* Right: INFO CARD + CTA (no “second preview” ever) */}
-              <div className="lg:col-span-1">
-                <div className="cc-glass bg-black/45 rounded-2xl p-4">
-                  <div className="text-sm font-medium text-white/90">{props.lang === "he" ? "מה רואים כאן" : "What you’ll get"}</div>
-
-                  <div className="mt-3 rounded-2xl border border-white/10 bg-black/35 p-3">
-                    <div className="text-xs text-white/60">{props.lang === "he" ? "דוגמה נבחרת" : "Selected example"}</div>
-                    <div className="mt-2 text-sm text-white/90">{activeExample?.title?.[props.lang] || promoTitle || "—"}</div>
-                    <div className="mt-2 text-sm text-white/70 whitespace-pre-line">
-                      {(activeExample?.description?.[props.lang] || promoDesc || "").trim() || "—"}
+            return (
+              <button
+                key={ex.id}
+                type="button"
+                onClick={() => setActiveExampleIndex(idx)}
+                className={[
+                  "relative aspect-[16/9] overflow-hidden rounded-xl border",
+                  active ? "border-[rgb(var(--red))]/60" : "border-white/10 hover:border-white/20",
+                ].join(" ")}
+                aria-label={ex.title?.[props.lang] || `Example ${idx + 1}`}
+              >
+                <Image src={thumbSrc} alt="" fill sizes="180px" className="object-cover" />
+                {ex.mediaType === "VIDEO" ? (
+                  <div className="absolute inset-0 grid place-items-center">
+                    <div className="rounded-full bg-black/45 border border-white/15 px-2 py-1 text-[10px] text-white/90">
+                      VIDEO
                     </div>
                   </div>
+                ) : null}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
 
-                  {!!props.catalog.tags?.length ? (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {props.catalog.tags.slice(0, 6).map((tag) => (
-                        <span key={tag} className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-xs text-white/75">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  ) : null}
+    {/* Info/CTA column */}
+    <div className="lg:col-span-1">
+      <div className="cc-glass bg-black/45 rounded-2xl p-4">
+        <div className="text-sm font-medium text-white/90">
+          {props.lang === "he" ? "מה הלאה?" : "Next step"}
+        </div>
 
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      onClick={() => props.onTabChange("package")}
-                      className="w-full rounded-xl border border-[rgb(var(--red))]/35 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/28"
-                    >
-                      {props.lang === "he" ? "הבא: לבחור חבילה" : "Next: choose a package"}
-                    </button>
-                    <div className="mt-2 text-xs text-white/50">
-                      {props.lang === "he" ? "אחרי זה — תאריך/עיר ושליחה ל־WhatsApp." : "Then pick date/city and send to WhatsApp."}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : null}
+        <div className="mt-3 text-sm text-white/80">
+          {props.lang === "he"
+            ? "בחר/י חבילה מתאימה (או בנה/י לבד) ואז קבע/י תאריך ושעה."
+            : "Pick a package (or build your own), then choose date/time and send on WhatsApp."}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => props.onTabChange("package")}
+          className="mt-4 w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/22 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/32"
+        >
+          {props.lang === "he" ? "לבחירת חבילה" : "Choose a package"}
+        </button>
+
+        {activeExample?.description?.[props.lang]?.trim() ? (
+          <div className="mt-4 text-xs text-white/60 whitespace-pre-line">
+            {activeExample.description[props.lang]}
+          </div>
+        ) : null}
+      </div>
+    </div>
+  </div>
+) : null}
+
 
           {/* ===== Package ===== */}
           {props.tab === "package" ? (

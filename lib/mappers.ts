@@ -14,17 +14,21 @@ function parseTags(tagsJson: string): string[] {
   }
 }
 
-export function dbSettingsToUi(s: SiteSettings): UiSettings {
+// lib/mappers.ts
+export function dbExampleToUi(row: any) {
   return {
-    heroTitle: { he: s.heroTitleHe, en: s.heroTitleEn },
-    heroSubtitle: { he: s.heroSubtitleHe, en: s.heroSubtitleEn },
-    promoText: { he: s.promoTextHe, en: s.promoTextEn },
-    aboutText: { he: s.aboutTextHe, en: s.aboutTextEn },
-    contactText: { he: s.contactTextHe, en: s.contactTextEn },
-    instagramHandle: s.instagramHandle,
-    email: s.email,
+    id: row.id,
+    order: row.order ?? 0,
+    title: { he: row.titleHe ?? "", en: row.titleEn ?? "" },
+    description: { he: row.descriptionHe ?? "", en: row.descriptionEn ?? "" },
+    mediaType: row.mediaType as "IMAGE" | "VIDEO",
+    mediaUrl: row.mediaUrl,
+    posterUrl: row.posterUrl ?? null,
+    link: row.link ?? null,
   };
 }
+
+
 
 export function dbPricingToUi(p: PricingConfig): UiPricing {
   return {
@@ -77,12 +81,6 @@ export function dbCatalogToUi(db: Catalog & { examples: Example[] }): UiCatalog 
     popular: db.popular,
     examples: [...db.examples]
       .sort((a, b) => (a.order - b.order) || (a.id - b.id))
-      .map((e) => ({
-        title: { he: e.titleHe, en: e.titleEn },
-        previewImage: e.previewImage,
-        videoUrl: e.videoUrl || undefined,
-        description: { he: e.descriptionHe, en: e.descriptionEn },
-        link: e.link || undefined,
-      })),
+      .map((e) => dbExampleToUi(e)),
   };
 }

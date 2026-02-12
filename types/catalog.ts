@@ -1,11 +1,17 @@
 import type { L10n } from "./l10n";
 
+// types/catalog.ts
+export type MediaType = "IMAGE" | "VIDEO";
+
 export type CatalogExample = {
-  title: L10n;
-  previewImage: string;
-  videoUrl?: string;
-  description?: L10n;
-  link?: string;
+  id: number;
+  order: number;
+  title: Record<"he" | "en", string>;
+  description: Record<"he" | "en", string>;
+  mediaType: MediaType;
+  mediaUrl: string;
+  posterUrl?: string | null;
+  link?: string | null;
 };
 
 export type Catalog = {

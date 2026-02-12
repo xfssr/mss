@@ -105,22 +105,31 @@ model Catalog {
   examples              Example[]
   updatedAt             DateTime @updatedAt
 }
+enum MediaType {
+  IMAGE
+  VIDEO
+}
 
 model Example {
-  id            Int     @id @default(autoincrement())
-  catalogId     Int
+  id          Int       @id @default(autoincrement())
+  catalogId   Int
+  catalog     Catalog   @relation(fields: [catalogId], references: [id], onDelete: Cascade)
 
-  titleHe       String
-  titleEn       String
+  order       Int       @default(0)
 
-  previewImage  String
-  videoUrl      String  @default("")
-
+  titleHe     String    @default("")
+  titleEn     String    @default("")
   descriptionHe String  @default("")
   descriptionEn String  @default("")
 
-  link          String  @default("")
-  order         Int     @default(0)
+  mediaType   MediaType @default(IMAGE)
+  mediaUrl    String
+  posterUrl   String?   // useful for VIDEO
 
-  catalog       Catalog @relation(fields: [catalogId], references: [id], onDelete: Cascade)
+  link        String?   // optional
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([catalogId])
 }
