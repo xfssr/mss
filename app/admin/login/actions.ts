@@ -16,7 +16,8 @@ export async function adminLogin(formData: FormData) {
   }
 
   const token = await createAdminCookieValue(secret);
-  cookies().set(ADMIN_COOKIE_NAME, token, {
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -27,6 +28,7 @@ export async function adminLogin(formData: FormData) {
 }
 
 export async function adminLogout() {
-  cookies().set(ADMIN_COOKIE_NAME, "", { httpOnly: true, path: "/", maxAge: 0 });
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_COOKIE_NAME, "", { httpOnly: true, path: "/", maxAge: 0 });
   redirect("/admin/login");
 }

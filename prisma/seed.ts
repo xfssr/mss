@@ -318,8 +318,9 @@ async function main() {
           create: c.examples.map((e) => ({
             titleHe: e.titleHe,
             titleEn: e.titleEn,
-            previewImage: e.previewImage,
-            videoUrl: e.videoUrl,
+            mediaType: e.videoUrl ? "VIDEO" : "IMAGE",
+            mediaUrl: e.videoUrl || e.previewImage,
+            posterUrl: e.videoUrl ? e.previewImage : null,
             descriptionHe: e.descriptionHe,
             descriptionEn: e.descriptionEn,
             link: e.link,

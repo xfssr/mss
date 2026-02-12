@@ -18,8 +18,12 @@ export const CATALOGS: Catalog[] = [
       },
     tags: ["Night", "Cocktails", "Reels"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
+      id: i,
+      order: i,
       title: { en: `Bar shot ${i + 1}`, he: "" },
-      previewImage: `https://picsum.photos/seed/bars-${i + 1}/960/640`,
+      description: { en: "", he: "" },
+      mediaType: "IMAGE" as const,
+      mediaUrl: `https://picsum.photos/seed/bars-${i + 1}/960/640`,
     })),
   },
   {
@@ -40,8 +44,12 @@ export const CATALOGS: Catalog[] = [
       },
     tags: ["Food", "Menu", "Brand"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
+      id: i,
+      order: i,
       title: { en: `Restaurant frame ${i + 1}`, he: "" },
-      previewImage: `https://picsum.photos/seed/restaurants-${i + 1}/960/640`,
+      description: { en: "", he: "" },
+      mediaType: "IMAGE" as const,
+      mediaUrl: `https://picsum.photos/seed/restaurants-${i + 1}/960/640`,
     })),
   },
   {
@@ -61,8 +69,12 @@ export const CATALOGS: Catalog[] = [
       },
     tags: ["Hospitality", "Interior", "Premium"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
+      id: i,
+      order: i,
       title: { en: `Hotel scene ${i + 1}`, he: "" },
-      previewImage: `https://picsum.photos/seed/hotels-${i + 1}/960/640`,
+      description: { en: "", he: "" },
+      mediaType: "IMAGE" as const,
+      mediaUrl: `https://picsum.photos/seed/hotels-${i + 1}/960/640`,
     })),
   },
   {
@@ -82,8 +94,12 @@ export const CATALOGS: Catalog[] = [
       },
     tags: ["Report", "Highlights", "People"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
+      id: i,
+      order: i,
       title: { en: `Event moment ${i + 1}`, he: "" },
-      previewImage: `https://picsum.photos/seed/events-${i + 1}/960/640`,
+      description: { en: "", he: "" },
+      mediaType: "IMAGE" as const,
+      mediaUrl: `https://picsum.photos/seed/events-${i + 1}/960/640`,
     })),
   },
   {
@@ -104,8 +120,12 @@ export const CATALOGS: Catalog[] = [
       },
     tags: ["Property", "Wide", "Listing"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
+      id: i,
+      order: i,
       title: { en: `Estate view ${i + 1}`, he: "" },
-      previewImage: `https://picsum.photos/seed/estate-${i + 1}/960/640`,
+      description: { en: "", he: "" },
+      mediaType: "IMAGE" as const,
+      mediaUrl: `https://picsum.photos/seed/estate-${i + 1}/960/640`,
     })),
   },
 ];
