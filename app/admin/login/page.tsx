@@ -1,6 +1,9 @@
 import { adminLogin } from "./actions";
 
-export default function AdminLoginPage({ searchParams }: { searchParams: { error?: string; next?: string } }) {
+export default async function AdminLoginPage(props: { 
+  searchParams: Promise<{ error?: string; next?: string }> 
+}) {
+  const searchParams = await props.searchParams;
   const next = searchParams.next ?? "/admin";
   const error = searchParams.error === "1";
 

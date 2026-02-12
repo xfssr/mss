@@ -1,12 +1,14 @@
 # Micro-Screen Studio — HE/EN v1 (One‑page + 3D micro‑screens + Admin CMS)
 
-Next.js (App Router) + TypeScript + Tailwind + Prisma (SQLite).
+Next.js (App Router) + TypeScript + Tailwind + Prisma (PostgreSQL).
 
 ## 1) ENV
 Create `.env.local` in project root:
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://..."
+DIRECT_URL="postgresql://..."
+
 NEXT_PUBLIC_WHATSAPP_PHONE=972509656366
 
 ADMIN_PASSWORD=change-me

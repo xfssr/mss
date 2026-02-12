@@ -18,6 +18,9 @@ import {
 } from "./actions";
 import { UploadUrlInput } from "@/components/admin/UploadUrlInput";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function tagsToCsv(tagsJson: string) {
   try {
     const v = JSON.parse(tagsJson);
@@ -490,9 +493,21 @@ export default async function AdminPage() {
                                 </label>
                               </div>
 
-                              <UploadUrlInput name="previewImage" defaultValue={e.previewImage} label="Preview image" accept="image/*" preview="image" />
+                              <UploadUrlInput 
+                                name="previewImage" 
+                                defaultValue={e.mediaType === "VIDEO" ? (e.posterUrl || "") : (e.mediaUrl || "")} 
+                                label="Preview image" 
+                                accept="image/*" 
+                                preview="image" 
+                              />
 
-                              <UploadUrlInput name="videoUrl" defaultValue={e.videoUrl} label="Video (optional)" accept="video/*" preview="video" />
+                              <UploadUrlInput 
+                                name="videoUrl" 
+                                defaultValue={e.mediaType === "VIDEO" ? (e.mediaUrl || "") : ""} 
+                                label="Video (optional)" 
+                                accept="video/*" 
+                                preview="video" 
+                              />
 
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 <label className="block">
@@ -501,7 +516,7 @@ export default async function AdminPage() {
                                 </label>
                                 <label className="block">
                                   <span className="text-[11px] text-white/55">Link (optional)</span>
-                                  <input name="link" defaultValue={e.link} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+                                  <input name="link" defaultValue={e.link || ""} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
                                 </label>
                               </div>
                             </div>

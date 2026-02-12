@@ -108,7 +108,7 @@ export function MiniScreenPanel(props: {
 
   if (!props.open) return null;
 
-  const promoVideo = props.catalog.promoVideoUrl || activeExample?.videoUrl || "";
+  const promoVideo = props.catalog.promoVideoUrl || (activeExample?.mediaType === "VIDEO" ? activeExample?.mediaUrl : "") || "";
   const promoTitle = (props.catalog.promoVideoTitle?.[props.lang] || activeExample?.title?.[props.lang] || props.catalog.title[props.lang] || "").trim();
   const promoDesc = (props.catalog.promoVideoDescription?.[props.lang] || activeExample?.description?.[props.lang] || "").trim();
 
@@ -137,7 +137,10 @@ export function MiniScreenPanel(props: {
       <LightboxPreview
         lang={props.lang}
         open={lightboxOpen}
-        items={examples.map(ex => ({ ...ex, previewImage: ex.videoUrl || "" }))}
+        items={examples.map(ex => ({ 
+          ...ex, 
+          previewImage: ex.mediaType === "VIDEO" ? (ex.posterUrl || ex.mediaUrl) : ex.mediaUrl 
+        }))}
         index={safeIndex}
         onIndex={setActiveExampleIndex}
         onClose={() => setLightboxOpen(false)}

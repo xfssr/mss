@@ -96,7 +96,8 @@ async function uploadToLocal(file: File) {
 
 export async function POST(req: Request) {
   const secret = process.env.ADMIN_COOKIE_SECRET || "";
-  const cookie = cookies().get(ADMIN_COOKIE_NAME)?.value;
+  const cookieStore = await cookies();
+  const cookie = cookieStore.get(ADMIN_COOKIE_NAME)?.value;
 
   if (!secret || !(await verifyAdminCookieValue(secret, cookie))) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
