@@ -1,3 +1,4 @@
+// components/ClientPage.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -14,6 +15,7 @@ import { MiniScreenPanel } from "@/components/MiniScreenPanel";
 import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
+import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { useCopiedState } from "@/components/useCopiedState";
 import type { TabKey } from "@/components/Tabs";
@@ -119,7 +121,18 @@ export function ClientPage(props: Props) {
 
   function openCatalog(slug: string, nextTab: TabKey = "examples") {
     setPanelOpen(true);
+    setTab(nextTab);
     setParams({ catalog: slug, tab: nextTab });
+  }
+
+  const defaultCatalogSlug = useMemo(() => {
+    const popular = props.catalogs.find((c) => "popular" in c && Boolean((c as any).popular));
+    return popular?.slug ?? props.catalogs[0]?.slug ?? null;
+  }, [props.catalogs]);
+
+  function openFlow(nextTab: TabKey) {
+    if (!defaultCatalogSlug) return;
+    openCatalog(defaultCatalogSlug, nextTab);
   }
 
   useEffect(() => {
@@ -191,11 +204,19 @@ export function ClientPage(props: Props) {
               <HeroSlider lang={lang} items={props.heroMedia} intervalMs={2400} />
             </div>
           </div>
+
+          {/* ✅ UX mini-instruction (guided flow) */}
+          <HowItWorksHero lang={lang} onOpenFlow={openFlow} />
         </div>
       </Section>
 
       <Section id="catalog" title={t(lang, "sectionCatalog")}>
-        <CatalogGrid lang={lang} catalogs={props.catalogs} selectedSlug={selectedCatalog?.slug ?? undefined} onSelect={(slug) => openCatalog(slug, "examples")} />
+        <CatalogGrid
+          lang={lang}
+          catalogs={props.catalogs}
+          selectedSlug={selectedCatalog?.slug ?? undefined}
+          onSelect={(slug) => openCatalog(slug, "examples")}
+        />
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
 
@@ -248,7 +269,11 @@ export function ClientPage(props: Props) {
 
                     {pickL10n(lang, p.details).trim() ? (
                       <>
-                        <button type="button" onClick={() => setExpandedPrice(open ? null : p.id)} className="mt-3 text-sm text-[rgb(var(--blue))] hover:underline">
+                        <button
+                          type="button"
+                          onClick={() => setExpandedPrice(open ? null : p.id)}
+                          className="mt-3 text-sm text-[rgb(var(--blue))] hover:underline"
+                        >
                           {open ? t(lang, "less") : t(lang, "more")}
                         </button>
                         {open ? <div className="mt-3 text-sm text-white/70 whitespace-pre-line">{pickL10n(lang, p.details)}</div> : null}
