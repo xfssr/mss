@@ -175,12 +175,6 @@ export function PackageBuilder(props: {
               customActive ? "border-[rgb(var(--blue))]/50 shadow-lg" : "border-white/10 hover:border-white/20",
             ].join(" ")}
           >
-            <div
-              className={[
-                "absolute -top-1 left-3 h-2.5 w-10 rounded-t-lg border-x border-t",
-                customActive ? "border-[rgb(var(--blue))]/40 bg-[rgb(var(--blue))]/15" : "border-white/12 bg-white/[0.06]",
-              ].join(" ")}
-            />
             <div className="p-3 sm:p-4">
               <div className="text-lg" aria-hidden="true">⚙️</div>
               <div className="mt-1 text-sm font-semibold text-white/90">
