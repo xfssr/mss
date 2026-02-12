@@ -1,86 +1,131 @@
 # Руководство по настройке и запуску проекта
 
-## Проблемы, которые были исправлены
+## Важно: Проект настроен для работы с PostgreSQL (Neon) и Vercel
 
-### 1. База данных
-**Проблема**: Схема Prisma была настроена на PostgreSQL, но в проекте использовалась SQLite база данных.
+Этот проект использует PostgreSQL базу данных через Neon и предназначен для развертывания на Vercel.
 
-**Решение**:
-- Изменен `datasource db` в `prisma/schema.prisma` с PostgreSQL на SQLite
-- Обновлен `migration_lock.toml` для указания SQLite
-- Пересозданы миграции для SQLite синтаксиса
+## Развертывание на Vercel (рекомендуется)
 
-### 2. Структура данных Example
-**Проблема**: Модель Example в schema.prisma не соответствовала коду приложения. В коде использовались поля `mediaType`, `mediaUrl`, `posterUrl`, но в схеме были `previewImage` и `videoUrl`.
+### 1. Настройка базы данных на Neon
 
-**Решение**:
-- Обновлена модель Example в schema.prisma для соответствия коду
-- Создана новая миграция с правильной структурой
+1. Зарегистрируйтесь на [https://neon.tech](https://neon.tech)
+2. Создайте новый проект
+3. В разделе "Connection Details" скопируйте строку подключения:
+   - Выберите "Pooled connection" для лучшей производительности с Vercel
+   - Формат: `postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require`
 
-### 3. Функция маппинга dbSettingsToUi
-**Проблема**: Функция `dbSettingsToUi` возвращала сырые данные из БД вместо преобразования в правильный формат UI.
+### 2. Настройка проекта на Vercel
 
-**Решение**:
-- Исправлена функция для правильного преобразования полей `heroTitleHe/En`, `heroSubtitleHe/En` и т.д. в объекты L10n
+1. Зайдите на [https://vercel.com](https://vercel.com)
+2. Импортируйте ваш GitHub репозиторий
+3. В настройках проекта добавьте переменные окружения:
 
-### 4. Файл окружения
-**Проблема**: Отсутствовал файл `.env` с переменными окружения.
+**Обязательные переменные:**
+```
+DATABASE_URL=postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require
+NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
+NEXT_PUBLIC_WHATSAPP_PHONE=972509656366
+ADMIN_PASSWORD=ваш-безопасный-пароль
+ADMIN_COOKIE_SECRET=длинная-случайная-строка-минимум-32-символа
+```
 
-**Решение**:
-- Создан `.env` с правильной конфигурацией DATABASE_URL
-- Создан `.env.example` для документации
+**Опциональные переменные (для Cloudinary):**
+```
+CLOUDINARY_CLOUD_NAME=ваше-облако
+CLOUDINARY_API_KEY=ваш-ключ
+CLOUDINARY_API_SECRET=ваш-секрет
+CLOUDINARY_FOLDER=micro-screen-studio
+```
 
-### 5. Скрипты npm
-**Проблема**: Отсутствовали скрипты для разработки и запуска приложения.
+### 3. Развертывание
 
-**Решение**:
-- Добавлены скрипты `dev` и `start` в package.json
+1. Нажмите "Deploy"
+2. Vercel автоматически:
+   - Установит зависимости
+   - Сгенерирует Prisma Client
+   - Соберет Next.js приложение
+   - Применит миграции базы данных
+   - Заполнит базу данных начальными данными (seed)
 
-## Установка и запуск
+### 4. После развертывания
 
-### Первый запуск
+1. Откройте ваш сайт по адресу `https://your-domain.vercel.app`
+2. Зайдите в админ-панель: `https://your-domain.vercel.app/admin`
+3. Используйте пароль из `ADMIN_PASSWORD`
 
-1. Скопируйте `.env.example` в `.env`:
+## Локальная разработка (опционально)
+
+Если вы хотите разрабатывать локально, но все равно использовать Neon базу данных:
+
+### 1. Создайте .env файл
+
+Скопируйте `.env.example` в `.env`:
 ```bash
 cp .env.example .env
 ```
 
-2. Установите зависимости:
+Заполните переменные:
+```env
+DATABASE_URL="postgresql://user:password@ep-xxx-xxx.region.aws.neon.tech/neondb?sslmode=require"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+NEXT_PUBLIC_WHATSAPP_PHONE="972509656366"
+ADMIN_PASSWORD="ваш-пароль"
+ADMIN_COOKIE_SECRET="длинная-случайная-строка"
+```
+
+### 2. Установите зависимости
+
 ```bash
 npm install
 ```
 
-3. Создайте и заполните базу данных:
+### 3. Примените миграции
+
 ```bash
-npx prisma migrate dev
+npx prisma migrate deploy
 ```
 
-База данных автоматически заполнится начальными данными из `prisma/seed.ts`.
+### 4. Заполните базу данных (первый раз)
 
-### Разработка
+```bash
+npx prisma db seed
+```
 
-Запустите dev сервер:
+### 5. Запустите dev сервер
+
 ```bash
 npm run dev
 ```
 
 Приложение будет доступно по адресу http://localhost:3000
 
-### Production
+## Проблемы, которые были исправлены
 
-Соберите проект:
-```bash
-npm run build
-```
+### 1. База данных
+**Было**: Схема Prisma была настроена на SQLite для локальной разработки.
 
-Запустите production сервер:
-```bash
-npm start
-```
+**Стало**: 
+- Изменен провайдер с SQLite на PostgreSQL в `prisma/schema.prisma`
+- Обновлены миграции для синтаксиса PostgreSQL
+- Обновлен `migration_lock.toml` для указания PostgreSQL
+- Настроена работа с Neon (serverless PostgreSQL)
+
+### 2. Переменные окружения
+**Было**: Примеры переменных окружения были для SQLite.
+
+**Стало**:
+- Обновлен `.env.example` с примером подключения к Neon
+- Добавлены инструкции для настройки на Vercel
+
+### 3. Документация
+**Было**: Инструкции были только для локальной разработки с SQLite.
+
+**Стало**:
+- Добавлены подробные инструкции для Vercel + Neon
+- Обновлены README.md и SETUP.md
+- Локальная разработка теперь опциональна
 
 ## Структура базы данных
-
-База данных SQLite находится в `prisma/dev.db`.
 
 Основные таблицы:
 - `SiteSettings` - настройки сайта (заголовки, тексты)
@@ -90,34 +135,55 @@ npm start
 - `Catalog` - каталоги услуг
 - `Example` - примеры работ для каждого каталога
 
-## Переменные окружения
+## Полезные команды Prisma
 
-- `DATABASE_URL` - путь к базе данных SQLite (по умолчанию: `file:./dev.db`)
-- `NEXT_PUBLIC_SITE_URL` - URL сайта для метаданных
-- `ADMIN_PASSWORD` - пароль для админ-панели (опционально)
+### Посмотреть схему базы данных
+```bash
+npx prisma studio
+```
 
-## Миграции
-
-Создать новую миграцию:
+### Создать новую миграцию (только для разработки)
 ```bash
 npx prisma migrate dev --name описание_изменений
 ```
 
-Применить миграции:
+### Применить миграции на продакшене
 ```bash
 npx prisma migrate deploy
 ```
 
-Сбросить базу данных:
-```bash
-npx prisma migrate reset
-```
-
-## Заполнение данными
-
-Данные для заполнения находятся в `prisma/seed.ts`.
-
-Запустить seed вручную:
+### Заполнить базу данных начальными данными
 ```bash
 npx prisma db seed
 ```
+
+### Сгенерировать Prisma Client
+```bash
+npx prisma generate
+```
+
+## Часто задаваемые вопросы
+
+### Как обновить данные на сайте?
+
+1. Зайдите в админ-панель: `https://your-site.vercel.app/admin`
+2. Используйте графический интерфейс для редактирования
+
+### Как добавить новый каталог?
+
+Через админ-панель в разделе "Catalogs"
+
+### Где хранятся изображения?
+
+- Если настроен Cloudinary - на Cloudinary
+- Иначе - в папке `public/uploads` (не рекомендуется для Vercel)
+
+### Можно ли использовать другую БД вместо Neon?
+
+Да, можно использовать любой PostgreSQL провайдер:
+- Supabase
+- Railway
+- Render
+- Или свой собственный сервер PostgreSQL
+
+Просто измените `DATABASE_URL` на строку подключения вашей БД.
