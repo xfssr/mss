@@ -216,6 +216,7 @@ export function ClientPage(props: Props) {
           catalogs={props.catalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug, "examples")}
+          fromPrice={props.pricing.duration2h > 0 ? `${props.pricing.currency}${props.pricing.duration2h}` : undefined}
         />
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>

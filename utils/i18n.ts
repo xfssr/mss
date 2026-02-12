@@ -74,6 +74,19 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     footerTop: "למעלה",
     footerCatalog: "קטלוג",
+
+    catalogBenefit: "תוכן מקצועי לעסק שלך",
+    openArrow: "פתיחה →",
+    fromPrice: "החל מ-",
+
+    helpTitle: "3 צעדים פשוטים",
+    helpDesc: "1) צפו בדוגמאות  2) בנו חבילה  3) מלאו פרטים ושלחו ב-WhatsApp.",
+
+    showMore: "עוד...",
+    showLess: "פחות",
+
+    customPresetTitle: "התאמה אישית",
+    customPresetDesc: "בנה חבילה ידנית",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -140,6 +153,19 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     footerTop: "Top",
     footerCatalog: "Catalog",
+
+    catalogBenefit: "Professional content for your business",
+    openArrow: "Open →",
+    fromPrice: "from ",
+
+    helpTitle: "3 Simple Steps",
+    helpDesc: "1) Browse examples  2) Build a package  3) Fill details & send via WhatsApp.",
+
+    showMore: "More...",
+    showLess: "Less",
+
+    customPresetTitle: "Custom",
+    customPresetDesc: "Build your own package",
   },
 };
 
