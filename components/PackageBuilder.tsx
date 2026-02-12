@@ -136,14 +136,6 @@ export function PackageBuilder(props: {
                   active ? "border-[rgb(var(--red))]/50 shadow-lg" : "border-white/10 hover:border-white/20",
                 ].join(" ")}
               >
-                {/* folder tab */}
-                <div
-                  className={[
-                    "absolute -top-1 left-3 h-2.5 w-10 rounded-t-lg border-x border-t",
-                    active ? "border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/15" : "border-white/12 bg-white/[0.06]",
-                  ].join(" ")}
-                />
-
                 <div className="p-3 sm:p-4">
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
