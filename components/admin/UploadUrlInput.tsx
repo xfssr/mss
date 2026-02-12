@@ -44,7 +44,7 @@ export function UploadUrlInput(props: Props) {
   const mode = "imageName" in props ? "media" : "legacy";
 
   const initial =
-    mode === "media" ? (props.initialUrl ?? "") : (props.defaultValue ?? "");
+    mode === "media" ? (props as { initialUrl?: string }).initialUrl ?? "" : (props as { defaultValue: string }).defaultValue;
 
   const [value, setValue] = useState(initial);
   const [busy, setBusy] = useState(false);
@@ -53,7 +53,7 @@ export function UploadUrlInput(props: Props) {
   const accept = mode === "media" ? (props.accept ?? "image/*,video/*") : props.accept;
 
   const hasPreview = value.startsWith("/") || value.startsWith("http");
-  const video = mode === "media" ? isVideoUrl(value) : props.preview === "video";
+  const video = mode === "media" ? isVideoUrl(value) : (props as { preview: "image" | "video" }).preview === "video";
 
   async function upload(file: File) {
     setBusy(true);
@@ -90,15 +90,15 @@ export function UploadUrlInput(props: Props) {
       {/* ✅ hidden inputs, чтобы action получил previewImage/videoUrl */}
       {mode === "media" ? (
         <>
-          <input type="hidden" name={props.imageName} value={imageVal} />
-          <input type="hidden" name={props.videoName} value={videoVal} />
+          <input type="hidden" name={(props as { imageName: string }).imageName} value={imageVal} />
+          <input type="hidden" name={(props as { videoName: string }).videoName} value={videoVal} />
         </>
       ) : null}
 
       <div className="mt-1 flex gap-2 items-center">
         <input
           id={id}
-          name={mode === "legacy" ? props.name : undefined}
+          name={"name" in props ? props.name : undefined}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={props.placeholder ?? "URL или Upload"}

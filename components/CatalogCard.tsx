@@ -7,7 +7,8 @@ import { t } from "@/utils/i18n";
 
 export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: boolean; onClick: () => void }) {
   const { catalog, selected } = props;
-  const cover = catalog.coverImage || catalog.examples?.[0]?.previewImage;
+  const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
+  const cover = catalog.coverImage || example0?.preview || example0?.image || example0?.src;
 
   return (
     <button

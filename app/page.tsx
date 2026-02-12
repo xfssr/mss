@@ -9,7 +9,6 @@ import {
   dbPriceToUi,
   dbSettingsToUi,
 } from "@/lib/mappers";
-
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 

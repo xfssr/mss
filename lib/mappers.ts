@@ -83,4 +83,8 @@ export function dbCatalogToUi(db: Catalog & { examples: Example[] }): UiCatalog 
       .sort((a, b) => (a.order - b.order) || (a.id - b.id))
       .map((e) => dbExampleToUi(e)),
   };
+  
+}
+export function dbSettingsToUi(row: any) {
+  return row;
 }
