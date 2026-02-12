@@ -495,7 +495,7 @@ export default async function AdminPage() {
 
                               <UploadUrlInput 
                                 name="previewImage" 
-                                defaultValue={e.mediaType === "VIDEO" ? e.posterUrl || "" : e.mediaUrl} 
+                                defaultValue={e.mediaType === "VIDEO" ? (e.posterUrl || "") : (e.mediaUrl || "")} 
                                 label="Preview image" 
                                 accept="image/*" 
                                 preview="image" 
@@ -503,7 +503,7 @@ export default async function AdminPage() {
 
                               <UploadUrlInput 
                                 name="videoUrl" 
-                                defaultValue={e.mediaType === "VIDEO" ? e.mediaUrl : ""} 
+                                defaultValue={e.mediaType === "VIDEO" ? (e.mediaUrl || "") : ""} 
                                 label="Video (optional)" 
                                 accept="video/*" 
                                 preview="video" 
