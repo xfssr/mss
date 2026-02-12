@@ -17,6 +17,9 @@ import {
   updateSettings,
 } from "./actions";
 import { UploadUrlInput } from "@/components/admin/UploadUrlInput";
+import { AdminLangTabs } from "@/components/admin/AdminLangTabs";
+import { AdminAccordion } from "@/components/admin/AdminAccordion";
+import { AdminNav } from "@/components/admin/AdminNav";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -44,95 +47,100 @@ export default async function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white" dir="ltr">
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/25 backdrop-blur">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="font-medium">Admin</div>
-          <form action={adminLogout}>
-            <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm hover:bg-white/[0.10]">Logout</button>
+      <header className="sticky top-0 z-30 border-b border-white/10 bg-black/60 backdrop-blur-lg">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between gap-2">
+          <div className="font-medium text-sm shrink-0">Admin</div>
+          <AdminNav />
+          <form action={adminLogout} className="shrink-0">
+            <button className="rounded-lg border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm hover:bg-white/[0.10]">Logout</button>
           </form>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10 space-y-10">
-        <section className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Site settings (HE/EN)</h2>
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 space-y-4">
+        {/* ─── Homepage content ─── */}
+        <section id="homepage" className="cc-glass rounded-3xl p-6">
+          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Homepage content</h2>
+          <p className="text-xs text-white/40 mt-1">Hero, promo, about &amp; contact texts for the main page</p>
 
-          <form action={updateSettings} className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-white/90">Hebrew</div>
+          <form action={updateSettings} className="mt-4">
+            <AdminLangTabs
+              heContent={
+                <div className="space-y-3">
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Hero title</span>
+                    <input name="heroTitleHe" defaultValue={settings.heroTitleHe} placeholder="כותרת ראשית" className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Hero subtitle</span>
+                    <textarea name="heroSubtitleHe" defaultValue={settings.heroSubtitleHe} rows={3} placeholder="תת-כותרת..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Promo text</span>
+                    <textarea name="promoTextHe" defaultValue={settings.promoTextHe} rows={4} placeholder="טקסט קידום..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">About text</span>
+                    <textarea name="aboutTextHe" defaultValue={settings.aboutTextHe} rows={5} placeholder="אודות..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Contact text</span>
+                    <textarea name="contactTextHe" defaultValue={settings.contactTextHe} rows={3} placeholder="צור קשר..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                </div>
+              }
+              enContent={
+                <div className="space-y-3">
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Hero title</span>
+                    <input name="heroTitleEn" defaultValue={settings.heroTitleEn} placeholder="Main heading" className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Hero subtitle</span>
+                    <textarea name="heroSubtitleEn" defaultValue={settings.heroSubtitleEn} rows={3} placeholder="Subtitle text..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Promo text</span>
+                    <textarea name="promoTextEn" defaultValue={settings.promoTextEn} rows={4} placeholder="Promotional text..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">About text</span>
+                    <textarea name="aboutTextEn" defaultValue={settings.aboutTextEn} rows={5} placeholder="About section..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                  <label className="block">
+                    <span className="text-[11px] text-white/55">Contact text</span>
+                    <textarea name="contactTextEn" defaultValue={settings.contactTextEn} rows={3} placeholder="Contact us..." className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-y" />
+                  </label>
+                </div>
+              }
+            />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
               <label className="block">
-                <span className="text-[11px] text-white/55">Hero title (HE)</span>
-                <input name="heroTitleHe" defaultValue={settings.heroTitleHe} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+                <span className="text-[11px] text-white/55">Instagram</span>
+                <input name="instagramHandle" defaultValue={settings.instagramHandle} placeholder="@handle" className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
               <label className="block">
-                <span className="text-[11px] text-white/55">Hero subtitle (HE)</span>
-                <textarea name="heroSubtitleHe" defaultValue={settings.heroSubtitleHe} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Promo text (HE)</span>
-                <textarea name="promoTextHe" defaultValue={settings.promoTextHe} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">About text (HE)</span>
-                <textarea name="aboutTextHe" defaultValue={settings.aboutTextHe} rows={4} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Contact text (HE)</span>
-                <textarea name="contactTextHe" defaultValue={settings.contactTextHe} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
+                <span className="text-[11px] text-white/55">Email</span>
+                <input name="email" defaultValue={settings.email} placeholder="email@example.com" className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
             </div>
 
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-white/90">English</div>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Hero title (EN)</span>
-                <input name="heroTitleEn" defaultValue={settings.heroTitleEn} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Hero subtitle (EN)</span>
-                <textarea name="heroSubtitleEn" defaultValue={settings.heroSubtitleEn} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Promo text (EN)</span>
-                <textarea name="promoTextEn" defaultValue={settings.promoTextEn} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">About text (EN)</span>
-                <textarea name="aboutTextEn" defaultValue={settings.aboutTextEn} rows={4} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-              <label className="block">
-                <span className="text-[11px] text-white/55">Contact text (EN)</span>
-                <textarea name="contactTextEn" defaultValue={settings.contactTextEn} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
-              </label>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <label className="block">
-                  <span className="text-[11px] text-white/55">Instagram</span>
-                  <input name="instagramHandle" defaultValue={settings.instagramHandle} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
-                </label>
-                <label className="block">
-                  <span className="text-[11px] text-white/55">Email</span>
-                  <input name="email" defaultValue={settings.email} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
-                </label>
-              </div>
-
-              <button className="mt-2 w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
-                Save settings
-              </button>
-            </div>
+            <button className="mt-4 w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+              Save settings
+            </button>
           </form>
         </section>
 
-        <section className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Pricing config (calculator)</h2>
-
-          <form action={updatePricingConfig} className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* ─── Pricing config ─── */}
+        <AdminAccordion title="Pricing config" id="pricing">
+          <form action={updatePricingConfig} className="grid grid-cols-1 lg:grid-cols-3 gap-3">
             <label className="block">
               <span className="text-[11px] text-white/55">Currency</span>
               <input name="currency" defaultValue={pricing.currency} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
             </label>
 
-            <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-3">
               <label className="block">
                 <span className="text-[11px] text-white/55">Duration 2h</span>
                 <input name="duration2h" type="number" defaultValue={pricing.duration2h} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
@@ -189,12 +197,11 @@ export default async function AdminPage() {
               Save pricing config
             </button>
           </form>
-        </section>
+        </AdminAccordion>
 
-        <section className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Hero gallery (slider)</h2>
-
-          <div className="mt-6 space-y-4">
+        {/* ─── Hero gallery ─── */}
+        <AdminAccordion title="Hero gallery" id="hero-gallery" count={hero.length}>
+          <div className="space-y-3">
             {hero.map((h) => (
   <div key={h.id} className="rounded-3xl border border-white/10 bg-black/20 p-5">
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -257,12 +264,11 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
-        </section>
+        </AdminAccordion>
 
-        <section className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Price list cards (About section)</h2>
-
-          <div className="mt-6 space-y-4">
+        {/* ─── Price list cards ─── */}
+        <AdminAccordion title="Price list cards" id="price-items" count={priceItems.length}>
+          <div className="space-y-3">
             {priceItems.map((p) => (
   <div key={p.id} className="rounded-3xl border border-white/10 bg-black/20 p-5">
     <div className="flex items-start justify-between gap-3">
@@ -369,12 +375,11 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
-        </section>
+        </AdminAccordion>
 
-        <section className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Catalogs</h2>
-
-          <div className="mt-6 space-y-6">
+        {/* ─── Catalogs ─── */}
+        <AdminAccordion title="Catalogs" id="catalogs" count={catalogs.length}>
+          <div className="space-y-4">
             {catalogs.map((c) => (
               <div key={c.id} className="rounded-3xl border border-white/10 bg-black/20 p-5">
                 <div className="flex items-start justify-between gap-3">
@@ -674,7 +679,7 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
-        </section>
+        </AdminAccordion>
 
         <div className="text-xs text-white/45">
           Tip: upload images/videos with Cloudinary env, or store locally in <span className="font-mono">public/uploads</span>.
