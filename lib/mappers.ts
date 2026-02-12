@@ -85,6 +85,14 @@ export function dbCatalogToUi(db: Catalog & { examples: Example[] }): UiCatalog 
   };
   
 }
-export function dbSettingsToUi(row: any) {
-  return row;
+export function dbSettingsToUi(s: SiteSettings): UiSettings {
+  return {
+    heroTitle: { he: s.heroTitleHe, en: s.heroTitleEn },
+    heroSubtitle: { he: s.heroSubtitleHe, en: s.heroSubtitleEn },
+    promoText: { he: s.promoTextHe, en: s.promoTextEn },
+    aboutText: { he: s.aboutTextHe, en: s.aboutTextEn },
+    contactText: { he: s.contactTextHe, en: s.contactTextEn },
+    instagramHandle: s.instagramHandle,
+    email: s.email,
+  };
 }

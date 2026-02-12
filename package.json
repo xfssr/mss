@@ -3,9 +3,11 @@
   "private": true,
   "version": "0.3.0",
   "scripts": {
+    "dev": "next dev",
     "postinstall": "prisma generate",
     "vercel-build": "prisma generate && next build",
-    "build": "next build"
+    "build": "next build",
+    "start": "next start"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -1,13 +1,24 @@
 # Micro-Screen Studio — HE/EN v1 (One‑page + 3D micro‑screens + Admin CMS)
 
-Next.js (App Router) + TypeScript + Tailwind + Prisma (PostgreSQL).
+Next.js (App Router) + TypeScript + Tailwind + Prisma (SQLite).
+
+## 📚 Документация
+
+- 🇷🇺 **[Как работать с Git](КАК_РАБОТАТЬ_С_GIT.md)** - полное руководство на русском
+- ⚡ **[Быстрая инструкция Git](БЫСТРАЯ_ИНСТРУКЦИЯ_GIT.md)** - краткий гайд за 5 шагов
+- 🎨 **[Визуальный Git Workflow](GIT_WORKFLOW_VISUAL.md)** - схемы и диаграммы
+- 🛠️ **[Настройка проекта](SETUP.md)** - установка и запуск
+- 🔧 **[Решение проблем](РЕШЕНИЕ_ПРОБЛЕМ.md)** - что было исправлено
 
 ## 1) ENV
-Create `.env.local` in project root:
+Create `.env` in project root:
 
 ```env
-DATABASE_URL="postgresql://..."
-DIRECT_URL="postgresql://..."
+# База данных SQLite
+DATABASE_URL="file:./dev.db"
+
+# URL сайта
+NEXT_PUBLIC_SITE_URL="https://studioscreen.vercel.app"
 
 NEXT_PUBLIC_WHATSAPP_PHONE=972509656366
 
@@ -24,13 +35,18 @@ CLOUDINARY_FOLDER=micro-screen-studio
 ## 2) Install + DB
 ```bash
 npm install
-npx prisma migrate dev --name init
-npx prisma db seed
+npx prisma migrate dev
+# База данных автоматически заполнится тестовыми данными
 ```
 
 ## 3) Run
 ```bash
+# Development
 npm run dev
+
+# Production
+npm run build
+npm start
 ```
 
 ## Main page (HE/EN)
