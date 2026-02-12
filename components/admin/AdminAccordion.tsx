@@ -22,6 +22,7 @@ export function AdminAccordion({
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
         className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.03] transition-colors"
       >
         <span className="text-xl font-semibold text-[rgb(var(--blue))] flex items-center gap-2">
@@ -33,6 +34,7 @@ export function AdminAccordion({
           )}
         </span>
         <svg
+          aria-hidden="true"
           className={`w-5 h-5 text-white/40 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
