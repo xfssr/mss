@@ -173,16 +173,16 @@ export function ClientPage(props: Props) {
       <FloatingWhatsAppButton onClick={onSendWhatsApp} />
 
       <Section id="top">
-        <div className="cc-glass rounded-3xl p-6 sm:p-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-3xl sm:text-4xl font-semibold text-[rgb(var(--blue))]">{pickL10n(lang, props.settings.heroTitle)}</h1>
-              <p className="mt-3 text-base sm:text-lg text-white/70">{pickL10n(lang, props.settings.heroSubtitle)}</p>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle)}</h1>
+              <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{pickL10n(lang, props.settings.heroSubtitle)}</p>
 
-              <div className="mt-6 flex flex-col sm:flex-row gap-3">
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <a
                   href="#catalog"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaPick")}
                 </a>
@@ -190,14 +190,14 @@ export function ClientPage(props: Props) {
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaWhatsApp")}
                 </button>
               </div>
 
-              <div className="mt-4 text-sm text-white/70 whitespace-pre-line">{pickL10n(lang, props.settings.promoText)}</div>
-              <div className="mt-3 text-xs text-white/45">{t(lang, "heroHint")}</div>
+              <div className="mt-5 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.promoText)}</div>
+              <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
             </div>
 
             <div className="lg:col-span-5">
@@ -247,24 +247,24 @@ export function ClientPage(props: Props) {
       ) : null}
 
       <Section id="about" title={t(lang, "sectionAbout")}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2 cc-glass rounded-3xl p-6">
-            <div className="text-sm text-white/70 whitespace-pre-line">{pickL10n(lang, props.settings.aboutText)}</div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+          <div className="lg:col-span-2 cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
+            <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.aboutText)}</div>
           </div>
 
-          <div className="cc-glass rounded-3xl p-6">
-            <div className="text-sm font-medium text-white/90">{t(lang, "packagesTitle")}</div>
-            <div className="mt-3 space-y-3">
+          <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
+            <div className="text-base font-semibold text-white/95">{t(lang, "packagesTitle")}</div>
+            <div className="mt-4 space-y-3">
               {props.prices.map((p) => {
                 const open = expandedPrice === p.id;
                 return (
-                  <div key={p.id} className="rounded-2xl border border-white/10 bg-black/20 p-4">
+                  <div key={p.id} className="rounded-2xl border border-white/10 bg-black/25 p-4 hover:bg-black/30 hover:border-white/15 transition-all duration-200">
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <div className="text-sm font-medium text-white/90">{pickL10n(lang, p.title)}</div>
-                        <div className="mt-1 text-xs text-white/55">{pickL10n(lang, p.note)}</div>
+                        <div className="text-sm font-semibold text-white/95">{pickL10n(lang, p.title)}</div>
+                        <div className="mt-1.5 text-xs text-white/60 leading-relaxed">{pickL10n(lang, p.note)}</div>
                       </div>
-                      <div className="text-sm font-semibold text-white">{p.price}</div>
+                      <div className="text-sm font-bold text-white">{p.price}</div>
                     </div>
 
                     {pickL10n(lang, p.details).trim() ? (
@@ -272,11 +272,11 @@ export function ClientPage(props: Props) {
                         <button
                           type="button"
                           onClick={() => setExpandedPrice(open ? null : p.id)}
-                          className="mt-3 text-sm text-[rgb(var(--blue))] hover:underline"
+                          className="mt-3 text-sm text-[rgb(var(--blue))] hover:text-[rgb(var(--blue))]/80 hover:underline transition-colors"
                         >
                           {open ? t(lang, "less") : t(lang, "more")}
                         </button>
-                        {open ? <div className="mt-3 text-sm text-white/70 whitespace-pre-line">{pickL10n(lang, p.details)}</div> : null}
+                        {open ? <div className="mt-3 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, p.details)}</div> : null}
                       </>
                     ) : null}
                   </div>
@@ -287,7 +287,7 @@ export function ClientPage(props: Props) {
             <button
               type="button"
               onClick={() => document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-4 w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+              className="mt-5 w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
             >
               {t(lang, "openCatalog")}
             </button>
@@ -296,14 +296,14 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Section id="contact" title={t(lang, "sectionContact")}>
-        <div className="cc-glass rounded-3xl p-6">
-          <div className="text-sm text-white/70 whitespace-pre-line">{pickL10n(lang, props.settings.contactText)}</div>
+        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
+          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
 
-          <div className="mt-5 flex flex-col sm:flex-row gap-3">
+          <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
             >
               {t(lang, "contactWhatsApp")}
             </button>
@@ -312,20 +312,20 @@ export function ClientPage(props: Props) {
               href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
             >
               {t(lang, "contactInstagram")}
             </a>
 
             <a
               href={`mailto:${props.settings.email}`}
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
             >
               {t(lang, "contactEmail")}
             </a>
           </div>
 
-          <div className="mt-4 text-xs text-white/45">{t(lang, "replyTime")}</div>
+          <div className="mt-5 text-xs text-white/50">{t(lang, "replyTime")}</div>
         </div>
       </Section>
 

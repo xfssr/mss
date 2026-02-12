@@ -23,7 +23,7 @@ export function HeroSlider(props: { lang: Lang; items: HeroMedia[]; intervalMs?:
   if (!safeItems.length) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
+    <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/25 shadow-2xl backdrop-blur-sm">
       <div className="relative aspect-[16/10] sm:aspect-[16/9]">
         {safeItems.map((it, i) => {
           const active = i === idx;
@@ -31,8 +31,8 @@ export function HeroSlider(props: { lang: Lang; items: HeroMedia[]; intervalMs?:
             <div
               key={it.id}
               className={[
-                "absolute inset-0 transition-opacity duration-700",
-                active ? "opacity-100" : "opacity-0",
+                "absolute inset-0 transition-opacity duration-1000",
+                active ? "opacity-100 z-10" : "opacity-0 z-0",
                 reduced ? "transition-none" : "",
               ].join(" ")}
             >
@@ -44,11 +44,28 @@ export function HeroSlider(props: { lang: Lang; items: HeroMedia[]; intervalMs?:
                 className="object-cover"
                 priority={i === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
             </div>
           );
         })}
       </div>
+      
+      {/* Индикаторы слайдов */}
+      {safeItems.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-2 rounded-full bg-black/40 backdrop-blur-sm border border-white/10">
+          {safeItems.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIdx(i)}
+              className={[
+                "h-1.5 rounded-full transition-all duration-300",
+                i === idx ? "w-6 bg-white" : "w-1.5 bg-white/40 hover:bg-white/60",
+              ].join(" ")}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -11,7 +11,11 @@
   --stroke: 255 255 255;
 }
 
-html { scroll-behavior: smooth; }
+html { 
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -20,9 +24,13 @@ body {
     radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
     radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
     linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
+  background-attachment: fixed;
 }
 
-::selection { background: rgba(var(--red) / 0.35); }
+::selection { 
+  background: rgba(var(--red) / 0.35);
+  color: rgb(var(--text));
+}
 
 @media (max-width: 640px) {
   .cc-glass {
@@ -38,6 +46,13 @@ body {
 .cc-glass {
   background: rgba(11, 15, 20, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px) saturate(1.2);
+  transition: all 0.3s ease;
+}
+
+.cc-glass:hover {
+  background: rgba(11, 15, 20, 0.65);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 
@@ -67,4 +82,40 @@ body {
   .cc-tilt { transform: none !important; transition: none !important; }
   .cc-glare { transition: none !important; }
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
+}
+
+/* Улучшенные transitions для интерактивных элементов */
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .hover-lift {
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-2px);
+  }
+  
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+  }
+}
+
+/* Улучшенная типографика */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+  
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
