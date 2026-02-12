@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model SiteSettings {
@@ -105,31 +104,26 @@ model Catalog {
   examples              Example[]
   updatedAt             DateTime @updatedAt
 }
-enum MediaType {
-  IMAGE
-  VIDEO
-}
-
 model Example {
-  id          Int       @id @default(autoincrement())
-  catalogId   Int
-  catalog     Catalog   @relation(fields: [catalogId], references: [id], onDelete: Cascade)
+  id            Int      @id @default(autoincrement())
+  catalogId     Int
+  catalog       Catalog  @relation(fields: [catalogId], references: [id], onDelete: Cascade)
 
-  order       Int       @default(0)
+  order         Int      @default(0)
 
-  titleHe     String    @default("")
-  titleEn     String    @default("")
-  descriptionHe String  @default("")
-  descriptionEn String  @default("")
+  titleHe       String   @default("")
+  titleEn       String   @default("")
+  descriptionHe String   @default("")
+  descriptionEn String   @default("")
 
-  mediaType   MediaType @default(IMAGE)
-  mediaUrl    String
-  posterUrl   String?   // useful for VIDEO
+  mediaType     String   @default("IMAGE")
+  mediaUrl      String
+  posterUrl     String?
 
-  link        String?   // optional
+  link          String?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([catalogId])
 }

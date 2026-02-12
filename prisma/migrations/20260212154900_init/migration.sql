@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "SiteSettings" (
-    "id" INTEGER NOT NULL DEFAULT 1,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT DEFAULT 1,
     "heroTitleHe" TEXT NOT NULL DEFAULT 'תוכן שמרגיש יוקרתי. מינימליסטי. מדויק.',
     "heroTitleEn" TEXT NOT NULL DEFAULT 'Minimal content that looks premium.',
     "heroSubtitleHe" TEXT NOT NULL DEFAULT 'בחרו קטגוריה → בחרו חבילה → מלאו תאריך/עיר → ההודעה ל-WhatsApp מוכנה.',
@@ -13,14 +13,12 @@ CREATE TABLE "SiteSettings" (
     "contactTextEn" TEXT NOT NULL DEFAULT 'Fastest via WhatsApp. Usually reply within 1–3 hours.',
     "instagramHandle" TEXT NOT NULL DEFAULT '@emil_edition',
     "email" TEXT NOT NULL DEFAULT 'nisenem98@gmail.com',
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "SiteSettings_pkey" PRIMARY KEY ("id")
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "PricingConfig" (
-    "id" INTEGER NOT NULL DEFAULT 1,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT DEFAULT 1,
     "currency" TEXT NOT NULL DEFAULT '$',
     "duration2h" INTEGER NOT NULL DEFAULT 220,
     "duration4h" INTEGER NOT NULL DEFAULT 380,
@@ -34,26 +32,22 @@ CREATE TABLE "PricingConfig" (
     "monthlyPro" INTEGER NOT NULL DEFAULT 5200,
     "socialManagement" INTEGER NOT NULL DEFAULT 900,
     "targetingSetup" INTEGER NOT NULL DEFAULT 300,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "PricingConfig_pkey" PRIMARY KEY ("id")
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "HeroMedia" (
-    "id" SERIAL NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "imageUrl" TEXT NOT NULL,
     "titleHe" TEXT NOT NULL DEFAULT '',
     "titleEn" TEXT NOT NULL DEFAULT '',
     "order" INTEGER NOT NULL DEFAULT 0,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "HeroMedia_pkey" PRIMARY KEY ("id")
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "PriceItem" (
-    "id" SERIAL NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "titleHe" TEXT NOT NULL,
     "titleEn" TEXT NOT NULL,
     "price" TEXT NOT NULL,
@@ -62,14 +56,12 @@ CREATE TABLE "PriceItem" (
     "detailsHe" TEXT NOT NULL DEFAULT '',
     "detailsEn" TEXT NOT NULL DEFAULT '',
     "order" INTEGER NOT NULL DEFAULT 0,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "PriceItem_pkey" PRIMARY KEY ("id")
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Catalog" (
-    "id" SERIAL NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "slug" TEXT NOT NULL,
     "titleHe" TEXT NOT NULL,
     "titleEn" TEXT NOT NULL,
@@ -85,30 +77,29 @@ CREATE TABLE "Catalog" (
     "promoVideoDescriptionEn" TEXT NOT NULL DEFAULT '',
     "tagsJson" TEXT NOT NULL DEFAULT '[]',
     "popular" BOOLEAN NOT NULL DEFAULT false,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Catalog_pkey" PRIMARY KEY ("id")
+    "updatedAt" DATETIME NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Example" (
-    "id" SERIAL NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "catalogId" INTEGER NOT NULL,
-    "titleHe" TEXT NOT NULL,
-    "titleEn" TEXT NOT NULL,
-    "previewImage" TEXT NOT NULL,
-    "videoUrl" TEXT NOT NULL DEFAULT '',
+    "order" INTEGER NOT NULL DEFAULT 0,
+    "titleHe" TEXT NOT NULL DEFAULT '',
+    "titleEn" TEXT NOT NULL DEFAULT '',
     "descriptionHe" TEXT NOT NULL DEFAULT '',
     "descriptionEn" TEXT NOT NULL DEFAULT '',
-    "link" TEXT NOT NULL DEFAULT '',
-    "order" INTEGER NOT NULL DEFAULT 0,
-
-    CONSTRAINT "Example_pkey" PRIMARY KEY ("id")
+    "mediaType" TEXT NOT NULL DEFAULT 'IMAGE',
+    "mediaUrl" TEXT NOT NULL,
+    "posterUrl" TEXT,
+    "link" TEXT,
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Example_catalogId_fkey" FOREIGN KEY ("catalogId") REFERENCES "Catalog" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Catalog_slug_key" ON "Catalog"("slug");
 
--- AddForeignKey
-ALTER TABLE "Example" ADD CONSTRAINT "Example_catalogId_fkey" FOREIGN KEY ("catalogId") REFERENCES "Catalog"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
+-- CreateIndex
+CREATE INDEX "Example_catalogId_idx" ON "Example"("catalogId");
