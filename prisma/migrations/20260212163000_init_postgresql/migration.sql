@@ -7,7 +7,7 @@ CREATE TABLE "SiteSettings" (
     "heroSubtitleEn" TEXT NOT NULL DEFAULT 'Pick a category → choose a package → add date/city → WhatsApp message is ready.',
     "promoTextHe" TEXT NOT NULL DEFAULT 'אני יוצר תוכן ל-Hospitality ו-Real Estate — צילום נקי, תאורה רכה, תוצאה שמוכרת.',
     "promoTextEn" TEXT NOT NULL DEFAULT 'I create content for hospitality & real estate — clean light, premium feel, sales-ready.',
-    "aboutTextHe" TEXT NOT NULL DEFAULT 'סגנון נקי ומדויק: קומפוזיציה, תאורה, תנועה עדינה. מינימום רעש — מקסימום 'יוקרתי'.',
+    "aboutTextHe" TEXT NOT NULL DEFAULT 'סגנון נקי ומדויק: קומפוזיציה, תאורה, תנועה עדינה. מינימום רעש — מקסימום ''יוקרתי''.',
     "aboutTextEn" TEXT NOT NULL DEFAULT 'Clean, precise visual style: composition, light, subtle motion. Less noise — more premium.',
     "contactTextHe" TEXT NOT NULL DEFAULT 'הכי מהר ב-WhatsApp. לרוב עונה תוך 1–3 שעות.',
     "contactTextEn" TEXT NOT NULL DEFAULT 'Fastest via WhatsApp. Usually reply within 1–3 hours.',
