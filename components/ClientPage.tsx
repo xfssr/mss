@@ -282,12 +282,24 @@ export function ClientPage(props: Props) {
                           type="button"
                           onClick={() => setExpandedPrice(open ? null : p.id)}
                           className="mt-3 text-sm text-[rgb(var(--blue))] hover:text-[rgb(var(--blue))]/80 hover:underline transition-colors"
+                          aria-expanded={open}
                         >
                           {open ? t(lang, "less") : t(lang, "more")}
                         </button>
                         {open ? <div className="mt-3 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, p.details)}</div> : null}
                       </>
                     ) : null}
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        openFlow("reserve");
+                        document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="mt-3 w-full rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-2.5 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all duration-200"
+                    >
+                      {t(lang, "pickThis")}
+                    </button>
                   </div>
                 );
               })}
