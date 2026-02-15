@@ -195,7 +195,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="#about"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaPricing")}
                 </a>
@@ -300,8 +300,8 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={() => {
-                        openFlow("reserve");
-                        document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" });
+                        const slug = selectedCatalog?.slug ?? defaultCatalogSlug ?? "";
+                        router.push(`/product?lang=${lang}${slug ? `&catalog=${encodeURIComponent(slug)}` : ""}`);
                       }}
                       className="mt-3 w-full rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-2.5 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all duration-200"
                     >
@@ -361,21 +361,22 @@ export function ClientPage(props: Props) {
 
       {/* Sticky mobile CTA bar */}
       <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">
-        <div className="flex items-center gap-3">
-          <a
-            href="#catalog"
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90"
-          >
-            {t(lang, "stickyExamples")}
-          </a>
+        {selectedCatalog ? (
           <button
             type="button"
-            onClick={onSendWhatsApp}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm font-medium text-white"
+            onClick={onContinueToProduct}
+            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm font-medium text-white"
           >
-            {t(lang, "stickyOrder")}
+            {t(lang, "continueToPackage")}
           </button>
-        </div>
+        ) : (
+          <a
+            href="#catalog"
+            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
+          >
+            {t(lang, "heroCtaCatalogs")}
+          </a>
+        )}
       </div>
     </div>
   );
