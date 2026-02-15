@@ -29,6 +29,8 @@ model SiteSettings {
   instagramHandle  String   @default("@emil_edition")
   email            String   @default("nisenem98@gmail.com")
 
+  contentOverridesJson String @default("{}")
+
   updatedAt        DateTime @updatedAt
 }
 

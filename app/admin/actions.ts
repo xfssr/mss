@@ -265,14 +265,14 @@ export async function deleteExample(id: number) {
 
 export async function updateCategoryDetailAction(jsonStr: string) {
   const parsed: CategoryDetail = JSON.parse(jsonStr);
-  const all = getCategoryDetails();
+  const all = await getCategoryDetails();
   const idx = all.findIndex((d) => d.slug === parsed.slug);
   if (idx >= 0) {
     all[idx] = parsed;
   } else {
     all.push(parsed);
   }
-  saveCategoryDetails(all);
+  await saveCategoryDetails(all);
   revalidatePath("/");
   revalidatePath("/admin");
 }
