@@ -358,7 +358,6 @@ export function ClientPage(props: Props) {
           <a
             href="#catalog"
             className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90"
-            aria-label={t(lang, "stickyExamples")}
           >
             {t(lang, "stickyExamples")}
           </a>
@@ -366,7 +365,6 @@ export function ClientPage(props: Props) {
             type="button"
             onClick={onSendWhatsApp}
             className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm font-medium text-white"
-            aria-label={t(lang, "stickyOrder")}
           >
             {t(lang, "stickyOrder")}
           </button>

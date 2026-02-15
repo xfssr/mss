@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import type { ReservationDraft } from "@/utils/whatsapp";
@@ -15,12 +16,12 @@ export function ReservationForm(props: {
 }) {
   const v = props.value;
   const lang = props.lang;
-  const goalOptions = [
+  const goalOptions = useMemo(() => [
     { value: "", label: lang === "he" ? "— בחר/י —" : "— Select —" },
     { value: t(lang, "goalReels"), label: t(lang, "goalReels") },
     { value: t(lang, "goalPhotos"), label: t(lang, "goalPhotos") },
     { value: t(lang, "goalBoth"), label: t(lang, "goalBoth") },
-  ];
+  ], [lang]);
 
   return (
     <div className="space-y-4">

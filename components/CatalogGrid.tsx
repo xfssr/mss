@@ -72,7 +72,7 @@ export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSl
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t(props.lang, "searchPlaceholder")}
           className="w-full rounded-xl border border-white/10 bg-black/35 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all"
-          aria-label={t(props.lang, "searchPlaceholder")}
+          aria-label={props.lang === "he" ? "חיפוש בפורטפוליו לפי קטגוריה או מילת מפתח" : "Search portfolio by category or keyword"}
         />
       </div>
 
