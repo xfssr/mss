@@ -51,7 +51,7 @@ export function CategoryDetailModal(props: {
 
   function onPrimary() {
     saveCity(city);
-    const params = new URLSearchParams({ category: detail.slug, pkg: "custom", lang });
+    const params = new URLSearchParams({ category: detail.slug, lang });
     if (businessType) params.set("businessType", businessType);
     if (city) params.set("city", city);
     if (desiredDate) params.set("desiredDate", desiredDate);

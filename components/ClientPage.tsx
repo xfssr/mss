@@ -59,8 +59,8 @@ const PACKAGE_CARDS = [
     badge: undefined,
   },
   {
-    id: "custom",
-    icon: "🛠",
+    id: "restaurant-web",
+    icon: "🔨",
     badge: undefined,
   },
 ] as const;
