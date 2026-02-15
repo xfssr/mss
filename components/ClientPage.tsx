@@ -164,6 +164,11 @@ export function ClientPage(props: Props) {
     setParams({ catalog: selectedCatalog?.slug ?? slugFromUrl ?? null, tab: "reserve" });
   }
 
+  function onContinueToProduct() {
+    const slug = selectedCatalog?.slug ?? slugFromUrl ?? "";
+    router.push(`/product?lang=${lang}&catalog=${encodeURIComponent(slug)}`);
+  }
+
   const [expandedPrice, setExpandedPrice] = useState<number | null>(null);
 
   return (
@@ -182,22 +187,22 @@ export function ClientPage(props: Props) {
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <a
                   href="#catalog"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaExamples")}
+                  {t(lang, "heroCtaCatalogs")}
                 </a>
 
                 <a
                   href="#about"
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaPackages")}
+                  {t(lang, "heroCtaPricing")}
                 </a>
 
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaOrder")}
                 </button>
@@ -252,6 +257,7 @@ export function ClientPage(props: Props) {
           onSend={onSendWhatsApp}
           onCopy={onCopyText}
           copiedState={copied.state}
+          onContinueToProduct={onContinueToProduct}
         />
       ) : null}
 

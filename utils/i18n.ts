@@ -92,6 +92,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaPackages: "לבחור חבילה",
     heroCtaOrder: "להזמין עכשיו",
 
+    heroCtaCatalogs: "פתח קטלוגים",
+    heroCtaPricing: "מחירים",
+    howStartNow: "התחל עכשיו",
+    continueToPackage: "המשך לבחירת חבילה",
+
     filterAll: "הכל",
     filterFood: "מסעדות / שף",
     filterBar: "בר / ברמן",
@@ -198,6 +203,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaExamples: "View examples",
     heroCtaPackages: "Choose a package",
     heroCtaOrder: "Order now",
+
+    heroCtaCatalogs: "Open catalogs",
+    heroCtaPricing: "Pricing",
+    howStartNow: "Start now",
+    continueToPackage: "Continue to package",
 
     filterAll: "All",
     filterFood: "Food / Restaurant",

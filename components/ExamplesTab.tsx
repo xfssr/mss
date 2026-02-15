@@ -34,6 +34,7 @@ export function ExamplesTab(props: {
   onOpenLightbox: () => void;
   onNextTab: () => void;
   onOrderSimilar?: () => void;
+  onContinueToProduct?: () => void;
 }) {
   const { lang, examples, activeExample, reducedMotion } = props;
 
@@ -152,10 +153,10 @@ export function ExamplesTab(props: {
 
           <button
             type="button"
-            onClick={props.onNextTab}
+            onClick={props.onContinueToProduct ?? props.onNextTab}
             className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/22 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/32"
           >
-            {lang === "he" ? "הבא: חבילה →" : "Next: package →"}
+            {t(lang, "continueToPackage")}
           </button>
 
           {props.onOrderSimilar ? (

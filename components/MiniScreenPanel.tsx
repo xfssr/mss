@@ -47,6 +47,8 @@ export function MiniScreenPanel(props: {
   onCopy: () => void;
 
   copiedState: CopiedState;
+
+  onContinueToProduct?: () => void;
 }) {
   const reducedMotion = usePrefersReducedMotion();
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -252,6 +254,7 @@ export function MiniScreenPanel(props: {
     onOpenLightbox={() => setLightboxOpen(true)}
     onNextTab={() => props.onTabChange("package")}
     onOrderSimilar={() => props.onTabChange("reserve")}
+    onContinueToProduct={props.onContinueToProduct}
   />
 ) : null}
 
