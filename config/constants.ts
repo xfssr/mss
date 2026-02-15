@@ -25,9 +25,12 @@ export const SEO = {
 
 /** Resolve the canonical site URL from env vars with a safe fallback. */
 export function getSiteUrl(): string {
-  const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  const env =
+    process.env.SITE_URL?.trim() ||
+    process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (env) return env.replace(/\/+$/, "");
-  const vercel = process.env.VERCEL_URL?.trim();
-  if (vercel) return `https://${vercel}`;
   return SITE_DOMAIN;
 }
+
+/** Canonical site URL resolved once. */
+export const SITE_URL = getSiteUrl();
