@@ -21,6 +21,7 @@ import { AdminLangTabs } from "@/components/admin/AdminLangTabs";
 import { AdminAccordion } from "@/components/admin/AdminAccordion";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { AdminCategoryDetailEditor } from "@/components/admin/AdminCategoryDetailEditor";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 
 export const dynamic = "force-dynamic";
@@ -233,9 +234,7 @@ export default async function AdminPage() {
 
       <div className="lg:col-start-3 lg:row-start-1 lg:row-span-1 flex lg:justify-end">
         <form action={deleteHeroMedia.bind(null, h.id)}>
-          <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">
-            Delete
-          </button>
+          <DeleteButton />
         </form>
       </div>
     </div>
@@ -278,7 +277,7 @@ export default async function AdminPage() {
     <div className="flex items-start justify-between gap-3">
       <div className="text-sm text-white/55">id: <span className="font-mono">{p.id}</span></div>
       <form action={deletePriceItem.bind(null, p.id)}>
-        <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">Delete</button>
+        <DeleteButton />
       </form>
     </div>
 
@@ -392,7 +391,7 @@ export default async function AdminPage() {
                     <div className="mt-1 text-lg font-semibold text-white">{c.titleEn}</div>
                   </div>
                   <form action={deleteCatalog.bind(null, c.id)}>
-                    <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">Delete</button>
+                    <DeleteButton />
                   </form>
                 </div>
 
@@ -483,9 +482,7 @@ export default async function AdminPage() {
                           <div className="flex items-start justify-between gap-3">
                             <div className="text-sm text-white/80">{e.titleEn}</div>
                             <form action={deleteExample.bind(null, e.id)}>
-                              <button className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-white/85 hover:bg-white/[0.10]">
-                                Delete
-                              </button>
+                              <DeleteButton className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-white/85 hover:bg-white/[0.10] disabled:opacity-40 disabled:pointer-events-none" />
                             </form>
                           </div>
 
