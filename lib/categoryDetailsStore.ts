@@ -5,16 +5,21 @@ import { DEFAULT_CATEGORY_DETAILS, type CategoryDetail } from "@/content/categor
 const DATA_PATH = join(process.cwd(), "data", "categoryDetails.json");
 
 export function getCategoryDetails(): CategoryDetail[] {
+  let stored: CategoryDetail[] = [];
   try {
     if (existsSync(DATA_PATH)) {
       const raw = readFileSync(DATA_PATH, "utf-8");
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) stored = parsed;
     }
   } catch (err) {
     console.warn("[categoryDetailsStore] Failed to read config, using defaults:", err);
   }
-  return DEFAULT_CATEGORY_DETAILS;
+
+  // Merge: stored entries take priority, append any defaults not present in stored
+  const storedSlugs = new Set(stored.map((d) => d.slug));
+  const missing = DEFAULT_CATEGORY_DETAILS.filter((d) => !storedSlugs.has(d.slug));
+  return [...stored, ...missing];
 }
 
 export function getCategoryDetailBySlug(slug: string): CategoryDetail | undefined {
