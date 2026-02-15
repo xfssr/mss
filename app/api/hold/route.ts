@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { checkAvailability, createHold } from "@/lib/calendarGateway";
+import { BOOKING_DEFAULTS } from "@/lib/bookingConfig";
 
 export const runtime = "nodejs";
 
@@ -33,18 +34,12 @@ export async function POST(req: Request) {
     );
   }
 
-  const durationMinutes = Number(process.env.BOOKING_DURATION_MIN) || 120;
-  const bufferMinutes = Number(process.env.BOOKING_BUFFER_MIN) || 30;
-  const maxBookingsPerDay = Number(process.env.BOOKING_MAX_PER_DAY) || 1;
-
   try {
     // Server-side availability recheck
     const avail = await checkAvailability({
       date,
       time,
-      durationMinutes,
-      bufferMinutes,
-      maxBookingsPerDay,
+      ...BOOKING_DEFAULTS,
     });
 
     if (!avail.available) {
@@ -62,8 +57,8 @@ export async function POST(req: Request) {
       city,
       date,
       time,
-      durationMinutes,
-      bufferMinutes,
+      durationMinutes: BOOKING_DEFAULTS.durationMinutes,
+      bufferMinutes: BOOKING_DEFAULTS.bufferMinutes,
       lang,
       comment,
       pageUrl,

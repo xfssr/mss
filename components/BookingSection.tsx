@@ -96,6 +96,12 @@ export function BookingSection({
 
     try {
       const res = await fetch(`/api/availability?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`);
+
+      if (!res.ok) {
+        setAvail({ kind: "error", message: s.calendarDown });
+        return;
+      }
+
       const json = await res.json();
 
       if (!json.ok && json.error === "calendar_unavailable") {
@@ -137,6 +143,12 @@ export function BookingSection({
           pageUrl: typeof window !== "undefined" ? window.location.href : "",
         }),
       });
+
+      if (!res.ok) {
+        setHold({ kind: "error", message: s.calendarDown });
+        return;
+      }
+
       const json = await res.json();
 
       if (!json.ok && json.error === "calendar_unavailable") {

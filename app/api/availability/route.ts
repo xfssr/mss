@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { checkAvailability } from "@/lib/calendarGateway";
+import { BOOKING_DEFAULTS } from "@/lib/bookingConfig";
 
 export const runtime = "nodejs";
 
@@ -18,17 +19,11 @@ export async function GET(req: Request) {
     );
   }
 
-  const durationMinutes = Number(process.env.BOOKING_DURATION_MIN) || 120;
-  const bufferMinutes = Number(process.env.BOOKING_BUFFER_MIN) || 30;
-  const maxBookingsPerDay = Number(process.env.BOOKING_MAX_PER_DAY) || 1;
-
   try {
     const result = await checkAvailability({
       date,
       time,
-      durationMinutes,
-      bufferMinutes,
-      maxBookingsPerDay,
+      ...BOOKING_DEFAULTS,
     });
 
     return NextResponse.json({
