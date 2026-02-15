@@ -9,6 +9,7 @@ import {
   dbPriceToUi,
   dbSettingsToUi,
 } from "@/lib/mappers";
+import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -75,6 +76,7 @@ export default async function Page() {
       <Suspense fallback={null}>
         <ClientPage
           catalogs={catalogs.map(dbCatalogToUi)}
+          categoryDetails={getCategoryDetails()}
           settings={dbSettingsToUi(settings)}
           prices={prices.map(dbPriceToUi)}
           heroMedia={heroMedia.map(dbHeroToUi)}

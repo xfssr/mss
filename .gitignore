@@ -24,6 +24,9 @@ prisma/dev.db-journal
 *.db
 *.db-journal
 
+# Runtime data
+data/*.json
+
 # OS
 .DS_Store
 Thumbs.db

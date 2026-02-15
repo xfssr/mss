@@ -56,7 +56,7 @@ export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: bo
           </div>
 
           <span className="shrink-0 rounded-full border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-1.5 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--red))]/20 group-hover:border-[rgb(var(--red))]/50 transition-all">
-            {t(props.lang, "openArrow")}
+            {catalog.microCta?.[props.lang] || t(props.lang, "openArrow")}
           </span>
         </div>
       </div>
