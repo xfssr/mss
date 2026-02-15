@@ -49,26 +49,57 @@ async function getLowestPriceFromDb() {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const SITE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    "https://www.mscreenstudio.online";
+  const resolvedParams = searchParams ? await searchParams : undefined;
+  const lang = parseLang(resolvedParams);
   const firstPrice = await getLowestPriceFromDb();
 
+  const isProduction =
+    (process.env.VERCEL_ENV || "production") === "production";
+
+  const title =
+    lang === "he"
+      ? "Micro-Screen Studio — חבילות תוכן"
+      : "Micro-Screen Studio — Content Packages";
+  const description =
+    lang === "he"
+      ? "חבילות תוכן לעסקים: רילס, צילום, הפקות וניהול סושיאל. הזמנה ב-WhatsApp."
+      : "Content packages for businesses: reels, photos, shoots and social media management. Order via WhatsApp.";
+
   return {
-    title: "Packages & Pricing · Micro-Screen Studio | חבילות ומחירים",
-    description: "תוכן לעסקים: סרטוני רילס לעסקים, צילום סרטונים לתוכן לעסקים, הפקת סרטון תדמית לעסק, צילום דירה להשכרה. בחרו קטלוג → חבילה → תאריך/עיר → שלחו ב-WhatsApp.",
-    robots: { index: true, follow: true },
+    title,
+    description,
+    alternates: {
+      canonical: "https://www.mscreenstudio.online/product",
+      languages: {
+        he: `${SITE_URL}/product?lang=he`,
+        en: `${SITE_URL}/product?lang=en`,
+      },
+    },
+    robots: isProduction
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     openGraph: {
       type: "website",
-      url: `${siteUrl}/product`,
-      title: "Micro-Screen Studio — Content Packages",
-      description: "Reels, photos, shoots and social media management. Quick WhatsApp booking.",
-      images: [{ url: `${siteUrl}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio — Professional content packages for businesses" }],
+      url: `${SITE_URL}/product`,
+      locale: lang === "he" ? "he_IL" : "en_US",
+      title,
+      description,
+      images: [{ url: `${SITE_URL}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio — Professional content packages for businesses" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Micro-Screen Studio — Content Packages",
-      description: "Reels, photos, shoots and social media management. Contact via WhatsApp.",
-      images: [`${siteUrl}/og.jpg`],
+      title,
+      description,
+      images: [`${SITE_URL}/og.jpg`],
     },
     other: {
       "og:type": "product",
