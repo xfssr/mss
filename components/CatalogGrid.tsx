@@ -52,7 +52,7 @@ function matchesSearch(catalog: Catalog, query: string): boolean {
   return searchIn.includes(q);
 }
 
-export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSlug?: string; onSelect: (slug: string) => void; fromPrice?: string }) {
+export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSlug?: string; onSelect: (slug: string) => void }) {
   const [activeFilter, setActiveFilter] = useState("filterAll");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -104,7 +104,7 @@ export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSl
       {filtered.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {filtered.map((c) => (
-            <CatalogCard key={c.slug} lang={props.lang} catalog={c} selected={props.selectedSlug === c.slug} fromPrice={props.fromPrice} onClick={() => props.onSelect(c.slug)} />
+            <CatalogCard key={c.slug} lang={props.lang} catalog={c} selected={props.selectedSlug === c.slug} onClick={() => props.onSelect(c.slug)} />
           ))}
         </div>
       ) : (

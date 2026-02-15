@@ -5,7 +5,7 @@ import type { Catalog } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
-export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: boolean; fromPrice?: string; onClick: () => void }) {
+export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: boolean; onClick: () => void }) {
   const { catalog, selected } = props;
   const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
   const cover = catalog.coverImage || example0?.preview || example0?.image || example0?.src;
@@ -27,11 +27,6 @@ export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: bo
           <Image src={cover} alt={catalog.title[props.lang]} fill sizes="360px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-90" />
           {selected ? <div className="absolute top-3 right-3 h-3 w-3 rounded-full bg-[rgb(var(--red))] shadow-lg animate-pulse" /> : null}
-          {props.fromPrice ? (
-            <div className="absolute bottom-3 left-3 rounded-full border border-white/20 bg-black/60 backdrop-blur-sm px-2.5 py-1 text-[11px] text-white/90 font-medium">
-              {t(props.lang, "fromPrice")}{props.fromPrice}
-            </div>
-          ) : null}
         </div>
       ) : null}
 
