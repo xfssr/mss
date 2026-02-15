@@ -301,11 +301,7 @@ export function ClientPage(props: Props) {
                       type="button"
                       onClick={() => {
                         const slug = selectedCatalog?.slug ?? defaultCatalogSlug ?? "";
-                        if (slug) {
-                          router.push(`/product?lang=${lang}&catalog=${encodeURIComponent(slug)}`);
-                        } else {
-                          document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" });
-                        }
+                        router.push(`/product?lang=${lang}${slug ? `&catalog=${encodeURIComponent(slug)}` : ""}`);
                       }}
                       className="mt-3 w-full rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-2.5 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all duration-200"
                     >
