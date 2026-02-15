@@ -1,10 +1,12 @@
 // app/head.tsx
+import { SITE_DOMAIN } from "@/config/constants";
+
 function getSiteUrl() {
   const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
   if (env) return env.replace(/\/+$/, "");
   const vercel = process.env.VERCEL_URL?.trim();
   if (vercel) return `https://${vercel}`;
-  return "https://studioscreen.vercel.app";
+  return SITE_DOMAIN;
 }
 
 export default function Head() {

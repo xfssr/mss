@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { SITE_DOMAIN, SAME_AS } from "@/config/constants";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -14,7 +15,7 @@ function getSiteUrl() {
   if (env) return env.replace(/\/+$/, "");
   const vercel = process.env.VERCEL_URL?.trim();
   if (vercel) return `https://${vercel}`;
-  return "https://studioscreen.vercel.app";
+  return SITE_DOMAIN;
 }
 
 function parseLang(searchParams?: Record<string, string | string[] | undefined>): Lang {
@@ -195,7 +196,7 @@ export default async function ProductPage(props: {
         name: "Micro-Screen Studio",
         url: siteUrl,
         logo: `${siteUrl}/apple-touch-icon.png`,
-        sameAs: ["https://instagram.com/emil_edition"],
+        sameAs: [...SAME_AS],
       },
       {
         "@type": "Product",

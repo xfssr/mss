@@ -9,6 +9,7 @@ import {
   dbPriceToUi,
   dbSettingsToUi,
 } from "@/lib/mappers";
+import { SITE_DOMAIN, SAME_AS, SEO } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -39,17 +40,20 @@ export default async function Page() {
   });
 
   const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://studioscreen.vercel.app";
+    process.env.NEXT_PUBLIC_SITE_URL?.trim() || SITE_DOMAIN;
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
-    name: "Micro-Screen Studio",
+    name: SEO.siteName,
     url: siteUrl,
-    areaServed: "IL",
-    sameAs: ["https://instagram.com/emil_edition"],
-    description:
-      "Content for businesses: reels, photos, shoots and social media management. Choose catalog → package → date/city → send via WhatsApp.",
+    image: `${siteUrl}/og.jpg`,
+    description: SEO.description,
+    areaServed: [
+      { "@type": "Country", name: "Israel" },
+      { "@type": "City", name: "Tel Aviv-Yafo" },
+    ],
+    sameAs: [...SAME_AS],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "sales",
