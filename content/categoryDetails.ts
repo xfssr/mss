@@ -101,8 +101,8 @@ export const DEFAULT_CATEGORY_DETAILS: CategoryDetail[] = [
     ],
     socialProof: [
       { title: { he: "לפני / אחרי (מקום שמרגיש יוקרתי)", en: "Before/After (premium look)" } },
-      { title: { he: "יותר צפיות (מקום לטסטימוניאל)", en: "More views (testimonial slot)" } },
-      { title: { he: "יותר הזמנות (מקום לקייס)", en: "More bookings (case slot)" } },
+      { title: { he: "יותר צפיות (סלוט לטסטימוניאל)", en: "More views (testimonial slot)" } },
+      { title: { he: "יותר הזמנות (סלוט לקייס)", en: "More bookings (case slot)" } },
     ],
     ctaPrimary: { he: "בקשו את החבילה", en: "Request this package" },
     ctaSecondary: { he: "שאלה מהירה ב-WhatsApp", en: "Quick question on WhatsApp" },

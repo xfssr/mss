@@ -18,7 +18,7 @@ export function CategoryDetailModal(props: {
   catalogSubtitle: { he: string; en: string };
   onClose: () => void;
 }) {
-  const { lang, detail } = props;
+  const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
   const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
@@ -27,14 +27,14 @@ export function CategoryDetailModal(props: {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") props.onClose();
+      if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [props.onClose]);
+  }, [onClose]);
 
   function onPrimary() {
-    router.push(`/product?category=${encodeURIComponent(detail.slug)}&lang=${lang}`);
+    router.push(`/product?category=${encodeURIComponent(detail.slug)}&pkg=custom&lang=${lang}`);
   }
 
   function onSecondary() {
@@ -55,7 +55,7 @@ export function CategoryDetailModal(props: {
         type="button"
         aria-label="Close"
         className="absolute inset-0 bg-black/75 sm:bg-black/65 backdrop-blur-[1px] sm:backdrop-blur-sm"
-        onClick={props.onClose}
+        onClick={onClose}
       />
 
       {/* Panel */}
@@ -67,9 +67,9 @@ export function CategoryDetailModal(props: {
             <div className="min-w-0">
               <div className="text-xs text-white/50">{pick(lang, detail.label)}</div>
               <h2 className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))]">
-                {pick(lang, props.catalogTitle)}
+                {pick(lang, catalogTitle)}
               </h2>
-              <p className="mt-1 text-sm text-white/70">{pick(lang, props.catalogSubtitle)}</p>
+              <p className="mt-1 text-sm text-white/70">{pick(lang, catalogSubtitle)}</p>
 
               {/* Pills */}
               <div className="mt-3 flex flex-wrap gap-1.5">
@@ -86,7 +86,7 @@ export function CategoryDetailModal(props: {
 
             <button
               type="button"
-              onClick={props.onClose}
+              onClick={onClose}
               className="shrink-0 rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07] hover:border-white/20"
             >
               ✕
