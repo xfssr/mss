@@ -82,9 +82,19 @@ export function ClientPage(props: Props) {
 
   const [panelOpen, setPanelOpen] = useState(false);
 
+  const enrichedCatalogs = useMemo(() => {
+    return props.catalogs.map((c) => {
+      const detail = props.categoryDetails.find((d) => d.slug === c.slug);
+      if (detail && c.microCta == null) {
+        return { ...c, microCta: detail.ctaPrimary };
+      }
+      return c;
+    });
+  }, [props.catalogs, props.categoryDetails]);
+
   const slugFromUrl = searchParams.get("catalog");
 
-  const selectedCatalog = useMemo(() => props.catalogs.find((c) => c.slug === slugFromUrl) ?? null, [props.catalogs, slugFromUrl]);
+  const selectedCatalog = useMemo(() => enrichedCatalogs.find((c) => c.slug === slugFromUrl) ?? null, [enrichedCatalogs, slugFromUrl]);
 
   const selectedCategoryDetail = useMemo(
     () => (slugFromUrl ? props.categoryDetails.find((d) => d.slug === slugFromUrl) ?? null : null),
@@ -182,7 +192,7 @@ export function ClientPage(props: Props) {
       <Section id="catalog" title={t(lang, "sectionCatalog")}>
         <CatalogGrid
           lang={lang}
-          catalogs={props.catalogs}
+          catalogs={enrichedCatalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
         />
