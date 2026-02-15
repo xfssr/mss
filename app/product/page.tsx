@@ -250,15 +250,7 @@ export default async function ProductPage(props: {
     <main
       dir={dir}
       className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white px-4 py-10"
-      itemScope
-      itemType="https://schema.org/Product"
     >
-      {/* Microdata (extra hint for parsers) */}
-      <meta itemProp="name" content="Micro-Screen Studio — Content Packages" />
-      <meta itemProp="image" content={`${siteUrl}/og.jpg`} />
-      <meta itemProp="url" content={`${siteUrl}/product?lang=${lang}`} />
-      <meta itemProp="description" content="Content packages: reels, photos, shoots and social media management." />
-
       {/* JSON-LD */}
       <script
         type="application/ld+json"
@@ -295,7 +287,7 @@ export default async function ProductPage(props: {
           </div>
 
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]" itemProp="name">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]">
               {ui.title}
             </h1>
 
