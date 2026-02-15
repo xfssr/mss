@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { SAME_AS, getSiteUrl } from "@/config/constants";
+import { BookingSection } from "@/components/BookingSection";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -116,6 +117,10 @@ export default async function ProductPage(props: {
   const searchParams = props.searchParams ? await props.searchParams : undefined;
   const lang = parseLang(searchParams);
   const dir = lang === "he" ? "rtl" : "ltr";
+
+  const catalogRaw = searchParams?.catalog;
+  const catalogFromUrl = (Array.isArray(catalogRaw) ? catalogRaw[0] : catalogRaw) ?? "";
+  const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "15551234567";
 
   const prices = await prisma.priceItem.findMany({
     orderBy: [{ order: "asc" }, { id: "asc" }],
@@ -371,6 +376,8 @@ export default async function ProductPage(props: {
                 ))}
               </div>
             </div>
+
+            <BookingSection lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} />
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
