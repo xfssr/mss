@@ -1,20 +1,25 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from "fs";
-import { join, dirname } from "path";
+import { prisma } from "@/lib/prisma";
 import { DEFAULT_CATEGORY_DETAILS, type CategoryDetail } from "@/content/categoryDetails";
 
-const DATA_PATH = join(process.cwd(), "data", "categoryDetails.json");
-
-export function getCategoryDetails(): CategoryDetail[] {
-  let stored: CategoryDetail[] = [];
+/**
+ * Read overrides from DB (SiteSettings.contentOverridesJson).
+ * Returns the parsed categoryDetails array stored in the overrides, or [].
+ */
+async function readOverrides(): Promise<CategoryDetail[]> {
   try {
-    if (existsSync(DATA_PATH)) {
-      const raw = readFileSync(DATA_PATH, "utf-8");
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) stored = parsed;
-    }
+    const row = await prisma.siteSettings.findFirst({ where: { id: 1 } });
+    if (!row?.contentOverridesJson) return [];
+    const parsed = JSON.parse(row.contentOverridesJson);
+    const arr = parsed?.categoryDetails;
+    return Array.isArray(arr) ? arr : [];
   } catch (err) {
-    console.warn("[categoryDetailsStore] Failed to read config, using defaults:", err);
+    console.warn("[categoryDetailsStore] Failed to read overrides:", err);
+    return [];
   }
+}
+
+export async function getCategoryDetails(): Promise<CategoryDetail[]> {
+  const stored = await readOverrides();
 
   // Merge: stored entries take priority, append any defaults not present in stored
   const storedSlugs = new Set(stored.map((d) => d.slug));
@@ -22,16 +27,29 @@ export function getCategoryDetails(): CategoryDetail[] {
   return [...stored, ...missing];
 }
 
-export function getCategoryDetailBySlug(slug: string): CategoryDetail | undefined {
-  return getCategoryDetails().find((d) => d.slug === slug);
+export async function getCategoryDetailBySlug(slug: string): Promise<CategoryDetail | undefined> {
+  const all = await getCategoryDetails();
+  return all.find((d) => d.slug === slug);
 }
 
-export function saveCategoryDetails(details: CategoryDetail[]): void {
+export async function saveCategoryDetails(details: CategoryDetail[]): Promise<void> {
   try {
-    const dir = dirname(DATA_PATH);
-    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
-    writeFileSync(DATA_PATH, JSON.stringify(details, null, 2), "utf-8");
+    const row = await prisma.siteSettings.findFirst({ where: { id: 1 } });
+    let overrides: Record<string, unknown> = {};
+    try {
+      if (row?.contentOverridesJson) {
+        overrides = JSON.parse(row.contentOverridesJson) ?? {};
+      }
+    } catch { /* ignore parse errors */ }
+
+    overrides.categoryDetails = details;
+
+    await prisma.siteSettings.upsert({
+      where: { id: 1 },
+      update: { contentOverridesJson: JSON.stringify(overrides) },
+      create: { id: 1, contentOverridesJson: JSON.stringify(overrides) },
+    });
   } catch (err) {
-    console.warn("[categoryDetailsStore] Failed to save config (read-only fs?):", err);
+    console.warn("[categoryDetailsStore] Failed to save overrides:", err);
   }
 }
