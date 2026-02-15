@@ -3,20 +3,12 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { SITE_DOMAIN, SAME_AS } from "@/config/constants";
+import { SAME_AS, getSiteUrl } from "@/config/constants";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 type Lang = "he" | "en";
-
-function getSiteUrl() {
-  const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (env) return env.replace(/\/+$/, "");
-  const vercel = process.env.VERCEL_URL?.trim();
-  if (vercel) return `https://${vercel}`;
-  return SITE_DOMAIN;
-}
 
 function parseLang(searchParams?: Record<string, string | string[] | undefined>): Lang {
   const raw = searchParams?.lang;

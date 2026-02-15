@@ -22,3 +22,12 @@ export const SEO = {
   locale: "he_IL",
   siteName: "Micro-Screen Studio",
 } as const;
+
+/** Resolve the canonical site URL from env vars with a safe fallback. */
+export function getSiteUrl(): string {
+  const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (env) return env.replace(/\/+$/, "");
+  const vercel = process.env.VERCEL_URL?.trim();
+  if (vercel) return `https://${vercel}`;
+  return SITE_DOMAIN;
+}

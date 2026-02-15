@@ -9,7 +9,7 @@ import {
   dbPriceToUi,
   dbSettingsToUi,
 } from "@/lib/mappers";
-import { SITE_DOMAIN, SAME_AS, SEO } from "@/config/constants";
+import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -39,8 +39,7 @@ export default async function Page() {
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
 
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.trim() || SITE_DOMAIN;
+  const siteUrl = getSiteUrl();
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -51,7 +50,11 @@ export default async function Page() {
     description: SEO.description,
     areaServed: [
       { "@type": "Country", name: "Israel" },
-      { "@type": "City", name: "Tel Aviv-Yafo" },
+      {
+        "@type": "City",
+        name: "Tel Aviv-Yafo",
+        containedInPlace: { "@type": "Country", name: "Israel" },
+      },
     ],
     sameAs: [...SAME_AS],
     contactPoint: {

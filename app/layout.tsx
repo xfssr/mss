@@ -1,15 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import "./globals.css";
-import { SITE_DOMAIN, SEO } from "@/config/constants";
-
-function getSiteUrl() {
-  const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (env) return env.replace(/\/+$/, "");
-  const vercel = process.env.VERCEL_URL?.trim(); // e.g. mss-teal.vercel.app
-  if (vercel) return `https://${vercel}`;
-  return SITE_DOMAIN;
-}
+import { SEO, getSiteUrl } from "@/config/constants";
 
 const siteUrl = getSiteUrl();
 
