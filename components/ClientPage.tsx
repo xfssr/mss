@@ -85,7 +85,7 @@ export function ClientPage(props: Props) {
   const enrichedCatalogs = useMemo(() => {
     return props.catalogs.map((c) => {
       const detail = props.categoryDetails.find((d) => d.slug === c.slug);
-      if (detail && !c.microCta) {
+      if (detail && c.microCta == null) {
         return { ...c, microCta: detail.ctaPrimary };
       }
       return c;
