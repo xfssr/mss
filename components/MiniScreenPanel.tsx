@@ -251,6 +251,7 @@ export function MiniScreenPanel(props: {
     onSelectExample={setActiveExampleIndex}
     onOpenLightbox={() => setLightboxOpen(true)}
     onNextTab={() => props.onTabChange("package")}
+    onOrderSimilar={() => props.onTabChange("reserve")}
   />
 ) : null}
 

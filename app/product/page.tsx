@@ -61,15 +61,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const firstPrice = await getLowestPriceFromDb();
 
   return {
-    title: "Product · Micro-Screen Studio",
-    description: "תוכן לעסקים: רילס, צילום, הפקות וניהול סושיאל. בחרו קטלוג → חבילה → תאריך/עיר → שלחו ב-WhatsApp.",
+    title: "Packages & Pricing · Micro-Screen Studio | חבילות ומחירים",
+    description: "תוכן לעסקים: סרטוני רילס לעסקים, צילום סרטונים לתוכן לעסקים, הפקת סרטון תדמית לעסק, צילום דירה להשכרה. בחרו קטלוג → חבילה → תאריך/עיר → שלחו ב-WhatsApp.",
     robots: { index: true, follow: true },
     openGraph: {
       type: "website",
       url: `${siteUrl}/product`,
       title: "Micro-Screen Studio — Content Packages",
       description: "Reels, photos, shoots and social media management. Quick WhatsApp booking.",
-      images: [{ url: `${siteUrl}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio" }],
+      images: [{ url: `${siteUrl}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio — Professional content packages for businesses" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -240,11 +240,11 @@ export default async function ProductPage(props: {
   const lowestOffer = lowPrice || "350";
 
   const ui = {
-    title: lang === "he" ? "Micro-Screen Studio" : "Micro-Screen Studio",
+    title: lang === "he" ? "Micro-Screen Studio — חבילות תוכן" : "Micro-Screen Studio — Content Packages",
     subtitle:
       lang === "he"
-        ? "חבילות ומחירים (נטען מה-DB). השתמשו בלינק הזה ב-Canva:"
-        : "Packages & pricing (from DB). Use this link in Canva:",
+        ? "חבילות ומחירים. בחרו קטלוג, חבילה, והזמינו ב-WhatsApp."
+        : "Packages & pricing. Pick a catalog, package, and book via WhatsApp.",
     packages: lang === "he" ? "חבילות" : "Packages",
     viewCatalogs: lang === "he" ? "צפו בקטלוגים" : "View catalogs",
     contact: lang === "he" ? "יצירת קשר (WhatsApp)" : "Contact (WhatsApp)",

@@ -6,7 +6,7 @@ import { t } from "@/utils/i18n";
 export function Footer(props: { lang: Lang }) {
   return (
     <footer className="border-t border-white/10 bg-black/20 backdrop-blur-sm">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 text-sm text-white/50">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 pb-24 sm:pb-12 text-sm text-white/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="font-medium">© {new Date().getFullYear()} Micro-Screen Studio</div>
           <div className="flex items-center gap-4">
