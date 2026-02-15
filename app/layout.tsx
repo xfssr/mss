@@ -45,11 +45,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  other: {
-    "og:type": "product",
-    "product:price:amount": "350",
-    "product:price:currency": "ILS",
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
