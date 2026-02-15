@@ -7,18 +7,18 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET() {
-  const [catalogs, settings, categoryDetails] = await Promise.all([
+  const [catalogs, settingsRow] = await Promise.all([
     prisma.catalog
       .findMany({
         include: { examples: true },
         orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
       })
       .then((rows) => rows.map(dbCatalogToUi)),
-    prisma.siteSettings
-      .upsert({ where: { id: 1 }, update: {}, create: { id: 1 } })
-      .then(dbSettingsToUi),
-    Promise.resolve(getCategoryDetails()),
+    prisma.siteSettings.findFirst({ where: { id: 1 } }),
   ]);
+
+  const categoryDetails = getCategoryDetails();
+  const settings = settingsRow ? dbSettingsToUi(settingsRow) : null;
 
   return NextResponse.json(
     { catalogs, categoryDetails, settings },
