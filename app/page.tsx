@@ -10,6 +10,7 @@ import {
   dbSettingsToUi,
 } from "@/lib/mappers";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
+import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
 import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -81,7 +82,7 @@ export default async function Page() {
 
       <Suspense fallback={null}>
         <ClientPage
-          catalogs={catalogs.map(dbCatalogToUi)}
+          catalogs={mergeCatalogsWithDefaults(catalogs.map(dbCatalogToUi))}
           categoryDetails={categoryDetails}
           settings={dbSettingsToUi(settings)}
           prices={prices.map(dbPriceToUi)}

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { dbCatalogToUi, dbSettingsToUi } from "@/lib/mappers";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
+import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -13,7 +14,7 @@ export async function GET() {
         include: { examples: true },
         orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
       })
-      .then((rows) => rows.map(dbCatalogToUi)),
+      .then((rows) => mergeCatalogsWithDefaults(rows.map(dbCatalogToUi))),
     prisma.siteSettings.findFirst({ where: { id: 1 } }),
   ]);
 
