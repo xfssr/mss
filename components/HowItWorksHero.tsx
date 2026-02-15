@@ -1,6 +1,7 @@
 "use client";
 
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
 import type { TabKey } from "@/components/Tabs";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
@@ -87,7 +88,7 @@ export function HowItWorksHero(props: { lang: Lang; onOpenFlow?: (tab: TabKey) =
               <button
                 type="button"
                 onClick={() => props.onOpenFlow?.(s.tab)}
-                className="mt-4 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3 py-2.5 text-xs sm:text-sm font-medium text-white/95 hover:bg-white/[0.15] hover:border-white/25 transition-all duration-200"
+                className="mt-4 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3 py-2.5 text-xs sm:text-sm font-medium text-white/95 hover:bg-white/[0.15] hover:border-white/25 transition-all duration-200 hidden sm:block"
               >
                 {c.btn(s.tab)}
               </button>
@@ -110,6 +111,14 @@ export function HowItWorksHero(props: { lang: Lang; onOpenFlow?: (tab: TabKey) =
           </div>
         </div>
       </div>
+
+      {/* Single mobile CTA at bottom */}
+      <a
+        href="#catalog"
+        className="sm:hidden mt-5 block w-full text-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/95 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
+      >
+        {t(props.lang, "howStartNow")}
+      </a>
     </div>
   );
 }
