@@ -57,6 +57,16 @@ async function main() {
       detailsEn: "Monthly plan, recurring shoots.\nOptional: social management + ads setup.",
       order: 3,
     },
+    {
+      titleHe: "תפריט QR + מיני אתר למסעדות",
+      titleEn: "QR Menu + Mini Website for Restaurants",
+      price: "מ-₪2,500",
+      noteHe: "תוכן + תפריט + אתר. חבילה שמוכרת.",
+      noteEn: "Content + menu + site. One full package.",
+      detailsHe: "צילום אוכל/קוקטיילים + אווירה\n6–12 רילס (UGC + דיטיילס)\nתפריט QR: PDF + להדפסה\nמיני אתר: תפריט, מפה, WhatsApp\n\nMini: 2,500–5,000 ₪\nStandard: 6,000–12,000 ₪\nPremium: 15,000–30,000 ₪+\n\nהמחיר הסופי נקבע לפי היקף העבודה",
+      detailsEn: "Food/cocktail + atmosphere photos\n6–12 reels (UGC + details)\nQR menu: PDF + print-ready\nMini website: menu, map, WhatsApp\n\nMini: 2,500–5,000 ₪\nStandard: 6,000–12,000 ₪\nPremium: 15,000–30,000 ₪+\n\nFinal quote depends on scope",
+      order: 4,
+    },
   ];
 
   for (const p of priceSeed) {
