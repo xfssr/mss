@@ -12,7 +12,7 @@ async function main() {
   await prisma.pricingConfig.upsert({
     where: { id: 1 },
     update: {},
-    create: { id: 1, currency: "$" },
+    create: { id: 1, currency: "₪" },
   });
 
   const heroCount = await prisma.heroMedia.count();
@@ -30,7 +30,7 @@ async function main() {
     {
       titleHe: "Starter (חבילת תוכן)",
       titleEn: "Starter (content pack)",
-      price: "מ-$450",
+      price: "מ-₪450",
       noteHe: "10 תמונות + 2 reels",
       noteEn: "10 photos + 2 reels",
       detailsHe: "מתאים לעסק קטן. לוקיישן אחד, עריכה בסיסית.\nמסירה: 3–5 ימים.",
@@ -40,7 +40,7 @@ async function main() {
     {
       titleHe: "Business (יום צילום)",
       titleEn: "Business (shoot day)",
-      price: "מ-$800",
+      price: "מ-₪800",
       noteHe: "תמונות + וידאו + reels",
       noteEn: "Photos + video + reels",
       detailsHe: "יום מלא, 2–3 לוקיישנים, שוט-ליסט.\nמעולה למסעדות/מלונות/נדל״ן.",
@@ -50,12 +50,22 @@ async function main() {
     {
       titleHe: "Monthly (מנוי)",
       titleEn: "Monthly (subscription)",
-      price: "מ-$2400",
+      price: "מ-₪2400",
       noteHe: "15 reels + stories + posts",
       noteEn: "15 reels + stories + posts",
       detailsHe: "תכנית חודשית, יצירת תוכן קבועה.\nאופציונלי: ניהול סושיאל וטרגוט.",
       detailsEn: "Monthly plan, recurring shoots.\nOptional: social management + ads setup.",
       order: 3,
+    },
+    {
+      titleHe: "Restaurant-Web (חבילת מסעדה)",
+      titleEn: "Restaurant-Web (restaurant package)",
+      price: "מ-₪2500",
+      noteHe: "צילום + תפריט QR + מיני אתר",
+      noteEn: "Photos + QR menu + mini website",
+      detailsHe: "חבילה מלאה למסעדות: צילום, רילס, תפריט QR, מיני אתר והקמת סושיאל.\nמסירה: 5–10 ימים.",
+      detailsEn: "Full restaurant package: photos, reels, QR menu, mini website and social setup.\nDelivery: 5–10 days.",
+      order: 4,
     },
   ];
 

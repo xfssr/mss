@@ -58,11 +58,6 @@ const PACKAGE_CARDS = [
     icon: "⭐",
     badge: undefined,
   },
-  {
-    id: "custom",
-    icon: "🛠",
-    badge: undefined,
-  },
 ] as const;
 
 export function ClientPage(props: Props) {
@@ -210,7 +205,7 @@ export function ClientPage(props: Props) {
       {/* ===== Package selection section ===== */}
       <Section id="packages" title={t(lang, "choosePackage")}>
         <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
             return (

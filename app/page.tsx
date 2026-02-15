@@ -43,10 +43,6 @@ export default async function Page() {
 
   const categoryDetails = await getCategoryDetails();
 
-  if (process.env.NODE_ENV === "development") {
-    console.log("[page] catalogs:", catalogs.length, "categoryDetails:", categoryDetails.length);
-  }
-
   const siteUrl = getSiteUrl();
 
   const jsonLd = {
