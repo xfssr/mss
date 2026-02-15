@@ -40,6 +40,12 @@ export default async function Page() {
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
 
+  const categoryDetails = getCategoryDetails();
+
+  if (process.env.NODE_ENV === "development") {
+    console.log("[page] catalogs:", catalogs.length, "categoryDetails:", categoryDetails.length);
+  }
+
   const siteUrl = getSiteUrl();
 
   const jsonLd = {
@@ -76,7 +82,7 @@ export default async function Page() {
       <Suspense fallback={null}>
         <ClientPage
           catalogs={catalogs.map(dbCatalogToUi)}
-          categoryDetails={getCategoryDetails()}
+          categoryDetails={categoryDetails}
           settings={dbSettingsToUi(settings)}
           prices={prices.map(dbPriceToUi)}
           heroMedia={heroMedia.map(dbHeroToUi)}
