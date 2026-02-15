@@ -49,11 +49,11 @@ export default async function Page() {
     image: `${siteUrl}/og.jpg`,
     description: SEO.description,
     areaServed: [
-      { "@type": "Country", name: "Israel" },
+      { "@type": "Country", "@id": "#country-il", name: "Israel" },
       {
         "@type": "City",
         name: "Tel Aviv-Yafo",
-        containedInPlace: { "@type": "Country", name: "Israel" },
+        containedInPlace: { "@id": "#country-il" },
       },
     ],
     sameAs: [...SAME_AS],
