@@ -11,6 +11,14 @@ function pick(lang: Lang, v: { he: string; en: string }) {
   return s?.trim() ? s : v.he;
 }
 
+function loadCity(): string {
+  try { return localStorage.getItem("cc_city") ?? ""; } catch { return ""; }
+}
+
+function saveCity(v: string) {
+  try { localStorage.setItem("cc_city", v); } catch { /* ignore */ }
+}
+
 export function CategoryDetailModal(props: {
   lang: Lang;
   detail: CategoryDetail;
@@ -21,6 +29,14 @@ export function CategoryDetailModal(props: {
   const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
   const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const [businessType, setBusinessType] = useState("");
+  const [city, setCity] = useState("");
+  const [desiredDate, setDesiredDate] = useState("");
+  const [langMenuSite, setLangMenuSite] = useState("");
+  const [goal, setGoal] = useState("");
+
+  useEffect(() => { setCity(loadCity()); }, []);
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
@@ -34,7 +50,14 @@ export function CategoryDetailModal(props: {
   }, [onClose]);
 
   function onPrimary() {
-    router.push(`/product?category=${encodeURIComponent(detail.slug)}&pkg=custom&lang=${lang}`);
+    saveCity(city);
+    const params = new URLSearchParams({ category: detail.slug, pkg: "custom", lang });
+    if (businessType) params.set("businessType", businessType);
+    if (city) params.set("city", city);
+    if (desiredDate) params.set("desiredDate", desiredDate);
+    if (langMenuSite) params.set("langMenuSite", langMenuSite);
+    if (goal) params.set("goal", goal);
+    router.push(`/product?${params.toString()}`);
   }
 
   function onSecondary() {
@@ -212,6 +235,45 @@ export function CategoryDetailModal(props: {
               </div>
             </section>
           )}
+
+          {/* I) Quick form */}
+          <section>
+            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              {lang === "he" ? "פרטים מהירים" : "Quick details"}
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <input
+                value={businessType}
+                onChange={(e) => setBusinessType(e.target.value)}
+                placeholder={lang === "he" ? "סוג עסק" : "Business type"}
+                className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none placeholder:text-white/40"
+              />
+              <input
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder={lang === "he" ? "עיר" : "City"}
+                className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none placeholder:text-white/40"
+              />
+              <input
+                value={desiredDate}
+                onChange={(e) => setDesiredDate(e.target.value)}
+                placeholder={lang === "he" ? "תאריך רצוי" : "Desired date"}
+                className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none placeholder:text-white/40"
+              />
+              <input
+                value={langMenuSite}
+                onChange={(e) => setLangMenuSite(e.target.value)}
+                placeholder={lang === "he" ? "שפת תפריט/אתר" : "Menu/site language"}
+                className="rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none placeholder:text-white/40"
+              />
+              <input
+                value={goal}
+                onChange={(e) => setGoal(e.target.value)}
+                placeholder={lang === "he" ? "מטרה" : "Goal"}
+                className="sm:col-span-2 rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none placeholder:text-white/40"
+              />
+            </div>
+          </section>
         </div>
 
         {/* Sticky CTA footer */}
