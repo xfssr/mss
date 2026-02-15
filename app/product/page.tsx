@@ -149,10 +149,20 @@ export default async function ProductPage(props: {
     .filter((o) => o.name);
 
   // If pkg query param is provided, filter to show only the matching package
-  const filteredOffers = pkgFromUrl
-    ? offers.filter((o) => o.name.toLowerCase().includes(pkgFromUrl.toLowerCase()))
-    : offers;
-  const hasPkgFilter = pkgFromUrl && filteredOffers.length > 0;
+  const matchedOffers = pkgFromUrl
+    ? offers.filter((o) => {
+        const q = pkgFromUrl.toLowerCase();
+        return (
+          o.name.toLowerCase().includes(q) ||
+          o.title.en.toLowerCase().includes(q) ||
+          o.title.he.toLowerCase().includes(q)
+        );
+      })
+    : [];
+  // Only apply pkg-specific layout (hide FAQ, etc.) when filter actually matched
+  const hasPkgFilter = !!(pkgFromUrl && matchedOffers.length > 0);
+  // Show matched offers when filter matches, otherwise fall back to all offers
+  const filteredOffers = hasPkgFilter ? matchedOffers : offers;
 
   // Build Offer nodes (from DB)
   const offerNodes = offers
