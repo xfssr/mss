@@ -49,6 +49,7 @@ export async function updateSettings(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updatePricingConfig(formData: FormData) {
@@ -74,6 +75,7 @@ export async function updatePricingConfig(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function createHeroMedia(formData: FormData) {
@@ -87,6 +89,7 @@ export async function createHeroMedia(formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updateHeroMedia(id: number, formData: FormData) {
@@ -101,6 +104,7 @@ export async function updateHeroMedia(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function deleteHeroMedia(id: number) {
@@ -110,6 +114,7 @@ export async function deleteHeroMedia(id: number) {
   }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function createPriceItem(formData: FormData) {
@@ -127,6 +132,7 @@ export async function createPriceItem(formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updatePriceItem(id: number, formData: FormData) {
@@ -145,6 +151,7 @@ export async function updatePriceItem(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function deletePriceItem(id: number) {
@@ -154,6 +161,7 @@ export async function deletePriceItem(id: number) {
   }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function createCatalog(formData: FormData) {
@@ -180,6 +188,7 @@ export async function createCatalog(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updateCatalog(id: number, formData: FormData) {
@@ -205,6 +214,7 @@ export async function updateCatalog(id: number, formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function deleteCatalog(id: number) {
@@ -214,6 +224,7 @@ export async function deleteCatalog(id: number) {
   }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function createExample(catalogId: number, formData: FormData) {
@@ -233,6 +244,7 @@ export async function createExample(catalogId: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updateExample(id: number, formData: FormData) {
@@ -252,6 +264,7 @@ export async function updateExample(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function deleteExample(id: number) {
@@ -261,18 +274,20 @@ export async function deleteExample(id: number) {
   }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }
 
 export async function updateCategoryDetailAction(jsonStr: string) {
   const parsed: CategoryDetail = JSON.parse(jsonStr);
-  const all = getCategoryDetails();
+  const all = await getCategoryDetails();
   const idx = all.findIndex((d) => d.slug === parsed.slug);
   if (idx >= 0) {
     all[idx] = parsed;
   } else {
     all.push(parsed);
   }
-  saveCategoryDetails(all);
+  await saveCategoryDetails(all);
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
 }

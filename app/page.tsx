@@ -41,11 +41,7 @@ export default async function Page() {
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
 
-  const categoryDetails = getCategoryDetails();
-
-  if (process.env.NODE_ENV === "development") {
-    console.log("[page] catalogs:", catalogs.length, "categoryDetails:", categoryDetails.length);
-  }
+  const categoryDetails = await getCategoryDetails();
 
   const siteUrl = getSiteUrl();
 

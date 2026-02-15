@@ -18,7 +18,7 @@ export async function GET() {
     prisma.siteSettings.findFirst({ where: { id: 1 } }),
   ]);
 
-  const categoryDetails = getCategoryDetails();
+  const categoryDetails = await getCategoryDetails();
   const settings = settingsRow ? dbSettingsToUi(settingsRow) : null;
 
   return NextResponse.json(
