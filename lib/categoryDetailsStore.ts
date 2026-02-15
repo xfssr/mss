@@ -11,8 +11,8 @@ export function getCategoryDetails(): CategoryDetail[] {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
     }
-  } catch {
-    // fall through to defaults
+  } catch (err) {
+    console.warn("[categoryDetailsStore] Failed to read config, using defaults:", err);
   }
   return DEFAULT_CATEGORY_DETAILS;
 }
@@ -26,7 +26,7 @@ export function saveCategoryDetails(details: CategoryDetail[]): void {
     const dir = dirname(DATA_PATH);
     if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
     writeFileSync(DATA_PATH, JSON.stringify(details, null, 2), "utf-8");
-  } catch {
-    // read-only filesystem (e.g. Vercel) — silently skip
+  } catch (err) {
+    console.warn("[categoryDetailsStore] Failed to save config (read-only fs?):", err);
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
@@ -24,6 +24,14 @@ export function CategoryDetailModal(props: {
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") props.onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [props.onClose]);
 
   function onPrimary() {
     router.push(`/product?category=${encodeURIComponent(detail.slug)}&lang=${lang}`);
