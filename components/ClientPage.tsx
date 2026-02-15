@@ -166,6 +166,7 @@ export function ClientPage(props: Props) {
 
   function onContinueToProduct() {
     const slug = selectedCatalog?.slug ?? slugFromUrl ?? "";
+    if (!slug) return;
     router.push(`/product?lang=${lang}&catalog=${encodeURIComponent(slug)}`);
   }
 

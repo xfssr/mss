@@ -88,7 +88,7 @@ export function HowItWorksHero(props: { lang: Lang; onOpenFlow?: (tab: TabKey) =
               <button
                 type="button"
                 onClick={() => props.onOpenFlow?.(s.tab)}
-                className="hidden sm:block mt-4 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3 py-2.5 text-xs sm:text-sm font-medium text-white/95 hover:bg-white/[0.15] hover:border-white/25 transition-all duration-200"
+                className="mt-4 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3 py-2.5 text-xs sm:text-sm font-medium text-white/95 hover:bg-white/[0.15] hover:border-white/25 transition-all duration-200 hidden sm:block"
               >
                 {c.btn(s.tab)}
               </button>
