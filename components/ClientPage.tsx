@@ -184,7 +184,14 @@ export function ClientPage(props: Props) {
                   href="#catalog"
                   className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaPick")}
+                  {t(lang, "heroCtaExamples")}
+                </a>
+
+                <a
+                  href="#about"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                >
+                  {t(lang, "heroCtaPackages")}
                 </a>
 
                 <button
@@ -192,12 +199,13 @@ export function ClientPage(props: Props) {
                   onClick={onSendWhatsApp}
                   className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaWhatsApp")}
+                  {t(lang, "heroCtaOrder")}
                 </button>
               </div>
 
               <div className="mt-5 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.promoText)}</div>
               <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
+              <p className="mt-2 text-xs text-white/40">{t(lang, "seoHeroDescription")}</p>
             </div>
 
             <div className="lg:col-span-5">
@@ -331,6 +339,27 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Footer lang={lang} />
+
+      {/* Sticky mobile CTA bar */}
+      <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">
+        <div className="flex items-center gap-3">
+          <a
+            href="#catalog"
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90"
+            aria-label={t(lang, "stickyExamples")}
+          >
+            {t(lang, "stickyExamples")}
+          </a>
+          <button
+            type="button"
+            onClick={onSendWhatsApp}
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm font-medium text-white"
+            aria-label={t(lang, "stickyOrder")}
+          >
+            {t(lang, "stickyOrder")}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

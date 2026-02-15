@@ -87,6 +87,34 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     customPresetTitle: "התאמה אישית",
     customPresetDesc: "בנה חבילה ידנית",
+
+    heroCtaExamples: "לראות דוגמאות",
+    heroCtaPackages: "לבחור חבילה",
+    heroCtaOrder: "להזמין עכשיו",
+
+    filterAll: "הכל",
+    filterFood: "מסעדות / שף",
+    filterBar: "בר / ברמן",
+    filterBeauty: "ביוטי / ציפורניים",
+    filterFlowers: "פרחים / קמעונאות",
+    filterTattoo: "קעקועים / שירותים",
+    filterRealEstate: "צילום דירה להשכרה",
+    searchPlaceholder: "חיפוש... (בר, קעקוע, דירה, רילס)",
+    noResults: "לא נמצאו תוצאות — נסו סינון אחר או חפשו מילה אחרת.",
+
+    formGoal: "מה צריך?",
+    goalReels: "רילס",
+    goalPhotos: "תמונות",
+    goalBoth: "רילס + תמונות",
+
+    stickyExamples: "דוגמאות",
+    stickyOrder: "להזמין",
+
+    orderSimilar: "להזמין דומה",
+
+    pickThis: "לבחור חבילה זו",
+
+    seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -166,6 +194,34 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     customPresetTitle: "Custom",
     customPresetDesc: "Build your own package",
+
+    heroCtaExamples: "View examples",
+    heroCtaPackages: "Choose a package",
+    heroCtaOrder: "Order now",
+
+    filterAll: "All",
+    filterFood: "Food / Restaurant",
+    filterBar: "Bar / Bartender",
+    filterBeauty: "Beauty / Nails",
+    filterFlowers: "Flowers / Retail",
+    filterTattoo: "Tattoo / Services",
+    filterRealEstate: "Real Estate",
+    searchPlaceholder: "Search... (bar, tattoo, apartment, reels)",
+    noResults: "No results found — try a different filter or search term.",
+
+    formGoal: "What do you need?",
+    goalReels: "Reels",
+    goalPhotos: "Photos",
+    goalBoth: "Reels + Photos",
+
+    stickyExamples: "Examples",
+    stickyOrder: "Order",
+
+    orderSimilar: "Order similar",
+
+    pickThis: "Pick this package",
+
+    seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",
   },
 };
 

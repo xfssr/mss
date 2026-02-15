@@ -10,6 +10,7 @@ export type ReservationDraft = {
   comment: string;
   contact: string;
   business: string;
+  goal: string;
 };
 
 export const DEFAULT_RESERVATION: ReservationDraft = {
@@ -19,6 +20,7 @@ export const DEFAULT_RESERVATION: ReservationDraft = {
   comment: "",
   contact: "",
   business: "",
+  goal: "",
 };
 
 export function buildWaMeUrl(phone: string, text: string) {
@@ -76,6 +78,10 @@ export function buildMessage(args: {
 
   if (r.business.trim()) {
     lines.push(lang === "he" ? `עסק: ${r.business.trim()}` : `Business: ${r.business.trim()}`);
+  }
+
+  if (r.goal.trim()) {
+    lines.push(lang === "he" ? `מה צריך: ${r.goal.trim()}` : `Goal: ${r.goal.trim()}`);
   }
 
   if (dtParts.length) lines.push(dtParts.join(" • "));

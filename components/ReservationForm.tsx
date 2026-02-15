@@ -14,6 +14,13 @@ export function ReservationForm(props: {
   showBusiness?: boolean;
 }) {
   const v = props.value;
+  const lang = props.lang;
+  const goalOptions = [
+    { value: "", label: lang === "he" ? "— בחר/י —" : "— Select —" },
+    { value: t(lang, "goalReels"), label: t(lang, "goalReels") },
+    { value: t(lang, "goalPhotos"), label: t(lang, "goalPhotos") },
+    { value: t(lang, "goalBoth"), label: t(lang, "goalBoth") },
+  ];
 
   return (
     <div className="space-y-4">
@@ -27,6 +34,19 @@ export function ReservationForm(props: {
           />
         </label>
       ) : null}
+
+      <label className="block">
+        <span className="text-xs font-medium text-white/60">{t(props.lang, "formGoal")}</span>
+        <select
+          value={v.goal}
+          onChange={(e) => props.onChange({ ...v, goal: e.target.value })}
+          className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all"
+        >
+          {goalOptions.map((o) => (
+            <option key={o.value} value={o.value}>{o.label}</option>
+          ))}
+        </select>
+      </label>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <label className="block">

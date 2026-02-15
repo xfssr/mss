@@ -15,32 +15,32 @@ const siteUrl = getSiteUrl();
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Micro-Screen Studio",
+    default: "Micro-Screen Studio — Content for Businesses | סרטוני רילס לעסקים",
     template: "%s · Micro-Screen Studio",
   },
   description:
-    "Контент для бизнеса: reels, фото, съемка и ведение соцсетей. Выберите каталог → пакет → дату/город → отправьте заявку в WhatsApp.",
+    "Professional content for businesses: reels, photos, shoots and social media management. צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה. Choose catalog → package → date/city → send via WhatsApp.",
   alternates: {
     canonical: siteUrl,
   },
   openGraph: {
     type: "website",
     url: siteUrl,
-    title: "Micro-Screen Studio",
-    description: "Контент для бизнеса: reels, фото, съемка и ведение соцсетей. Быстрая заявка в WhatsApp за 30 секунд.",
+    title: "Micro-Screen Studio — Reels & Photos for Businesses",
+    description: "Professional content for businesses: reels, photos, shoots and social media management. Quick WhatsApp booking in 30 seconds.",
     images: [
       {
         url: "/og.jpg",
         width: 1200,
         height: 630,
-        alt: "Micro-Screen Studio",
+        alt: "Micro-Screen Studio — Professional content creation for businesses",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Micro-Screen Studio",
-    description: "Контент для бизнеса: reels, фото, съемка и ведение соцсетей. Заявка в WhatsApp.",
+    title: "Micro-Screen Studio — Reels & Photos for Businesses",
+    description: "Professional content for businesses: reels, photos, shoots. Quick WhatsApp booking.",
     images: ["/og.jpg"],
   },
   icons: {
