@@ -300,6 +300,24 @@ async function main() {
         },
       ],
     },
+    {
+      slug: "restaurant-menu-website",
+      popular: true,
+      coverImage: "https://picsum.photos/seed/cat-rmw/900/600",
+      titleHe: "מסעדה / בר / קפה: תוכן + תפריט + אתר",
+      titleEn: "Restaurant / Bar / Cafe: Content + Menu + Website",
+      shortHe: "שותף אחד. חבילה מלאה. מוכנה למכירה.",
+      shortEn: "One partner. Full package. Ready to sell.",
+      longHe: "חבילת תוכן מלאה למסעדות: צילום, רילס, תפריט QR, מיני אתר והקמת סושיאל.",
+      longEn: "Full content package for restaurants: photos, reels, QR menu, mini website and social setup.",
+      tags: ["Food", "Restaurant", "Menu", "Website", "UGC"],
+      promoVideoUrl: "",
+      promoVideoTitleHe: "",
+      promoVideoTitleEn: "",
+      promoVideoDescHe: "",
+      promoVideoDescEn: "",
+      examples: [],
+    },
   ];
 
   for (const c of catalogs) {

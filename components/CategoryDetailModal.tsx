@@ -34,7 +34,7 @@ export function CategoryDetailModal(props: {
   }, [onClose]);
 
   function onPrimary() {
-    router.push(`/product?category=${encodeURIComponent(detail.slug)}&lang=${lang}`);
+    router.push(`/product?catalog=${encodeURIComponent(detail.slug)}&lang=${lang}`);
   }
 
   function onSecondary() {

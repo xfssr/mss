@@ -150,6 +150,16 @@ export function ExamplesTab(props: {
               ? "צפו בדוגמאות וגלו סגנונות שונים."
               : "Browse examples and discover different styles."}
           </div>
+
+          {props.onContinueToProduct && (
+            <button
+              type="button"
+              onClick={props.onContinueToProduct}
+              className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30 transition-all"
+            >
+              {t(lang, "continueToPackage")}
+            </button>
+          )}
         </div>
       </div>
     </div>
