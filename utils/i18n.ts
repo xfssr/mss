@@ -119,6 +119,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "לבחור חבילה זו",
 
+    choosePackage: "בחרו חבילה",
+    choosePackageSubtitle: "בחרו חבילה מוכנה או בנו חבילה מותאמת אישית — וממשיכים להזמנה.",
+    pkgStarter: "Starter",
+    pkgStarterDesc: "4 שעות · 6 רילס · 20 תמונות",
+    pkgGrowth: "Growth",
+    pkgGrowthDesc: "יום מלא · 10 רילס · 120 תמונות",
+    pkgPro: "Pro",
+    pkgProDesc: "מנוי חודשי + ניהול סושיאל",
+    pkgCustom: "התאמה אישית",
+    pkgCustomDesc: "בנה חבילה ידנית",
+    pkgChoose: "לבחור",
+
     seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
   },
   en: {
@@ -230,6 +242,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     orderSimilar: "Order similar",
 
     pickThis: "Pick this package",
+
+    choosePackage: "Choose a package",
+    choosePackageSubtitle: "Pick a ready-made package or build your own — then proceed to order.",
+    pkgStarter: "Starter",
+    pkgStarterDesc: "4h · 6 reels · 20 photos",
+    pkgGrowth: "Growth",
+    pkgGrowthDesc: "Full day · 10 reels · 120 photos",
+    pkgPro: "Pro",
+    pkgProDesc: "Monthly plan + social mgmt",
+    pkgCustom: "Custom",
+    pkgCustomDesc: "Build your own package",
+    pkgChoose: "Choose",
 
     seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",
   },

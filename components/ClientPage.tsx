@@ -17,19 +17,13 @@ import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
-import { useCopiedState } from "@/components/useCopiedState";
-import type { TabKey } from "@/components/Tabs";
-import { DEFAULT_PACKAGE, STORAGE_KEY_PACKAGE, type PackageDraft, calcPackage } from "@/utils/packageCalculator";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
   buildMessage,
   buildWaMeUrl,
-  copyToClipboard,
   DEFAULT_RESERVATION,
   openWhatsApp,
-  STORAGE_KEY_RESERVATION,
   WHATSAPP_PHONE,
-  type ReservationDraft,
 } from "@/utils/whatsapp";
 
 type Props = {
@@ -40,15 +34,33 @@ type Props = {
   pricing: PricingConfig;
 };
 
-function normalizeTab(t0: string | null): TabKey {
-  if (t0 === "reserve" || t0 === "examples" || t0 === "package") return t0;
-  return "examples";
-}
-
 function pickL10n(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
   return s?.trim() ? s : v.he;
 }
+
+const PACKAGE_CARDS = [
+  {
+    id: "starter",
+    icon: "📁",
+    badge: "popular" as const,
+  },
+  {
+    id: "growth",
+    icon: "🚀",
+    badge: "popular" as const,
+  },
+  {
+    id: "pro",
+    icon: "⭐",
+    badge: undefined,
+  },
+  {
+    id: "custom",
+    icon: "🛠",
+    badge: undefined,
+  },
+] as const;
 
 export function ClientPage(props: Props) {
   const router = useRouter();
@@ -65,74 +77,28 @@ export function ClientPage(props: Props) {
     }
   }, [lang]);
 
-  const [reservationRaw, setReservationRaw] = useLocalStorageState<ReservationDraft>(STORAGE_KEY_RESERVATION, DEFAULT_RESERVATION);
-  const reservation = useMemo(() => ({ ...DEFAULT_RESERVATION, ...reservationRaw }), [reservationRaw]);
-
-  const [packageRaw, setPackageRaw] = useLocalStorageState<PackageDraft>(STORAGE_KEY_PACKAGE, DEFAULT_PACKAGE);
-  const packageDraft = useMemo(() => ({ ...DEFAULT_PACKAGE, ...packageRaw }), [packageRaw]);
-
-  const [includePackageInMessage, setIncludePackageInMessage] = useState(false);
-
-  const packageSummary = useMemo(
-    () => (includePackageInMessage ? calcPackage(lang, packageDraft, props.pricing).summaryLines : []),
-    [includePackageInMessage, lang, packageDraft, props.pricing],
-  );
-
   const [panelOpen, setPanelOpen] = useState(false);
 
   const slugFromUrl = searchParams.get("catalog");
-  const tabFromUrl = normalizeTab(searchParams.get("tab"));
 
   const selectedCatalog = useMemo(() => props.catalogs.find((c) => c.slug === slugFromUrl) ?? null, [props.catalogs, slugFromUrl]);
 
-  const [tab, setTab] = useState<TabKey>("examples");
-  useEffect(() => setTab(tabFromUrl), [tabFromUrl]);
-
-  const copied = useCopiedState();
-
-  const softErrors = useMemo(() => {
-    const e: Partial<Record<keyof ReservationDraft, string>> = {};
-    if ((reservation.comment || "").trim().length > 0 && reservation.comment.trim().length < 4) {
-      e.comment = lang === "he" ? "ההערה קצרה מדי — כמה מילים מספיק 🙂" : "Comment is too short — a couple words is enough 🙂";
-    }
-    return e;
-  }, [lang, reservation.comment]);
-
   const messagePreview = useMemo(() => {
-    const catalogTitle = selectedCatalog ? pickL10n(lang, selectedCatalog.title) : undefined;
-    return buildMessage({
-      lang,
-      catalogTitle,
-      reservation,
-      packageSummary: packageSummary.length ? packageSummary : undefined,
-    });
-  }, [lang, packageSummary, reservation, selectedCatalog]);
+    return buildMessage({ lang, reservation: DEFAULT_RESERVATION });
+  }, [lang]);
 
-  function setParams(next: { catalog?: string | null; tab?: TabKey | null }) {
+  function setParams(next: { catalog?: string | null }) {
     const sp = new URLSearchParams(searchParams.toString());
     if (next.catalog === null) sp.delete("catalog");
     else if (typeof next.catalog === "string") sp.set("catalog", next.catalog);
-    if (next.tab === null) sp.delete("tab");
-    else if (typeof next.tab === "string") sp.set("tab", next.tab);
 
     const qs = sp.toString();
     router.replace(qs ? `/?${qs}#catalog` : "/#catalog");
   }
 
-  function openCatalog(slug: string, nextTab: TabKey = "examples") {
+  function openCatalog(slug: string) {
     setPanelOpen(true);
-    setTab(nextTab);
-    setParams({ catalog: slug, tab: nextTab });
-  }
-
-  const defaultCatalogSlug = useMemo(() => {
-    const popular = props.catalogs.find((c) => "popular" in c && Boolean((c as any).popular));
-    return popular?.slug ?? props.catalogs[0]?.slug ?? null;
-  }, [props.catalogs]);
-
-  function openFlow(nextTab: TabKey) {
-    if (!defaultCatalogSlug) return;
-    openCatalog(defaultCatalogSlug, nextTab);
+    setParams({ catalog: slug });
   }
 
   useEffect(() => {
@@ -141,7 +107,7 @@ export function ClientPage(props: Props) {
 
   function closePanel() {
     setPanelOpen(false);
-    setParams({ catalog: null, tab: null });
+    setParams({ catalog: null });
   }
 
   function onSendWhatsApp() {
@@ -149,25 +115,8 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  async function onCopyText() {
-    const ok = await copyToClipboard(messagePreview);
-    copied.set(ok ? "copied" : "error");
-  }
-
-  function onGenerate() {
-    copied.set("idle");
-  }
-
-  function onApplyPackageToReserve(_summaryLines: string[]) {
-    setIncludePackageInMessage(true);
-    setTab("reserve");
-    setParams({ catalog: selectedCatalog?.slug ?? slugFromUrl ?? null, tab: "reserve" });
-  }
-
-  function onContinueToProduct() {
-    const slug = selectedCatalog?.slug ?? slugFromUrl ?? "";
-    if (!slug) return;
-    router.push(`/product?lang=${lang}&catalog=${encodeURIComponent(slug)}`);
+  function onContinueToProduct(pkg?: string) {
+    router.push(`/product?lang=${lang}${pkg ? `&pkg=${encodeURIComponent(pkg)}` : ""}`);
   }
 
   const [expandedPrice, setExpandedPrice] = useState<number | null>(null);
@@ -194,7 +143,7 @@ export function ClientPage(props: Props) {
                 </a>
 
                 <a
-                  href="#about"
+                  href="#packages"
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaPricing")}
@@ -220,7 +169,7 @@ export function ClientPage(props: Props) {
           </div>
 
           {/* ✅ UX mini-instruction (guided flow) */}
-          <HowItWorksHero lang={lang} onOpenFlow={openFlow} />
+          <HowItWorksHero lang={lang} />
         </div>
       </Section>
 
@@ -229,8 +178,7 @@ export function ClientPage(props: Props) {
           lang={lang}
           catalogs={props.catalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
-          onSelect={(slug) => openCatalog(slug, "examples")}
-          fromPrice={props.pricing.duration2h > 0 ? `${props.pricing.currency}${props.pricing.duration2h}` : undefined}
+          onSelect={(slug) => openCatalog(slug)}
         />
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
@@ -238,29 +186,57 @@ export function ClientPage(props: Props) {
       {selectedCatalog ? (
         <MiniScreenPanel
           lang={lang}
-          pricing={props.pricing}
           open={panelOpen}
           catalog={selectedCatalog}
-          tab={tab}
-          onTabChange={(next) => {
-            setTab(next);
-            setParams({ catalog: selectedCatalog.slug, tab: next });
-          }}
           onClose={closePanel}
-          reservation={reservation}
-          onReservationChange={setReservationRaw}
-          softErrors={softErrors}
-          packageDraft={packageDraft}
-          onPackageChange={setPackageRaw}
-          onApplyPackageToReserve={onApplyPackageToReserve}
-          messagePreview={messagePreview}
-          onGenerate={onGenerate}
-          onSend={onSendWhatsApp}
-          onCopy={onCopyText}
-          copiedState={copied.state}
-          onContinueToProduct={onContinueToProduct}
+          onContinueToProduct={() => onContinueToProduct()}
         />
       ) : null}
+
+      {/* ===== Package selection section ===== */}
+      <Section id="packages" title={t(lang, "choosePackage")}>
+        <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+          {PACKAGE_CARDS.map((pkg) => {
+            const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
+            return (
+            <button
+              key={pkg.id}
+              type="button"
+              onClick={() => onContinueToProduct(pkg.id)}
+              className="group text-left cc-glass rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/25 hover:bg-white/[0.10] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+            >
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">{pkg.icon}</span>
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">
+                        {t(lang, keyBase)}
+                      </h3>
+                      {pkg.badge === "popular" ? (
+                        <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                          {t(lang, "popular")}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-xs text-white/60">
+                      {t(lang, `${keyBase}Desc`)}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--red))]/20 group-hover:border-[rgb(var(--red))]/50 transition-all">
+                    {t(lang, "pkgChoose")} →
+                  </span>
+                </div>
+              </div>
+            </button>
+            );
+          })}
+        </div>
+      </Section>
 
       <Section id="about" title={t(lang, "sectionAbout")}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -299,10 +275,7 @@ export function ClientPage(props: Props) {
 
                     <button
                       type="button"
-                      onClick={() => {
-                        const slug = selectedCatalog?.slug ?? defaultCatalogSlug ?? "";
-                        router.push(`/product?lang=${lang}${slug ? `&catalog=${encodeURIComponent(slug)}` : ""}`);
-                      }}
+                      onClick={() => onContinueToProduct()}
                       className="mt-3 w-full rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-2.5 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all duration-200"
                     >
                       {t(lang, "pickThis")}
@@ -361,22 +334,12 @@ export function ClientPage(props: Props) {
 
       {/* Sticky mobile CTA bar */}
       <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">
-        {selectedCatalog ? (
-          <button
-            type="button"
-            onClick={onContinueToProduct}
-            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/25 px-4 py-3 text-sm font-medium text-white"
-          >
-            {t(lang, "continueToPackage")}
-          </button>
-        ) : (
-          <a
-            href="#catalog"
-            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
-          >
-            {t(lang, "heroCtaCatalogs")}
-          </a>
-        )}
+        <a
+          href="#packages"
+          className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
+        >
+          {t(lang, "choosePackage")}
+        </a>
       </div>
     </div>
   );
