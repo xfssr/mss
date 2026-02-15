@@ -16,8 +16,6 @@ export function getCategoryDetails(): CategoryDetail[] {
     console.warn("[categoryDetailsStore] Failed to read config, using defaults:", err);
   }
 
-  if (stored.length === 0) return DEFAULT_CATEGORY_DETAILS;
-
   // Merge: stored entries take priority, append any defaults not present in stored
   const storedSlugs = new Set(stored.map((d) => d.slug));
   const missing = DEFAULT_CATEGORY_DETAILS.filter((d) => !storedSlugs.has(d.slug));
