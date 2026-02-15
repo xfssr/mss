@@ -6,6 +6,8 @@ export function DeleteButton({ className }: { className?: string }) {
   const { pending } = useFormStatus();
   return (
     <button
+      type="submit"
+      aria-label="Delete"
       disabled={pending}
       className={
         className ??
