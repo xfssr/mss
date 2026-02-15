@@ -197,7 +197,9 @@ export function ClientPage(props: Props) {
       <Section id="packages" title={t(lang, "choosePackage")}>
         <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-          {PACKAGE_CARDS.map((pkg) => (
+          {PACKAGE_CARDS.map((pkg) => {
+            const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
+            return (
             <button
               key={pkg.id}
               type="button"
@@ -210,7 +212,7 @@ export function ClientPage(props: Props) {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">
-                        {t(lang, `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`)}
+                        {t(lang, keyBase)}
                       </h3>
                       {pkg.badge === "popular" ? (
                         <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
@@ -219,7 +221,7 @@ export function ClientPage(props: Props) {
                       ) : null}
                     </div>
                     <p className="mt-1 text-xs text-white/60">
-                      {t(lang, `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}Desc`)}
+                      {t(lang, `${keyBase}Desc`)}
                     </p>
                   </div>
                 </div>
@@ -231,7 +233,8 @@ export function ClientPage(props: Props) {
                 </div>
               </div>
             </button>
-          ))}
+            );
+          })}
         </div>
       </Section>
 
