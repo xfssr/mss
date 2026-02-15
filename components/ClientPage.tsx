@@ -4,12 +4,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Catalog } from "@/types/catalog";
+import type { CategoryDetail } from "@/content/categoryDetails";
 import type { HeroMedia } from "@/types/hero";
 import type { PricingConfig } from "@/types/pricing";
 import type { PriceItem } from "@/types/price";
 import type { SiteSettings } from "@/types/settings";
 import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
+import { CategoryDetailModal } from "@/components/CategoryDetailModal";
 import { CatalogGrid } from "@/components/CatalogGrid";
 import { MiniScreenPanel } from "@/components/MiniScreenPanel";
 import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
@@ -28,6 +30,7 @@ import {
 
 type Props = {
   catalogs: Catalog[];
+  categoryDetails: CategoryDetail[];
   settings: SiteSettings;
   prices: PriceItem[];
   heroMedia: HeroMedia[];
@@ -82,6 +85,11 @@ export function ClientPage(props: Props) {
   const slugFromUrl = searchParams.get("catalog");
 
   const selectedCatalog = useMemo(() => props.catalogs.find((c) => c.slug === slugFromUrl) ?? null, [props.catalogs, slugFromUrl]);
+
+  const selectedCategoryDetail = useMemo(
+    () => (slugFromUrl ? props.categoryDetails.find((d) => d.slug === slugFromUrl) ?? null : null),
+    [props.categoryDetails, slugFromUrl],
+  );
 
   const messagePreview = useMemo(() => {
     return buildMessage({ lang, reservation: DEFAULT_RESERVATION });
@@ -181,7 +189,15 @@ export function ClientPage(props: Props) {
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
 
-      {selectedCatalog ? (
+      {selectedCatalog && panelOpen && selectedCategoryDetail ? (
+        <CategoryDetailModal
+          lang={lang}
+          detail={selectedCategoryDetail}
+          catalogTitle={selectedCatalog.title}
+          catalogSubtitle={selectedCatalog.shortDescription}
+          onClose={closePanel}
+        />
+      ) : selectedCatalog ? (
         <MiniScreenPanel
           lang={lang}
           open={panelOpen}

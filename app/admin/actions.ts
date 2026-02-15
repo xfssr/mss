@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsStore";
+import type { CategoryDetail } from "@/content/categoryDetails";
 
 function s(v: FormDataEntryValue | null, fallback = "") {
   return String(v ?? fallback);
@@ -245,6 +247,20 @@ export async function updateExample(id: number, formData: FormData) {
 
 export async function deleteExample(id: number) {
   await prisma.example.delete({ where: { id } });
+  revalidatePath("/");
+  revalidatePath("/admin");
+}
+
+export async function updateCategoryDetailAction(jsonStr: string) {
+  const parsed: CategoryDetail = JSON.parse(jsonStr);
+  const all = getCategoryDetails();
+  const idx = all.findIndex((d) => d.slug === parsed.slug);
+  if (idx >= 0) {
+    all[idx] = parsed;
+  } else {
+    all.push(parsed);
+  }
+  saveCategoryDetails(all);
   revalidatePath("/");
   revalidatePath("/admin");
 }

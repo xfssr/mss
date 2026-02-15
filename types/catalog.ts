@@ -28,5 +28,6 @@ export type Catalog = {
 
   tags: string[];
   popular?: boolean;
+  microCta?: L10n;
   examples: CatalogExample[];
 };

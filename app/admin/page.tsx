@@ -20,6 +20,8 @@ import { UploadUrlInput } from "@/components/admin/UploadUrlInput";
 import { AdminLangTabs } from "@/components/admin/AdminLangTabs";
 import { AdminAccordion } from "@/components/admin/AdminAccordion";
 import { AdminNav } from "@/components/admin/AdminNav";
+import { AdminCategoryDetailEditor } from "@/components/admin/AdminCategoryDetailEditor";
+import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -44,6 +46,8 @@ export default async function AdminPage() {
     include: { examples: true },
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
+
+  const categoryDetails = getCategoryDetails();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white" dir="ltr">
@@ -679,6 +683,12 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
+        </AdminAccordion>
+
+        {/* ─── Category Details (extended modal content) ─── */}
+        <AdminAccordion title="Category details (modal content)" id="category-details" count={categoryDetails.length}>
+          <p className="text-xs text-white/40 mb-3">Edit extended content for category detail modals: pills, bullets, pricing, FAQ, CTA labels, WhatsApp templates (he/en).</p>
+          <AdminCategoryDetailEditor details={categoryDetails} />
         </AdminAccordion>
 
         <div className="text-xs text-white/45">
