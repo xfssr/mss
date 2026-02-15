@@ -119,8 +119,6 @@ export function ClientPage(props: Props) {
     router.push(`/product?lang=${lang}${pkg ? `&pkg=${encodeURIComponent(pkg)}` : ""}`);
   }
 
-  const [expandedPrice, setExpandedPrice] = useState<number | null>(null);
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
@@ -239,60 +237,8 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Section id="about" title={t(lang, "sectionAbout")}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-          <div className="lg:col-span-2 cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
-            <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.aboutText)}</div>
-          </div>
-
-          <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
-            <div className="text-base font-semibold text-white/95">{t(lang, "packagesTitle")}</div>
-            <div className="mt-4 space-y-3">
-              {props.prices.map((p) => {
-                const open = expandedPrice === p.id;
-                return (
-                  <div key={p.id} className="rounded-2xl border border-white/10 bg-black/25 p-4 hover:bg-black/30 hover:border-white/15 transition-all duration-200">
-                    <div className="flex items-start justify-between gap-3">
-                      <div>
-                        <div className="text-sm font-semibold text-white/95">{pickL10n(lang, p.title)}</div>
-                        <div className="mt-1.5 text-xs text-white/60 leading-relaxed">{pickL10n(lang, p.note)}</div>
-                      </div>
-                      <div className="text-sm font-bold text-white">{p.price}</div>
-                    </div>
-
-                    {pickL10n(lang, p.details).trim() ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => setExpandedPrice(open ? null : p.id)}
-                          className="mt-3 text-sm text-[rgb(var(--blue))] hover:text-[rgb(var(--blue))]/80 hover:underline transition-colors"
-                          aria-expanded={open}
-                        >
-                          {open ? t(lang, "less") : t(lang, "more")}
-                        </button>
-                        {open ? <div className="mt-3 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, p.details)}</div> : null}
-                      </>
-                    ) : null}
-
-                    <button
-                      type="button"
-                      onClick={() => onContinueToProduct()}
-                      className="mt-3 w-full rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-2.5 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all duration-200"
-                    >
-                      {t(lang, "pickThis")}
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => document.querySelector("#catalog")?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-5 w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
-            >
-              {t(lang, "openCatalog")}
-            </button>
-          </div>
+        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
+          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.aboutText)}</div>
         </div>
       </Section>
 

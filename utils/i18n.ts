@@ -20,7 +20,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroHint: "בחרו קטגוריה → בחרו חבילה → מלאו תאריך/עיר → שולחים ב-WhatsApp.",
 
     sectionCatalog: "קטלוגים",
-    sectionAbout: "אודות / מחירים (הערכה)",
+    sectionAbout: "אודות",
     sectionContact: "יצירת קשר",
 
     flowHint: "בחרו קטגוריה → דוגמאות → התאמת חבילה → הזמנה → WhatsApp.",
@@ -144,7 +144,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroHint: "Pick a category → build a package → add date/city → send via WhatsApp.",
 
     sectionCatalog: "Catalogs",
-    sectionAbout: "About / price guide",
+    sectionAbout: "About",
     sectionContact: "Contact",
 
     flowHint: "Pick → Examples → Build a package → Reserve → WhatsApp.",

@@ -120,6 +120,8 @@ export default async function ProductPage(props: {
 
   const catalogRaw = searchParams?.catalog;
   const catalogFromUrl = (Array.isArray(catalogRaw) ? catalogRaw[0] : catalogRaw) ?? "";
+  const pkgRaw = searchParams?.pkg;
+  const pkgFromUrl = (Array.isArray(pkgRaw) ? pkgRaw[0] : pkgRaw) ?? "";
   const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "15551234567";
 
   const prices = await prisma.priceItem.findMany({
@@ -145,6 +147,22 @@ export default async function ProductPage(props: {
       };
     })
     .filter((o) => o.name);
+
+  // If pkg query param is provided, filter to show only the matching package
+  const matchedOffers = pkgFromUrl
+    ? offers.filter((o) => {
+        const q = pkgFromUrl.toLowerCase();
+        return (
+          o.name.toLowerCase().includes(q) ||
+          o.title.en.toLowerCase().includes(q) ||
+          o.title.he.toLowerCase().includes(q)
+        );
+      })
+    : [];
+  // Only apply pkg-specific layout (hide FAQ, etc.) when filter actually matched
+  const hasPkgFilter = !!(pkgFromUrl && matchedOffers.length > 0);
+  // Show matched offers when filter matches, otherwise fall back to all offers
+  const filteredOffers = hasPkgFilter ? matchedOffers : offers;
 
   // Build Offer nodes (from DB)
   const offerNodes = offers
@@ -338,9 +356,9 @@ export default async function ProductPage(props: {
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">{ui.packages}</div>
 
-              {offers.length ? (
+              {filteredOffers.length ? (
                 <div className="mt-3 space-y-3">
-                  {offers.map((o) => {
+                  {filteredOffers.map((o) => {
                     const name = pickByLang(lang, { he: o.title.he || o.name, en: o.title.en || o.name });
                     const note = pickByLang(lang, { he: o.note.he || "", en: o.note.en || "" });
                     const details = pickByLang(lang, { he: o.details.he || "", en: o.details.en || "" });
@@ -365,6 +383,7 @@ export default async function ProductPage(props: {
               )}
             </div>
 
+            {!hasPkgFilter && (
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">{ui.faqTitle}</div>
               <div className="mt-3 space-y-3">
@@ -376,8 +395,9 @@ export default async function ProductPage(props: {
                 ))}
               </div>
             </div>
+            )}
 
-            <BookingSection lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} />
+            <BookingSection lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} pkgFromUrl={pkgFromUrl} />
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link

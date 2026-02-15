@@ -66,10 +66,12 @@ export function BookingSection({
   lang,
   whatsappPhone,
   catalogFromUrl,
+  pkgFromUrl,
 }: {
   lang: Lang;
   whatsappPhone: string;
   catalogFromUrl: string;
+  pkgFromUrl?: string;
 }) {
   const s = L[lang];
 
@@ -77,7 +79,7 @@ export function BookingSection({
   const [time, setTime] = useState("");
   const [city, setCity] = useState("");
   const [catalog, setCatalog] = useState(catalogFromUrl);
-  const [pkg, setPkg] = useState("");
+  const [pkg, setPkg] = useState(pkgFromUrl || "");
   const [comment, setComment] = useState("");
 
   const [avail, setAvail] = useState<AvailStatus>({ kind: "idle" });

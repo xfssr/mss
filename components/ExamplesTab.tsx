@@ -147,27 +147,9 @@ export function ExamplesTab(props: {
 
           <div className="text-sm text-white/80">
             {lang === "he"
-              ? "בחר/י חבילה מתאימה (או בנה/י לבד) ואז קבע/י תאריך ושעה."
-              : "Pick a package (or build your own), then choose date/time and send on WhatsApp."}
+              ? "צפו בדוגמאות וגלו סגנונות שונים."
+              : "Browse examples and discover different styles."}
           </div>
-
-          <button
-            type="button"
-            onClick={props.onContinueToProduct ?? props.onNextTab}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/22 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/32"
-          >
-            {t(lang, "continueToPackage")}
-          </button>
-
-          {props.onOrderSimilar ? (
-            <button
-              type="button"
-              onClick={props.onOrderSimilar}
-              className="w-full rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all"
-            >
-              {t(lang, "orderSimilar")}
-            </button>
-          ) : null}
         </div>
       </div>
     </div>
