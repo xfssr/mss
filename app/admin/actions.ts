@@ -104,7 +104,10 @@ export async function updateHeroMedia(id: number, formData: FormData) {
 }
 
 export async function deleteHeroMedia(id: number) {
-  await prisma.heroMedia.delete({ where: { id } });
+  const { count } = await prisma.heroMedia.deleteMany({ where: { id } });
+  if (count === 0 && process.env.NODE_ENV === "development") {
+    console.warn(`[admin] heroMedia id=${id} already deleted`);
+  }
   revalidatePath("/");
   revalidatePath("/admin");
 }
@@ -145,7 +148,10 @@ export async function updatePriceItem(id: number, formData: FormData) {
 }
 
 export async function deletePriceItem(id: number) {
-  await prisma.priceItem.delete({ where: { id } });
+  const { count } = await prisma.priceItem.deleteMany({ where: { id } });
+  if (count === 0 && process.env.NODE_ENV === "development") {
+    console.warn(`[admin] priceItem id=${id} already deleted`);
+  }
   revalidatePath("/");
   revalidatePath("/admin");
 }
@@ -202,7 +208,10 @@ export async function updateCatalog(id: number, formData: FormData) {
 }
 
 export async function deleteCatalog(id: number) {
-  await prisma.catalog.delete({ where: { id } });
+  const { count } = await prisma.catalog.deleteMany({ where: { id } });
+  if (count === 0 && process.env.NODE_ENV === "development") {
+    console.warn(`[admin] catalog id=${id} already deleted`);
+  }
   revalidatePath("/");
   revalidatePath("/admin");
 }
@@ -246,7 +255,10 @@ export async function updateExample(id: number, formData: FormData) {
 }
 
 export async function deleteExample(id: number) {
-  await prisma.example.delete({ where: { id } });
+  const { count } = await prisma.example.deleteMany({ where: { id } });
+  if (count === 0 && process.env.NODE_ENV === "development") {
+    console.warn(`[admin] example id=${id} already deleted`);
+  }
   revalidatePath("/");
   revalidatePath("/admin");
 }
