@@ -25,7 +25,7 @@ export default async function Page() {
   const pricing = await prisma.pricingConfig.upsert({
     where: { id: 1 },
     update: {},
-    create: { id: 1 },
+    create: { id: 1, currency: "₪" },
   });
 
   const heroMedia = await prisma.heroMedia.findMany({

@@ -127,8 +127,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     pkgGrowthDesc: "יום מלא · 10 רילס · 120 תמונות",
     pkgPro: "Pro",
     pkgProDesc: "מנוי חודשי + ניהול סושיאל",
-    pkgCustom: "התאמה אישית",
-    pkgCustomDesc: "בנה חבילה ידנית",
     pkgChoose: "לבחור",
 
     seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
@@ -251,8 +249,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     pkgGrowthDesc: "Full day · 10 reels · 120 photos",
     pkgPro: "Pro",
     pkgProDesc: "Monthly plan + social mgmt",
-    pkgCustom: "Custom",
-    pkgCustomDesc: "Build your own package",
     pkgChoose: "Choose",
 
     seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",

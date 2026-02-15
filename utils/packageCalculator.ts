@@ -40,7 +40,7 @@ function monthlyLabel(lang: Lang, m: MonthlyPlan) {
 
 export function calcPackage(lang: Lang, d: PackageDraft, pricing: PricingConfig) {
   const lines: Line[] = [];
-  const cur = pricing.currency || "₪";
+  const cur = "₪";
 
   const add = (label: string, amount: number) => lines.push({ label, amount });
 

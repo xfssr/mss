@@ -38,7 +38,7 @@ function tagsToCsv(tagsJson: string) {
 
 export default async function AdminPage() {
   const settings = await prisma.siteSettings.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
-  const pricing = await prisma.pricingConfig.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
+  const pricing = await prisma.pricingConfig.upsert({ where: { id: 1 }, update: {}, create: { id: 1, currency: "₪" } });
 
   const hero = await prisma.heroMedia.findMany({ orderBy: [{ order: "asc" }, { id: "asc" }] });
   const priceItems = await prisma.priceItem.findMany({ orderBy: [{ order: "asc" }, { id: "asc" }] });
