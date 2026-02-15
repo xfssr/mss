@@ -159,7 +159,7 @@ export function MiniScreenPanel(props: {
 
         {/* Footer */}
         <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/97 backdrop-blur px-3 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={props.onClose}
@@ -167,16 +167,6 @@ export function MiniScreenPanel(props: {
             >
               {t(props.lang, "close")}
             </button>
-
-            {props.onContinueToProduct ? (
-              <button
-                type="button"
-                onClick={props.onContinueToProduct}
-                className="rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/22 px-4 py-2 text-sm text-white hover:bg-[rgb(var(--red))]/32"
-              >
-                {t(props.lang, "continueToPackage")}
-              </button>
-            ) : null}
           </div>
         </div>
       </div>
