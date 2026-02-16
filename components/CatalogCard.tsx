@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import type { Catalog } from "@/types/catalog";
+import type { Catalog, CatalogExample } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
@@ -15,11 +16,14 @@ export function CatalogCard(props: {
   catalog: Catalog;
   selected?: boolean;
   onClick: () => void;
-  onPreview?: () => void;
 }) {
   const { catalog, selected } = props;
+  const [expanded, setExpanded] = useState(false);
   const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
   const cover = catalog.coverImage || example0?.preview || example0?.image || example0?.src;
+
+  const examples = (catalog.examples ?? []) as CatalogExample[];
+  const visibleExamples = examples.slice(0, 9);
 
   return (
     <div
@@ -55,43 +59,60 @@ export function CatalogCard(props: {
               </span>
             ) : null}
           </div>
-          <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">{t(props.lang, "catalogBenefit")}</p>
           <p className="mt-1.5 text-sm text-white/70 leading-relaxed group-hover:text-white/85 transition-colors line-clamp-2">{pick(props.lang, catalog.shortDescription)}</p>
         </div>
 
-        {/* Tags */}
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {catalog.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="text-[11px] rounded-full border border-white/10 px-2 py-0.5 text-white/60 group-hover:border-white/15 group-hover:text-white/70 transition-all">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Action buttons */}
-        <div className="mt-4 flex items-center gap-2">
+        {/* Single red CTA button */}
+        <div className="mt-4">
           <button
             type="button"
-            onClick={props.onClick}
-            className="shrink-0 rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-1.5 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--blue))]/20 group-hover:border-[rgb(var(--blue))]/50 transition-all"
+            onClick={() => setExpanded((v) => !v)}
+            className="shrink-0 rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            aria-expanded={expanded}
           >
-            {catalog.microCta?.[props.lang] || t(props.lang, "openArrow")}
+            {t(props.lang, "catalogSeeExamples")}
           </button>
-
-          {props.onPreview && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                props.onPreview?.();
-              }}
-              className="shrink-0 rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-xs font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 hover:text-white transition-all"
-            >
-              {t(props.lang, "previewBtn")}
-            </button>
-          )}
         </div>
       </div>
+
+      {/* Expanded accordion with examples grid */}
+      {expanded && (
+        <div className="border-t border-white/10 px-4 sm:px-5 py-4 space-y-4 animate-in slide-in-from-top-2 duration-200">
+          {visibleExamples.length > 0 ? (
+            <div className="grid grid-cols-3 gap-2">
+              {visibleExamples.map((ex: CatalogExample) => {
+                const src = ex.posterUrl || ex.mediaUrl || "";
+                return (
+                  <div key={ex.id} className="relative aspect-[4/5] rounded-lg overflow-hidden border border-white/10 bg-black/30">
+                    {src ? (
+                      <Image
+                        src={src}
+                        alt={pick(props.lang, ex.title) || pick(props.lang, ex.description)}
+                        fill
+                        sizes="(max-width: 640px) 33vw, 20vw"
+                        className="object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-white/20 text-xl">📷</div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-xs text-white/40 text-center py-4">📷</div>
+          )}
+
+          {/* Secondary link to packages */}
+          <a
+            href="#packages"
+            className="inline-flex items-center text-xs text-[rgb(var(--blue))] hover:text-white transition-colors"
+          >
+            {t(props.lang, "catalogChoosePackage")} →
+          </a>
+        </div>
+      )}
     </div>
   );
 }
