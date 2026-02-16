@@ -236,18 +236,15 @@ export async function deleteCatalog(id: number) {
   if (catalog?.slug) {
     await disableCatalogSlug(catalog.slug);
   }
-  const { count } = await prisma.catalog.deleteMany({ where: { id } });
-  if (count === 0 && process.env.NODE_ENV === "development") {
-    console.warn(`[admin] catalog id=${id} already deleted`);
-  }
+  await prisma.catalog.deleteMany({ where: { id } });
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
   revalidatePath("/solutions");
 }
 
-export async function toggleCatalogActive(slug: string, active: boolean) {
-  if (active) {
+export async function toggleCatalogActive(slug: string, isCurrentlyDisabled: boolean) {
+  if (isCurrentlyDisabled) {
     await enableCatalogSlug(slug);
   } else {
     await disableCatalogSlug(slug);

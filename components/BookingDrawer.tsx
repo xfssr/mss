@@ -121,7 +121,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
     try {
       setFirstOrderUsed(localStorage.getItem(FIRST_ORDER_KEY) === "true");
     } catch { /* SSR fallback */ }
-  }, [open]);
+  }, []); // Read once on mount
 
   const showDiscount = !!(discountConfig?.enabled && !firstOrderUsed);
 
@@ -142,7 +142,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
     let subtotal = lines.reduce((s, x) => s + x.amount, 0);
     let discountAmount = 0;
     if (showDiscount && discountConfig) {
-      discountAmount = Math.round(subtotal * discountConfig.percent / 100);
+      discountAmount = Math.floor(subtotal * discountConfig.percent / 100);
     }
     const total = subtotal - discountAmount;
 

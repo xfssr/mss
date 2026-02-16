@@ -10,7 +10,8 @@ async function readOverrides(): Promise<Record<string, unknown>> {
     const row = await prisma.siteSettings.findFirst({ where: { id: 1 } });
     if (!row?.contentOverridesJson) return {};
     return JSON.parse(row.contentOverridesJson) ?? {};
-  } catch {
+  } catch (err) {
+    console.warn("[catalogOverridesStore] Failed to read overrides:", err);
     return {};
   }
 }
