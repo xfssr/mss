@@ -18,6 +18,7 @@ import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
+import { BookingDrawer } from "@/components/BookingDrawer";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -76,8 +77,16 @@ export function ClientPage(props: Props) {
   }, [lang]);
 
   const [panelOpen, setPanelOpen] = useState(false);
+  const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
+  const [bookingPkg, setBookingPkg] = useState("");
 
   const slugFromUrl = searchParams.get("catalog");
+
+  // Exclude "restaurant-menu-website" from homepage portfolio catalog
+  const portfolioCatalogs = useMemo(
+    () => props.catalogs.filter((c) => c.slug !== "restaurant-menu-website"),
+    [props.catalogs],
+  );
 
   const selectedCatalog = useMemo(() => props.catalogs.find((c) => c.slug === slugFromUrl) ?? null, [props.catalogs, slugFromUrl]);
 
@@ -119,7 +128,8 @@ export function ClientPage(props: Props) {
   }
 
   function onContinueToProduct(pkg?: string) {
-    router.push(`/product?lang=${lang}${pkg ? `&pkg=${encodeURIComponent(pkg)}` : ""}`);
+    setBookingPkg(pkg || "");
+    setBookingDrawerOpen(true);
   }
 
   return (
@@ -184,7 +194,7 @@ export function ClientPage(props: Props) {
       <Section id="catalog" title={t(lang, "sectionCatalog")}>
         <CatalogGrid
           lang={lang}
-          catalogs={props.catalogs}
+          catalogs={portfolioCatalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
         />
@@ -295,6 +305,15 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Footer lang={lang} />
+
+      {/* Booking Drawer */}
+      <BookingDrawer
+        lang={lang}
+        open={bookingDrawerOpen}
+        onClose={() => setBookingDrawerOpen(false)}
+        sourceType="package"
+        pkg={bookingPkg}
+      />
 
       {/* Sticky mobile CTA bar */}
       <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">

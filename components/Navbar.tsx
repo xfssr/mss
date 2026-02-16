@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import { Logo } from "@/components/Logo";
@@ -21,9 +22,9 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
         <nav className="flex items-center gap-2" aria-label="Main navigation">
           {/* Desktop links only */}
           <div className="hidden md:flex items-center gap-1">
-            <a className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="#catalog">
+            <Link className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="/#catalog">
               {t(props.lang, "navCatalog")}
-            </a>
+            </Link>
             <a className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="/solutions">
               {t(props.lang, "navSolutions")}
             </a>

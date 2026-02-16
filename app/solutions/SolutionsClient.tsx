@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import type { SolutionItem } from "@/content/solutions";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -30,6 +31,15 @@ export function SolutionsClient(props: { solutions: SolutionItem[] }) {
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="solutions" title={t(lang, "sectionSolutions")}>
+        <div className="mb-4">
+          <Link
+            href="/#catalog"
+            className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
+          >
+            <span aria-hidden="true">←</span>
+            {lang === "he" ? "חזרה לקטלוגים" : "Back to catalogs"}
+          </Link>
+        </div>
         <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">

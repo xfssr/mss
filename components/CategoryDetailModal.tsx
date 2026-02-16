@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
 import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { BookingDrawer } from "@/components/BookingDrawer";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
@@ -19,8 +19,8 @@ export function CategoryDetailModal(props: {
   onClose: () => void;
 }) {
   const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
-  const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
@@ -34,7 +34,7 @@ export function CategoryDetailModal(props: {
   }, [onClose]);
 
   function onPrimary() {
-    router.push(`/product?catalog=${encodeURIComponent(detail.slug)}&lang=${lang}`);
+    setBookingOpen(true);
   }
 
   function onSecondary() {
@@ -233,6 +233,14 @@ export function CategoryDetailModal(props: {
             </button>
           </div>
         </div>
+        {/* Booking Drawer */}
+        <BookingDrawer
+          lang={lang}
+          open={bookingOpen}
+          onClose={() => setBookingOpen(false)}
+          sourceType="solution"
+          solutionSlug={detail.slug}
+        />
       </div>
     </div>
   );

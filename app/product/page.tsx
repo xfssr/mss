@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { SAME_AS, getSiteUrl } from "@/config/constants";
-import { BookingSection } from "@/components/BookingSection";
+import { BookingSectionToggle } from "@/components/BookingSectionToggle";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -397,7 +397,7 @@ export default async function ProductPage(props: {
             </div>
             )}
 
-            <BookingSection lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} pkgFromUrl={pkgFromUrl} />
+            <BookingSectionToggle lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} pkgFromUrl={pkgFromUrl} />
 
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
