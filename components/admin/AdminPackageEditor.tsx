@@ -107,6 +107,21 @@ export function AdminPackageEditor(props: { packages: PackageDetail[] }) {
         <input type="number" min="0" value={d.priceFrom} onChange={(e) => updateField(id, (x) => ({ ...x, priceFrom: Math.max(0, Number(e.target.value) || 0) }))} className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
       </fieldset>
 
+      {/* Icon name */}
+      <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
+        <legend className="text-xs text-white/55 px-1">Icon name</legend>
+        <input value={d.iconName ?? ""} onChange={(e) => updateField(id, (x) => ({ ...x, iconName: e.target.value }))} placeholder="camera, briefcase, calendar, hammer, star, zap" className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+      </fieldset>
+
+      {/* Active toggle */}
+      <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
+        <legend className="text-xs text-white/55 px-1">Active</legend>
+        <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
+          <input type="checkbox" checked={d.active !== false} onChange={(e) => updateField(id, (x) => ({ ...x, active: e.target.checked }))} className="accent-[rgb(var(--blue))]" />
+          Enable / Disable this package
+        </label>
+      </fieldset>
+
       {/* Pills */}
       <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
         <legend className="text-xs text-white/55 px-1">Pills (tags)</legend>
