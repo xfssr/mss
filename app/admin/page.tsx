@@ -24,9 +24,11 @@ import { AdminAccordion } from "@/components/admin/AdminAccordion";
 import { AdminNav } from "@/components/admin/AdminNav";
 import { AdminCategoryDetailEditor } from "@/components/admin/AdminCategoryDetailEditor";
 import { AdminSolutionEditor } from "@/components/admin/AdminSolutionEditor";
+import { AdminPackageEditor } from "@/components/admin/AdminPackageEditor";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { getSolutions } from "@/lib/solutionsStore";
+import { getPackageDetails } from "@/lib/packageConfigStore";
 import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
 
 export const dynamic = "force-dynamic";
@@ -55,6 +57,7 @@ export default async function AdminPage() {
 
   const categoryDetails = await getCategoryDetails();
   const solutions = await getSolutions();
+  const packageDetails = await getPackageDetails();
   const disabledSlugs = await getDisabledCatalogSlugs();
   const discountConfig = await getDiscountConfig();
 
@@ -728,6 +731,12 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
+        </AdminAccordion>
+
+        {/* ─── Packages ─── */}
+        <AdminAccordion title="Packages (unified pricing)" id="packages" count={packageDetails.length}>
+          <p className="text-xs text-white/40 mb-3">Edit unified package details: titles, subtitles, pricing, pills, shoot time, delivery, locations, revisions, best-for, what-you-get, add-ons (he/en).</p>
+          <AdminPackageEditor packages={packageDetails} />
         </AdminAccordion>
 
         {/* ─── Category Details (extended modal content) ─── */}

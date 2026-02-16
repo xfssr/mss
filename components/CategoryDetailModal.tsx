@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
 import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
-import { DRAWER_BACKDROP_CLASS } from "@/lib/drawerStyles";
+import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
@@ -64,10 +65,10 @@ export function CategoryDetailModal(props: {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-3xl overflow-hidden border border-white/12 shadow-2xl rounded-2xl sm:rounded-[28px] bg-[#0b0f14]/98 sm:bg-[#0b0f14]/95 flex flex-col min-h-0 h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]">
+      <div className={MODAL_PANEL_CLASS}>
 
         {/* Header */}
-        <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-[#0b0f14]/97 backdrop-blur">
+        <div className={MODAL_HEADER_CLASS}>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/50">{pick(lang, detail.label)}</div>
@@ -105,7 +106,7 @@ export function CategoryDetailModal(props: {
           {/* B) What you get */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "מה מקבלים" : "What you get"}
+              {t(lang, "sectionWhatYouGet")}
             </h3>
             <ul className="space-y-1.5">
               {detail.whatYouGet.map((item, i) => (
@@ -120,7 +121,7 @@ export function CategoryDetailModal(props: {
           {/* C) Best for */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
-              {lang === "he" ? "מתאים ל" : "Best for"}
+              {t(lang, "sectionBestFor")}
             </h3>
             <p className="text-sm text-white/70">{pick(lang, detail.bestFor)}</p>
           </section>
@@ -128,7 +129,7 @@ export function CategoryDetailModal(props: {
           {/* D) Process timeline */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
-              {lang === "he" ? "התהליך" : "Process"}
+              {t(lang, "sectionProcess")}
             </h3>
             <div className="flex items-start gap-2 sm:gap-4">
               {detail.process.map((step, i) => (
@@ -145,7 +146,7 @@ export function CategoryDetailModal(props: {
           {/* E) Pricing range */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "טווח מחירים" : "Pricing range"}
+              {t(lang, "sectionPricingRange")}
             </h3>
             <div className="grid grid-cols-3 gap-2">
               {detail.pricingTiers.map((tier, i) => (
@@ -162,7 +163,7 @@ export function CategoryDetailModal(props: {
           {detail.whyThisWorks.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "למה זה עובד" : "Why this works"}
+                {t(lang, "sectionWhyThisWorks")}
               </h3>
               <ul className="space-y-1">
                 {detail.whyThisWorks.map((item, i) => (
@@ -179,7 +180,7 @@ export function CategoryDetailModal(props: {
           {detail.faq.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "שאלות נפוצות" : "FAQ"}
+                {t(lang, "sectionFaq")}
               </h3>
               <div className="space-y-1">
                 {detail.faq.map((item, i) => (
@@ -205,7 +206,7 @@ export function CategoryDetailModal(props: {
           {detail.socialProof.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "הוכחה חברתית" : "Social proof"}
+                {t(lang, "sectionSocialProof")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {detail.socialProof.map((card, i) => (
@@ -220,7 +221,7 @@ export function CategoryDetailModal(props: {
         </div>
 
         {/* Sticky CTA footer */}
-        <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/97 backdrop-blur px-4 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+        <div className={MODAL_FOOTER_CLASS}>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <button
               type="button"

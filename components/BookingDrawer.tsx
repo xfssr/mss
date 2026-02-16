@@ -72,6 +72,9 @@ const L: Record<Lang, Record<string, string>> = {
     holdSuccess: "השעה נשמרה!",
     fillDateTime: "נא למלא תאריך ושעה בפורמט תקין",
     close: "סגור",
+    step1: "תאריך ושעה",
+    step2: "זמינות",
+    step3: "שמירה ושליחה",
   },
   en: {
     title: "Check availability & book",
@@ -89,6 +92,9 @@ const L: Record<Lang, Record<string, string>> = {
     holdSuccess: "Slot held!",
     fillDateTime: "Please fill date and time in the correct format",
     close: "Close",
+    step1: "Date & time",
+    step2: "Availability",
+    step3: "Hold & send",
   },
 };
 
@@ -389,6 +395,47 @@ export function BookingDrawer(props: BookingDrawerProps) {
           )}
         </div>
 
+        {/* Stepper */}
+        {(() => {
+          let currentStep = 1;
+          if (hold.kind === "held") currentStep = 3;
+          else if (avail.kind === "available" || avail.kind === "unavailable") currentStep = 2;
+          const stepLabels = [s.step1, s.step2, s.step3];
+          return (
+            <div className="flex items-center justify-between px-4 sm:px-6 py-2" dir="ltr">
+              {stepLabels.map((label, i) => {
+                const step = i + 1;
+                const isActive = step <= currentStep;
+                return (
+                  <div key={step} className="flex items-center flex-1 last:flex-none">
+                    <div className="flex flex-col items-center gap-0.5">
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-semibold border transition-colors ${
+                          isActive
+                            ? "border-[rgb(var(--blue))] bg-[rgb(var(--blue))]/25 text-[rgb(var(--blue))]"
+                            : "border-white/15 bg-white/[0.04] text-white/30"
+                        }`}
+                      >
+                        {step}
+                      </div>
+                      <span className={`text-[9px] leading-tight ${isActive ? "text-white/80" : "text-white/30"}`}>
+                        {label}
+                      </span>
+                    </div>
+                    {step < 3 && (
+                      <div
+                        className={`flex-1 h-px mx-1.5 transition-colors ${
+                          step < currentStep ? "bg-[rgb(var(--blue))]/40" : "bg-white/10"
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
+
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-4 space-y-3">
           {/* Compact package summary */}
@@ -405,8 +452,8 @@ export function BookingDrawer(props: BookingDrawerProps) {
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                <div className="text-white/40">{lang === "he" ? "זמן צילום" : "Shoot"}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
-                <div className="text-white/40">{lang === "he" ? "אספקה" : "Delivery"}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
+                <div className="text-white/40">{t(lang, "labelShoot")}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
+                <div className="text-white/40">{t(lang, "labelDeliveryShort")}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
               </div>
               {showDiscount && discountConfig && (
                 <div className="text-[10px] text-green-400">

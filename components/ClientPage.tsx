@@ -160,6 +160,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="/solutions"
+                  title={t(lang, "navSolutions")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "navSolutions")}
@@ -167,6 +168,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="#packages"
+                  title={t(lang, "heroCtaPricing")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaPricing")}
@@ -175,6 +177,7 @@ export function ClientPage(props: Props) {
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
+                  title={t(lang, "heroCtaOrder")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaOrder")}
@@ -304,7 +307,7 @@ export function ClientPage(props: Props) {
                   {/* What you get */}
                   <div>
                     <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1.5">
-                      {lang === "he" ? "מה מקבלים" : "What you get"}
+                      {t(lang, "sectionWhatYouGet")}
                     </h4>
                     <ul className="space-y-1">
                       {detail.whatYouGet.map((item, i) => (
@@ -319,19 +322,19 @@ export function ClientPage(props: Props) {
                   {/* Details grid */}
                   <div className="grid grid-cols-2 gap-2">
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן צילום" : "Shoot time"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן אספקה" : "Delivery"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "מיקומים" : "Locations"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelLocations")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.locations)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "תיקונים" : "Revisions"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelRevisions")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.revisions)}</div>
                     </div>
                   </div>
@@ -339,7 +342,7 @@ export function ClientPage(props: Props) {
                   {/* Best for */}
                   <div>
                     <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1">
-                      {lang === "he" ? "מתאים ל" : "Best for"}
+                      {t(lang, "sectionBestFor")}
                     </h4>
                     <p className="text-xs text-white/65">{pickL10n(lang, detail.bestFor)}</p>
                   </div>

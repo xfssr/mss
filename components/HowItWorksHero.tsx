@@ -4,47 +4,27 @@ import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-function copy(lang: Lang) {
-  if (lang === "he") {
-    return {
-      title: "איך זה עובד",
-      subtitle: "צפו בדוגמאות בקטלוג → בחרו חבילה → בדקו זמינות ושלחו ב-WhatsApp.",
-      steps: [
-        { n: "1", title: "דוגמאות", desc: "גללו בקטלוג וצפו בדוגמאות של עבודות.", href: "#catalog" },
-        { n: "2", title: "חבילה", desc: "בחרו חבילה מוכנה או בנו משלכם.", href: "#packages" },
-        { n: "3", title: "הזמנה", desc: "בדקו זמינות, שמרו שעה ושלחו ב-WhatsApp.", href: "#packages" },
-      ],
-      btn: (step: number) => (step === 1 ? "לראות דוגמאות" : step === 2 ? "לבחור חבילה" : "להזמין"),
-    };
-  }
-
-  return {
-    title: "How it works",
-    subtitle: "Browse the catalog for examples → pick a package → check availability and send via WhatsApp.",
-    steps: [
-      { n: "1", title: "Examples", desc: "Scroll through the catalog and browse work samples.", href: "#catalog" },
-      { n: "2", title: "Package", desc: "Choose a preset or build your own.", href: "#packages" },
-      { n: "3", title: "Order", desc: "Check availability, hold a slot and send via WhatsApp.", href: "#packages" },
-    ],
-    btn: (step: number) => (step === 1 ? "View examples" : step === 2 ? "Choose package" : "Order"),
-  };
-}
+const STEPS = [
+  { n: "1", titleKey: "howStep1Title", descKey: "howStep1Desc", btnKey: "howStep1Btn", href: "#catalog" },
+  { n: "2", titleKey: "howStep2Title", descKey: "howStep2Desc", btnKey: "howStep2Btn", href: "#packages" },
+  { n: "3", titleKey: "howStep3Title", descKey: "howStep3Desc", btnKey: "howStep3Btn", href: "#packages" },
+] as const;
 
 export function HowItWorksHero(props: { lang: Lang }) {
   const reduced = usePrefersReducedMotion();
-  const c = copy(props.lang);
+  const lang = props.lang;
 
   return (
     <div className="mt-8 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-sm p-5 sm:p-6 shadow-lg">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-base sm:text-lg font-bold text-white/95">{c.title}</div>
-          <div className="mt-1.5 text-xs sm:text-sm text-white/75 leading-relaxed">{c.subtitle}</div>
+          <div className="text-base sm:text-lg font-bold text-white/95">{t(lang, "howItWorksTitle")}</div>
+          <div className="mt-1.5 text-xs sm:text-sm text-white/75 leading-relaxed">{t(lang, "howItWorksSubtitle")}</div>
         </div>
       </div>
 
       <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        {c.steps.map((s, idx) => (
+        {STEPS.map((s) => (
           <div
             key={s.n}
             className={[
@@ -58,18 +38,18 @@ export function HowItWorksHero(props: { lang: Lang }) {
                 <span className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/40 text-xs font-semibold text-white/90 shadow-sm">
                   {s.n}
                 </span>
-                <div className="text-sm font-bold text-white/95 truncate">{s.title}</div>
+                <div className="text-sm font-bold text-white/95 truncate">{t(lang, s.titleKey)}</div>
               </div>
               <span className="h-2 w-2 rounded-full bg-[rgb(var(--red))]/80 shadow-sm" aria-hidden="true" />
             </div>
 
-            <div className="mt-3 text-xs sm:text-sm text-white/75 leading-relaxed">{s.desc}</div>
+            <div className="mt-3 text-xs sm:text-sm text-white/75 leading-relaxed">{t(lang, s.descKey)}</div>
 
             <a
               href={s.href}
               className="mt-4 w-full rounded-xl border border-white/15 bg-white/[0.08] px-3 py-2.5 text-xs sm:text-sm font-medium text-white/95 hover:bg-white/[0.15] hover:border-white/25 transition-all duration-200 hidden sm:block text-center"
             >
-              {c.btn(idx + 1)}
+              {t(lang, s.btnKey)}
             </a>
           </div>
         ))}
@@ -80,7 +60,7 @@ export function HowItWorksHero(props: { lang: Lang }) {
         href="#catalog"
         className="sm:hidden mt-5 block w-full text-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/95 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
       >
-        {t(props.lang, "howStartNow")}
+        {t(lang, "howStartNow")}
       </a>
     </div>
   );

@@ -19,3 +19,15 @@ export const DRAWER_HEADER_CLASS =
 /** Footer CTA area inside the panel */
 export const DRAWER_FOOTER_CLASS =
   "shrink-0 border-t border-white/10 bg-white/[0.03] backdrop-blur px-4 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] space-y-2";
+
+/** Panel for detail modals (wider, centered, dark bg) */
+export const MODAL_PANEL_CLASS =
+  "relative w-full max-w-3xl overflow-hidden border border-white/12 shadow-2xl rounded-2xl sm:rounded-2xl bg-white/[0.06] backdrop-blur-xl flex flex-col min-h-0 h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]";
+
+/** Header for detail modals */
+export const MODAL_HEADER_CLASS =
+  "shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-white/[0.03] backdrop-blur";
+
+/** Footer for detail modals */
+export const MODAL_FOOTER_CLASS =
+  "shrink-0 border-t border-white/10 bg-white/[0.03] backdrop-blur px-4 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]";
