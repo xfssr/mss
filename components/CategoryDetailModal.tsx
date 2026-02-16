@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
-import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { buildWaMeUrl, WHATSAPP_PHONE } from "@/utils/whatsapp";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
@@ -43,11 +43,7 @@ export function CategoryDetailModal(props: {
     setBookingOpen(true);
   }
 
-  function onSecondary() {
-    const msg = pick(lang, detail.whatsappTemplateSecondary);
-    const url = buildWaMeUrl(WHATSAPP_PHONE, msg);
-    openWhatsApp(url);
-  }
+  const secondaryWaUrl = buildWaMeUrl(WHATSAPP_PHONE, pick(lang, detail.whatsappTemplateSecondary));
 
   return (
     <div
@@ -230,13 +226,14 @@ export function CategoryDetailModal(props: {
             >
               {pick(lang, detail.ctaPrimary)}
             </button>
-            <button
-              type="button"
-              onClick={onSecondary}
+            <a
+              href={secondaryWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
             >
               {pick(lang, detail.ctaSecondary)}
-            </button>
+            </a>
           </div>
         </div>
         {/* Booking Drawer */}

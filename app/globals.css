@@ -15,6 +15,15 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent iOS Safari zoom on input focus (font-size must be >= 16px) */
+@media (max-width: 640px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
