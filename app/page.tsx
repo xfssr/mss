@@ -13,6 +13,7 @@ import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
 import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
 import { getPackageDetails } from "@/lib/packageConfigStore";
+import { getActiveSolutions } from "@/lib/solutionsStore";
 import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -47,6 +48,7 @@ export default async function Page() {
   const disabledSlugs = await getDisabledCatalogSlugs();
   const discountConfig = await getDiscountConfig();
   const packageDetails = await getPackageDetails();
+  const solutions = await getActiveSolutions();
 
   const siteUrl = getSiteUrl();
 
@@ -122,6 +124,7 @@ export default async function Page() {
           pricing={dbPricingToUi(pricing)}
           discountConfig={discountConfig}
           packageDetails={packageDetails}
+          solutions={solutions}
         />
       </Suspense>
     </>

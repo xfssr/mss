@@ -11,6 +11,7 @@ import type { PriceItem } from "@/types/price";
 import type { SiteSettings } from "@/types/settings";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { PackageDetail } from "@/lib/packageConfigStore";
+import type { SolutionItem } from "@/content/solutions";
 import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
@@ -22,6 +23,8 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { BookingDrawer } from "@/components/BookingDrawer";
 import { QuickPreviewModal } from "@/components/QuickPreviewModal";
+import { SolutionCard } from "@/components/SolutionCard";
+import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -41,6 +44,7 @@ type Props = {
   pricing: PricingConfig;
   discountConfig: DiscountConfig;
   packageDetails: PackageDetail[];
+  solutions: SolutionItem[];
 };
 
 function pickL10n(lang: Lang, v: { he: string; en: string }) {
@@ -98,6 +102,7 @@ export function ClientPage(props: Props) {
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
   const [packagesVisible, setPackagesVisible] = useState(false);
+  const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -117,6 +122,11 @@ export function ClientPage(props: Props) {
   const previewCatalog = useMemo(
     () => (previewSlug ? props.catalogs.find((c) => c.slug === previewSlug) ?? null : null),
     [props.catalogs, previewSlug],
+  );
+
+  const selectedSolution = useMemo(
+    () => (selectedSolutionSlug ? props.solutions.find((s) => s.slug === selectedSolutionSlug) ?? null : null),
+    [props.solutions, selectedSolutionSlug],
   );
 
   const messagePreview = useMemo(() => {
@@ -244,6 +254,33 @@ export function ClientPage(props: Props) {
           onContinueToProduct={() => onContinueToProduct()}
         />
       ) : null}
+
+      {/* ===== Ready Solutions section ===== */}
+      {props.solutions.length > 0 && (
+        <Section id="solutions" title={t(lang, "sectionSolutions")}>
+          <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+            {props.solutions.map((item) => (
+              <SolutionCard
+                key={item.slug}
+                lang={lang}
+                item={item}
+                onSelect={() => setSelectedSolutionSlug(item.slug)}
+              />
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {selectedSolution && (
+        <SolutionDetailModal
+          lang={lang}
+          item={selectedSolution}
+          onClose={() => setSelectedSolutionSlug(null)}
+          pricing={props.pricing}
+          discountConfig={props.discountConfig}
+        />
+      )}
 
       {/* ===== Package selection section (gated until user interacts with catalog) ===== */}
       {packagesVisible && (
