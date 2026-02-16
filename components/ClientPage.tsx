@@ -54,12 +54,12 @@ const PACKAGE_CARDS = [
     badge: "popular" as const,
   },
   {
-    id: "growth",
+    id: "business",
     icon: "🚀",
     badge: "popular" as const,
   },
   {
-    id: "pro",
+    id: "monthly",
     icon: "⭐",
     badge: undefined,
   },
@@ -160,7 +160,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="/solutions"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "navSolutions")}
                 </a>
@@ -232,13 +232,8 @@ export function ClientPage(props: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
-            const priceMap: Record<string, number> = {
-              starter: props.pricing.monthlyStarter,
-              growth: props.pricing.monthlyGrowth,
-              pro: props.pricing.monthlyPro,
-            };
-            const price = priceMap[pkg.id] ?? 0;
             const detail = props.packageDetails.find((d) => d.id === pkg.id);
+            const price = detail?.priceFrom ?? 0;
             const isExpanded = expandedPkg === pkg.id;
             return (
             <div

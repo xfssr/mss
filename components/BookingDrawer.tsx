@@ -7,6 +7,12 @@ import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { PackageDetail } from "@/lib/packageConfigStore";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
+import {
+  DRAWER_BACKDROP_CLASS,
+  DRAWER_PANEL_CLASS,
+  DRAWER_HEADER_CLASS,
+  DRAWER_FOOTER_CLASS,
+} from "@/lib/drawerStyles";
 
 type SourcePackage = {
   sourceType: "package";
@@ -88,16 +94,17 @@ const L: Record<Lang, Record<string, string>> = {
 
 const PKG_LABELS: Record<string, Record<Lang, string>> = {
   starter: { he: "Starter", en: "Starter" },
-  growth: { he: "Growth", en: "Growth" },
-  pro: { he: "Pro", en: "Pro" },
+  business: { he: "Business", en: "Business" },
+  monthly: { he: "Monthly", en: "Monthly" },
 };
 
-function getBasePrice(pkg: string, pricing?: PricingConfig): number {
+function getBasePrice(pkg: string, pricing?: PricingConfig, packageDetail?: PackageDetail): number {
+  if (packageDetail?.priceFrom && packageDetail.priceFrom > 0) return packageDetail.priceFrom;
   if (!pricing) return 0;
   switch (pkg) {
     case "starter": return pricing.monthlyStarter;
-    case "growth": return pricing.monthlyGrowth;
-    case "pro": return pricing.monthlyPro;
+    case "business": return pricing.monthlyGrowth;
+    case "monthly": return pricing.monthlyPro;
     default: return 0;
   }
 }
@@ -137,7 +144,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
   const priceSummary = useMemo(() => {
     if (!pricing) return null;
     const pkgKey = props.sourceType === "package" ? props.pkg : "";
-    const base = getBasePrice(pkgKey, pricing);
+    const base = getBasePrice(pkgKey, pricing, packageDetail);
     if (base <= 0) return null;
 
     const lines: { label: string; amount: number }[] = [];
@@ -344,14 +351,14 @@ export function BookingDrawer(props: BookingDrawerProps) {
       <button
         type="button"
         aria-label="Close"
-        className="absolute inset-0 bg-black/75 sm:bg-black/65 backdrop-blur-[1px] sm:backdrop-blur-sm"
+        className={DRAWER_BACKDROP_CLASS}
         onClick={onClose}
       />
 
       {/* Panel: bottom sheet on mobile, centered modal on desktop */}
-      <div className="relative w-full sm:max-w-lg overflow-hidden border border-white/12 shadow-2xl rounded-t-2xl sm:rounded-2xl bg-[#0b0f14]/98 sm:bg-[#0b0f14]/95 flex flex-col max-h-[90dvh] sm:max-h-[calc(100dvh-8rem)]">
+      <div className={DRAWER_PANEL_CLASS}>
         {/* Header */}
-        <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 border-b border-white/10 bg-[#0b0f14]/97 backdrop-blur">
+        <div className={DRAWER_HEADER_CLASS}>
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-base sm:text-lg font-semibold text-[rgb(var(--blue))]">
               {s.title}
@@ -513,7 +520,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
         </div>
 
         {/* Sticky footer CTA */}
-        <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/97 backdrop-blur px-4 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] space-y-2">
+        <div className={DRAWER_FOOTER_CLASS}>
           {/* Check availability button */}
           {avail.kind !== "available" && (
             <button
