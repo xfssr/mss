@@ -20,7 +20,7 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
     id: "starter",
     title: { he: "Starter", en: "Starter" },
     subtitle: { he: "חבילת התחלה לעסקים", en: "Starter package for businesses" },
-    priceFrom: 0,
+    priceFrom: 450,
     pills: [
       { he: "4 שעות צילום", en: "4h shoot" },
       { he: "6 רילס", en: "6 reels" },
@@ -43,10 +43,10 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
     ],
   },
   {
-    id: "growth",
-    title: { he: "Growth", en: "Growth" },
+    id: "business",
+    title: { he: "Business", en: "Business" },
     subtitle: { he: "חבילה ליום צילום מלא", en: "Full-day shooting package" },
-    priceFrom: 0,
+    priceFrom: 800,
     pills: [
       { he: "יום מלא", en: "Full day" },
       { he: "10 רילס", en: "10 reels" },
@@ -70,10 +70,10 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
     ],
   },
   {
-    id: "pro",
-    title: { he: "Pro", en: "Pro" },
+    id: "monthly",
+    title: { he: "Monthly", en: "Monthly" },
     subtitle: { he: "מנוי חודשי + ניהול סושיאל", en: "Monthly plan + social management" },
-    priceFrom: 0,
+    priceFrom: 2400,
     pills: [
       { he: "מנוי חודשי", en: "Monthly" },
       { he: "ניהול סושיאל", en: "Social mgmt" },

@@ -7,6 +7,7 @@ import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { DRAWER_BACKDROP_CLASS } from "@/lib/drawerStyles";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
@@ -59,7 +60,7 @@ export function SolutionDetailModal(props: {
       <button
         type="button"
         aria-label="Close"
-        className="absolute inset-0 bg-black/75 sm:bg-black/65 backdrop-blur-[1px] sm:backdrop-blur-sm"
+        className={DRAWER_BACKDROP_CLASS}
         onClick={onClose}
       />
 

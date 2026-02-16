@@ -232,11 +232,20 @@ export async function updateCatalog(id: number, formData: FormData) {
 
 export async function deleteCatalog(id: number) {
   // Look up the slug before deleting so we can store a disable override
-  const catalog = await prisma.catalog.findUnique({ where: { id }, select: { slug: true } });
-  if (catalog?.slug) {
-    await disableCatalogSlug(catalog.slug);
+  try {
+    const catalog = await prisma.catalog.findUnique({ where: { id }, select: { slug: true } });
+    if (catalog?.slug) {
+      await disableCatalogSlug(catalog.slug);
+    }
+    await prisma.catalog.deleteMany({ where: { id } });
+  } catch (err: unknown) {
+    // P2025: record not found — already deleted, treat as success
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteCatalog] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
   }
-  await prisma.catalog.deleteMany({ where: { id } });
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
