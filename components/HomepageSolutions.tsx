@@ -5,16 +5,12 @@ import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import type { PackageDetail } from "@/lib/packageConfigStore";
 import { Section } from "@/components/Section";
+import { getNicheConfig, pickL10n } from "@/content/packagesConfig";
 import {
   buildWaMeUrl,
   openWhatsApp,
   WHATSAPP_PHONE,
 } from "@/utils/whatsapp";
-
-function pick(lang: Lang, v: { he: string; en: string }) {
-  const s = v?.[lang] ?? "";
-  return s?.trim() ? s : v.he || v.en;
-}
 
 type SolutionBlock = {
   id: string;
@@ -171,7 +167,7 @@ export function HomepageSolutions(props: {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   function handleRequestPackage(solution: SolutionBlock, pkgTitle?: string) {
-    const base = pick(lang, solution.whatsappMessage);
+    const base = pickL10n(lang, solution.whatsappMessage);
     const msg = pkgTitle ? `${base}\n${lang === "he" ? "חבילה" : "Package"}: ${pkgTitle}` : base;
     const url = buildWaMeUrl(WHATSAPP_PHONE, msg);
     openWhatsApp(url);
@@ -184,6 +180,7 @@ export function HomepageSolutions(props: {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
         {SOLUTION_BLOCKS.map((solution) => {
           const isExpanded = expandedId === solution.id;
+          const nicheConfig = getNicheConfig(solution.id);
           return (
             <div
               key={solution.id}
@@ -194,14 +191,14 @@ export function HomepageSolutions(props: {
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-2xl shrink-0">{solution.icon}</span>
                   <h3 className="text-base sm:text-lg font-bold text-white">
-                    {pick(lang, solution.title)}
+                    {pickL10n(lang, solution.title)}
                   </h3>
                 </div>
 
                 {/* Problem */}
                 <p className="text-xs text-white/50 mb-2">
                   <span className="text-[rgb(var(--red))]/80 font-medium">{t(lang, "solutionProblem")}:</span>{" "}
-                  {pick(lang, solution.problem)}
+                  {pickL10n(lang, solution.problem)}
                 </p>
 
                 {/* What we shoot */}
@@ -211,7 +208,7 @@ export function HomepageSolutions(props: {
                     {solution.whatWeShoot.map((item, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-white/70">
                         <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">•</span>
-                        {pick(lang, item)}
+                        {pickL10n(lang, item)}
                       </li>
                     ))}
                   </ul>
@@ -220,7 +217,7 @@ export function HomepageSolutions(props: {
                 {/* Result */}
                 <p className="text-xs text-white/50 mb-3">
                   <span className="text-green-400/80 font-medium">{t(lang, "solutionWhatYouGet")}:</span>{" "}
-                  {pick(lang, solution.result)}
+                  {pickL10n(lang, solution.result)}
                 </p>
 
                 {/* Action buttons */}
@@ -244,7 +241,7 @@ export function HomepageSolutions(props: {
                 </div>
               </div>
 
-              {/* Expanded packages inside the solution */}
+              {/* Expanded canonical packages inside the solution */}
               {isExpanded && packageDetails.length > 0 && (
                 <div className="border-t border-white/10 px-5 sm:px-6 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
                   <h4 className="text-xs font-semibold text-[rgb(var(--red))] mb-2">
@@ -253,44 +250,65 @@ export function HomepageSolutions(props: {
                   {PACKAGE_IDS.map((pkgId) => {
                     const detail = packageDetails.find((d) => d.id === pkgId);
                     if (!detail) return null;
+
+                    const isRecommended = nicheConfig?.recommended === pkgId;
+                    const nicheBullets = nicheConfig?.nicheBullets[pkgId];
+
                     return (
                       <div
                         key={pkgId}
-                        className="rounded-lg border border-white/10 bg-white/[0.03] p-3"
+                        className={[
+                          "rounded-lg border p-3",
+                          isRecommended
+                            ? "border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/[0.06]"
+                            : "border-white/10 bg-white/[0.03]",
+                        ].join(" ")}
                       >
                         <div className="flex items-center justify-between gap-2 flex-wrap">
-                          <div>
-                            <span className="text-sm font-bold text-white">{pick(lang, detail.title)}</span>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-bold text-white">{pickL10n(lang, detail.title)}</span>
+                            {isRecommended && (
+                              <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/15 px-2 py-0.5 text-white/90 font-medium">
+                                {t(lang, "solutionRecommended")}
+                              </span>
+                            )}
                             {detail.priceFrom > 0 && (
-                              <span className="text-xs text-white/50 ml-2">
+                              <span className="text-xs text-white/50">
                                 {t(lang, "fromPrice")}₪{detail.priceFrom.toLocaleString()}
                               </span>
                             )}
                           </div>
                           <button
                             type="button"
-                            onClick={() => handleRequestPackage(solution, pick(lang, detail.title))}
-                            className="shrink-0 rounded-lg border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-3 py-1 text-[11px] font-medium text-white hover:bg-[rgb(var(--red))]/25 transition-all"
+                            onClick={() => handleRequestPackage(solution, pickL10n(lang, detail.title))}
+                            className={[
+                              "shrink-0 rounded-lg px-3 py-1 text-[11px] font-medium text-white transition-all",
+                              isRecommended
+                                ? "border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 hover:bg-[rgb(var(--red))]/25"
+                                : "border border-white/15 bg-white/[0.06] hover:bg-white/[0.12]",
+                            ].join(" ")}
                           >
                             {t(lang, "solutionRequestPackage")}
                           </button>
                         </div>
+
+                        {/* Niche-specific bullets */}
+                        {nicheBullets && nicheBullets.length > 0 && (
+                          <ul className="mt-1.5 space-y-0.5">
+                            {nicheBullets.map((bullet, i) => (
+                              <li key={i} className="flex items-start gap-1.5 text-[11px] text-white/65">
+                                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✓</span>
+                                {pickL10n(lang, bullet)}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+
+                        {/* Best for */}
                         <p className="text-[11px] text-white/50 mt-1">
                           <span className="text-white/60 font-medium">{t(lang, "solutionBestFor")}:</span>{" "}
-                          {pick(lang, detail.bestFor)}
+                          {pickL10n(lang, detail.bestFor)}
                         </p>
-                        {detail.pills.length > 0 && (
-                          <div className="mt-1.5 flex flex-wrap gap-1">
-                            {detail.pills.slice(0, 4).map((pill, i) => (
-                              <span
-                                key={i}
-                                className="text-[10px] rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-white/55"
-                              >
-                                {pick(lang, pill)}
-                              </span>
-                            ))}
-                          </div>
-                        )}
                       </div>
                     );
                   })}

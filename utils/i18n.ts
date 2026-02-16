@@ -144,6 +144,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionRequestPackage: "לבקש חבילה זו",
     solutionPackages: "חבילות",
     solutionBestFor: "מתאים ל",
+    solutionRecommended: "מומלץ",
 
     priceEstimate: "הערכה",
     selectedLabel: "נבחר",
@@ -372,6 +373,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionRequestPackage: "Request this package",
     solutionPackages: "Packages",
     solutionBestFor: "Best for",
+    solutionRecommended: "Recommended",
 
     priceEstimate: "estimate",
     selectedLabel: "Selected",
