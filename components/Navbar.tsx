@@ -9,8 +9,8 @@ import { Logo } from "@/components/Logo";
 /** Single source of truth for navigation items (used by both desktop and mobile). */
 export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] = [
   { labelKey: "navExamples", href: "/#catalog", useLink: true },
-  { labelKey: "navPricing", href: "/#packages" },
   { labelKey: "navSolutions", href: "/#solutions", useLink: true },
+  { labelKey: "navPricing", href: "/#packages" },
   { labelKey: "navContact", href: "#contact" },
 ];
 
