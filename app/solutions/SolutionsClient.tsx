@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { SolutionItem } from "@/content/solutions";
+import type { PricingConfig } from "@/types/pricing";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SolutionCard } from "@/components/SolutionCard";
@@ -11,7 +13,11 @@ import { Section } from "@/components/Section";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 
-export function SolutionsClient(props: { solutions: SolutionItem[] }) {
+export function SolutionsClient(props: {
+  solutions: SolutionItem[];
+  pricing?: PricingConfig;
+  discountConfig?: DiscountConfig;
+}) {
   const [lang, setLang] = useLocalStorageState<Lang>(STORAGE_KEY_LANG, DEFAULT_LANG);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
@@ -59,6 +65,8 @@ export function SolutionsClient(props: { solutions: SolutionItem[] }) {
           lang={lang}
           item={selected}
           onClose={() => setSelectedSlug(null)}
+          pricing={props.pricing}
+          discountConfig={props.discountConfig}
         />
       )}
 

@@ -210,6 +210,8 @@ export function ClientPage(props: Props) {
           catalogTitle={selectedCatalog.title}
           catalogSubtitle={selectedCatalog.shortDescription}
           onClose={closePanel}
+          pricing={props.pricing}
+          discountConfig={props.discountConfig}
         />
       ) : selectedCatalog ? (
         <MiniScreenPanel

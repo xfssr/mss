@@ -26,6 +26,7 @@ type BookingDrawerProps = {
   onClose: () => void;
   pricing?: PricingConfig;
   discountConfig?: DiscountConfig;
+  categoryLabel?: string;
 } & (SourcePackage | SourceSolution);
 
 type AvailStatus =
@@ -100,7 +101,7 @@ function getBasePrice(pkg: string, pricing?: PricingConfig): number {
 }
 
 export function BookingDrawer(props: BookingDrawerProps) {
-  const { lang, open, onClose, pricing, discountConfig } = props;
+  const { lang, open, onClose, pricing, discountConfig, categoryLabel } = props;
   const s = L[lang];
 
   const [date, setDate] = useState("");
@@ -152,6 +153,9 @@ export function BookingDrawer(props: BookingDrawerProps) {
   // Selected tags
   const selectedTags = useMemo(() => {
     const tags: string[] = [];
+    if (categoryLabel) {
+      tags.push(categoryLabel);
+    }
     if (props.sourceType === "package" && props.pkg) {
       tags.push(PKG_LABELS[props.pkg]?.[lang] ?? props.pkg);
     }
@@ -161,7 +165,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
     if (smmOn) tags.push("SMM");
     if (targetOn) tags.push("Target Ads");
     return tags;
-  }, [props, lang, smmOn, targetOn]);
+  }, [props, lang, smmOn, targetOn, categoryLabel]);
 
   // Reset state when drawer opens
   useEffect(() => {
