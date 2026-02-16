@@ -220,6 +220,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     howCompactStep1: "בחרו קטלוג",
     howCompactStep2: "בחרו חבילה",
     howCompactStep3: "שלחו ב-WhatsApp",
+
+    // Mobile CTA
+    letsStart: "Давай начнем",
+
+    // Mobile nav
+    navPricing: "מחירים",
+    menuOpen: "תפריט",
+    menuClose: "סגור",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -432,6 +440,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     howCompactStep1: "Choose catalog",
     howCompactStep2: "Pick a package",
     howCompactStep3: "Send via WhatsApp",
+
+    // Mobile CTA
+    letsStart: "Let's start",
+
+    // Mobile nav
+    navPricing: "Pricing",
+    menuOpen: "Menu",
+    menuClose: "Close",
   },
 };
 

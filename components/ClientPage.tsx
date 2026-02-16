@@ -155,6 +155,26 @@ export function ClientPage(props: Props) {
     setBookingDrawerOpen(true);
   }
 
+  function scrollToCatalogAndPreview() {
+    const el = document.getElementById("catalog");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      const openPreview = () => {
+        if (portfolioCatalogs.length > 0) {
+          setPreviewSlug(portfolioCatalogs[0].slug);
+        }
+      };
+
+      // Use scrollend event when supported, with a timeout fallback
+      if ("onscrollend" in window) {
+        window.addEventListener("scrollend", openPreview, { once: true });
+      } else {
+        setTimeout(openPreview, 600);
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
@@ -168,7 +188,19 @@ export function ClientPage(props: Props) {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle)}</h1>
               <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{pickL10n(lang, props.settings.heroSubtitle)}</p>
 
-              <div className="mt-8 flex flex-col sm:flex-row gap-3">
+              {/* Mobile: single primary CTA */}
+              <div className="mt-8 sm:hidden">
+                <button
+                  type="button"
+                  onClick={scrollToCatalogAndPreview}
+                  className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                >
+                  {t(lang, "letsStart")}
+                </button>
+              </div>
+
+              {/* Desktop: full CTA set */}
+              <div className="mt-8 hidden sm:flex flex-row gap-3">
                 <a
                   href="#catalog"
                   className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
@@ -488,25 +520,6 @@ export function ClientPage(props: Props) {
         discountConfig={props.discountConfig}
         packageDetail={props.packageDetails.find((d) => d.id === bookingPkg)}
       />
-
-      {/* Sticky mobile CTA bar — 2 buttons */}
-      <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">
-        <div className="flex gap-2">
-          <a
-            href="#catalog"
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
-          >
-            {t(lang, "stickyCatalogs")}
-          </a>
-          <button
-            type="button"
-            onClick={onSendWhatsApp}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
-          >
-            {t(lang, "stickyWhatsApp")}
-          </button>
-        </div>
-      </div>
     </div>
   );
 }
