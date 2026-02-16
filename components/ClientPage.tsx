@@ -160,6 +160,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="/solutions"
+                  title={t(lang, "navSolutions")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "navSolutions")}
@@ -167,6 +168,7 @@ export function ClientPage(props: Props) {
 
                 <a
                   href="#packages"
+                  title={t(lang, "heroCtaPricing")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaPricing")}
@@ -175,6 +177,7 @@ export function ClientPage(props: Props) {
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
+                  title={t(lang, "heroCtaOrder")}
                   className="hidden sm:inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "heroCtaOrder")}
