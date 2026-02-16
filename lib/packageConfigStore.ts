@@ -168,6 +168,8 @@ export async function getPackageDetails(): Promise<PackageDetail[]> {
         const override = stored.find((s) => s.id === def.id);
         return override ? mergePackage(def, override) : def;
       });
+  // Filter out inactive packages. Using `!== false` so packages without
+  // an explicit `active` field (e.g., legacy stored overrides) remain visible.
   return all.filter((p) => p.active !== false);
 }
 

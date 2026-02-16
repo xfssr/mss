@@ -375,7 +375,7 @@ export function ClientPage(props: Props) {
                   {/* First-order discount in card */}
                   {props.discountConfig.enabled && (
                     <div className="text-[11px] text-green-400/80">
-                      🎁 {lang === "he" ? props.discountConfig.labelHe : props.discountConfig.labelEn} ({props.discountConfig.percent}%)
+                      🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })} ({props.discountConfig.percent}%)
                     </div>
                   )}
                 </div>
@@ -397,7 +397,7 @@ export function ClientPage(props: Props) {
         {/* First-time discount note */}
         {props.discountConfig.enabled && (
           <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
-            🎁 {lang === "he" ? props.discountConfig.labelHe : props.discountConfig.labelEn}
+            🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
             {" — "}
             {props.discountConfig.percent}%
             {" "}
