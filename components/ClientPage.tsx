@@ -159,13 +159,19 @@ export function ClientPage(props: Props) {
     const el = document.getElementById("catalog");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-      // Auto-open first category preview after scroll completes
-      setTimeout(() => {
-        el.focus({ preventScroll: true });
+
+      const openPreview = () => {
         if (portfolioCatalogs.length > 0) {
           setPreviewSlug(portfolioCatalogs[0].slug);
         }
-      }, 600);
+      };
+
+      // Use scrollend event when supported, with a timeout fallback
+      if ("onscrollend" in window) {
+        window.addEventListener("scrollend", openPreview, { once: true });
+      } else {
+        setTimeout(openPreview, 600);
+      }
     }
   }
 

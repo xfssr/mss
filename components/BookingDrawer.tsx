@@ -317,8 +317,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
           lang === "he" ? "תודה!" : "Thanks!",
         ].filter(Boolean);
 
-        const text = encodeURIComponent(lines.join("\n"));
-        const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${text}`;
+        const waUrl = buildWaMeUrl(WHATSAPP_PHONE, lines.join("\n"));
         openWhatsApp(waUrl);
       } else {
         setHold({ kind: "error", message: json.reason ?? "hold_failed" });
