@@ -103,6 +103,7 @@ export function CatalogCard(props: {
           <a
             href="#packages"
             className="inline-flex items-center gap-1 text-xs text-[rgb(var(--red))]/80 hover:text-[rgb(var(--red))] transition-colors"
+            aria-label={props.lang === "he" ? "עבור לחבילות" : "Navigate to packages section"}
           >
             {t(props.lang, "goToPackages")} →
           </a>
