@@ -116,9 +116,17 @@ export async function updateHeroMedia(id: number, formData: FormData) {
 }
 
 export async function deleteHeroMedia(id: number) {
-  const { count } = await prisma.heroMedia.deleteMany({ where: { id } });
-  if (count === 0 && process.env.NODE_ENV === "development") {
-    console.warn(`[admin] heroMedia id=${id} already deleted`);
+  try {
+    const { count } = await prisma.heroMedia.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] heroMedia id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteHeroMedia] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
   }
   revalidatePath("/");
   revalidatePath("/admin");
@@ -166,9 +174,17 @@ export async function updatePriceItem(id: number, formData: FormData) {
 }
 
 export async function deletePriceItem(id: number) {
-  const { count } = await prisma.priceItem.deleteMany({ where: { id } });
-  if (count === 0 && process.env.NODE_ENV === "development") {
-    console.warn(`[admin] priceItem id=${id} already deleted`);
+  try {
+    const { count } = await prisma.priceItem.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] priceItem id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deletePriceItem] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
   }
   revalidatePath("/");
   revalidatePath("/admin");
@@ -322,9 +338,17 @@ export async function updateExample(id: number, formData: FormData) {
 }
 
 export async function deleteExample(id: number) {
-  const { count } = await prisma.example.deleteMany({ where: { id } });
-  if (count === 0 && process.env.NODE_ENV === "development") {
-    console.warn(`[admin] example id=${id} already deleted`);
+  try {
+    const { count } = await prisma.example.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] example id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteExample] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
   }
   revalidatePath("/");
   revalidatePath("/admin");
