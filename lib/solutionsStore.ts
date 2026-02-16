@@ -34,7 +34,7 @@ export async function saveSolutions(solutions: SolutionItem[]): Promise<void> {
       if (row?.contentOverridesJson) {
         overrides = JSON.parse(row.contentOverridesJson) ?? {};
       }
-    } catch { /* ignore parse errors */ }
+    } catch { /* parse error, use empty overrides */ }
 
     overrides.solutions = solutions;
 

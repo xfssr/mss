@@ -132,7 +132,7 @@ export function SolutionDetailModal(props: {
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
               {lang === "he" ? "טווח מחירים" : "Pricing range"}
             </h3>
-            <div className={`grid gap-2 ${item.pricingTiers.length === 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+            <div className={`grid gap-2 ${item.pricingTiers.length <= 2 ? "grid-cols-2" : "grid-cols-3"}`}>
               {item.pricingTiers.map((tier, i) => (
                 <div key={i} className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-center">
                   <div className="text-xs text-white/50 font-medium">{tier.label}</div>
