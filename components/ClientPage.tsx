@@ -255,33 +255,6 @@ export function ClientPage(props: Props) {
         />
       ) : null}
 
-      {/* ===== Ready Solutions section ===== */}
-      {props.solutions.length > 0 && (
-        <Section id="solutions" title={t(lang, "sectionSolutions")}>
-          <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-            {props.solutions.map((item) => (
-              <SolutionCard
-                key={item.slug}
-                lang={lang}
-                item={item}
-                onSelect={() => setSelectedSolutionSlug(item.slug)}
-              />
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {selectedSolution && (
-        <SolutionDetailModal
-          lang={lang}
-          item={selectedSolution}
-          onClose={() => setSelectedSolutionSlug(null)}
-          pricing={props.pricing}
-          discountConfig={props.discountConfig}
-        />
-      )}
-
       {/* ===== Package selection section (gated until user interacts with catalog) ===== */}
       {packagesVisible && (
       <Section id="packages" title={t(lang, "choosePackage")}>
@@ -462,6 +435,33 @@ export function ClientPage(props: Props) {
           </p>
         )}
       </Section>
+      )}
+
+      {/* ===== Ready Solutions section ===== */}
+      {props.solutions.length > 0 && (
+        <Section id="solutions" title={t(lang, "sectionSolutions")}>
+          <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+            {props.solutions.map((item) => (
+              <SolutionCard
+                key={item.slug}
+                lang={lang}
+                item={item}
+                onSelect={() => setSelectedSolutionSlug(item.slug)}
+              />
+            ))}
+          </div>
+        </Section>
+      )}
+
+      {selectedSolution && (
+        <SolutionDetailModal
+          lang={lang}
+          item={selectedSolution}
+          onClose={() => setSelectedSolutionSlug(null)}
+          pricing={props.pricing}
+          discountConfig={props.discountConfig}
+        />
       )}
 
       <Section id="about" title={t(lang, "sectionAbout")}>
