@@ -747,7 +747,7 @@ export default async function AdminPage() {
 
         {/* ─── Solutions ─── */}
         <AdminAccordion title="Solutions (ready-made packages)" id="solutions" count={solutions.length}>
-          <p className="text-xs text-white/40 mb-3">Edit solutions displayed on /solutions: titles, subtitles, pills, bullets, pricing, FAQ, CTA labels, WhatsApp templates (he/en). Toggle active/inactive.</p>
+          <p className="text-xs text-white/40 mb-3">Edit solutions displayed on the homepage: titles, subtitles, pills, bullets, pricing, FAQ, CTA labels, WhatsApp templates (he/en). Toggle active/inactive.</p>
           <AdminSolutionEditor solutions={solutions} />
         </AdminAccordion>
 

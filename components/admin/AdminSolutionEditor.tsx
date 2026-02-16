@@ -73,7 +73,7 @@ export function AdminSolutionEditor(props: { solutions: SolutionItem[] }) {
             checked={d.isActive}
             onChange={(e) => updateField(slug, (x) => ({ ...x, isActive: e.target.checked }))}
           />
-          Active (visible on /solutions)
+          Active (visible on homepage)
         </label>
       </fieldset>
 
