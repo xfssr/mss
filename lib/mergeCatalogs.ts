@@ -19,7 +19,9 @@ export function mergeCatalogsWithDefaults(
 ): Catalog[] {
   const valid = dbCatalogs.filter(isValidCatalog);
   const dbSlugs = new Set(valid.map((c) => c.slug));
-  const missing = CATALOGS.filter((c) => !dbSlugs.has(c.slug) && isValidCatalog(c));
+  const missing = CATALOGS.filter(
+    (c) => !dbSlugs.has(c.slug) && isValidCatalog(c) && !(disabledSlugs && disabledSlugs.has(c.slug)),
+  );
   const merged = [...valid, ...missing];
   if (disabledSlugs && disabledSlugs.size > 0) {
     return merged.filter((c) => !disabledSlugs.has(c.slug));

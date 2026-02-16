@@ -5,73 +5,47 @@ export const CATALOGS: Catalog[] = [
     slug: "bars",
     title: {
       en: "Bars",
-      he: "מסעדות/ברים",
+      he: "ברים",
     },
     shortDescription: {
-      en: "Атмосфера, свет, коктейли — кадры, которые продают настроение.",
-      he: ""
+      en: "Atmosphere, light, cocktails — shots that sell the mood.",
+      he: "אווירה, תאורה, קוקטיילים — תמונות שמוכרות מצב רוח."
     },
     longDescription:
       {
-        en: "Съёмка баров и коктейльной культуры: интерьер, детали, люди в кадре, короткие клипы для Reels.\nПодходит для обновления меню, запусков и промо-ивентов.",
-        he: ""
+        en: "Bar and cocktail culture photography: interiors, details, people in frame, short clips for Reels.\nGreat for menu updates, launches, and promo events.",
+        he: "צילום ברים ותרבות קוקטיילים: אינטריור, פרטים, אנשים בקדר, קליפים קצרים לרילס.\nמתאים לעדכוני תפריט, השקות ואירועי קידום."
       },
     tags: ["Night", "Cocktails", "Reels"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
       id: i,
       order: i,
-      title: { en: `Bar shot ${i + 1}`, he: "" },
+      title: { en: `Bar shot ${i + 1}`, he: `תמונה ${i + 1}` },
       description: { en: "", he: "" },
       mediaType: "IMAGE" as const,
       mediaUrl: `https://picsum.photos/seed/bars-${i + 1}/960/640`,
     })),
   },
   {
-    slug: "restaurants",
-    title: {
-      en: "Restaurants",
-      he: ""
-    },
-    popular: true,
-    shortDescription: {
-      en: "Еда, подача и сервис — чистый визуал без лишнего шума.",
-      he: ""
-    },
-    longDescription:
-      {
-        en: "Контент для ресторанов: блюда, процесс, интерьер, портреты шефа и команды.\nСтавка на аккуратный свет, текстуры и понятный сторителлинг.",
-        he: ""
-      },
-    tags: ["Food", "Menu", "Brand"],
-    examples: Array.from({ length: 9 }).map((_, i) => ({
-      id: i,
-      order: i,
-      title: { en: `Restaurant frame ${i + 1}`, he: "" },
-      description: { en: "", he: "" },
-      mediaType: "IMAGE" as const,
-      mediaUrl: `https://picsum.photos/seed/restaurants-${i + 1}/960/640`,
-    })),
-  },
-  {
     slug: "hotels",
     title: {
       en: "Hotels",
-      he: ""
+      he: "מלונות"
     },
     shortDescription: {
-      en: "Номера, лобби, детали сервиса — премиальный, спокойный тон.",
-      he: ""
+      en: "Rooms, lobby, service details — premium, calm tone.",
+      he: "חדרים, לובי, פרטי שירות — טון פרימיום ורגוע."
     },
     longDescription:
       {
-        en: "Съёмка отелей и апартов: номера, общие зоны, детали, утро/вечер.\nПодходит для сайта, OTA карточек и бренд-коммуникаций.",
-        he: ""
+        en: "Hotel and apartment photography: rooms, common areas, details, morning/evening.\nGreat for websites, OTA listings, and brand communications.",
+        he: "צילום מלונות ודירות: חדרים, אזורים משותפים, פרטים, בוקר/ערב.\nמתאים לאתרים, כרטיסי OTA ותקשורת מותג."
       },
     tags: ["Hospitality", "Interior", "Premium"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
       id: i,
       order: i,
-      title: { en: `Hotel scene ${i + 1}`, he: "" },
+      title: { en: `Hotel scene ${i + 1}`, he: `תמונה ${i + 1}` },
       description: { en: "", he: "" },
       mediaType: "IMAGE" as const,
       mediaUrl: `https://picsum.photos/seed/hotels-${i + 1}/960/640`,
@@ -81,51 +55,25 @@ export const CATALOGS: Catalog[] = [
     slug: "events",
     title: {
       en: "Events",
-      he: ""
+      he: "אירועים"
     },
     shortDescription: {
-      en: "Репортаж + хайлайты — динамика без хаоса.",
-      he: ""
+      en: "Reportage + highlights — dynamic without chaos.",
+      he: "ריפורטאז׳ + היילייטס — דינמיקה בלי כאוס."
     },
     longDescription:
       {
-        en: "Съёмка мероприятий: репортаж, бренд-зоны, спикеры, эмоции, aftermovie-подход.\nФорматы: фото + короткие вертикальные видео.",
-        he: ""
+        en: "Event photography: reportage, brand zones, speakers, emotions, aftermovie approach.\nFormats: photo + short vertical videos.",
+        he: "צילום אירועים: ריפורטאז׳, אזורי מותג, דוברים, רגשות, גישת aftermovie.\nפורמטים: צילום + סרטונים קצרים אנכיים."
       },
     tags: ["Report", "Highlights", "People"],
     examples: Array.from({ length: 9 }).map((_, i) => ({
       id: i,
       order: i,
-      title: { en: `Event moment ${i + 1}`, he: "" },
+      title: { en: `Event moment ${i + 1}`, he: `תמונה ${i + 1}` },
       description: { en: "", he: "" },
       mediaType: "IMAGE" as const,
       mediaUrl: `https://picsum.photos/seed/events-${i + 1}/960/640`,
-    })),
-  },
-  {
-    slug: "real-estate",
-    title: {
-      en: "Real Estate",
-      he: ""
-    },
-    popular: true,
-    shortDescription: {
-      en: "Чистая геометрия, пространство и свет — продающее представление.",
-      he: ""
-    },
-    longDescription:
-      {
-        en: "Съёмка недвижимости: квартиры, виллы, коммерция.\nСтавка на перспективу, натуральный свет и понятную серию кадров.",
-        he: ""
-      },
-    tags: ["Property", "Wide", "Listing"],
-    examples: Array.from({ length: 9 }).map((_, i) => ({
-      id: i,
-      order: i,
-      title: { en: `Estate view ${i + 1}`, he: "" },
-      description: { en: "", he: "" },
-      mediaType: "IMAGE" as const,
-      mediaUrl: `https://picsum.photos/seed/estate-${i + 1}/960/640`,
     })),
   },
 ];
