@@ -5,6 +5,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { SAME_AS, getSiteUrl } from "@/config/constants";
 import { BookingSectionToggle } from "@/components/BookingSectionToggle";
+import { getPackageDetails } from "@/lib/packageConfigStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -127,6 +128,8 @@ export default async function ProductPage(props: {
   const prices = await prisma.priceItem.findMany({
     orderBy: [{ order: "asc" }, { id: "asc" }],
   });
+
+  const packageDetails = await getPackageDetails();
 
   const offers = prices
     .map((p: any) => {
@@ -298,8 +301,29 @@ export default async function ProductPage(props: {
     from: lang === "he" ? "החל מ-" : "From",
     noPackages: lang === "he" ? "עדיין אין חבילות ב-DB. הוסיפו ב-Admin → Prices." : "No packages in DB yet. Add them in Admin → Prices.",
     faqTitle: lang === "he" ? "שאלות נפוצות" : "FAQ",
-    infoNote: lang === "he" ? "זו לא הזמנה. כאן רק מידע ומחירים." : "This is not an order. Information and pricing only.",
+    infoNote: lang === "he" ? "זו לא הזמנה — מידע ומחירים בלבד." : "This is not an order — information and pricing only.",
+    compareTitle: lang === "he" ? "השוואת חבילות" : "Compare packages",
+    reels: lang === "he" ? "רילס" : "Reels",
+    photos: lang === "he" ? "תמונות" : "Photos",
+    locations: lang === "he" ? "מיקומים" : "Locations",
+    delivery: lang === "he" ? "אספקה" : "Delivery",
+    bestFor: lang === "he" ? "מתאים ל" : "Best for",
+    goToCatalogs: lang === "he" ? "לקטלוגים" : "Go to catalogs",
+    whatsappCta: lang === "he" ? "WhatsApp עם הודעה מוכנה" : "WhatsApp with prefilled message",
   };
+
+  /** Pick localized value from {he,en} */
+  function pickPkg(v: { he: string; en: string }) {
+    const s = (lang === "en" ? v.en : v.he).trim();
+    return s || v.he.trim() || v.en.trim();
+  }
+
+  const whatsappMsg = encodeURIComponent(
+    lang === "he"
+      ? "היי, אני מעוניין לשמוע על חבילות תוכן"
+      : "Hi, I'd like to learn about content packages",
+  );
+  const waLink = `https://wa.me/${whatsappPhone}?text=${whatsappMsg}`;
 
   return (
     <main
@@ -314,7 +338,7 @@ export default async function ProductPage(props: {
       />
 
       <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/[0.06] p-6 sm:p-10">
-        {/* simple lang switch */}
+        {/* lang switch */}
         <div className="flex items-center justify-end gap-2">
           <a
             href="/product?lang=he"
@@ -350,14 +374,48 @@ export default async function ProductPage(props: {
               {ui.subtitle}
             </p>
 
-            <p className="mt-2 text-xs text-white/50">
+            {/* Info badge */}
+            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-1.5 text-xs text-[rgb(var(--blue))]">
+              <span aria-hidden="true">ℹ️</span>
               {ui.infoNote}
-            </p>
+            </div>
 
             <div className="mt-3 text-sm text-white/75">
               {ui.from} <span className="font-semibold text-white">₪ {lowestOffer}</span>
             </div>
 
+            {/* Comparison blocks (mobile-first stacked) */}
+            {packageDetails.length > 0 && (
+              <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-medium text-white/90 mb-3">{ui.compareTitle}</div>
+                <div className="space-y-3">
+                  {packageDetails.map((pkg) => (
+                    <div key={pkg.id} className="rounded-xl border border-white/10 bg-black/25 p-3">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="text-sm font-semibold text-white">{pickPkg(pkg.title)}</div>
+                        <div className="text-sm font-semibold text-[rgb(var(--blue))] whitespace-nowrap">
+                          ₪{pkg.priceFrom.toLocaleString()}+
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                        <div className="text-white/50">{ui.reels}</div>
+                        <div className="text-white/80">{pickPkg(pkg.pills[0] ?? { he: "—", en: "—" })}</div>
+                        <div className="text-white/50">{ui.photos}</div>
+                        <div className="text-white/80">{pickPkg(pkg.pills[2] ?? pkg.pills[1] ?? { he: "—", en: "—" })}</div>
+                        <div className="text-white/50">{ui.locations}</div>
+                        <div className="text-white/80">{pickPkg(pkg.locations)}</div>
+                        <div className="text-white/50">{ui.delivery}</div>
+                        <div className="text-white/80">{pickPkg(pkg.deliveryTime)}</div>
+                        <div className="text-white/50">{ui.bestFor}</div>
+                        <div className="text-white/80 col-span-1">{pickPkg(pkg.bestFor)}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* DB price items */}
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">{ui.packages}</div>
 
@@ -404,20 +462,23 @@ export default async function ProductPage(props: {
 
             <BookingSectionToggle lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} pkgFromUrl={pkgFromUrl} />
 
+            {/* CTAs */}
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/#catalog"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-5 py-3 text-sm text-white/90 font-medium hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
               >
-                {ui.viewCatalogs}
+                {ui.goToCatalogs}
               </Link>
 
-              <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10] hover:border-white/20 transition-all"
               >
-                {ui.contact}
-              </Link>
+                {ui.whatsappCta}
+              </a>
             </div>
           </div>
         </div>
