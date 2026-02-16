@@ -108,11 +108,39 @@ async function readOverrides(): Promise<Record<string, unknown>> {
   }
 }
 
+function mergeL10n(
+  def: { he: string; en: string },
+  override?: Partial<{ he: string; en: string }>,
+): { he: string; en: string } {
+  if (!override || typeof override !== "object") return def;
+  return {
+    he: typeof override.he === "string" ? override.he : def.he,
+    en: typeof override.en === "string" ? override.en : def.en,
+  };
+}
+
+function mergeL10nArr(
+  def: { he: string; en: string }[],
+  override?: Partial<{ he: string; en: string }>[],
+): { he: string; en: string }[] {
+  if (!Array.isArray(override) || override.length === 0) return def;
+  return override.map((o, i) => mergeL10n(def[i] ?? { he: "", en: "" }, o));
+}
+
 function mergePackage(defaults: PackageDetail, overrides: Partial<PackageDetail>): PackageDetail {
   return {
-    ...defaults,
-    ...overrides,
     id: defaults.id,
+    title: mergeL10n(defaults.title, overrides.title),
+    subtitle: mergeL10n(defaults.subtitle, overrides.subtitle),
+    priceFrom: typeof overrides.priceFrom === "number" ? overrides.priceFrom : defaults.priceFrom,
+    pills: mergeL10nArr(defaults.pills, overrides.pills),
+    shootTime: mergeL10n(defaults.shootTime, overrides.shootTime),
+    deliveryTime: mergeL10n(defaults.deliveryTime, overrides.deliveryTime),
+    locations: mergeL10n(defaults.locations, overrides.locations),
+    revisions: mergeL10n(defaults.revisions, overrides.revisions),
+    bestFor: mergeL10n(defaults.bestFor, overrides.bestFor),
+    whatYouGet: mergeL10nArr(defaults.whatYouGet, overrides.whatYouGet),
+    addOns: mergeL10nArr(defaults.addOns, overrides.addOns),
   };
 }
 

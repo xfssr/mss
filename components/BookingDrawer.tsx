@@ -102,7 +102,7 @@ function getBasePrice(pkg: string, pricing?: PricingConfig): number {
   }
 }
 
-function pick(lang: Lang, v: { he: string; en: string }) {
+function pickL10n(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
   return s?.trim() ? s : v.he;
 }
@@ -387,18 +387,18 @@ export function BookingDrawer(props: BookingDrawerProps) {
           {packageDetail && props.sourceType === "package" && (
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2">
               <div className="text-xs font-semibold text-[rgb(var(--blue))]">
-                {pick(lang, packageDetail.title)}
+                {pickL10n(lang, packageDetail.title)}
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {packageDetail.pills.map((pill, i) => (
                   <span key={i} className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2 py-0.5 text-white/60">
-                    {pick(lang, pill)}
+                    {pickL10n(lang, pill)}
                   </span>
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                <div className="text-white/40">{lang === "he" ? "זמן צילום" : "Shoot"}: <span className="text-white/70">{pick(lang, packageDetail.shootTime)}</span></div>
-                <div className="text-white/40">{lang === "he" ? "אספקה" : "Delivery"}: <span className="text-white/70">{pick(lang, packageDetail.deliveryTime)}</span></div>
+                <div className="text-white/40">{lang === "he" ? "זמן צילום" : "Shoot"}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
+                <div className="text-white/40">{lang === "he" ? "אספקה" : "Delivery"}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
               </div>
               {showDiscount && discountConfig && (
                 <div className="text-[10px] text-green-400">
