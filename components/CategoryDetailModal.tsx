@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
 import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
@@ -105,7 +106,7 @@ export function CategoryDetailModal(props: {
           {/* B) What you get */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "מה מקבלים" : "What you get"}
+              {t(lang, "sectionWhatYouGet")}
             </h3>
             <ul className="space-y-1.5">
               {detail.whatYouGet.map((item, i) => (
@@ -120,7 +121,7 @@ export function CategoryDetailModal(props: {
           {/* C) Best for */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
-              {lang === "he" ? "מתאים ל" : "Best for"}
+              {t(lang, "sectionBestFor")}
             </h3>
             <p className="text-sm text-white/70">{pick(lang, detail.bestFor)}</p>
           </section>
@@ -128,7 +129,7 @@ export function CategoryDetailModal(props: {
           {/* D) Process timeline */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
-              {lang === "he" ? "התהליך" : "Process"}
+              {t(lang, "sectionProcess")}
             </h3>
             <div className="flex items-start gap-2 sm:gap-4">
               {detail.process.map((step, i) => (
@@ -145,7 +146,7 @@ export function CategoryDetailModal(props: {
           {/* E) Pricing range */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "טווח מחירים" : "Pricing range"}
+              {t(lang, "sectionPricingRange")}
             </h3>
             <div className="grid grid-cols-3 gap-2">
               {detail.pricingTiers.map((tier, i) => (
@@ -162,7 +163,7 @@ export function CategoryDetailModal(props: {
           {detail.whyThisWorks.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "למה זה עובד" : "Why this works"}
+                {t(lang, "sectionWhyThisWorks")}
               </h3>
               <ul className="space-y-1">
                 {detail.whyThisWorks.map((item, i) => (
@@ -179,7 +180,7 @@ export function CategoryDetailModal(props: {
           {detail.faq.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "שאלות נפוצות" : "FAQ"}
+                {t(lang, "sectionFaq")}
               </h3>
               <div className="space-y-1">
                 {detail.faq.map((item, i) => (
@@ -205,7 +206,7 @@ export function CategoryDetailModal(props: {
           {detail.socialProof.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "הוכחה חברתית" : "Social proof"}
+                {t(lang, "sectionSocialProof")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {detail.socialProof.map((card, i) => (

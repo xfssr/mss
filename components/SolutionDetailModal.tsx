@@ -6,6 +6,7 @@ import type { Lang } from "@/utils/i18n";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
+import { t } from "@/utils/i18n";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
 
@@ -105,7 +106,7 @@ export function SolutionDetailModal(props: {
           {/* What you get */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "מה מקבלים" : "What you get"}
+              {t(lang, "sectionWhatYouGet")}
             </h3>
             <ul className="space-y-1.5">
               {item.whatYouGet.map((bullet, i) => (
@@ -120,7 +121,7 @@ export function SolutionDetailModal(props: {
           {/* Best for */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
-              {lang === "he" ? "מתאים ל" : "Best for"}
+              {t(lang, "sectionBestFor")}
             </h3>
             <p className="text-sm text-white/70">{pick(lang, item.bestFor)}</p>
           </section>
@@ -128,7 +129,7 @@ export function SolutionDetailModal(props: {
           {/* Process timeline */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
-              {lang === "he" ? "התהליך" : "Process"}
+              {t(lang, "sectionProcess")}
             </h3>
             <div className="flex items-start gap-2 sm:gap-4">
               {item.process.map((step, i) => (
@@ -145,7 +146,7 @@ export function SolutionDetailModal(props: {
           {/* Pricing range */}
           <section>
             <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-              {lang === "he" ? "טווח מחירים" : "Pricing range"}
+              {t(lang, "sectionPricingRange")}
             </h3>
             <div className={`grid gap-2 ${item.pricingTiers.length <= 2 ? "grid-cols-2" : "grid-cols-3"}`}>
               {item.pricingTiers.map((tier, i) => (
@@ -162,7 +163,7 @@ export function SolutionDetailModal(props: {
           {item.whyThisWorks.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "למה זה עובד" : "Why this works"}
+                {t(lang, "sectionWhyThisWorks")}
               </h3>
               <ul className="space-y-1">
                 {item.whyThisWorks.map((bullet, i) => (
@@ -179,7 +180,7 @@ export function SolutionDetailModal(props: {
           {item.faq.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "שאלות נפוצות" : "FAQ"}
+                {t(lang, "sectionFaq")}
               </h3>
               <div className="space-y-1">
                 {item.faq.map((faqItem, i) => (
@@ -205,7 +206,7 @@ export function SolutionDetailModal(props: {
           {item.socialProof.length > 0 && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
-                {lang === "he" ? "הוכחה חברתית" : "Social proof"}
+                {t(lang, "sectionSocialProof")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {item.socialProof.map((card, i) => (

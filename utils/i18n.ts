@@ -158,6 +158,22 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     howStep1Btn: "לראות דוגמאות",
     howStep2Btn: "לבחור חבילה",
     howStep3Btn: "להזמין",
+
+    sectionWhatYouGet: "מה מקבלים",
+    sectionBestFor: "מתאים ל",
+    sectionProcess: "התהליך",
+    sectionPricingRange: "טווח מחירים",
+    sectionWhyThisWorks: "למה זה עובד",
+    sectionFaq: "שאלות נפוצות",
+    sectionSocialProof: "הוכחה חברתית",
+
+    labelShootTime: "זמן צילום",
+    labelDelivery: "זמן אספקה",
+    labelLocations: "מיקומים",
+    labelRevisions: "תיקונים",
+
+    labelShoot: "זמן צילום",
+    labelDeliveryShort: "אספקה",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -308,6 +324,22 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     howStep1Btn: "View examples",
     howStep2Btn: "Choose package",
     howStep3Btn: "Order",
+
+    sectionWhatYouGet: "What you get",
+    sectionBestFor: "Best for",
+    sectionProcess: "Process",
+    sectionPricingRange: "Pricing range",
+    sectionWhyThisWorks: "Why this works",
+    sectionFaq: "FAQ",
+    sectionSocialProof: "Social proof",
+
+    labelShootTime: "Shoot time",
+    labelDelivery: "Delivery",
+    labelLocations: "Locations",
+    labelRevisions: "Revisions",
+
+    labelShoot: "Shoot",
+    labelDeliveryShort: "Delivery",
   },
 };
 

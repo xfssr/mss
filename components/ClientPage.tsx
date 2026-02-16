@@ -307,7 +307,7 @@ export function ClientPage(props: Props) {
                   {/* What you get */}
                   <div>
                     <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1.5">
-                      {lang === "he" ? "מה מקבלים" : "What you get"}
+                      {t(lang, "sectionWhatYouGet")}
                     </h4>
                     <ul className="space-y-1">
                       {detail.whatYouGet.map((item, i) => (
@@ -322,19 +322,19 @@ export function ClientPage(props: Props) {
                   {/* Details grid */}
                   <div className="grid grid-cols-2 gap-2">
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן צילום" : "Shoot time"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן אספקה" : "Delivery"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "מיקומים" : "Locations"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelLocations")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.locations)}</div>
                     </div>
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{lang === "he" ? "תיקונים" : "Revisions"}</div>
+                      <div className="text-[10px] text-white/40">{t(lang, "labelRevisions")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.revisions)}</div>
                     </div>
                   </div>
@@ -342,7 +342,7 @@ export function ClientPage(props: Props) {
                   {/* Best for */}
                   <div>
                     <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1">
-                      {lang === "he" ? "מתאים ל" : "Best for"}
+                      {t(lang, "sectionBestFor")}
                     </h4>
                     <p className="text-xs text-white/65">{pickL10n(lang, detail.bestFor)}</p>
                   </div>

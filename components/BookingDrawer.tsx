@@ -453,8 +453,8 @@ export function BookingDrawer(props: BookingDrawerProps) {
                 ))}
               </div>
               <div className="grid grid-cols-2 gap-1.5 text-[10px]">
-                <div className="text-white/40">{lang === "he" ? "זמן צילום" : "Shoot"}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
-                <div className="text-white/40">{lang === "he" ? "אספקה" : "Delivery"}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
+                <div className="text-white/40">{t(lang, "labelShoot")}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
+                <div className="text-white/40">{t(lang, "labelDeliveryShort")}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
               </div>
               {showDiscount && discountConfig && (
                 <div className="text-[10px] text-green-400">
