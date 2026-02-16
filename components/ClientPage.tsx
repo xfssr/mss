@@ -47,20 +47,31 @@ function pickL10n(lang: Lang, v: { he: string; en: string }) {
   return s?.trim() ? s : v.he;
 }
 
+const ICON_MAP: Record<string, string> = {
+  camera: "📷",
+  briefcase: "💼",
+  calendar: "📅",
+  hammer: "🔨",
+  star: "⭐",
+  zap: "⚡",
+};
+
+function pkgIcon(detail?: PackageDetail): string {
+  if (!detail?.iconName) return "📁";
+  return ICON_MAP[detail.iconName] ?? "📁";
+}
+
 const PACKAGE_CARDS = [
   {
     id: "starter",
-    icon: "📁",
     badge: "popular" as const,
   },
   {
     id: "business",
-    icon: "🚀",
     badge: "popular" as const,
   },
   {
     id: "monthly",
-    icon: "⭐",
     badge: undefined,
   },
 ] as const;
@@ -245,7 +256,7 @@ export function ClientPage(props: Props) {
             >
               <div className="p-5 sm:p-6">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">{pkg.icon}</span>
+                  <span className="text-2xl">{pkgIcon(detail)}</span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-base sm:text-lg font-bold text-white">
@@ -339,7 +350,7 @@ export function ClientPage(props: Props) {
                     </div>
                   </div>
 
-                  {/* Best for */}
+                  {/* Best for / Target audience */}
                   <div>
                     <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1">
                       {t(lang, "sectionBestFor")}
@@ -360,6 +371,22 @@ export function ClientPage(props: Props) {
                       </ul>
                     </div>
                   )}
+
+                  {/* First-order discount in card */}
+                  {props.discountConfig.enabled && (
+                    <div className="text-[11px] text-green-400/80">
+                      🎁 {lang === "he" ? props.discountConfig.labelHe : props.discountConfig.labelEn} ({props.discountConfig.percent}%)
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Collapsed summary when accordion is closed */}
+              {detail && !isExpanded && (
+                <div className="border-t border-white/10 px-5 sm:px-6 py-2">
+                  <p className="text-[11px] text-white/45">
+                    {t(lang, "pkgCollapsedSummary")}: {detail.pills.map((p) => pickL10n(lang, p)).join(", ")}
+                  </p>
                 </div>
               )}
             </div>

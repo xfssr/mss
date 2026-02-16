@@ -18,7 +18,7 @@ const DURATIONS: Array<{ key: ShootDuration; labelHe: string; labelEn: string }>
 const MONTHLY: Array<{ key: MonthlyPlan; labelHe: string; labelEn: string }> = [
   { key: "none", labelHe: "ללא", labelEn: "none" },
   { key: "starter", labelHe: "Starter (15 reels + posts/stories)", labelEn: "Starter (15 reels + posts/stories)" },
-  { key: "growth", labelHe: "Growth (25 reels + posts/stories)", labelEn: "Growth (25 reels + posts/stories)" },
+  { key: "growth", labelHe: "Business (25 reels + posts/stories)", labelEn: "Business (25 reels + posts/stories)" },
   { key: "pro", labelHe: "Pro (40 reels + posts/stories)", labelEn: "Pro (40 reels + posts/stories)" },
 ];
 
@@ -46,8 +46,8 @@ const FOLDER_CARDS: FolderCard[] = [
   },
   {
     id: "growth",
-    titleHe: "Growth",
-    titleEn: "Growth",
+    titleHe: "Business",
+    titleEn: "Business",
     descHe: "יום מלא · 10 רילס · 120 תמונות",
     descEn: "Full day · 10 reels · 120 photos",
     icon: "🚀",

@@ -23,13 +23,10 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           {/* Desktop links only */}
           <div className="hidden md:flex items-center gap-1">
             <Link className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="/#catalog">
-              {t(props.lang, "navCatalog")}
+              {t(props.lang, "navExamples")}
             </Link>
             <a className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="/solutions">
               {t(props.lang, "navSolutions")}
-            </a>
-            <a className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="#about">
-              {t(props.lang, "navAbout")}
             </a>
             <a className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]" href="#contact">
               {t(props.lang, "navContact")}

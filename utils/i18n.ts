@@ -174,6 +174,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     labelShoot: "זמן צילום",
     labelDeliveryShort: "אספקה",
+
+    formBusinessType: "סוג עסק",
+    formLanguages: "שפות",
+    formGoalLabel: "מטרה",
+    productPageNote: "זו לא הזמנה. כאן רק מידע ומחירים.",
+
+    labelTargetAudience: "קהל יעד",
+    pkgCollapsedSummary: "מה כלול",
+    buildCustomPkg: "בניית חבילה מותאמת",
+    disableHint: "כבו קטגוריה כדי להסתיר אותה זמנית מהאתר",
+    chooseAnotherDate: "בחרו תאריך אחר",
+    navExamples: "דוגמאות",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -340,6 +352,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     labelShoot: "Shoot",
     labelDeliveryShort: "Delivery",
+
+    formBusinessType: "Business type",
+    formLanguages: "Languages",
+    formGoalLabel: "Goal",
+    productPageNote: "This is not an order. Information and pricing only.",
+
+    labelTargetAudience: "Target audience",
+    pkgCollapsedSummary: "What's included",
+    buildCustomPkg: "Build custom package",
+    disableHint: "Disable a category to temporarily hide it from the site",
+    chooseAnotherDate: "Choose another date",
+    navExamples: "Examples",
   },
 };
 

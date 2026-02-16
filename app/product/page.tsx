@@ -298,6 +298,7 @@ export default async function ProductPage(props: {
     from: lang === "he" ? "החל מ-" : "From",
     noPackages: lang === "he" ? "עדיין אין חבילות ב-DB. הוסיפו ב-Admin → Prices." : "No packages in DB yet. Add them in Admin → Prices.",
     faqTitle: lang === "he" ? "שאלות נפוצות" : "FAQ",
+    infoNote: lang === "he" ? "זו לא הזמנה. כאן רק מידע ומחירים." : "This is not an order. Information and pricing only.",
   };
 
   return (
@@ -346,7 +347,11 @@ export default async function ProductPage(props: {
             </h1>
 
             <p className="mt-2 text-white/70">
-              {ui.subtitle} <span className="text-white/85">{siteUrl}/product?lang={lang}</span>
+              {ui.subtitle}
+            </p>
+
+            <p className="mt-2 text-xs text-white/50">
+              {ui.infoNote}
             </p>
 
             <div className="mt-3 text-sm text-white/75">
