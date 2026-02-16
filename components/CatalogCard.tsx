@@ -22,8 +22,9 @@ export function CatalogCard(props: {
   const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
   const cover = catalog.coverImage || example0?.preview || example0?.image || example0?.src;
 
+  const MAX_VISIBLE_EXAMPLES = 9;
   const examples = (catalog.examples ?? []) as CatalogExample[];
-  const visibleExamples = examples.slice(0, 9);
+  const visibleExamples = examples.slice(0, MAX_VISIBLE_EXAMPLES);
 
   return (
     <div

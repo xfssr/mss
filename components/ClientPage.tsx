@@ -91,6 +91,8 @@ const PACKAGE_CARDS = [
   },
 ] as const;
 
+const MAX_VISIBLE_PILLS = 6;
+
 export function ClientPage(props: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -471,7 +473,7 @@ export function ClientPage(props: Props) {
 
                     {/* Included pills/chips */}
                     <div className="mt-3 flex flex-wrap gap-1.5">
-                      {sol.pills.slice(0, 6).map((pill, i) => (
+                      {sol.pills.slice(0, MAX_VISIBLE_PILLS).map((pill, i) => (
                         <span
                           key={i}
                           className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
