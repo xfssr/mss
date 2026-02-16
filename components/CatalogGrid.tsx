@@ -56,6 +56,13 @@ export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSl
   const [activeFilter, setActiveFilter] = useState("filterAll");
   const [searchQuery, setSearchQuery] = useState("");
 
+  // Only show filter tabs that have at least one matching catalog
+  const visibleFilterKeys = useMemo(() => {
+    return FILTER_KEYS.filter(
+      (key) => key === "filterAll" || props.catalogs.some((c) => matchesFilter(c, key)),
+    );
+  }, [props.catalogs]);
+
   const filtered = useMemo(() => {
     return props.catalogs.filter(
       (c) => matchesFilter(c, activeFilter) && matchesSearch(c, searchQuery)
@@ -78,7 +85,7 @@ export function CatalogGrid(props: { lang: Lang; catalogs: Catalog[]; selectedSl
 
       {/* Filter chips */}
       <div className="mb-6 flex flex-wrap gap-2" role="group" aria-label="Category filters">
-        {FILTER_KEYS.map((key) => {
+        {visibleFilterKeys.map((key) => {
           const active = activeFilter === key;
           return (
             <button
