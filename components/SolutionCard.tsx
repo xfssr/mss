@@ -74,7 +74,7 @@ export function SolutionCard(props: {
         {/* Price range hint */}
         {item.pricingTiers.length > 0 && (
           <div className="mt-2 text-[11px] text-[rgb(var(--blue))]/70">
-            {lang === "he" ? "החל מ-" : "from "}{pick(lang, item.pricingTiers[0].range)}
+            {t(lang, "fromPrice")}{pick(lang, item.pricingTiers[0].range)}
           </div>
         )}
 
