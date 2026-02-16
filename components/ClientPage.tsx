@@ -21,7 +21,7 @@ import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { BookingDrawer } from "@/components/BookingDrawer";
-import { QuickPreviewModal } from "@/components/QuickPreviewModal";
+import { HomepageSolutions } from "@/components/HomepageSolutions";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -96,7 +96,6 @@ export function ClientPage(props: Props) {
   const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
   const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
-  const [previewSlug, setPreviewSlug] = useState<string | null>(null);
   const [packagesVisible, setPackagesVisible] = useState(false);
 
   const slugFromUrl = searchParams.get("catalog");
@@ -112,11 +111,6 @@ export function ClientPage(props: Props) {
   const selectedCategoryDetail = useMemo(
     () => (slugFromUrl ? props.categoryDetails.find((d) => d.slug === slugFromUrl) ?? null : null),
     [props.categoryDetails, slugFromUrl],
-  );
-
-  const previewCatalog = useMemo(
-    () => (previewSlug ? props.catalogs.find((c) => c.slug === previewSlug) ?? null : null),
-    [props.catalogs, previewSlug],
   );
 
   const messagePreview = useMemo(() => {
@@ -157,23 +151,10 @@ export function ClientPage(props: Props) {
     setBookingDrawerOpen(true);
   }
 
-  function scrollToCatalogAndPreview() {
+  function scrollToCatalog() {
     const el = document.getElementById("catalog");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      const openPreview = () => {
-        if (portfolioCatalogs.length > 0) {
-          setPreviewSlug(portfolioCatalogs[0].slug);
-        }
-      };
-
-      // Use scrollend event when supported, with a timeout fallback
-      if ("onscrollend" in window) {
-        window.addEventListener("scrollend", openPreview, { once: true });
-      } else {
-        setTimeout(openPreview, 600);
-      }
     }
   }
 
@@ -194,7 +175,7 @@ export function ClientPage(props: Props) {
               <div className="mt-8">
                 <button
                   type="button"
-                  onClick={scrollToCatalogAndPreview}
+                  onClick={scrollToCatalog}
                   className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "letsStart")}
@@ -215,12 +196,12 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Section id="catalog" title={t(lang, "sectionCatalog")}>
+        <p className="text-sm text-white/70 mb-6 -mt-4">{t(lang, "sectionCatalogSubtitle")}</p>
         <CatalogGrid
           lang={lang}
           catalogs={portfolioCatalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
-          onPreview={(slug) => setPreviewSlug(slug)}
         />
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
@@ -427,6 +408,9 @@ export function ClientPage(props: Props) {
       </Section>
       )}
 
+      {/* Solutions section on homepage */}
+      <HomepageSolutions lang={lang} packageDetails={props.packageDetails} />
+
       <Section id="about" title={t(lang, "sectionAbout")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
           <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.aboutText)}</div>
@@ -468,27 +452,6 @@ export function ClientPage(props: Props) {
       </Section>
 
       <Footer lang={lang} />
-
-      {/* Quick Preview Modal */}
-      {previewCatalog && (
-        <QuickPreviewModal
-          lang={lang}
-          catalog={previewCatalog}
-          onClose={() => {
-            setPreviewSlug(null);
-            setPackagesVisible(true);
-          }}
-          onChoosePackage={() => {
-            setPreviewSlug(null);
-            setPackagesVisible(true);
-            onContinueToProduct();
-          }}
-          onWhatsApp={() => {
-            setPreviewSlug(null);
-            onSendWhatsApp();
-          }}
-        />
-      )}
 
       {/* Booking Drawer */}
       <BookingDrawer

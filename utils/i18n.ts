@@ -19,7 +19,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "לכתוב ב-WhatsApp",
     heroHint: "בחרו קטגוריה → בחרו חבילה → מלאו תאריך/עיר → שולחים ב-WhatsApp.",
 
-    sectionCatalog: "קטלוגים",
+    sectionCatalog: "דוגמאות צילום ווידאו לפי תחום",
+    sectionCatalogSubtitle: "אלו דוגמאות מצילומים אמיתיים. בחרו תחום כדי לראות דוגמאות, ואחר כך בחרו חבילה.",
     sectionAbout: "אודות",
     sectionContact: "יצירת קשר",
 
@@ -76,7 +77,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     footerCatalog: "קטלוג",
 
     catalogBenefit: "תוכן מקצועי לעסק שלך",
-    openArrow: "פתיחה →",
+    openArrow: "פתח",
+    closeExamples: "סגור",
     fromPrice: "החל מ-",
 
     helpTitle: "3 צעדים פשוטים",
@@ -132,10 +134,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
 
     navSolutions: "פתרונות",
-    sectionSolutions: "פתרונות מוכנים",
+    sectionSolutions: "פתרונות",
     solutionsIntro: "חבילות מוכנות לפי סוג העסק — בחרו, צפו בפרטים והזמינו.",
     solutionView: "פרטים",
     solutionChoose: "לבחור פתרון זה",
+    solutionProblem: "הבעיה",
+    solutionWhatWeShoot: "מה אנחנו מצלמים",
+    solutionWhatYouGet: "מה מקבלים",
+    solutionRequestPackage: "לבקש חבילה זו",
+    solutionPackages: "חבילות",
+    solutionBestFor: "מתאים ל",
 
     priceEstimate: "הערכה",
     selectedLabel: "נבחר",
@@ -239,7 +247,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "Message on WhatsApp",
     heroHint: "Pick a category → build a package → add date/city → send via WhatsApp.",
 
-    sectionCatalog: "Catalogs",
+    sectionCatalog: "Photo & Video Examples by Industry",
+    sectionCatalogSubtitle: "These are examples of real shoots. Choose a category to see examples, then pick a package.",
     sectionAbout: "About",
     sectionContact: "Contact",
 
@@ -296,7 +305,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     footerCatalog: "Catalog",
 
     catalogBenefit: "Professional content for your business",
-    openArrow: "Open →",
+    openArrow: "Open",
+    closeExamples: "Close",
     fromPrice: "from ",
 
     helpTitle: "3 Simple Steps",
@@ -352,10 +362,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",
 
     navSolutions: "Solutions",
-    sectionSolutions: "Ready-Made Solutions",
+    sectionSolutions: "Solutions",
     solutionsIntro: "Ready-made packages by business type — pick, view details and order.",
     solutionView: "View",
     solutionChoose: "Choose this solution",
+    solutionProblem: "The problem",
+    solutionWhatWeShoot: "What we shoot",
+    solutionWhatYouGet: "What you get",
+    solutionRequestPackage: "Request this package",
+    solutionPackages: "Packages",
+    solutionBestFor: "Best for",
 
     priceEstimate: "estimate",
     selectedLabel: "Selected",

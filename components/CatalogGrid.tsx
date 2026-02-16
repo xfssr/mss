@@ -67,27 +67,11 @@ function matchesFilter(catalog: Catalog, filterKey: string): boolean {
   return tagKeywords.some((kw) => searchIn.includes(kw));
 }
 
-function matchesSearch(catalog: Catalog, query: string): boolean {
-  if (!query.trim()) return true;
-  const q = query.toLowerCase().trim();
-  const searchIn = [
-    catalog.title.he,
-    catalog.title.en,
-    catalog.shortDescription.he,
-    catalog.shortDescription.en,
-    ...catalog.tags,
-  ]
-    .join(" ")
-    .toLowerCase();
-  return searchIn.includes(q);
-}
-
 export function CatalogGrid(props: {
   lang: Lang;
   catalogs: Catalog[];
   selectedSlug?: string;
   onSelect: (slug: string) => void;
-  onPreview?: (slug: string) => void;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -97,7 +81,6 @@ export function CatalogGrid(props: {
   const initialFilter = FILTER_SLUG_MAP[catFromUrl] ?? "filterAll";
 
   const [activeFilter, setActiveFilter] = useState(initialFilter);
-  const [searchQuery, setSearchQuery] = useState("");
 
   // Sync filter state when URL changes
   useEffect(() => {
@@ -124,7 +107,6 @@ export function CatalogGrid(props: {
 
   const clearFilters = useCallback(() => {
     changeFilter("filterAll");
-    setSearchQuery("");
   }, [changeFilter]);
 
   // Only show filter tabs that have at least one matching catalog
@@ -136,26 +118,14 @@ export function CatalogGrid(props: {
 
   const filtered = useMemo(() => {
     return props.catalogs.filter(
-      (c) => matchesFilter(c, activeFilter) && matchesSearch(c, searchQuery)
+      (c) => matchesFilter(c, activeFilter)
     );
-  }, [props.catalogs, activeFilter, searchQuery]);
+  }, [props.catalogs, activeFilter]);
 
-  const hasActiveFilters = activeFilter !== "filterAll" || searchQuery.trim().length > 0;
+  const hasActiveFilters = activeFilter !== "filterAll";
 
   return (
     <div>
-      {/* Search input */}
-      <div className="mb-4">
-        <input
-          type="search"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={t(props.lang, "searchPlaceholder")}
-          className="w-full rounded-xl border border-white/10 bg-black/35 px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all"
-          aria-label={props.lang === "he" ? "חיפוש בפורטפוליו לפי קטגוריה או מילת מפתח" : "Search portfolio by category or keyword"}
-        />
-      </div>
-
       {/* Filter chips + Clear filters */}
       <div className="mb-6 flex flex-wrap items-center gap-2" role="group" aria-label="Category filters">
         {visibleFilterKeys.map((key) => {
@@ -167,9 +137,9 @@ export function CatalogGrid(props: {
               onClick={() => changeFilter(key)}
               className={[
                 "rounded-full px-4 py-2 text-xs sm:text-sm font-medium transition-all duration-200",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50",
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--red))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50",
                 active
-                  ? "bg-[rgb(var(--blue))]/20 border border-[rgb(var(--blue))]/50 text-white shadow-sm"
+                  ? "bg-[rgb(var(--red))]/20 border border-[rgb(var(--red))]/50 text-white shadow-sm"
                   : "border border-white/10 bg-white/[0.06] text-white/70 hover:bg-white/[0.10] hover:border-white/20 hover:text-white",
               ].join(" ")}
               aria-pressed={active}
@@ -200,7 +170,6 @@ export function CatalogGrid(props: {
               catalog={c}
               selected={props.selectedSlug === c.slug}
               onClick={() => props.onSelect(c.slug)}
-              onPreview={props.onPreview ? () => props.onPreview!(c.slug) : undefined}
             />
           ))}
         </div>
