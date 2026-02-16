@@ -1,7 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
+import type { PricingConfig } from "@/types/pricing";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 
 type SourcePackage = {
@@ -21,6 +24,8 @@ type BookingDrawerProps = {
   lang: Lang;
   open: boolean;
   onClose: () => void;
+  pricing?: PricingConfig;
+  discountConfig?: DiscountConfig;
 } & (SourcePackage | SourceSolution);
 
 type AvailStatus =
@@ -38,6 +43,8 @@ type HoldStatus =
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^\d{2}:\d{2}$/;
+
+const FIRST_ORDER_KEY = "mss_firstOrderUsed";
 
 const L: Record<Lang, Record<string, string>> = {
   he: {
@@ -76,19 +83,85 @@ const L: Record<Lang, Record<string, string>> = {
   },
 };
 
+const PKG_LABELS: Record<string, Record<Lang, string>> = {
+  starter: { he: "Starter", en: "Starter" },
+  growth: { he: "Growth", en: "Growth" },
+  pro: { he: "Pro", en: "Pro" },
+};
+
+function getBasePrice(pkg: string, pricing?: PricingConfig): number {
+  if (!pricing) return 0;
+  switch (pkg) {
+    case "starter": return pricing.monthlyStarter;
+    case "growth": return pricing.monthlyGrowth;
+    case "pro": return pricing.monthlyPro;
+    default: return 0;
+  }
+}
+
 export function BookingDrawer(props: BookingDrawerProps) {
-  const { lang, open, onClose } = props;
+  const { lang, open, onClose, pricing, discountConfig } = props;
   const s = L[lang];
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [city, setCity] = useState("");
   const [comment, setComment] = useState("");
+  const [smmOn, setSmmOn] = useState(false);
+  const [targetOn, setTargetOn] = useState(false);
 
   const [avail, setAvail] = useState<AvailStatus>({ kind: "idle" });
   const [hold, setHold] = useState<HoldStatus>({ kind: "idle" });
 
   const validInput = DATE_RE.test(date) && TIME_RE.test(time);
+
+  // First-time discount
+  const [firstOrderUsed, setFirstOrderUsed] = useState(true);
+  useEffect(() => {
+    try {
+      setFirstOrderUsed(localStorage.getItem(FIRST_ORDER_KEY) === "true");
+    } catch { /* SSR fallback */ }
+  }, []); // Read once on mount
+
+  const showDiscount = !!(discountConfig?.enabled && !firstOrderUsed);
+
+  // Pricing calculation
+  const priceSummary = useMemo(() => {
+    if (!pricing) return null;
+    const pkgKey = props.sourceType === "package" ? props.pkg : "";
+    const base = getBasePrice(pkgKey, pricing);
+    if (base <= 0) return null;
+
+    const lines: { label: string; amount: number }[] = [];
+    const pkgLabel = PKG_LABELS[pkgKey]?.[lang] ?? pkgKey;
+    lines.push({ label: `${t(lang, "packageLabel")}: ${pkgLabel}`, amount: base });
+
+    if (smmOn) lines.push({ label: t(lang, "smmAddon"), amount: pricing.socialManagement });
+    if (targetOn) lines.push({ label: t(lang, "targetAddon"), amount: pricing.targetingSetup });
+
+    let subtotal = lines.reduce((s, x) => s + x.amount, 0);
+    let discountAmount = 0;
+    if (showDiscount && discountConfig) {
+      discountAmount = Math.floor(subtotal * discountConfig.percent / 100);
+    }
+    const total = subtotal - discountAmount;
+
+    return { lines, subtotal, discountAmount, total, discountPercent: discountConfig?.percent ?? 0 };
+  }, [pricing, props, lang, smmOn, targetOn, showDiscount, discountConfig]);
+
+  // Selected tags
+  const selectedTags = useMemo(() => {
+    const tags: string[] = [];
+    if (props.sourceType === "package" && props.pkg) {
+      tags.push(PKG_LABELS[props.pkg]?.[lang] ?? props.pkg);
+    }
+    if (props.sourceType === "solution") {
+      tags.push(props.solutionSlug);
+    }
+    if (smmOn) tags.push("SMM");
+    if (targetOn) tags.push("Target Ads");
+    return tags;
+  }, [props, lang, smmOn, targetOn]);
 
   // Reset state when drawer opens
   useEffect(() => {
@@ -97,6 +170,8 @@ export function BookingDrawer(props: BookingDrawerProps) {
       setTime("");
       setCity("");
       setComment("");
+      setSmmOn(false);
+      setTargetOn(false);
       setAvail({ kind: "idle" });
       setHold({ kind: "idle" });
     }
@@ -147,6 +222,13 @@ export function BookingDrawer(props: BookingDrawerProps) {
     }
   }, [date, time, validInput, s]);
 
+  const markFirstOrderUsed = useCallback(() => {
+    try {
+      localStorage.setItem(FIRST_ORDER_KEY, "true");
+      setFirstOrderUsed(true);
+    } catch { /* ignore */ }
+  }, []);
+
   const onHold = useCallback(async () => {
     if (avail.kind !== "available") return;
     setHold({ kind: "holding" });
@@ -191,6 +273,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
       if (json.ok) {
         const holdId = json.holdId ?? "";
         setHold({ kind: "held", holdId, expiresAt: json.expiresAt });
+        markFirstOrderUsed();
 
         const label =
           props.sourceType === "package"
@@ -221,7 +304,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
     } catch {
       setHold({ kind: "error", message: s.calendarDown });
     }
-  }, [avail, city, date, time, lang, comment, props, s]);
+  }, [avail, city, date, time, lang, comment, props, s, markFirstOrderUsed]);
 
   const onDateChange = (v: string) => {
     setDate(v);
@@ -270,10 +353,73 @@ export function BookingDrawer(props: BookingDrawerProps) {
               ✕
             </button>
           </div>
+
+          {/* Selected tags badges */}
+          {selectedTags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <span className="text-[10px] text-white/50 self-center">{t(lang, "selectedLabel")}:</span>
+              {selectedTags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[11px] rounded-full border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-2.5 py-0.5 text-white/80"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-4 space-y-3">
+          {/* Add-on toggles (only for package source with pricing) */}
+          {props.sourceType === "package" && pricing && (
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-white/50">{t(lang, "addonsLabel")}</div>
+              <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={smmOn}
+                  onChange={(e) => setSmmOn(e.target.checked)}
+                  className="accent-[rgb(var(--blue))]"
+                />
+                {t(lang, "smmAddon")} — ₪{pricing.socialManagement.toLocaleString()}
+              </label>
+              <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={targetOn}
+                  onChange={(e) => setTargetOn(e.target.checked)}
+                  className="accent-[rgb(var(--blue))]"
+                />
+                {t(lang, "targetAddon")} — ₪{pricing.targetingSetup.toLocaleString()}
+              </label>
+            </div>
+          )}
+
+          {/* Price summary */}
+          {priceSummary && (
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-1.5">
+              {priceSummary.lines.map((line, i) => (
+                <div key={i} className="flex items-center justify-between text-xs text-white/70">
+                  <span>{line.label}</span>
+                  <span>₪{line.amount.toLocaleString()}</span>
+                </div>
+              ))}
+              {priceSummary.discountAmount > 0 && (
+                <div className="flex items-center justify-between text-xs text-green-400">
+                  <span>🎁 {discountConfig ? (lang === "he" ? discountConfig.labelHe : discountConfig.labelEn) : t(lang, "discountLabel")} ({priceSummary.discountPercent}%)</span>
+                  <span>-₪{priceSummary.discountAmount.toLocaleString()}</span>
+                </div>
+              )}
+              <div className="border-t border-white/10 pt-1.5 flex items-center justify-between text-sm font-semibold text-white">
+                <span>{t(lang, "totalLabel")}</span>
+                <span>₪{priceSummary.total.toLocaleString()}</span>
+              </div>
+              <p className="text-[10px] text-white/40">{t(lang, "estimateNote")}</p>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="block">
               <span className="text-xs font-medium text-white/60">{s.date}</span>

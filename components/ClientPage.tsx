@@ -9,6 +9,7 @@ import type { HeroMedia } from "@/types/hero";
 import type { PricingConfig } from "@/types/pricing";
 import type { PriceItem } from "@/types/price";
 import type { SiteSettings } from "@/types/settings";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
@@ -36,6 +37,7 @@ type Props = {
   prices: PriceItem[];
   heroMedia: HeroMedia[];
   pricing: PricingConfig;
+  discountConfig: DiscountConfig;
 };
 
 function pickL10n(lang: Lang, v: { he: string; en: string }) {
@@ -225,6 +227,12 @@ export function ClientPage(props: Props) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
+            const priceMap: Record<string, number> = {
+              starter: props.pricing.monthlyStarter,
+              growth: props.pricing.monthlyGrowth,
+              pro: props.pricing.monthlyPro,
+            };
+            const price = priceMap[pkg.id] ?? 0;
             return (
             <button
               key={pkg.id}
@@ -249,6 +257,12 @@ export function ClientPage(props: Props) {
                     <p className="mt-1 text-xs text-white/60">
                       {t(lang, `${keyBase}Desc`)}
                     </p>
+                    {price > 0 && (
+                      <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">
+                        {t(lang, "fromPrice")}₪{price.toLocaleString()}{" "}
+                        <span className="text-white/40">({t(lang, "priceEstimate")})</span>
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -262,6 +276,17 @@ export function ClientPage(props: Props) {
             );
           })}
         </div>
+
+        {/* First-time discount note */}
+        {props.discountConfig.enabled && (
+          <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
+            🎁 {lang === "he" ? props.discountConfig.labelHe : props.discountConfig.labelEn}
+            {" — "}
+            {props.discountConfig.percent}%
+            {" "}
+            <span className="text-white/40">({t(lang, "priceEstimate")})</span>
+          </p>
+        )}
       </Section>
 
       <Section id="about" title={t(lang, "sectionAbout")}>
@@ -313,6 +338,8 @@ export function ClientPage(props: Props) {
         onClose={() => setBookingDrawerOpen(false)}
         sourceType="package"
         pkg={bookingPkg}
+        pricing={props.pricing}
+        discountConfig={props.discountConfig}
       />
 
       {/* Sticky mobile CTA bar */}

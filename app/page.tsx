@@ -11,6 +11,7 @@ import {
 } from "@/lib/mappers";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
+import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
 import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -42,6 +43,8 @@ export default async function Page() {
   });
 
   const categoryDetails = await getCategoryDetails();
+  const disabledSlugs = await getDisabledCatalogSlugs();
+  const discountConfig = await getDiscountConfig();
 
   const siteUrl = getSiteUrl();
 
@@ -78,12 +81,13 @@ export default async function Page() {
 
       <Suspense fallback={null}>
         <ClientPage
-          catalogs={mergeCatalogsWithDefaults(catalogs.map(dbCatalogToUi))}
+          catalogs={mergeCatalogsWithDefaults(catalogs.map(dbCatalogToUi), disabledSlugs)}
           categoryDetails={categoryDetails}
           settings={dbSettingsToUi(settings)}
           prices={prices.map(dbPriceToUi)}
           heroMedia={heroMedia.map(dbHeroToUi)}
           pricing={dbPricingToUi(pricing)}
+          discountConfig={discountConfig}
         />
       </Suspense>
     </>

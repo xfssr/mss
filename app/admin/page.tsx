@@ -9,7 +9,9 @@ import {
   deleteExample,
   deleteHeroMedia,
   deletePriceItem,
+  toggleCatalogActive,
   updateCatalog,
+  updateDiscountConfig,
   updateExample,
   updateHeroMedia,
   updatePriceItem,
@@ -25,6 +27,7 @@ import { AdminSolutionEditor } from "@/components/admin/AdminSolutionEditor";
 import { DeleteButton } from "@/components/admin/DeleteButton";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { getSolutions } from "@/lib/solutionsStore";
+import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -52,6 +55,8 @@ export default async function AdminPage() {
 
   const categoryDetails = await getCategoryDetails();
   const solutions = await getSolutions();
+  const disabledSlugs = await getDisabledCatalogSlugs();
+  const discountConfig = await getDiscountConfig();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white" dir="ltr">
@@ -204,6 +209,35 @@ export default async function AdminPage() {
             <button className="lg:col-span-3 mt-2 rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
               Save pricing config
             </button>
+          </form>
+        </AdminAccordion>
+
+        {/* ─── First-time discount ─── */}
+        <AdminAccordion title="First-time discount" id="discount-config">
+          <p className="text-xs text-white/40 mb-3">Configure the first-order discount shown to new users. Stored in contentOverridesJson (no DB changes).</p>
+          <form action={updateDiscountConfig} className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <label className="flex items-center gap-2 text-sm text-white/80">
+              <input type="checkbox" name="discountEnabled" defaultChecked={discountConfig.enabled} />
+              Enable first-time discount
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-white/55">Discount %</span>
+              <input name="discountPercent" type="number" defaultValue={discountConfig.percent} min={0} max={100} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <div />
+            <label className="block">
+              <span className="text-[11px] text-white/55">Label HE</span>
+              <input name="discountLabelHe" defaultValue={discountConfig.labelHe} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-white/55">Label EN</span>
+              <input name="discountLabelEn" defaultValue={discountConfig.labelEn} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <div className="flex items-end">
+              <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                Save discount config
+              </button>
+            </div>
           </form>
         </AdminAccordion>
 
@@ -386,16 +420,26 @@ export default async function AdminPage() {
         {/* ─── Catalogs ─── */}
         <AdminAccordion title="Catalogs" id="catalogs" count={catalogs.length}>
           <div className="space-y-4">
-            {catalogs.map((c) => (
-              <div key={c.id} className="rounded-3xl border border-white/10 bg-black/20 p-5">
+            {catalogs.map((c) => {
+              const isDisabled = disabledSlugs.has(c.slug);
+              return (
+              <div key={c.id} className={`rounded-3xl border p-5 ${isDisabled ? "border-red-500/30 bg-red-500/5" : "border-white/10 bg-black/20"}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="text-sm text-white/55">slug: <span className="font-mono">{c.slug}</span></div>
                     <div className="mt-1 text-lg font-semibold text-white">{c.titleEn}</div>
+                    {isDisabled && <div className="text-xs text-red-400 mt-1">⚠ Disabled — hidden on homepage</div>}
                   </div>
-                  <form action={deleteCatalog.bind(null, c.id)}>
-                    <DeleteButton />
-                  </form>
+                  <div className="flex items-center gap-2">
+                    <form action={toggleCatalogActive.bind(null, c.slug, isDisabled)}>
+                      <button className={`rounded-xl border px-3 py-1.5 text-sm ${isDisabled ? "border-green-500/40 bg-green-500/20 text-green-300 hover:bg-green-500/30" : "border-yellow-500/40 bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30"}`}>
+                        {isDisabled ? "Enable" : "Disable"}
+                      </button>
+                    </form>
+                    <form action={deleteCatalog.bind(null, c.id)}>
+                      <DeleteButton />
+                    </form>
+                  </div>
                 </div>
 
                 <form action={updateCatalog.bind(null, c.id)} className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -597,7 +641,8 @@ export default async function AdminPage() {
                   </div>
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
           <div className="mt-8 rounded-3xl border border-white/10 bg-black/20 p-5">

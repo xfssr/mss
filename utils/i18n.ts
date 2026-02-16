@@ -136,6 +136,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionsIntro: "חבילות מוכנות לפי סוג העסק — בחרו, צפו בפרטים והזמינו.",
     solutionView: "פרטים",
     solutionChoose: "לבחור פתרון זה",
+
+    priceEstimate: "הערכה",
+    selectedLabel: "נבחר",
+    packageLabel: "חבילה",
+    addonsLabel: "תוספות",
+    totalLabel: "סה״כ",
+    discountLabel: "הנחה",
+    smmAddon: "SMM (ניהול סושיאל)",
+    targetAddon: "Target Ads (הגדרה)",
+    estimateNote: "המחיר הוא הערכה בלבד, לא הצעה מחייבת.",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -264,6 +274,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionsIntro: "Ready-made packages by business type — pick, view details and order.",
     solutionView: "View",
     solutionChoose: "Choose this solution",
+
+    priceEstimate: "estimate",
+    selectedLabel: "Selected",
+    packageLabel: "Package",
+    addonsLabel: "Add-ons",
+    totalLabel: "Total",
+    discountLabel: "Discount",
+    smmAddon: "SMM (social management)",
+    targetAddon: "Target Ads (setup)",
+    estimateNote: "Price is an estimate only, not a binding offer.",
   },
 };
 

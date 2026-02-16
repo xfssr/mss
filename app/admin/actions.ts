@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsStore";
 import { getSolutions, saveSolutions } from "@/lib/solutionsStore";
+import { disableCatalogSlug, enableCatalogSlug, saveDiscountConfig, type DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { SolutionItem } from "@/content/solutions";
 
@@ -230,10 +231,38 @@ export async function updateCatalog(id: number, formData: FormData) {
 }
 
 export async function deleteCatalog(id: number) {
-  const { count } = await prisma.catalog.deleteMany({ where: { id } });
-  if (count === 0 && process.env.NODE_ENV === "development") {
-    console.warn(`[admin] catalog id=${id} already deleted`);
+  // Look up the slug before deleting so we can store a disable override
+  const catalog = await prisma.catalog.findUnique({ where: { id }, select: { slug: true } });
+  if (catalog?.slug) {
+    await disableCatalogSlug(catalog.slug);
   }
+  await prisma.catalog.deleteMany({ where: { id } });
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function toggleCatalogActive(slug: string, isCurrentlyDisabled: boolean) {
+  if (isCurrentlyDisabled) {
+    await enableCatalogSlug(slug);
+  } else {
+    await disableCatalogSlug(slug);
+  }
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function updateDiscountConfig(formData: FormData) {
+  const config: DiscountConfig = {
+    enabled: b(formData.get("discountEnabled")),
+    percent: i(formData.get("discountPercent"), 10),
+    labelHe: s(formData.get("discountLabelHe"), "הנחת הזמנה ראשונה"),
+    labelEn: s(formData.get("discountLabelEn"), "First-order discount"),
+  };
+  await saveDiscountConfig(config);
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");

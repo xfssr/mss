@@ -11,10 +11,18 @@ function isValidCatalog(c: Catalog): boolean {
  * DB catalogs take priority; any static defaults whose slug is not
  * present in the DB are appended so new categories are always visible.
  * Invalid entries (missing slug or title) are always filtered out.
+ * Disabled slugs are excluded from the result.
  */
-export function mergeCatalogsWithDefaults(dbCatalogs: Catalog[]): Catalog[] {
+export function mergeCatalogsWithDefaults(
+  dbCatalogs: Catalog[],
+  disabledSlugs?: Set<string>,
+): Catalog[] {
   const valid = dbCatalogs.filter(isValidCatalog);
   const dbSlugs = new Set(valid.map((c) => c.slug));
   const missing = CATALOGS.filter((c) => !dbSlugs.has(c.slug) && isValidCatalog(c));
-  return [...valid, ...missing];
+  const merged = [...valid, ...missing];
+  if (disabledSlugs && disabledSlugs.size > 0) {
+    return merged.filter((c) => !disabledSlugs.has(c.slug));
+  }
+  return merged;
 }
