@@ -397,10 +397,9 @@ export function BookingDrawer(props: BookingDrawerProps) {
 
         {/* Stepper */}
         {(() => {
-          const currentStep =
-            hold.kind === "held" ? 3
-            : avail.kind === "available" || avail.kind === "unavailable" ? 2
-            : 1;
+          let currentStep = 1;
+          if (hold.kind === "held") currentStep = 3;
+          else if (avail.kind === "available" || avail.kind === "unavailable") currentStep = 2;
           const stepLabels = [s.step1, s.step2, s.step3];
           return (
             <div className="flex items-center justify-between px-4 sm:px-6 py-2" dir="ltr">
