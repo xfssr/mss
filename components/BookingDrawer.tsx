@@ -6,7 +6,7 @@ import { t } from "@/utils/i18n";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { PackageDetail } from "@/lib/packageConfigStore";
-import { WHATSAPP_PHONE, buildWaMeUrl, openWhatsApp } from "@/utils/whatsapp";
+import { WHATSAPP_PHONE, buildWaMeUrl } from "@/utils/whatsapp";
 import {
   DRAWER_BACKDROP_CLASS,
   DRAWER_PANEL_CLASS,
@@ -134,6 +134,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
 
   const [avail, setAvail] = useState<AvailStatus>({ kind: "idle" });
   const [hold, setHold] = useState<HoldStatus>({ kind: "idle" });
+  const [waUrl, setWaUrl] = useState("");
 
   const validInput = DATE_RE.test(date) && TIME_RE.test(time);
 
@@ -199,6 +200,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
       setTargetOn(false);
       setAvail({ kind: "idle" });
       setHold({ kind: "idle" });
+      setWaUrl("");
     }
   }, [open]);
 
@@ -317,8 +319,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
           lang === "he" ? "תודה!" : "Thanks!",
         ].filter(Boolean);
 
-        const waUrl = buildWaMeUrl(WHATSAPP_PHONE, lines.join("\n"));
-        openWhatsApp(waUrl);
+        setWaUrl(buildWaMeUrl(WHATSAPP_PHONE, lines.join("\n")));
       } else {
         setHold({ kind: "error", message: json.reason ?? "hold_failed" });
       }
@@ -341,7 +342,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
   if (!open) return null;
 
   const inputCls =
-    "mt-1.5 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
+    "mt-1.5 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
 
   return (
     <div
@@ -433,7 +434,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
         })()}
 
         {/* Scrollable body */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-4 space-y-3">
+        <div className="flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-4 sm:px-6 py-4 space-y-3">
           {/* Compact package summary */}
           {packageDetail && props.sourceType === "package" && (
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2">
@@ -590,6 +591,18 @@ export function BookingDrawer(props: BookingDrawerProps) {
             >
               {hold.kind === "holding" ? s.holding : s.holdBtn}
             </button>
+          )}
+
+          {/* Direct WhatsApp link after hold succeeds */}
+          {hold.kind === "held" && waUrl && (
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full rounded-xl border border-green-500/40 bg-green-500/20 px-5 py-3 text-sm text-center text-white font-medium hover:bg-green-500/30 transition-all"
+            >
+              {lang === "he" ? "פתח WhatsApp ושלח הודעה" : "Open WhatsApp & send message"}
+            </a>
           )}
         </div>
       </div>

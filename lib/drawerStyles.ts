@@ -22,7 +22,7 @@ export const DRAWER_FOOTER_CLASS =
 
 /** Panel for detail modals (wider, centered, dark bg) */
 export const MODAL_PANEL_CLASS =
-  "relative w-full max-w-3xl overflow-hidden border border-white/12 shadow-2xl rounded-2xl sm:rounded-2xl bg-white/[0.06] backdrop-blur-xl flex flex-col min-h-0 h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]";
+  "relative w-full max-w-3xl overflow-hidden border border-white/12 shadow-2xl rounded-2xl sm:rounded-2xl bg-white/[0.06] backdrop-blur-xl flex flex-col min-h-0 max-h-[calc(100dvh-6.5rem)] sm:max-h-[calc(100dvh-8rem)]";
 
 /** Header for detail modals */
 export const MODAL_HEADER_CLASS =

@@ -84,6 +84,7 @@ export function BookingSection({
 
   const [avail, setAvail] = useState<AvailStatus>({ kind: "idle" });
   const [hold, setHold] = useState<HoldStatus>({ kind: "idle" });
+  const [waUrl, setWaUrl] = useState("");
 
   const validInput = DATE_RE.test(date) && TIME_RE.test(time);
 
@@ -162,7 +163,6 @@ export function BookingSection({
         const holdId = json.holdId ?? "";
         setHold({ kind: "held", holdId, expiresAt: json.expiresAt });
 
-        // Open WhatsApp with holdId
         const lines = [
           lang === "he" ? "היי! שמרתי שעה 🗓" : "Hi! I held a slot 🗓",
           lang === "he" ? `תאריך: ${date}` : `Date: ${date}`,
@@ -176,7 +176,7 @@ export function BookingSection({
         ].filter(Boolean);
 
         const text = encodeURIComponent(lines.join("\n"));
-        window.open(`https://wa.me/${whatsappPhone}?text=${text}`, "_blank", "noopener,noreferrer");
+        setWaUrl(`https://wa.me/${whatsappPhone}?text=${text}`);
       } else {
         setHold({ kind: "failed", reason: json.reason ?? "hold_failed" });
       }
@@ -198,7 +198,7 @@ export function BookingSection({
   };
 
   const inputCls =
-    "mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-sm text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
+    "mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
 
   return (
     <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
@@ -287,8 +287,20 @@ export function BookingSection({
 
       {/* Hold status */}
       {hold.kind === "held" && (
-        <div className="mt-3 rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2.5 text-sm text-green-300">
-          {s.holdSuccess} (ID: {hold.holdId})
+        <div className="mt-3 space-y-2">
+          <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-2.5 text-sm text-green-300">
+            {s.holdSuccess} (ID: {hold.holdId})
+          </div>
+          {waUrl && (
+            <a
+              href={waUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full rounded-xl border border-green-500/40 bg-green-500/20 px-5 py-3 text-sm text-center text-white font-medium hover:bg-green-500/30 transition-all"
+            >
+              {lang === "he" ? "פתח WhatsApp ושלח הודעה" : "Open WhatsApp & send message"}
+            </a>
+          )}
         </div>
       )}
       {hold.kind === "failed" && (

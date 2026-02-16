@@ -41,14 +41,7 @@ export function SolutionDetailModal(props: {
     setBookingOpen(true);
   }
 
-  function onSecondary() {
-    const text = encodeURIComponent(pick(lang, item.whatsappTemplateSecondary));
-    window.open(
-      `https://wa.me/${WHATSAPP_PHONE}?text=${text}`,
-      "_blank",
-      "noopener,noreferrer"
-    );
-  }
+  const secondaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplateSecondary))}`;
 
   return (
     <div
@@ -230,13 +223,14 @@ export function SolutionDetailModal(props: {
             >
               {pick(lang, item.ctaPrimary)}
             </button>
-            <button
-              type="button"
-              onClick={onSecondary}
+            <a
+              href={secondaryWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
             >
               {pick(lang, item.ctaSecondary)}
-            </button>
+            </a>
           </div>
         </div>
 
