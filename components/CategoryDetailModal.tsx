@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
 import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
+import type { PricingConfig } from "@/types/pricing";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
@@ -17,8 +19,10 @@ export function CategoryDetailModal(props: {
   catalogTitle: { he: string; en: string };
   catalogSubtitle: { he: string; en: string };
   onClose: () => void;
+  pricing?: PricingConfig;
+  discountConfig?: DiscountConfig;
 }) {
-  const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
+  const { lang, detail, onClose, catalogTitle, catalogSubtitle, pricing, discountConfig } = props;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
 
@@ -240,6 +244,9 @@ export function CategoryDetailModal(props: {
           onClose={() => setBookingOpen(false)}
           sourceType="solution"
           solutionSlug={detail.slug}
+          pricing={pricing}
+          discountConfig={discountConfig}
+          categoryLabel={pick(lang, detail.label)}
         />
       </div>
     </div>

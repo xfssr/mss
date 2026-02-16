@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import type { SolutionItem } from "@/content/solutions";
 import type { Lang } from "@/utils/i18n";
+import type { PricingConfig } from "@/types/pricing";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 
@@ -15,8 +17,10 @@ export function SolutionDetailModal(props: {
   lang: Lang;
   item: SolutionItem;
   onClose: () => void;
+  pricing?: PricingConfig;
+  discountConfig?: DiscountConfig;
 }) {
-  const { lang, item, onClose } = props;
+  const { lang, item, onClose, pricing, discountConfig } = props;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [bookingOpen, setBookingOpen] = useState(false);
 
@@ -241,6 +245,9 @@ export function SolutionDetailModal(props: {
           onClose={() => setBookingOpen(false)}
           sourceType="solution"
           solutionSlug={item.slug}
+          pricing={pricing}
+          discountConfig={discountConfig}
+          categoryLabel={pick(lang, item.label)}
         />
       </div>
     </div>
