@@ -7,7 +7,7 @@ import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
-import { DRAWER_BACKDROP_CLASS } from "@/lib/drawerStyles";
+import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
@@ -64,10 +64,10 @@ export function CategoryDetailModal(props: {
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-3xl overflow-hidden border border-white/12 shadow-2xl rounded-2xl sm:rounded-[28px] bg-[#0b0f14]/98 sm:bg-[#0b0f14]/95 flex flex-col min-h-0 h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]">
+      <div className={MODAL_PANEL_CLASS}>
 
         {/* Header */}
-        <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 sm:pb-4 border-b border-white/10 bg-[#0b0f14]/97 backdrop-blur">
+        <div className={MODAL_HEADER_CLASS}>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/50">{pick(lang, detail.label)}</div>
@@ -220,7 +220,7 @@ export function CategoryDetailModal(props: {
         </div>
 
         {/* Sticky CTA footer */}
-        <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/97 backdrop-blur px-4 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
+        <div className={MODAL_FOOTER_CLASS}>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <button
               type="button"
