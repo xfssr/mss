@@ -71,20 +71,22 @@ export default async function Page() {
       contactType: "sales",
       email: settings.email || "nisenem98@gmail.com",
     },
-    offers: {
-      "@type": "AggregateOffer",
-      priceCurrency: "ILS",
-      lowPrice: Math.min(...packageDetails.map((p) => p.priceFrom)),
-      highPrice: Math.max(...packageDetails.map((p) => p.priceFrom)),
-      offerCount: packageDetails.length,
-      offers: packageDetails.map((p) => ({
-        "@type": "Offer",
-        name: p.title.en,
-        description: p.subtitle.en,
+    ...(packageDetails.length > 0 && {
+      offers: {
+        "@type": "AggregateOffer",
         priceCurrency: "ILS",
-        price: p.priceFrom,
-      })),
-    },
+        lowPrice: Math.min(...packageDetails.map((p) => p.priceFrom)),
+        highPrice: Math.max(...packageDetails.map((p) => p.priceFrom)),
+        offerCount: packageDetails.length,
+        offers: packageDetails.map((p) => ({
+          "@type": "Offer",
+          name: p.title.en,
+          description: p.subtitle.en,
+          priceCurrency: "ILS",
+          price: p.priceFrom,
+        })),
+      },
+    }),
   };
 
   return (

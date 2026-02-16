@@ -104,7 +104,7 @@ export function AdminPackageEditor(props: { packages: PackageDetail[] }) {
       {/* Price from */}
       <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
         <legend className="text-xs text-white/55 px-1">Price from (₪)</legend>
-        <input type="number" value={d.priceFrom} onChange={(e) => updateField(id, (x) => ({ ...x, priceFrom: Number(e.target.value) || 0 }))} className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+        <input type="number" min="0" value={d.priceFrom} onChange={(e) => updateField(id, (x) => ({ ...x, priceFrom: Math.max(0, Number(e.target.value) || 0) }))} className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
       </fieldset>
 
       {/* Pills */}
