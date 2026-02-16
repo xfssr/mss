@@ -169,14 +169,14 @@ export function QuickPreviewModal(props: {
           <button
             type="button"
             onClick={onChoosePackage}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
           >
             {t(lang, "previewChoosePackage")}
           </button>
           <button
             type="button"
             onClick={onWhatsApp}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all"
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all"
           >
             {t(lang, "previewWhatsApp")}
           </button>

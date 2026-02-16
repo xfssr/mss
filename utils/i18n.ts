@@ -222,7 +222,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     howCompactStep3: "שלחו ב-WhatsApp",
 
     // Mobile CTA
-    letsStart: "Давай начнем",
+    letsStart: "בוא נתחיל",
 
     // Mobile nav
     navPricing: "מחירים",
