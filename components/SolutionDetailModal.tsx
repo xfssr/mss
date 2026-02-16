@@ -7,7 +7,7 @@ import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import { BookingDrawer } from "@/components/BookingDrawer";
 import { t } from "@/utils/i18n";
-import { WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { WHATSAPP_PHONE, openWhatsApp } from "@/utils/whatsapp";
 import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
@@ -39,7 +39,7 @@ export function SolutionDetailModal(props: {
 
   function onPrimary() {
     const primaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplatePrimary))}`;
-    window.open(primaryWaUrl, "_blank", "noopener,noreferrer");
+    openWhatsApp(primaryWaUrl);
   }
 
   const secondaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplateSecondary))}`;
