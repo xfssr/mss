@@ -131,7 +131,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
 
-    navSolutions: "פתרונות",
+    navSolutions: "פתרונות מוכנים",
     sectionSolutions: "פתרונות מוכנים",
     solutionsIntro: "חבילות מוכנות לפי סוג העסק — בחרו, צפו בפרטים והזמינו.",
     solutionView: "פרטים",
@@ -363,7 +363,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",
 
-    navSolutions: "Solutions",
+    navSolutions: "Ready Solutions",
     sectionSolutions: "Ready-Made Solutions",
     solutionsIntro: "Ready-made packages by business type — pick, view details and order.",
     solutionView: "View",

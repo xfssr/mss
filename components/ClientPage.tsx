@@ -495,12 +495,7 @@ export function ClientPage(props: Props) {
                       >
                         {t(lang, "msgOnWhatsApp")}
                       </button>
-                      <a
-                        href="/solutions"
-                        className="inline-flex items-center text-xs text-[rgb(var(--blue))] hover:text-white transition-colors"
-                      >
-                        {t(lang, "solutionDetails")} →
-                      </a>
+
                     </div>
                   </div>
                 </div>
