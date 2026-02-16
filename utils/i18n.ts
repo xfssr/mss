@@ -233,6 +233,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     catalogOpen: "פתח",
     goToPackages: "לחבילות",
 
+    // Catalog preview modal
+    tabPhotos: "תמונות",
+    tabVideo: "וידאו",
+    choosePackageBtn: "בחר חבילה",
+
     // Package CTA
     pkgWhatsApp: "שלח ב-WhatsApp",
   },
@@ -459,6 +464,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // Catalog card
     catalogOpen: "Open",
     goToPackages: "Go to packages",
+
+    // Catalog preview modal
+    tabPhotos: "Photos",
+    tabVideo: "Video",
+    choosePackageBtn: "Choose a package",
 
     // Package CTA
     pkgWhatsApp: "Message on WhatsApp",

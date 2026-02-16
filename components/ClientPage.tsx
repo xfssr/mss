@@ -16,6 +16,7 @@ import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
 import { CatalogGrid } from "@/components/CatalogGrid";
+import { CatalogPreviewModal } from "@/components/CatalogPreviewModal";
 import { MiniScreenPanel } from "@/components/MiniScreenPanel";
 import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
@@ -100,6 +101,7 @@ export function ClientPage(props: Props) {
   const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
+  const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -121,6 +123,11 @@ export function ClientPage(props: Props) {
     [props.solutions, selectedSolutionSlug],
   );
 
+  const catalogPreview = useMemo(
+    () => (catalogPreviewSlug ? props.catalogs.find((c) => c.slug === catalogPreviewSlug) ?? null : null),
+    [props.catalogs, catalogPreviewSlug],
+  );
+
   const messagePreview = useMemo(() => {
     return buildMessage({ lang, reservation: DEFAULT_RESERVATION });
   }, [lang]);
@@ -135,8 +142,7 @@ export function ClientPage(props: Props) {
   }
 
   function openCatalog(slug: string) {
-    setPanelOpen(true);
-    setParams({ catalog: slug });
+    setCatalogPreviewSlug(slug);
   }
 
   useEffect(() => {
@@ -478,6 +484,15 @@ export function ClientPage(props: Props) {
           onClose={() => setSelectedSolutionSlug(null)}
           pricing={props.pricing}
           discountConfig={props.discountConfig}
+        />
+      )}
+
+      {/* Catalog Preview Modal (booking-style) */}
+      {catalogPreview && (
+        <CatalogPreviewModal
+          lang={lang}
+          catalog={catalogPreview}
+          onClose={() => setCatalogPreviewSlug(null)}
         />
       )}
 

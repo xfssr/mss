@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import type { Catalog, CatalogExample } from "@/types/catalog";
+import type { Catalog } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
@@ -18,22 +17,22 @@ export function CatalogCard(props: {
   onClick: () => void;
 }) {
   const { catalog, selected } = props;
-  const [expanded, setExpanded] = useState(false);
   const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
   const cover = catalog.coverImage || example0?.preview || example0?.image || example0?.src;
 
-  const examples = catalog.examples ?? [];
-  const thumbs = examples.slice(0, 9);
-
   return (
-    <div
+    <button
+      type="button"
+      onClick={props.onClick}
       className={[
-        "group cc-glass rounded-2xl overflow-hidden transition-all duration-300",
+        "group cc-glass rounded-2xl overflow-hidden transition-all duration-300 text-start w-full",
         "hover:border-white/25 hover:bg-white/[0.10] hover:shadow-2xl hover:-translate-y-1",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50",
         selected ? "border-[rgb(var(--blue))]/60 shadow-xl" : "",
       ].join(" ")}
+      aria-label={`${t(props.lang, "catalogOpen")} ${pick(props.lang, catalog.title)}`}
     >
-      {/* Clickable image area */}
+      {/* Cover image */}
       {cover ? (
         <div className="relative aspect-[16/9] overflow-hidden">
           <Image src={cover} alt={pick(props.lang, catalog.title)} fill sizes="360px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
@@ -55,60 +54,13 @@ export function CatalogCard(props: {
           <p className="mt-1.5 text-sm text-white/70 leading-relaxed group-hover:text-white/85 transition-colors line-clamp-2">{pick(props.lang, catalog.shortDescription)}</p>
         </div>
 
-        {/* Single red CTA button */}
+        {/* Red CTA button */}
         <div className="mt-4">
-          <button
-            type="button"
-            onClick={() => setExpanded((v) => !v)}
-            className="shrink-0 rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-          >
+          <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white group-hover:bg-[rgb(var(--red))]/35 group-hover:border-[rgb(var(--red))]/60 transition-all">
             {t(props.lang, "catalogOpen")}
-          </button>
+          </span>
         </div>
       </div>
-
-      {/* Inline accordion with thumbnails */}
-      {expanded && (
-        <div className="border-t border-white/10 px-4 sm:px-5 py-4 space-y-3 animate-in slide-in-from-top-2 duration-200">
-          {thumbs.length > 0 ? (
-            <div className="grid grid-cols-3 gap-2">
-              {thumbs.map((ex: CatalogExample) => {
-                const src = ex.posterUrl || ex.mediaUrl || "";
-                const caption = pick(props.lang, ex.title) || pick(props.lang, ex.description);
-                return (
-                  <div key={ex.id} className="group/thumb">
-                    <div className="relative aspect-[4/5] rounded-lg overflow-hidden border border-white/10 bg-black/30">
-                      {src ? (
-                        <Image
-                          src={src}
-                          alt={caption}
-                          fill
-                          sizes="(max-width: 640px) 33vw, 20vw"
-                          className="object-cover"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-white/20 text-xl">
-                          📷
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-xs text-white/40 text-center py-2">📷</p>
-          )}
-          <a
-            href="#packages"
-            className="inline-flex items-center gap-1 text-xs text-[rgb(var(--red))]/80 hover:text-[rgb(var(--red))] transition-colors"
-            aria-label={props.lang === "he" ? "עבור לחבילות" : "Navigate to packages section"}
-          >
-            {t(props.lang, "goToPackages")} →
-          </a>
-        </div>
-      )}
-    </div>
+    </button>
   );
 }
