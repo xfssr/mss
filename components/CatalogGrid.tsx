@@ -42,7 +42,7 @@ const SLUG_BY_FILTER: Record<string, string> = Object.fromEntries(
 );
 
 const FILTER_TAG_MAP: Record<string, string[]> = {
-  filterFood: ["food", "chef", "kitchen", "שף", "מטבח"],
+  filterFood: ["food", "restaurant", "chef", "kitchen", "מסעדה", "שף", "מטבח"],
   filterBar: ["bar", "bartender", "cocktail", "בר", "ברמן"],
   filterBeauty: ["beauty", "nails", "cosmetics", "makeup", "ביוטי", "ציפורניים", "קוסמטיקה", "איפור"],
   filterFlowers: ["flowers", "פרחים"],
