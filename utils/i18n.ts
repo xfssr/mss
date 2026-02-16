@@ -186,6 +186,40 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     disableHint: "כבו קטגוריה כדי להסתיר אותה זמנית מהאתר",
     chooseAnotherDate: "בחרו תאריך אחר",
     navExamples: "דוגמאות",
+
+    // Homepage redesign
+    heroCtaSeePricing: "מחירון",
+    stickyCatalogs: "קטלוגים",
+    stickyWhatsApp: "WhatsApp",
+    clearFilters: "נקה סינון",
+    filterEvents: "אירועים",
+    filterHotels: "מלונות / צימרים",
+    filterRestaurants: "מסעדות",
+    filterRetail: "קמעונאות / אונליין",
+    filterServices: "שירותים",
+    previewBtn: "תצוגה מקדימה",
+    previewTitle: "תצוגה מקדימה",
+    previewChoosePackage: "בחירת חבילה",
+    previewWhatsApp: "שליחה ב-WhatsApp",
+    previewPlaceholder: "דוגמה",
+    pkgBestFor: "מתאים ל",
+    pkgDelivery: "אספקה",
+
+    // Pricing page
+    pricingCompareTitle: "השוואת חבילות",
+    pricingReels: "רילס",
+    pricingPhotos: "תמונות",
+    pricingLocations: "מיקומים",
+    pricingDelivery: "אספקה",
+    pricingBestFor: "מתאים ל",
+    pricingInfoBadge: "זו לא הזמנה — מידע ומחירים בלבד.",
+    pricingGoToCatalogs: "לקטלוגים",
+    pricingWhatsApp: "WhatsApp עם הודעה מוכנה",
+
+    // How it works compact
+    howCompactStep1: "בחרו קטלוג",
+    howCompactStep2: "בחרו חבילה",
+    howCompactStep3: "שלחו ב-WhatsApp",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -364,6 +398,40 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     disableHint: "Disable a category to temporarily hide it from the site",
     chooseAnotherDate: "Choose another date",
     navExamples: "Examples",
+
+    // Homepage redesign
+    heroCtaSeePricing: "See pricing",
+    stickyCatalogs: "Catalogs",
+    stickyWhatsApp: "WhatsApp",
+    clearFilters: "Clear filters",
+    filterEvents: "Events",
+    filterHotels: "Hotels",
+    filterRestaurants: "Restaurants",
+    filterRetail: "Retail / Online",
+    filterServices: "Services",
+    previewBtn: "Preview",
+    previewTitle: "Quick Preview",
+    previewChoosePackage: "Choose package",
+    previewWhatsApp: "Send via WhatsApp",
+    previewPlaceholder: "Sample",
+    pkgBestFor: "Best for",
+    pkgDelivery: "Delivery",
+
+    // Pricing page
+    pricingCompareTitle: "Compare packages",
+    pricingReels: "Reels",
+    pricingPhotos: "Photos",
+    pricingLocations: "Locations",
+    pricingDelivery: "Delivery",
+    pricingBestFor: "Best for",
+    pricingInfoBadge: "This is not an order — information and pricing only.",
+    pricingGoToCatalogs: "Go to catalogs",
+    pricingWhatsApp: "WhatsApp with prefilled message",
+
+    // How it works compact
+    howCompactStep1: "Choose catalog",
+    howCompactStep2: "Pick a package",
+    howCompactStep3: "Send via WhatsApp",
   },
 };
 

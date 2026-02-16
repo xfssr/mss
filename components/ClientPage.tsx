@@ -21,6 +21,7 @@ import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { BookingDrawer } from "@/components/BookingDrawer";
+import { QuickPreviewModal } from "@/components/QuickPreviewModal";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -95,6 +96,7 @@ export function ClientPage(props: Props) {
   const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
   const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
+  const [previewSlug, setPreviewSlug] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -109,6 +111,11 @@ export function ClientPage(props: Props) {
   const selectedCategoryDetail = useMemo(
     () => (slugFromUrl ? props.categoryDetails.find((d) => d.slug === slugFromUrl) ?? null : null),
     [props.categoryDetails, slugFromUrl],
+  );
+
+  const previewCatalog = useMemo(
+    () => (previewSlug ? props.catalogs.find((c) => c.slug === previewSlug) ?? null : null),
+    [props.catalogs, previewSlug],
   );
 
   const messagePreview = useMemo(() => {
@@ -170,34 +177,24 @@ export function ClientPage(props: Props) {
                 </a>
 
                 <a
-                  href="/solutions"
-                  title={t(lang, "navSolutions")}
-                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  {t(lang, "navSolutions")}
-                </a>
-
-                <a
                   href="#packages"
-                  title={t(lang, "heroCtaPricing")}
-                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  title={t(lang, "heroCtaSeePricing")}
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaPricing")}
+                  {t(lang, "heroCtaSeePricing")}
                 </a>
 
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  title={t(lang, "heroCtaOrder")}
-                  className="hidden sm:inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  title="WhatsApp"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
-                  {t(lang, "heroCtaOrder")}
+                  WhatsApp
                 </button>
               </div>
 
-              <div className="mt-5 text-sm text-white/75 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.promoText)}</div>
               <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
-              <p className="mt-2 text-xs text-white/40">{t(lang, "seoHeroDescription")}</p>
             </div>
 
             <div className="lg:col-span-5">
@@ -205,7 +202,7 @@ export function ClientPage(props: Props) {
             </div>
           </div>
 
-          {/* ✅ UX mini-instruction (guided flow) */}
+          {/* Compact 3-step guide */}
           <HowItWorksHero lang={lang} />
         </div>
       </Section>
@@ -216,6 +213,7 @@ export function ClientPage(props: Props) {
           catalogs={portfolioCatalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
+          onPreview={(slug) => setPreviewSlug(slug)}
         />
         <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
@@ -263,7 +261,7 @@ export function ClientPage(props: Props) {
                         {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
                       </h3>
                       {pkg.badge === "popular" ? (
-                        <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                        <span className="text-[10px] rounded-full border border-[rgb(var(--blue))]/50 bg-[rgb(var(--blue))]/15 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
                           {t(lang, "popular")}
                         </span>
                       ) : null}
@@ -276,6 +274,20 @@ export function ClientPage(props: Props) {
                     )}
                   </div>
                 </div>
+
+                {/* Best for + Delivery (always visible) */}
+                {detail && (
+                  <div className="mt-3 space-y-1">
+                    <p className="text-xs text-white/60">
+                      <span className="text-[rgb(var(--blue))]/70 font-medium">{t(lang, "pkgBestFor")}:</span>{" "}
+                      {pickL10n(lang, detail.bestFor)}
+                    </p>
+                    <p className="text-xs text-white/60">
+                      <span className="text-[rgb(var(--blue))]/70 font-medium">{t(lang, "pkgDelivery")}:</span>{" "}
+                      {pickL10n(lang, detail.deliveryTime)}
+                    </p>
+                  </div>
+                )}
 
                 {/* Tag pills */}
                 {detail && detail.pills.length > 0 && (
@@ -296,7 +308,7 @@ export function ClientPage(props: Props) {
                   <button
                     type="button"
                     onClick={() => onContinueToProduct(pkg.id)}
-                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all"
+                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-2 text-xs font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
                   >
                     {t(lang, "pkgChoose")} →
                   </button>
@@ -448,6 +460,23 @@ export function ClientPage(props: Props) {
 
       <Footer lang={lang} />
 
+      {/* Quick Preview Modal */}
+      {previewCatalog && (
+        <QuickPreviewModal
+          lang={lang}
+          catalog={previewCatalog}
+          onClose={() => setPreviewSlug(null)}
+          onChoosePackage={() => {
+            setPreviewSlug(null);
+            onContinueToProduct();
+          }}
+          onWhatsApp={() => {
+            setPreviewSlug(null);
+            onSendWhatsApp();
+          }}
+        />
+      )}
+
       {/* Booking Drawer */}
       <BookingDrawer
         lang={lang}
@@ -460,14 +489,23 @@ export function ClientPage(props: Props) {
         packageDetail={props.packageDetails.find((d) => d.id === bookingPkg)}
       />
 
-      {/* Sticky mobile CTA bar */}
+      {/* Sticky mobile CTA bar — 2 buttons */}
       <div className="fixed bottom-0 inset-x-0 z-40 sm:hidden border-t border-white/10 bg-[#0b0f14]/95 backdrop-blur-lg px-4 py-3 safe-area-pb">
-        <a
-          href="#packages"
-          className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
-        >
-          {t(lang, "choosePackage")}
-        </a>
+        <div className="flex gap-2">
+          <a
+            href="#catalog"
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200"
+          >
+            {t(lang, "stickyCatalogs")}
+          </a>
+          <button
+            type="button"
+            onClick={onSendWhatsApp}
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+          >
+            {t(lang, "stickyWhatsApp")}
+          </button>
+        </div>
       </div>
     </div>
   );
