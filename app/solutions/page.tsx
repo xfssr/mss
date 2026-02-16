@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getActiveSolutions } from "@/lib/solutionsStore";
 import { getDiscountConfig } from "@/lib/catalogOverridesStore";
+import { getPackageDetails } from "@/lib/packageConfigStore";
 import { dbPricingToUi } from "@/lib/mappers";
 import { SolutionsClient } from "./SolutionsClient";
 
@@ -18,6 +19,7 @@ export default async function SolutionsPage() {
   });
 
   const discountConfig = await getDiscountConfig();
+  const packageDetails = await getPackageDetails();
 
   return (
     <Suspense fallback={null}>
@@ -25,6 +27,7 @@ export default async function SolutionsPage() {
         solutions={solutions}
         pricing={dbPricingToUi(pricing)}
         discountConfig={discountConfig}
+        packageDetails={packageDetails}
       />
     </Suspense>
   );
