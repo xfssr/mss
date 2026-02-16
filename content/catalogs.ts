@@ -128,22 +128,4 @@ export const CATALOGS: Catalog[] = [
       mediaUrl: `https://picsum.photos/seed/estate-${i + 1}/960/640`,
     })),
   },
-  {
-    slug: "restaurant-menu-website",
-    title: {
-      he: "מסעדה / בר / קפה: תוכן + תפריט + אתר",
-      en: "Restaurant / Bar / Cafe: Content + Menu + Website",
-    },
-    shortDescription: {
-      he: "שותף אחד. חבילה מלאה. מוכנה למכירה.",
-      en: "One partner. Full package. Ready to sell.",
-    },
-    longDescription: {
-      he: "חבילת תוכן מלאה למסעדות: צילום, רילס, תפריט QR, מיני אתר והקמת סושיאל.",
-      en: "Full content package for restaurants: photos, reels, QR menu, mini website and social setup.",
-    },
-    tags: ["Food", "Restaurant", "Menu", "Website", "UGC"],
-    microCta: { he: "צפה בחבילה", en: "View package" },
-    examples: [],
-  },
 ];

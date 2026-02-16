@@ -5,6 +5,11 @@ import type { Catalog } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
+function pick(lang: Lang, v: { he: string; en: string }) {
+  const s = v?.[lang] ?? "";
+  return s?.trim() ? s : v.he || v.en;
+}
+
 export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: boolean; onClick: () => void }) {
   const { catalog, selected } = props;
   const example0 = catalog.examples?.[0] as unknown as { preview?: string; image?: string; src?: string } | undefined;
@@ -20,11 +25,11 @@ export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: bo
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50",
         selected ? "border-[rgb(var(--red))]/60 shadow-xl" : "",
       ].join(" ")}
-      aria-label={`Open catalog ${catalog.title[props.lang]}`}
+      aria-label={`Open catalog ${pick(props.lang, catalog.title)}`}
     >
       {cover ? (
         <div className="relative aspect-[16/9] overflow-hidden">
-          <Image src={cover} alt={catalog.title[props.lang]} fill sizes="360px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+          <Image src={cover} alt={pick(props.lang, catalog.title)} fill sizes="360px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent transition-opacity group-hover:opacity-90" />
           {selected ? <div className="absolute top-3 right-3 h-3 w-3 rounded-full bg-[rgb(var(--red))] shadow-lg animate-pulse" /> : null}
         </div>
@@ -34,7 +39,7 @@ export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: bo
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">{catalog.title[props.lang]}</h3>
+              <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">{pick(props.lang, catalog.title)}</h3>
               {catalog.popular ? (
                 <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
                   {t(props.lang, "popular")}
@@ -42,7 +47,7 @@ export function CatalogCard(props: { lang: Lang; catalog: Catalog; selected?: bo
               ) : null}
             </div>
             <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">{t(props.lang, "catalogBenefit")}</p>
-            <p className="mt-1.5 text-sm text-white/70 leading-relaxed group-hover:text-white/85 transition-colors line-clamp-2">{catalog.shortDescription[props.lang]}</p>
+            <p className="mt-1.5 text-sm text-white/70 leading-relaxed group-hover:text-white/85 transition-colors line-clamp-2">{pick(props.lang, catalog.shortDescription)}</p>
           </div>
         </div>
 
