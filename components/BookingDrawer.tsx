@@ -6,7 +6,7 @@ import { t } from "@/utils/i18n";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { PackageDetail } from "@/lib/packageConfigStore";
-import { WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { WHATSAPP_PHONE, buildWaMeUrl, openWhatsApp } from "@/utils/whatsapp";
 import {
   DRAWER_BACKDROP_CLASS,
   DRAWER_PANEL_CLASS,
@@ -318,11 +318,8 @@ export function BookingDrawer(props: BookingDrawerProps) {
         ].filter(Boolean);
 
         const text = encodeURIComponent(lines.join("\n"));
-        window.open(
-          `https://wa.me/${WHATSAPP_PHONE}?text=${text}`,
-          "_blank",
-          "noopener,noreferrer"
-        );
+        const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${text}`;
+        openWhatsApp(waUrl);
       } else {
         setHold({ kind: "error", message: json.reason ?? "hold_failed" });
       }

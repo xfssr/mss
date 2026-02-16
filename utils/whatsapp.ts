@@ -29,7 +29,16 @@ export function buildWaMeUrl(phone: string, text: string) {
 }
 
 export function openWhatsApp(url: string) {
-  window.open(url, "_blank", "noopener,noreferrer");
+  // On mobile, window.open() is often blocked or unreliable.
+  // Using window.location.href provides more reliable navigation on mobile devices.
+  const isMobile = typeof navigator !== "undefined" &&
+    /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    window.location.href = url;
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 }
 
 export async function copyToClipboard(text: string) {
