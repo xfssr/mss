@@ -3,7 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsStore";
+import { getSolutions, saveSolutions } from "@/lib/solutionsStore";
 import type { CategoryDetail } from "@/content/categoryDetails";
+import type { SolutionItem } from "@/content/solutions";
 
 function s(v: FormDataEntryValue | null, fallback = "") {
   return String(v ?? fallback);
@@ -289,5 +291,21 @@ export async function updateCategoryDetailAction(jsonStr: string) {
   await saveCategoryDetails(all);
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+}
+
+export async function updateSolutionAction(jsonStr: string) {
+  const parsed: SolutionItem = JSON.parse(jsonStr);
+  const all = await getSolutions();
+  const idx = all.findIndex((d) => d.slug === parsed.slug);
+  if (idx >= 0) {
+    all[idx] = parsed;
+  } else {
+    all.push(parsed);
+  }
+  await saveSolutions(all);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/solutions");
   revalidatePath("/product");
 }

@@ -8,6 +8,7 @@ const sections = [
   { id: "hero-gallery", label: "Hero" },
   { id: "price-items", label: "Prices" },
   { id: "catalogs", label: "Catalogs" },
+  { id: "solutions", label: "Solutions" },
 ] as const;
 
 export function AdminNav() {
