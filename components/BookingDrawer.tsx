@@ -72,6 +72,9 @@ const L: Record<Lang, Record<string, string>> = {
     holdSuccess: "השעה נשמרה!",
     fillDateTime: "נא למלא תאריך ושעה בפורמט תקין",
     close: "סגור",
+    step1: "תאריך ושעה",
+    step2: "זמינות",
+    step3: "שמירה ושליחה",
   },
   en: {
     title: "Check availability & book",
@@ -89,6 +92,9 @@ const L: Record<Lang, Record<string, string>> = {
     holdSuccess: "Slot held!",
     fillDateTime: "Please fill date and time in the correct format",
     close: "Close",
+    step1: "Date & time",
+    step2: "Availability",
+    step3: "Hold & send",
   },
 };
 
@@ -388,6 +394,48 @@ export function BookingDrawer(props: BookingDrawerProps) {
             </div>
           )}
         </div>
+
+        {/* Stepper */}
+        {(() => {
+          const currentStep =
+            hold.kind === "held" ? 3
+            : avail.kind === "available" || avail.kind === "unavailable" ? 2
+            : 1;
+          const stepLabels = [s.step1, s.step2, s.step3];
+          return (
+            <div className="flex items-center justify-between px-4 sm:px-6 py-2" dir="ltr">
+              {stepLabels.map((label, i) => {
+                const step = i + 1;
+                const isActive = step <= currentStep;
+                return (
+                  <div key={step} className="flex items-center flex-1 last:flex-none">
+                    <div className="flex flex-col items-center gap-0.5">
+                      <div
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-semibold border transition-colors ${
+                          isActive
+                            ? "border-[rgb(var(--blue))] bg-[rgb(var(--blue))]/25 text-[rgb(var(--blue))]"
+                            : "border-white/15 bg-white/[0.04] text-white/30"
+                        }`}
+                      >
+                        {step}
+                      </div>
+                      <span className={`text-[9px] leading-tight ${isActive ? "text-white/80" : "text-white/30"}`}>
+                        {label}
+                      </span>
+                    </div>
+                    {step < 3 && (
+                      <div
+                        className={`flex-1 h-px mx-1.5 transition-colors ${
+                          step < currentStep ? "bg-[rgb(var(--blue))]/40" : "bg-white/10"
+                        }`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })()}
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-4 space-y-3">
