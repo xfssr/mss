@@ -182,7 +182,6 @@ export function ClientPage(props: Props) {
                 </button>
               </div>
 
-              <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
             </div>
 
             <div className="lg:col-span-5">
@@ -203,7 +202,6 @@ export function ClientPage(props: Props) {
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
         />
-        <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
 
       {selectedCatalog && panelOpen && selectedCategoryDetail ? (

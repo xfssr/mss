@@ -77,7 +77,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     footerCatalog: "קטלוג",
 
     catalogBenefit: "תוכן מקצועי לעסק שלך",
-    openArrow: "פתח",
+    openArrow: "צפה בדוגמאות",
     closeExamples: "סגור",
     fromPrice: "החל מ-",
 
@@ -141,7 +141,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionProblem: "הבעיה",
     solutionWhatWeShoot: "מה אנחנו מצלמים",
     solutionWhatYouGet: "מה מקבלים",
-    solutionRequestPackage: "לבקש חבילה זו",
+    solutionRequestPackage: "שלח ב-WhatsApp",
     solutionPackages: "חבילות",
     solutionBestFor: "מתאים ל",
     solutionRecommended: "מומלץ",
@@ -306,7 +306,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     footerCatalog: "Catalog",
 
     catalogBenefit: "Professional content for your business",
-    openArrow: "Open",
+    openArrow: "See examples",
     closeExamples: "Close",
     fromPrice: "from ",
 
@@ -370,7 +370,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionProblem: "The problem",
     solutionWhatWeShoot: "What we shoot",
     solutionWhatYouGet: "What you get",
-    solutionRequestPackage: "Request this package",
+    solutionRequestPackage: "Message on WhatsApp",
     solutionPackages: "Packages",
     solutionBestFor: "Best for",
     solutionRecommended: "Recommended",
