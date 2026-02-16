@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsStore";
 import { getSolutions, saveSolutions } from "@/lib/solutionsStore";
+import { savePackageDetails, type PackageDetail } from "@/lib/packageConfigStore";
 import { disableCatalogSlug, enableCatalogSlug, saveDiscountConfig, type DiscountConfig } from "@/lib/catalogOverridesStore";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { SolutionItem } from "@/content/solutions";
@@ -361,4 +362,13 @@ export async function updateSolutionAction(jsonStr: string) {
   revalidatePath("/admin");
   revalidatePath("/solutions");
   revalidatePath("/product");
+}
+
+export async function updatePackageDetails(jsonStr: string) {
+  const packages: PackageDetail[] = JSON.parse(jsonStr);
+  await savePackageDetails(packages);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
