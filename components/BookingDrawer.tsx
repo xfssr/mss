@@ -101,6 +101,7 @@ const PKG_LABELS: Record<string, Record<Lang, string>> = {
 function getBasePrice(pkg: string, pricing?: PricingConfig, packageDetail?: PackageDetail): number {
   if (packageDetail?.priceFrom && packageDetail.priceFrom > 0) return packageDetail.priceFrom;
   if (!pricing) return 0;
+  // Fallback: map new package IDs to existing PricingConfig DB fields (schema unchanged)
   switch (pkg) {
     case "starter": return pricing.monthlyStarter;
     case "business": return pricing.monthlyGrowth;
