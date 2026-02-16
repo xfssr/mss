@@ -8,11 +8,11 @@ function copy(lang: Lang) {
   if (lang === "he") {
     return {
       title: "איך זה עובד",
-      subtitle: "צפו בדוגמאות בקטלוג → בחרו חבילה → ממשיכים להזמנה ב-/product.",
+      subtitle: "צפו בדוגמאות בקטלוג → בחרו חבילה → בדקו זמינות ושלחו ב-WhatsApp.",
       steps: [
         { n: "1", title: "דוגמאות", desc: "גללו בקטלוג וצפו בדוגמאות של עבודות.", href: "#catalog" },
         { n: "2", title: "חבילה", desc: "בחרו חבילה מוכנה או בנו משלכם.", href: "#packages" },
-        { n: "3", title: "הזמנה", desc: "המשיכו לעמוד ההזמנה — בחרו תאריך ושלחו ב-WhatsApp.", href: "#packages" },
+        { n: "3", title: "הזמנה", desc: "בדקו זמינות, שמרו שעה ושלחו ב-WhatsApp.", href: "#packages" },
       ],
       btn: (step: number) => (step === 1 ? "לראות דוגמאות" : step === 2 ? "לבחור חבילה" : "להזמין"),
     };
@@ -20,11 +20,11 @@ function copy(lang: Lang) {
 
   return {
     title: "How it works",
-    subtitle: "Browse the catalog for examples → pick a package → proceed to order on /product.",
+    subtitle: "Browse the catalog for examples → pick a package → check availability and send via WhatsApp.",
     steps: [
       { n: "1", title: "Examples", desc: "Scroll through the catalog and browse work samples.", href: "#catalog" },
       { n: "2", title: "Package", desc: "Choose a preset or build your own.", href: "#packages" },
-      { n: "3", title: "Order", desc: "Continue to the order page — pick a date and send via WhatsApp.", href: "#packages" },
+      { n: "3", title: "Order", desc: "Check availability, hold a slot and send via WhatsApp.", href: "#packages" },
     ],
     btn: (step: number) => (step === 1 ? "View examples" : step === 2 ? "Choose package" : "Order"),
   };

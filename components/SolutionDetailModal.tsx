@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import type { SolutionItem } from "@/content/solutions";
 import type { Lang } from "@/utils/i18n";
+import { BookingDrawer } from "@/components/BookingDrawer";
+import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
   const s = v?.[lang] ?? "";
@@ -16,8 +17,8 @@ export function SolutionDetailModal(props: {
   onClose: () => void;
 }) {
   const { lang, item, onClose } = props;
-  const router = useRouter();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
@@ -31,7 +32,16 @@ export function SolutionDetailModal(props: {
   }, [onClose]);
 
   function onPrimary() {
-    router.push(`/product?pkg=custom&category=${encodeURIComponent(item.slug)}`);
+    setBookingOpen(true);
+  }
+
+  function onSecondary() {
+    const text = encodeURIComponent(pick(lang, item.whatsappTemplateSecondary));
+    window.open(
+      `https://wa.me/${WHATSAPP_PHONE}?text=${text}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   }
 
   return (
@@ -214,8 +224,24 @@ export function SolutionDetailModal(props: {
             >
               {pick(lang, item.ctaPrimary)}
             </button>
+            <button
+              type="button"
+              onClick={onSecondary}
+              className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+            >
+              {pick(lang, item.ctaSecondary)}
+            </button>
           </div>
         </div>
+
+        {/* Booking Drawer for solutions */}
+        <BookingDrawer
+          lang={lang}
+          open={bookingOpen}
+          onClose={() => setBookingOpen(false)}
+          sourceType="solution"
+          solutionSlug={item.slug}
+        />
       </div>
     </div>
   );

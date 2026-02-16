@@ -52,6 +52,7 @@ export async function updateSettings(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updatePricingConfig(formData: FormData) {
@@ -78,6 +79,7 @@ export async function updatePricingConfig(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createHeroMedia(formData: FormData) {
@@ -92,6 +94,7 @@ export async function createHeroMedia(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateHeroMedia(id: number, formData: FormData) {
@@ -107,6 +110,7 @@ export async function updateHeroMedia(id: number, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteHeroMedia(id: number) {
@@ -117,6 +121,7 @@ export async function deleteHeroMedia(id: number) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createPriceItem(formData: FormData) {
@@ -135,6 +140,7 @@ export async function createPriceItem(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updatePriceItem(id: number, formData: FormData) {
@@ -154,6 +160,7 @@ export async function updatePriceItem(id: number, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deletePriceItem(id: number) {
@@ -164,6 +171,7 @@ export async function deletePriceItem(id: number) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createCatalog(formData: FormData) {
@@ -191,6 +199,7 @@ export async function createCatalog(formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateCatalog(id: number, formData: FormData) {
@@ -217,6 +226,7 @@ export async function updateCatalog(id: number, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteCatalog(id: number) {
@@ -227,6 +237,7 @@ export async function deleteCatalog(id: number) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createExample(catalogId: number, formData: FormData) {
@@ -247,6 +258,7 @@ export async function createExample(catalogId: number, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateExample(id: number, formData: FormData) {
@@ -267,6 +279,7 @@ export async function updateExample(id: number, formData: FormData) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteExample(id: number) {
@@ -277,6 +290,7 @@ export async function deleteExample(id: number) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateCategoryDetailAction(jsonStr: string) {
@@ -292,6 +306,7 @@ export async function updateCategoryDetailAction(jsonStr: string) {
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateSolutionAction(jsonStr: string) {
