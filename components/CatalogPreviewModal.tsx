@@ -327,7 +327,7 @@ function VideosView(props: {
             {/* Play icon overlay */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
               <div className="rounded-full bg-black/60 border border-white/20 w-10 h-10 flex items-center justify-center">
-                <span className="text-white text-sm ml-0.5">▶</span>
+                <span className="text-white text-sm">▶</span>
               </div>
             </div>
             <p className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/70 to-transparent px-2 pb-1.5 pt-4 text-[10px] text-white/80 truncate">
