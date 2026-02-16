@@ -71,6 +71,13 @@ export function SolutionCard(props: {
           ))}
         </div>
 
+        {/* Price range hint */}
+        {item.pricingTiers.length > 0 && (
+          <div className="mt-2 text-[11px] text-[rgb(var(--blue))]/70">
+            {t(lang, "fromPrice")}{pick(lang, item.pricingTiers[0].range)}
+          </div>
+        )}
+
         <div className="mt-4">
           <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--red))]/20 group-hover:border-[rgb(var(--red))]/50 transition-all">
             {t(lang, "solutionView")} →

@@ -33,8 +33,8 @@ function durationLabel(lang: Lang, d: ShootDuration) {
 }
 
 function monthlyLabel(lang: Lang, m: MonthlyPlan) {
-  const he: Record<MonthlyPlan, string> = { none: "ללא", starter: "Starter", growth: "Growth", pro: "Pro" };
-  const en: Record<MonthlyPlan, string> = { none: "none", starter: "Starter", growth: "Growth", pro: "Pro" };
+  const he: Record<MonthlyPlan, string> = { none: "ללא", starter: "Starter", growth: "Business", pro: "Pro" };
+  const en: Record<MonthlyPlan, string> = { none: "none", starter: "Starter", growth: "Business", pro: "Pro" };
   return lang === "he" ? he[m] : en[m];
 }
 

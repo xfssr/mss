@@ -52,41 +52,56 @@ export default async function Page() {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: SEO.siteName,
-    url: siteUrl,
-    image: `${siteUrl}/og.jpg`,
-    description: SEO.description,
-    areaServed: [
-      { "@type": "Country", "@id": "#country-il", name: "Israel" },
+    "@graph": [
       {
-        "@type": "City",
-        name: "Tel Aviv-Yafo",
-        containedInPlace: { "@id": "#country-il" },
+        "@type": "ProfessionalService",
+        "@id": `${siteUrl}#service`,
+        name: SEO.siteName,
+        url: siteUrl,
+        image: `${siteUrl}/og.jpg`,
+        description: SEO.description,
+        areaServed: [
+          { "@type": "Country", "@id": "#country-il", name: "Israel" },
+          {
+            "@type": "City",
+            name: "Tel Aviv-Yafo",
+            containedInPlace: { "@id": "#country-il" },
+          },
+        ],
+        sameAs: [...SAME_AS],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: settings.email || "nisenem98@gmail.com",
+        },
       },
+      ...(packageDetails.length > 0
+        ? [
+            {
+              "@type": "Product",
+              "@id": `${siteUrl}#packages`,
+              name: "Content Packages",
+              brand: { "@type": "Brand", name: SEO.siteName },
+              offers: {
+                "@type": "AggregateOffer",
+                priceCurrency: "ILS",
+                lowPrice: Math.min(...packageDetails.map((p) => p.priceFrom)),
+                highPrice: Math.max(...packageDetails.map((p) => p.priceFrom)),
+                offerCount: packageDetails.length,
+                offers: packageDetails.map((p) => ({
+                  "@type": "Offer",
+                  name: p.title.en,
+                  description: p.subtitle.en,
+                  priceCurrency: "ILS",
+                  price: p.priceFrom,
+                  availability: "https://schema.org/InStock",
+                  url: `${siteUrl}/product?pkg=${p.id}`,
+                })),
+              },
+            },
+          ]
+        : []),
     ],
-    sameAs: [...SAME_AS],
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: settings.email || "nisenem98@gmail.com",
-    },
-    ...(packageDetails.length > 0 && {
-      offers: {
-        "@type": "AggregateOffer",
-        priceCurrency: "ILS",
-        lowPrice: Math.min(...packageDetails.map((p) => p.priceFrom)),
-        highPrice: Math.max(...packageDetails.map((p) => p.priceFrom)),
-        offerCount: packageDetails.length,
-        offers: packageDetails.map((p) => ({
-          "@type": "Offer",
-          name: p.title.en,
-          description: p.subtitle.en,
-          priceCurrency: "ILS",
-          price: p.priceFrom,
-        })),
-      },
-    }),
   };
 
   return (

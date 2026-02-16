@@ -5,6 +5,7 @@ export type PackageDetail = {
   title: { he: string; en: string };
   subtitle: { he: string; en: string };
   priceFrom: number;
+  iconName: string;
   pills: { he: string; en: string }[];
   shootTime: { he: string; en: string };
   deliveryTime: { he: string; en: string };
@@ -13,6 +14,8 @@ export type PackageDetail = {
   bestFor: { he: string; en: string };
   whatYouGet: { he: string; en: string }[];
   addOns: { he: string; en: string }[];
+  targetAudience: { he: string; en: string };
+  active: boolean;
 };
 
 const DEFAULT_PACKAGES: PackageDetail[] = [
@@ -21,6 +24,7 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
     title: { he: "Starter", en: "Starter" },
     subtitle: { he: "חבילת התחלה לעסקים", en: "Starter package for businesses" },
     priceFrom: 450,
+    iconName: "camera",
     pills: [
       { he: "4 שעות צילום", en: "4h shoot" },
       { he: "6 רילס", en: "6 reels" },
@@ -41,12 +45,15 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
       { he: "SMM (ניהול סושיאל)", en: "SMM (social management)" },
       { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
     ],
+    targetAudience: { he: "עסקים קטנים, פרילנסרים", en: "Small businesses, freelancers" },
+    active: true,
   },
   {
     id: "business",
     title: { he: "Business", en: "Business" },
     subtitle: { he: "חבילה ליום צילום מלא", en: "Full-day shooting package" },
     priceFrom: 800,
+    iconName: "briefcase",
     pills: [
       { he: "יום מלא", en: "Full day" },
       { he: "10 רילס", en: "10 reels" },
@@ -68,12 +75,15 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
       { he: "SMM (ניהול סושיאל)", en: "SMM (social management)" },
       { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
     ],
+    targetAudience: { he: "עסקים בצמיחה, רשתות קטנות", en: "Growing businesses, small chains" },
+    active: true,
   },
   {
     id: "monthly",
     title: { he: "Monthly", en: "Monthly" },
     subtitle: { he: "מנוי חודשי + ניהול סושיאל", en: "Monthly plan + social management" },
     priceFrom: 2400,
+    iconName: "calendar",
     pills: [
       { he: "מנוי חודשי", en: "Monthly" },
       { he: "ניהול סושיאל", en: "Social mgmt" },
@@ -94,6 +104,8 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
     addOns: [
       { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
     ],
+    targetAudience: { he: "עסקים שצריכים ניהול תוכן מלא", en: "Businesses needing full content management" },
+    active: true,
   },
 ];
 
@@ -133,6 +145,7 @@ function mergePackage(defaults: PackageDetail, overrides: Partial<PackageDetail>
     title: mergeL10n(defaults.title, overrides.title),
     subtitle: mergeL10n(defaults.subtitle, overrides.subtitle),
     priceFrom: typeof overrides.priceFrom === "number" ? overrides.priceFrom : defaults.priceFrom,
+    iconName: typeof overrides.iconName === "string" ? overrides.iconName : defaults.iconName,
     pills: mergeL10nArr(defaults.pills, overrides.pills),
     shootTime: mergeL10n(defaults.shootTime, overrides.shootTime),
     deliveryTime: mergeL10n(defaults.deliveryTime, overrides.deliveryTime),
@@ -141,18 +154,23 @@ function mergePackage(defaults: PackageDetail, overrides: Partial<PackageDetail>
     bestFor: mergeL10n(defaults.bestFor, overrides.bestFor),
     whatYouGet: mergeL10nArr(defaults.whatYouGet, overrides.whatYouGet),
     addOns: mergeL10nArr(defaults.addOns, overrides.addOns),
+    targetAudience: mergeL10n(defaults.targetAudience, overrides.targetAudience),
+    active: typeof overrides.active === "boolean" ? overrides.active : defaults.active,
   };
 }
 
 export async function getPackageDetails(): Promise<PackageDetail[]> {
   const overrides = await readOverrides();
   const stored = overrides.packageDetails as Partial<PackageDetail>[] | undefined;
-  if (!Array.isArray(stored)) return DEFAULT_PACKAGES;
-
-  return DEFAULT_PACKAGES.map((def) => {
-    const override = stored.find((s) => s.id === def.id);
-    return override ? mergePackage(def, override) : def;
-  });
+  const all = !Array.isArray(stored)
+    ? DEFAULT_PACKAGES
+    : DEFAULT_PACKAGES.map((def) => {
+        const override = stored.find((s) => s.id === def.id);
+        return override ? mergePackage(def, override) : def;
+      });
+  // Filter out inactive packages. Using `!== false` so packages without
+  // an explicit `active` field (e.g., legacy stored overrides) remain visible.
+  return all.filter((p) => p.active !== false);
 }
 
 export async function savePackageDetails(packages: PackageDetail[]): Promise<void> {

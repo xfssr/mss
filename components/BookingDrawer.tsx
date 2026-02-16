@@ -541,6 +541,9 @@ export function BookingDrawer(props: BookingDrawerProps) {
           {avail.kind === "unavailable" && (
             <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-sm text-red-300">
               {s.statusTaken} — {avail.reason}
+              <div className="mt-1 text-xs text-white/60">
+                {t(lang, "chooseAnotherDate")}
+              </div>
               {avail.suggested && (
                 <div className="mt-1 text-xs text-white/60">
                   {lang === "he" ? "הצעה:" : "Suggested:"} {avail.suggested}

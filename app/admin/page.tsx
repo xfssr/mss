@@ -191,7 +191,7 @@ export default async function AdminPage() {
                 <input name="monthlyStarter" type="number" defaultValue={pricing.monthlyStarter} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
               <label className="block">
-                <span className="text-[11px] text-white/55">Monthly Growth</span>
+                <span className="text-[11px] text-white/55">Monthly Business</span>
                 <input name="monthlyGrowth" type="number" defaultValue={pricing.monthlyGrowth} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
               <label className="block">
