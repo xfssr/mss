@@ -97,6 +97,7 @@ export function ClientPage(props: Props) {
   const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [previewSlug, setPreviewSlug] = useState<string | null>(null);
+  const [packagesVisible, setPackagesVisible] = useState(false);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -133,6 +134,7 @@ export function ClientPage(props: Props) {
 
   function openCatalog(slug: string) {
     setPanelOpen(true);
+    setPackagesVisible(true);
     setParams({ catalog: slug });
   }
 
@@ -188,41 +190,14 @@ export function ClientPage(props: Props) {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle)}</h1>
               <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{pickL10n(lang, props.settings.heroSubtitle)}</p>
 
-              {/* Mobile: single primary CTA */}
-              <div className="mt-8 sm:hidden">
+              {/* Single primary CTA for all screen sizes */}
+              <div className="mt-8">
                 <button
                   type="button"
                   onClick={scrollToCatalogAndPreview}
-                  className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "letsStart")}
-                </button>
-              </div>
-
-              {/* Desktop: full CTA set */}
-              <div className="mt-8 hidden sm:flex flex-row gap-3">
-                <a
-                  href="#catalog"
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  {t(lang, "heroCtaCatalogs")}
-                </a>
-
-                <a
-                  href="#packages"
-                  title={t(lang, "heroCtaSeePricing")}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  {t(lang, "heroCtaSeePricing")}
-                </a>
-
-                <button
-                  type="button"
-                  onClick={onSendWhatsApp}
-                  title="WhatsApp"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  WhatsApp
                 </button>
               </div>
 
@@ -270,7 +245,8 @@ export function ClientPage(props: Props) {
         />
       ) : null}
 
-      {/* ===== Package selection section ===== */}
+      {/* ===== Package selection section (gated until user interacts with catalog) ===== */}
+      {packagesVisible && (
       <Section id="packages" title={t(lang, "choosePackage")}>
         <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -340,7 +316,7 @@ export function ClientPage(props: Props) {
                   <button
                     type="button"
                     onClick={() => onContinueToProduct(pkg.id)}
-                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-2 text-xs font-medium text-white/90 hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
+                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                   >
                     {t(lang, "pkgChoose")} →
                   </button>
@@ -449,6 +425,7 @@ export function ClientPage(props: Props) {
           </p>
         )}
       </Section>
+      )}
 
       <Section id="about" title={t(lang, "sectionAbout")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
@@ -497,9 +474,13 @@ export function ClientPage(props: Props) {
         <QuickPreviewModal
           lang={lang}
           catalog={previewCatalog}
-          onClose={() => setPreviewSlug(null)}
+          onClose={() => {
+            setPreviewSlug(null);
+            setPackagesVisible(true);
+          }}
           onChoosePackage={() => {
             setPreviewSlug(null);
+            setPackagesVisible(true);
             onContinueToProduct();
           }}
           onWhatsApp={() => {

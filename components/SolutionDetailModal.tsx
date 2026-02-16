@@ -38,7 +38,8 @@ export function SolutionDetailModal(props: {
   }, [onClose]);
 
   function onPrimary() {
-    setBookingOpen(true);
+    const primaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplatePrimary))}`;
+    window.open(primaryWaUrl, "_blank", "noopener,noreferrer");
   }
 
   const secondaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplateSecondary))}`;

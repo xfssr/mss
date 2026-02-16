@@ -110,9 +110,9 @@ export function MiniScreenPanel(props: {
         className={[
           "relative w-full max-w-5xl overflow-hidden border border-white/12 shadow-2xl",
           "rounded-2xl sm:rounded-[28px]",
-          "bg-[#0b0f14]/98 sm:bg-[#0b0f14]/95",
+          "bg-[#0b0f14] sm:bg-[#0b0f14]/95",
           "flex flex-col min-h-0",
-          "h-[calc(100dvh-6.5rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]",
+          "h-[calc(100dvh-3rem)] sm:h-auto sm:max-h-[calc(100dvh-8rem)]",
           "transition-transform duration-300 will-change-transform",
           reducedMotion ? "" : "sm:cc-tilt",
         ].join(" ")}
@@ -157,18 +157,7 @@ export function MiniScreenPanel(props: {
           />
         </div>
 
-        {/* Footer */}
-        <div className="shrink-0 border-t border-white/10 bg-[#0b0f14]/97 backdrop-blur px-3 sm:px-6 pt-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)]">
-          <div className="flex items-center justify-end gap-2">
-            <button
-              type="button"
-              onClick={props.onClose}
-              className="rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07]"
-            >
-              {t(props.lang, "close")}
-            </button>
-          </div>
-        </div>
+        {/* Footer - removed duplicate close button */}
       </div>
     </div>
   );
