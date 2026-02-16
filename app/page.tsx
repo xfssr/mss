@@ -12,6 +12,7 @@ import {
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
 import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
+import { getPackageDetails } from "@/lib/packageConfigStore";
 import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -45,6 +46,7 @@ export default async function Page() {
   const categoryDetails = await getCategoryDetails();
   const disabledSlugs = await getDisabledCatalogSlugs();
   const discountConfig = await getDiscountConfig();
+  const packageDetails = await getPackageDetails();
 
   const siteUrl = getSiteUrl();
 
@@ -88,6 +90,7 @@ export default async function Page() {
           heroMedia={heroMedia.map(dbHeroToUi)}
           pricing={dbPricingToUi(pricing)}
           discountConfig={discountConfig}
+          packageDetails={packageDetails}
         />
       </Suspense>
     </>

@@ -10,6 +10,7 @@ import type { PricingConfig } from "@/types/pricing";
 import type { PriceItem } from "@/types/price";
 import type { SiteSettings } from "@/types/settings";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
+import type { PackageDetail } from "@/lib/packageConfigStore";
 import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
@@ -38,6 +39,7 @@ type Props = {
   heroMedia: HeroMedia[];
   pricing: PricingConfig;
   discountConfig: DiscountConfig;
+  packageDetails: PackageDetail[];
 };
 
 function pickL10n(lang: Lang, v: { he: string; en: string }) {
@@ -81,6 +83,7 @@ export function ClientPage(props: Props) {
   const [panelOpen, setPanelOpen] = useState(false);
   const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
   const [bookingPkg, setBookingPkg] = useState("");
+  const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -235,20 +238,20 @@ export function ClientPage(props: Props) {
               pro: props.pricing.monthlyPro,
             };
             const price = priceMap[pkg.id] ?? 0;
+            const detail = props.packageDetails.find((d) => d.id === pkg.id);
+            const isExpanded = expandedPkg === pkg.id;
             return (
-            <button
+            <div
               key={pkg.id}
-              type="button"
-              onClick={() => onContinueToProduct(pkg.id)}
-              className="group text-left cc-glass rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/25 hover:bg-white/[0.10] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+              className="cc-glass rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/25 hover:shadow-2xl"
             >
               <div className="p-5 sm:p-6">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{pkg.icon}</span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">
-                        {t(lang, keyBase)}
+                      <h3 className="text-base sm:text-lg font-bold text-white">
+                        {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
                       </h3>
                       {pkg.badge === "popular" ? (
                         <span className="text-[10px] rounded-full border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
@@ -256,9 +259,6 @@ export function ClientPage(props: Props) {
                         </span>
                       ) : null}
                     </div>
-                    <p className="mt-1 text-xs text-white/60">
-                      {t(lang, `${keyBase}Desc`)}
-                    </p>
                     {price > 0 && (
                       <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">
                         {t(lang, "fromPrice")}₪{price.toLocaleString()}{" "}
@@ -268,13 +268,103 @@ export function ClientPage(props: Props) {
                   </div>
                 </div>
 
-                <div className="mt-4">
-                  <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--red))]/20 group-hover:border-[rgb(var(--red))]/50 transition-all">
+                {/* Tag pills */}
+                {detail && detail.pills.length > 0 && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {detail.pills.map((pill, i) => (
+                      <span
+                        key={i}
+                        className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
+                      >
+                        {pickL10n(lang, pill)}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Action buttons */}
+                <div className="mt-4 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => onContinueToProduct(pkg.id)}
+                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 hover:bg-[rgb(var(--red))]/20 hover:border-[rgb(var(--red))]/50 transition-all"
+                  >
                     {t(lang, "pkgChoose")} →
-                  </span>
+                  </button>
+                  {detail && (
+                    <button
+                      type="button"
+                      onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
+                      className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
+                    >
+                      {isExpanded ? t(lang, "less") : t(lang, "more")}
+                    </button>
+                  )}
                 </div>
               </div>
-            </button>
+
+              {/* Expandable accordion */}
+              {detail && isExpanded && (
+                <div className="border-t border-white/10 px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200">
+                  {/* What you get */}
+                  <div>
+                    <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1.5">
+                      {lang === "he" ? "מה מקבלים" : "What you get"}
+                    </h4>
+                    <ul className="space-y-1">
+                      {detail.whatYouGet.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-xs text-white/75">
+                          <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✓</span>
+                          {pickL10n(lang, item)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Details grid */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן צילום" : "Shoot time"}</div>
+                      <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
+                    </div>
+                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                      <div className="text-[10px] text-white/40">{lang === "he" ? "זמן אספקה" : "Delivery"}</div>
+                      <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
+                    </div>
+                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                      <div className="text-[10px] text-white/40">{lang === "he" ? "מיקומים" : "Locations"}</div>
+                      <div className="text-xs text-white/80">{pickL10n(lang, detail.locations)}</div>
+                    </div>
+                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                      <div className="text-[10px] text-white/40">{lang === "he" ? "תיקונים" : "Revisions"}</div>
+                      <div className="text-xs text-white/80">{pickL10n(lang, detail.revisions)}</div>
+                    </div>
+                  </div>
+
+                  {/* Best for */}
+                  <div>
+                    <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1">
+                      {lang === "he" ? "מתאים ל" : "Best for"}
+                    </h4>
+                    <p className="text-xs text-white/65">{pickL10n(lang, detail.bestFor)}</p>
+                  </div>
+
+                  {/* Add-ons */}
+                  {detail.addOns.length > 0 && (
+                    <div>
+                      <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-1">
+                        {t(lang, "addonsLabel")}
+                      </h4>
+                      <ul className="space-y-0.5">
+                        {detail.addOns.map((addon, i) => (
+                          <li key={i} className="text-xs text-white/60">+ {pickL10n(lang, addon)}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
             );
           })}
         </div>
@@ -342,6 +432,7 @@ export function ClientPage(props: Props) {
         pkg={bookingPkg}
         pricing={props.pricing}
         discountConfig={props.discountConfig}
+        packageDetail={props.packageDetails.find((d) => d.id === bookingPkg)}
       />
 
       {/* Sticky mobile CTA bar */}

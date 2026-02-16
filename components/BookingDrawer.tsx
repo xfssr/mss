@@ -5,6 +5,7 @@ import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
+import type { PackageDetail } from "@/lib/packageConfigStore";
 import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 
 type SourcePackage = {
@@ -27,6 +28,7 @@ type BookingDrawerProps = {
   pricing?: PricingConfig;
   discountConfig?: DiscountConfig;
   categoryLabel?: string;
+  packageDetail?: PackageDetail;
 } & (SourcePackage | SourceSolution);
 
 type AvailStatus =
@@ -100,8 +102,13 @@ function getBasePrice(pkg: string, pricing?: PricingConfig): number {
   }
 }
 
+function pickL10n(lang: Lang, v: { he: string; en: string }) {
+  const s = v?.[lang] ?? "";
+  return s?.trim() ? s : v.he;
+}
+
 export function BookingDrawer(props: BookingDrawerProps) {
-  const { lang, open, onClose, pricing, discountConfig, categoryLabel } = props;
+  const { lang, open, onClose, pricing, discountConfig, categoryLabel, packageDetail } = props;
   const s = L[lang];
 
   const [date, setDate] = useState("");
@@ -376,6 +383,31 @@ export function BookingDrawer(props: BookingDrawerProps) {
 
         {/* Scrollable body */}
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 sm:px-6 py-4 space-y-3">
+          {/* Compact package summary */}
+          {packageDetail && props.sourceType === "package" && (
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2">
+              <div className="text-xs font-semibold text-[rgb(var(--blue))]">
+                {pickL10n(lang, packageDetail.title)}
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {packageDetail.pills.map((pill, i) => (
+                  <span key={i} className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2 py-0.5 text-white/60">
+                    {pickL10n(lang, pill)}
+                  </span>
+                ))}
+              </div>
+              <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                <div className="text-white/40">{lang === "he" ? "זמן צילום" : "Shoot"}: <span className="text-white/70">{pickL10n(lang, packageDetail.shootTime)}</span></div>
+                <div className="text-white/40">{lang === "he" ? "אספקה" : "Delivery"}: <span className="text-white/70">{pickL10n(lang, packageDetail.deliveryTime)}</span></div>
+              </div>
+              {showDiscount && discountConfig && (
+                <div className="text-[10px] text-green-400">
+                  🎁 {lang === "he" ? discountConfig.labelHe : discountConfig.labelEn} ({discountConfig.percent}%)
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Add-on toggles (only for package source with pricing) */}
           {props.sourceType === "package" && pricing && (
             <div className="space-y-2">
