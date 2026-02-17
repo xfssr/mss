@@ -178,13 +178,6 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  function scrollToPackages() {
-    const el = document.getElementById("packages");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
@@ -197,17 +190,6 @@ export function ClientPage(props: Props) {
             <div className="lg:col-span-7">
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle)}</h1>
               <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{pickL10n(lang, props.settings.heroSubtitle)}</p>
-
-              {/* Single primary CTA for all screen sizes */}
-              <div className="mt-8">
-                <button
-                  type="button"
-                  onClick={scrollToPackages}
-                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  {t(lang, "letsStart")}
-                </button>
-              </div>
             </div>
 
             <div className="lg:col-span-5">
