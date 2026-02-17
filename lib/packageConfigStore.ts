@@ -42,8 +42,8 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
       { he: "קבצים בפורמט מותאם לסושיאל", en: "Files formatted for social media" },
     ],
     addOns: [
-      { he: "SMM (ניהול סושיאל)", en: "SMM (social management)" },
-      { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
+      { he: "SMM Lite", en: "SMM Lite" },
+      { he: "Ads Targeting (Meta)", en: "Ads Targeting (Meta)" },
     ],
     targetAudience: { he: "עסקים קטנים, פרילנסרים", en: "Small businesses, freelancers" },
     active: true,
@@ -72,8 +72,8 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
       { he: "תכנון צילום מראש", en: "Pre-shoot planning" },
     ],
     addOns: [
-      { he: "SMM (ניהול סושיאל)", en: "SMM (social management)" },
-      { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
+      { he: "SMM Lite", en: "SMM Lite" },
+      { he: "Ads Targeting (Meta)", en: "Ads Targeting (Meta)" },
     ],
     targetAudience: { he: "עסקים בצמיחה, רשתות קטנות", en: "Growing businesses, small chains" },
     active: true,
@@ -102,7 +102,7 @@ const DEFAULT_PACKAGES: PackageDetail[] = [
       { he: "דוחות ביצועים", en: "Performance reports" },
     ],
     addOns: [
-      { he: "Target Ads (הגדרה)", en: "Target Ads (setup)" },
+      { he: "Ads Targeting (Meta)", en: "Ads Targeting (Meta)" },
     ],
     targetAudience: { he: "עסקים שצריכים ניהול תוכן מלא", en: "Businesses needing full content management" },
     active: true,

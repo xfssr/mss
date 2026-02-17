@@ -54,8 +54,8 @@ export function calcPackage(lang: Lang, d: PackageDraft, pricing: PricingConfig)
 
     add(lang === "he" ? `מנוי: ${monthlyLabel(lang, d.monthlyPlan)}` : `Monthly: ${monthlyLabel(lang, d.monthlyPlan)}`, mPrice);
 
-    if (d.socialManagement) add(lang === "he" ? "SMM (ניהול/פוסטים/תכנית)" : "SMM (posting/content plan)", pricing.socialManagement);
-    if (d.targetingSetup) add(lang === "he" ? "Targeting (הגדרה)" : "Targeting (setup)", pricing.targetingSetup);
+    if (d.socialManagement) add(lang === "he" ? "SMM Lite" : "SMM Lite", pricing.socialManagement);
+    if (d.targetingSetup) add(lang === "he" ? "Ads Targeting (Meta)" : "Ads Targeting (Meta)", pricing.targetingSetup);
   } else {
     const durPrice =
       d.duration === "2h"
@@ -72,8 +72,8 @@ export function calcPackage(lang: Lang, d: PackageDraft, pricing: PricingConfig)
     if (d.reels > 0) add(lang === "he" ? `Reels: ${d.reels}` : `Reels: ${d.reels}`, d.reels * pricing.perReel);
     if (d.photos > 0) add(lang === "he" ? `תמונות: ${d.photos}` : `Photos: ${d.photos}`, d.photos * pricing.perPhoto);
 
-    if (d.socialManagement) add(lang === "he" ? "SMM (ניהול/פוסטים)" : "SMM (management/posting)", pricing.socialManagement);
-    if (d.targetingSetup) add(lang === "he" ? "Targeting (הגדרה)" : "Targeting (setup)", pricing.targetingSetup);
+    if (d.socialManagement) add(lang === "he" ? "SMM Lite" : "SMM Lite", pricing.socialManagement);
+    if (d.targetingSetup) add(lang === "he" ? "Ads Targeting (Meta)" : "Ads Targeting (Meta)", pricing.targetingSetup);
   }
 
   const total = lines.reduce((s, x) => s + x.amount, 0);
