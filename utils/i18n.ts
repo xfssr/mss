@@ -508,7 +508,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // Business type selector
     bizTypeLabel: "Choose business type",
     bizTypeAll: "All",
-    bizTypeHint: "Pick a business type to see matching examples inside the packages",
+    bizTypeHint: "Choose a business type to see relevant examples in the packages",
     bizTypeBars: "Bars / Nightlife",
     bizTypeRestaurants: "Restaurants / Food",
     bizTypeHotels: "Hotels",

@@ -245,11 +245,10 @@ export function ClientPage(props: Props) {
 
       {/* ===== Package selection section ===== */}
       <Section id="packages" title={t(lang, "choosePackage")}>
-        <p className="text-sm text-white/70 mb-4">{t(lang, "choosePackageSubtitle")}</p>
 
         {/* Global business type selector */}
         <div className="mb-6">
-          <label htmlFor="global-biz-type" className="block text-sm font-medium text-white/80 mb-1">
+          <label htmlFor="global-biz-type" className="block text-lg font-semibold text-white mb-1 border-s-4 border-[rgb(var(--red))] ps-3">
             {t(lang, "bizTypeLabel")}
           </label>
           <select
@@ -259,7 +258,7 @@ export function ClientPage(props: Props) {
               const val = e.target.value;
               setGlobalBizType(val || null);
             }}
-            className="text-sm rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white/90 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] w-full sm:w-auto sm:min-w-[220px]"
+            className="text-sm rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white/90 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] w-full sm:w-auto sm:min-w-[240px]"
             aria-label={t(lang, "bizTypeLabel")}
           >
             <option value="">{t(lang, "bizTypeAll")}</option>
@@ -269,7 +268,7 @@ export function ClientPage(props: Props) {
               </option>
             ))}
           </select>
-          <p className="mt-1.5 text-xs text-white/50">{t(lang, "bizTypeHint")}</p>
+          <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeHint")}</p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -355,35 +354,37 @@ export function ClientPage(props: Props) {
                   ) : null;
                 })()}
 
-                {/* Action buttons — anchored here so CTA stays stable on expand/collapse */}
+                {/* Action buttons — CTA position depends on expand state */}
                 <div className="mt-4 flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-                      const icon = pkgIcon(detail);
-                      const addonNames: string[] = [];
-                      if (isMonthly) {
-                        MONTHLY_ADDONS.forEach((a) => {
-                          if (selectedAddons[a.id]) {
-                            addonNames.push(t(lang, a.titleKey));
-                          }
+                  {!isExpanded && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                        const icon = pkgIcon(detail);
+                        const addonNames: string[] = [];
+                        if (isMonthly) {
+                          MONTHLY_ADDONS.forEach((a) => {
+                            if (selectedAddons[a.id]) {
+                              addonNames.push(t(lang, a.titleKey));
+                            }
+                          });
+                        }
+                        const msg = buildWhatsAppMessage({
+                          packageName: pkgLabel,
+                          packageIcon: icon,
+                          discountedPrice: hasDiscount ? finalPrice : undefined,
+                          basePrice: price > 0 ? price : undefined,
+                          selectedAddons: addonNames.length > 0 ? addonNames : undefined,
+                          lang,
                         });
-                      }
-                      const msg = buildWhatsAppMessage({
-                        packageName: pkgLabel,
-                        packageIcon: icon,
-                        discountedPrice: hasDiscount ? finalPrice : undefined,
-                        basePrice: price > 0 ? price : undefined,
-                        selectedAddons: addonNames.length > 0 ? addonNames : undefined,
-                        lang,
-                      });
-                      openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
-                    }}
-                    className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-                  >
-                    {t(lang, "pkgWhatsApp")}
-                  </button>
+                        openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+                      }}
+                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                    >
+                      {t(lang, "pkgWhatsApp")}
+                    </button>
+                  )}
                   {detail && (
                     <button
                       type="button"
@@ -527,6 +528,37 @@ export function ClientPage(props: Props) {
                       </div>
                     </div>
                   )}
+
+                  {/* WhatsApp CTA — shown at bottom when details are expanded */}
+                  <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                        const icon = pkgIcon(detail);
+                        const addonNames: string[] = [];
+                        if (isMonthly) {
+                          MONTHLY_ADDONS.forEach((a) => {
+                            if (selectedAddons[a.id]) {
+                              addonNames.push(t(lang, a.titleKey));
+                            }
+                          });
+                        }
+                        const msg = buildWhatsAppMessage({
+                          packageName: pkgLabel,
+                          packageIcon: icon,
+                          discountedPrice: hasDiscount ? finalPrice : undefined,
+                          basePrice: price > 0 ? price : undefined,
+                          selectedAddons: addonNames.length > 0 ? addonNames : undefined,
+                          lang,
+                        });
+                        openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+                      }}
+                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                    >
+                      {t(lang, "pkgWhatsApp")}
+                    </button>
+                  </div>
                 </div>
               )}
 
