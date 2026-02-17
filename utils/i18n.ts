@@ -254,6 +254,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     bizTypeEvents: "אירועים",
     bizTypeRealEstate: "נדל״ן",
     bizTypeServices: "שירותים קטנים",
+
+    // Monthly add-ons
+    monthlyAddonsTitle: "תוספות חודשיות",
+    monthlyAddonsHelper: "תוספות חודשיות, לא כלול במחיר החבילה",
+    addonDetails: "פרטים",
+    addonSmmLite: "SMM Lite",
+    addonAdsMeta: "Ads Targeting (Meta)",
+    addonPerMonth: "/ חודש",
+    addonsTotal: "סה״כ תוספות",
+    addonOnlyMonthly: "זמין רק בחבילת Monthly",
+    addonWhatsIncluded: "מה כלול",
+    addonNotIncluded: "לא כלול",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -500,6 +512,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     bizTypeEvents: "Events",
     bizTypeRealEstate: "Real Estate",
     bizTypeServices: "Small Services",
+
+    // Monthly add-ons
+    monthlyAddonsTitle: "Monthly add-ons",
+    monthlyAddonsHelper: "Monthly add-ons, not included in package price",
+    addonDetails: "Details",
+    addonSmmLite: "SMM Lite",
+    addonAdsMeta: "Ads Targeting (Meta)",
+    addonPerMonth: "/ month",
+    addonsTotal: "Add-ons total",
+    addonOnlyMonthly: "Available only for Monthly",
+    addonWhatsIncluded: "What's included",
+    addonNotIncluded: "Not included",
   },
 };
 

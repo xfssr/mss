@@ -23,7 +23,9 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
+import { AddOnDetailModal } from "@/components/AddOnDetailModal";
 import { PackageExamples, getBusinessTypesFromCatalogs, type BusinessTypeKey } from "@/components/PackageExamples";
+import { MONTHLY_ADDONS, type AddonConfig } from "@/config/addons";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -110,6 +112,8 @@ export function ClientPage(props: Props) {
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
   const [pkgExampleSlug, setPkgExampleSlug] = useState<string | null>(null);
   const [globalBizType, setGlobalBizType] = useState<BusinessTypeKey | null>(null);
+  const [selectedAddons, setSelectedAddons] = useState<Record<string, boolean>>({});
+  const [addonDetailModal, setAddonDetailModal] = useState<AddonConfig | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -150,6 +154,14 @@ export function ClientPage(props: Props) {
   const messagePreview = useMemo(() => {
     return buildMessage({ lang, reservation: DEFAULT_RESERVATION });
   }, [lang]);
+
+  const addonsTotal = useMemo(() => {
+    return MONTHLY_ADDONS.reduce((sum, a) => sum + (selectedAddons[a.id] ? a.price : 0), 0);
+  }, [selectedAddons]);
+
+  function toggleAddon(id: string) {
+    setSelectedAddons((prev) => ({ ...prev, [id]: !prev[id] }));
+  }
 
   function setParams(next: { catalog?: string | null }) {
     const sp = new URLSearchParams(searchParams.toString());
@@ -265,6 +277,10 @@ export function ClientPage(props: Props) {
             const detail = props.packageDetails.find((d) => d.id === pkg.id);
             const price = detail?.priceFrom ?? 0;
             const isExpanded = expandedPkg === pkg.id;
+            const hasDiscount = props.discountConfig.enabled && price > 0;
+            const discountPercent = props.discountConfig.percent;
+            const finalPrice = hasDiscount ? Math.round(price * (1 - discountPercent / 100)) : price;
+            const isMonthly = pkg.id === "monthly";
             return (
             <div
               key={pkg.id}
@@ -285,9 +301,21 @@ export function ClientPage(props: Props) {
                       ) : null}
                     </div>
                     {price > 0 && (
-                      <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">
-                        {t(lang, "fromPrice")}₪{price.toLocaleString()}
-                      </p>
+                      <div className="mt-1 flex items-center gap-2 flex-wrap">
+                        {hasDiscount ? (
+                          <>
+                            <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
+                            <span className="text-sm font-bold text-[rgb(var(--blue))]">₪{finalPrice.toLocaleString()}</span>
+                            <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
+                              -{discountPercent}%
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-xs text-[rgb(var(--blue))]/80">
+                            {t(lang, "fromPrice")}₪{price.toLocaleString()}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -336,6 +364,50 @@ export function ClientPage(props: Props) {
                   ) : null;
                 })()}
 
+                {/* Monthly add-ons section */}
+                {isMonthly ? (
+                  <div className="mt-4 border-t border-white/10 pt-3">
+                    <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-0.5">
+                      {t(lang, "monthlyAddonsTitle")}
+                    </h4>
+                    <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
+                    <div className="space-y-2">
+                      {MONTHLY_ADDONS.map((addon) => (
+                        <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                          <div className="flex items-center gap-2 min-w-0">
+                            <input
+                              type="checkbox"
+                              checked={!!selectedAddons[addon.id]}
+                              onChange={() => toggleAddon(addon.id)}
+                              className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
+                            />
+                            <div className="min-w-0">
+                              <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
+                              <span className="text-[10px] text-white/50 ms-1">₪{addon.price} {t(lang, "addonPerMonth")}</span>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setAddonDetailModal(addon)}
+                            className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
+                          >
+                            {t(lang, "addonDetails")}
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                    {addonsTotal > 0 && (
+                      <p className="mt-2 text-xs font-medium text-[rgb(var(--blue))]">
+                        {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="mt-4 border-t border-white/10 pt-3">
+                    <p className="text-[10px] text-white/30 italic">{t(lang, "addonOnlyMonthly")}</p>
+                  </div>
+                )}
+
                 {/* Action buttons */}
                 <div className="mt-4 flex items-center gap-2">
                   <button
@@ -346,9 +418,20 @@ export function ClientPage(props: Props) {
                       const bizTypeLabel = globalBizType
                         ? pickL10n(lang, businessTypeOptions.find((bt) => bt.key === globalBizType)?.label ?? { he: globalBizType, en: globalBizType })
                         : null;
+                      // Build add-ons line for Monthly
+                      let addonsLine = "";
+                      if (isMonthly && MONTHLY_ADDONS.some((a) => selectedAddons[a.id])) {
+                        const smmYes = selectedAddons["smm-lite"];
+                        const adsYes = selectedAddons["ads-meta"];
+                        if (lang === "he") {
+                          addonsLine = `\nתוספות: SMM Lite ${smmYes ? "כן" : "לא"}, Ads Meta ${adsYes ? "כן" : "לא"}`;
+                        } else {
+                          addonsLine = `\nAdd-ons: SMM Lite ${smmYes ? "Yes" : "No"}, Ads Meta ${adsYes ? "Yes" : "No"}`;
+                        }
+                      }
                       const msg = lang === "he"
-                        ? `היי! אני רוצה להזמין חבילה: ${pkgLabel}.${bizTypeLabel ? `\nסוג עסק: ${bizTypeLabel}` : ""}\nאפשר פרטים ותיאום?`
-                        : `Hi! I'd like to order the ${pkgLabel} package.${bizTypeLabel ? `\nBusiness type: ${bizTypeLabel}` : ""}\nCan I get details and schedule?`;
+                        ? `היי! אני רוצה את חבילת ${pkgLabel}.${bizTypeLabel ? `\nסוג עסק: ${bizTypeLabel}` : ""}${addonsLine}\nאפשר פרטים ותיאום?`
+                        : `Hi! I'd like to order the ${pkgLabel} package.${bizTypeLabel ? `\nBusiness type: ${bizTypeLabel}` : ""}${addonsLine}\nCan I get details and schedule?`;
                       openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
                     }}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
@@ -544,6 +627,15 @@ export function ClientPage(props: Props) {
           lang={lang}
           catalog={pkgExampleCatalog}
           onClose={() => setPkgExampleSlug(null)}
+        />
+      )}
+
+      {/* Add-on detail modal */}
+      {addonDetailModal && (
+        <AddOnDetailModal
+          lang={lang}
+          addon={addonDetailModal}
+          onClose={() => setAddonDetailModal(null)}
         />
       )}
     </div>
