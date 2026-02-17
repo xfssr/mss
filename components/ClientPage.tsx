@@ -261,16 +261,22 @@ export function ClientPage(props: Props) {
             className="text-sm rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white/90 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] w-full sm:w-auto sm:min-w-[240px]"
             aria-label={t(lang, "bizTypeLabel")}
           >
-            <option value="">{t(lang, "bizTypeAll")}</option>
+            <option value="">{t(lang, "bizTypeLabel")}</option>
             {businessTypeOptions.map((bt) => (
               <option key={bt.key} value={bt.key}>
                 {pickL10n(lang, bt.label)}
               </option>
             ))}
           </select>
-          <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeHint")}</p>
+          {!globalBizType && (
+            <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeMicrocopy")}</p>
+          )}
         </div>
 
+        <div className={`relative${globalBizType ? "" : " opacity-50 pointer-events-none select-none"}`} aria-disabled={!globalBizType}>
+          {!globalBizType && (
+            <p className="mb-3 text-sm text-white/70 italic">{t(lang, "bizTypeGateHint")}</p>
+          )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
@@ -564,6 +570,7 @@ export function ClientPage(props: Props) {
             {props.discountConfig.percent}%
           </p>
         )}
+        </div>
       </Section>
 
       {/* Ready Solutions section - reusing existing /solutions data */}
