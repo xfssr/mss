@@ -48,6 +48,15 @@ export function MiniScreenPanel(props: {
     return () => window.removeEventListener("keydown", onKey);
   }, [props.open, props.onClose]);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (!props.open) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [props.open]);
+
   const panelStyle = useMemo(() => {
     if (reducedMotion) return {};
     return { transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) translateZ(0)` } as const;

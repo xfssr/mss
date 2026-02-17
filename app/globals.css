@@ -51,7 +51,7 @@ body {
   .cc-tilt { transform: none !important; transition: none !important; }
 }
 
-/* ПК/общая читаемость: делаем стекло плотнее */
+/* Dense glass for readability */
 .cc-glass {
   background: rgba(11, 15, 20, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -93,7 +93,7 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Улучшенные transitions для интерактивных элементов */
+/* Enhanced transitions for interactive elements */
 @layer utilities {
   .transition-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,7 +116,7 @@ body {
   }
 }
 
-/* Улучшенная типографика */
+/* Improved typography */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;

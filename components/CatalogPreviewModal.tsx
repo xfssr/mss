@@ -95,7 +95,7 @@ export function CatalogPreviewModal(props: {
           "rounded-t-2xl sm:rounded-2xl",
           "bg-[#0b0f14] sm:bg-[#0b0f14]/95 backdrop-blur-xl",
           "flex flex-col",
-          "max-h-[100dvh] sm:max-h-[calc(100dvh-4rem)]",
+          "max-h-[calc(100dvh-env(safe-area-inset-top))] sm:max-h-[calc(100dvh-4rem)]",
         ].join(" ")}
       >
         {/* Header */}

@@ -22,7 +22,6 @@ import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
-import { BookingDrawer } from "@/components/BookingDrawer";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
@@ -81,6 +80,12 @@ const PACKAGE_CARDS = [
   },
 ] as const;
 
+const PKG_LABELS: Record<string, Record<Lang, string>> = {
+  starter: { he: "Starter", en: "Starter" },
+  business: { he: "Business", en: "Business" },
+  monthly: { he: "Monthly", en: "Monthly" },
+};
+
 export function ClientPage(props: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -97,8 +102,6 @@ export function ClientPage(props: Props) {
   }, [lang]);
 
   const [panelOpen, setPanelOpen] = useState(false);
-  const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
-  const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
@@ -159,11 +162,6 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  function onContinueToProduct(pkg?: string) {
-    setBookingPkg(pkg || "");
-    setBookingDrawerOpen(true);
-  }
-
   function scrollToCatalog() {
     const el = document.getElementById("catalog");
     if (el) {
@@ -194,8 +192,6 @@ export function ClientPage(props: Props) {
                   {t(lang, "letsStart")}
                 </button>
               </div>
-
-              <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
             </div>
 
             <div className="lg:col-span-5">
@@ -233,7 +229,13 @@ export function ClientPage(props: Props) {
           open={panelOpen}
           catalog={selectedCatalog}
           onClose={closePanel}
-          onContinueToProduct={() => onContinueToProduct()}
+          onContinueToProduct={() => {
+            closePanel();
+            setTimeout(() => {
+              const el = document.getElementById("packages");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 100);
+          }}
         />
       ) : null}
 
@@ -305,7 +307,13 @@ export function ClientPage(props: Props) {
                 <div className="mt-4 flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => onContinueToProduct(pkg.id)}
+                    onClick={() => {
+                      const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                      const msg = lang === "he"
+                        ? `היי! מעוניין/ת בחבילת ${pkgLabel}. אשמח לפרטים!`
+                        : `Hi! I'm interested in the ${pkgLabel} package. I'd love to learn more!`;
+                      openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+                    }}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                   >
                     {t(lang, "pkgWhatsApp")}
@@ -492,18 +500,6 @@ export function ClientPage(props: Props) {
           onClose={() => setCatalogPreviewSlug(null)}
         />
       )}
-
-      {/* Booking Drawer */}
-      <BookingDrawer
-        lang={lang}
-        open={bookingDrawerOpen}
-        onClose={() => setBookingDrawerOpen(false)}
-        sourceType="package"
-        pkg={bookingPkg}
-        pricing={props.pricing}
-        discountConfig={props.discountConfig}
-        packageDetail={props.packageDetails.find((d) => d.id === bookingPkg)}
-      />
     </div>
   );
 }

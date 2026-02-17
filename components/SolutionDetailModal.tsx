@@ -5,7 +5,6 @@ import type { SolutionItem } from "@/content/solutions";
 import type { Lang } from "@/utils/i18n";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
-import { BookingDrawer } from "@/components/BookingDrawer";
 import { t } from "@/utils/i18n";
 import { WHATSAPP_PHONE, openWhatsApp } from "@/utils/whatsapp";
 import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
@@ -22,9 +21,8 @@ export function SolutionDetailModal(props: {
   pricing?: PricingConfig;
   discountConfig?: DiscountConfig;
 }) {
-  const { lang, item, onClose, pricing, discountConfig } = props;
+  const { lang, item, onClose } = props;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [bookingOpen, setBookingOpen] = useState(false);
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
@@ -36,6 +34,14 @@ export function SolutionDetailModal(props: {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+
+  // Prevent body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   function onPrimary() {
     const primaryWaUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(pick(lang, item.whatsappTemplatePrimary))}`;
@@ -234,18 +240,6 @@ export function SolutionDetailModal(props: {
             </a>
           </div>
         </div>
-
-        {/* Booking Drawer for solutions */}
-        <BookingDrawer
-          lang={lang}
-          open={bookingOpen}
-          onClose={() => setBookingOpen(false)}
-          sourceType="solution"
-          solutionSlug={item.slug}
-          pricing={pricing}
-          discountConfig={discountConfig}
-          categoryLabel={pick(lang, item.label)}
-        />
       </div>
     </div>
   );
