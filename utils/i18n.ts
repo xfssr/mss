@@ -268,6 +268,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     priceAfterDiscount: "מחיר אחרי הנחה",
     addonWhatsIncluded: "מה כלול",
     addonNotIncluded: "לא כלול",
+    finalTotalLabel: "סה״כ לתשלום",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -528,6 +529,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     priceAfterDiscount: "Price after discount",
     addonWhatsIncluded: "What's included",
     addonNotIncluded: "Not included",
+    finalTotalLabel: "Total",
   },
 };
 
