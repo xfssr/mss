@@ -355,15 +355,13 @@ export function ClientPage(props: Props) {
                   ) : null;
                 })()}
 
-
-                {/* Action buttons */}
+                {/* Action buttons — anchored here so CTA stays stable on expand/collapse */}
                 <div className="mt-4 flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => {
                       const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
                       const icon = pkgIcon(detail);
-                      // Collect selected add-on names for Monthly
                       const addonNames: string[] = [];
                       if (isMonthly) {
                         MONTHLY_ADDONS.forEach((a) => {
@@ -416,7 +414,7 @@ export function ClientPage(props: Props) {
                     </ul>
                   </div>
 
-                  {/* Details grid */}
+                  {/* Details grid — only shoot time + delivery */}
                   <div className="grid grid-cols-2 gap-2">
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
                       <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
@@ -425,14 +423,6 @@ export function ClientPage(props: Props) {
                     <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
                       <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
                       <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
-                    </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{t(lang, "labelLocations")}</div>
-                      <div className="text-xs text-white/80">{pickL10n(lang, detail.locations)}</div>
-                    </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{t(lang, "labelRevisions")}</div>
-                      <div className="text-xs text-white/80">{pickL10n(lang, detail.revisions)}</div>
                     </div>
                   </div>
 
@@ -477,7 +467,7 @@ export function ClientPage(props: Props) {
                               />
                               <div className="min-w-0">
                                 <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
-                                <span className="text-[10px] text-white/50 ms-1">₪{addon.price} {t(lang, "addonPerMonth")}</span>
+                                <span className="text-[10px] text-white/50 ms-2">— ₪{addon.price} {t(lang, "addonPerMonth")}</span>
                               </div>
                             </div>
                             <button
@@ -524,6 +514,16 @@ export function ClientPage(props: Props) {
                         <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
                           -{discountPercent}%
                         </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Final total line for Monthly (package after discount + add-ons) */}
+                  {isMonthly && (hasDiscount || addonsTotal > 0) && (
+                    <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
+                        <span className="text-sm font-bold text-[rgb(var(--blue))]">₪{(finalPrice + addonsTotal).toLocaleString()}</span>
                       </div>
                     </div>
                   )}
