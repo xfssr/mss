@@ -281,6 +281,27 @@ export function ClientPage(props: Props) {
             const discountPercent = props.discountConfig.percent;
             const finalPrice = hasDiscount ? Math.round(price * (1 - discountPercent / 100)) : price;
             const isMonthly = pkg.id === "monthly";
+            const handleWhatsApp = () => {
+              const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+              const icon = pkgIcon(detail);
+              const addonNames: string[] = [];
+              if (isMonthly) {
+                MONTHLY_ADDONS.forEach((a) => {
+                  if (selectedAddons[a.id]) {
+                    addonNames.push(t(lang, a.titleKey));
+                  }
+                });
+              }
+              const msg = buildWhatsAppMessage({
+                packageName: pkgLabel,
+                packageIcon: icon,
+                discountedPrice: hasDiscount ? finalPrice : undefined,
+                basePrice: price > 0 ? price : undefined,
+                selectedAddons: addonNames.length > 0 ? addonNames : undefined,
+                lang,
+              });
+              openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+            };
             return (
             <div
               key={pkg.id}
@@ -359,27 +380,7 @@ export function ClientPage(props: Props) {
                   {!isExpanded && (
                     <button
                       type="button"
-                      onClick={() => {
-                        const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-                        const icon = pkgIcon(detail);
-                        const addonNames: string[] = [];
-                        if (isMonthly) {
-                          MONTHLY_ADDONS.forEach((a) => {
-                            if (selectedAddons[a.id]) {
-                              addonNames.push(t(lang, a.titleKey));
-                            }
-                          });
-                        }
-                        const msg = buildWhatsAppMessage({
-                          packageName: pkgLabel,
-                          packageIcon: icon,
-                          discountedPrice: hasDiscount ? finalPrice : undefined,
-                          basePrice: price > 0 ? price : undefined,
-                          selectedAddons: addonNames.length > 0 ? addonNames : undefined,
-                          lang,
-                        });
-                        openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
-                      }}
+                      onClick={handleWhatsApp}
                       className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
@@ -533,27 +534,7 @@ export function ClientPage(props: Props) {
                   <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
                     <button
                       type="button"
-                      onClick={() => {
-                        const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-                        const icon = pkgIcon(detail);
-                        const addonNames: string[] = [];
-                        if (isMonthly) {
-                          MONTHLY_ADDONS.forEach((a) => {
-                            if (selectedAddons[a.id]) {
-                              addonNames.push(t(lang, a.titleKey));
-                            }
-                          });
-                        }
-                        const msg = buildWhatsAppMessage({
-                          packageName: pkgLabel,
-                          packageIcon: icon,
-                          discountedPrice: hasDiscount ? finalPrice : undefined,
-                          basePrice: price > 0 ? price : undefined,
-                          selectedAddons: addonNames.length > 0 ? addonNames : undefined,
-                          lang,
-                        });
-                        openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
-                      }}
+                      onClick={handleWhatsApp}
                       className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
