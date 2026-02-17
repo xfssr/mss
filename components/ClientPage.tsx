@@ -30,6 +30,7 @@ import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
   buildMessage,
+  buildWhatsAppMessage,
   buildWaMeUrl,
   DEFAULT_RESERVATION,
   openWhatsApp,
@@ -302,19 +303,9 @@ export function ClientPage(props: Props) {
                     </div>
                     {price > 0 && (
                       <div className="mt-1 flex items-center gap-2 flex-wrap">
-                        {hasDiscount ? (
-                          <>
-                            <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
-                            <span className="text-sm font-bold text-[rgb(var(--blue))]">₪{finalPrice.toLocaleString()}</span>
-                            <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
-                              -{discountPercent}%
-                            </span>
-                          </>
-                        ) : (
-                          <span className="text-xs text-[rgb(var(--blue))]/80">
-                            {t(lang, "fromPrice")}₪{price.toLocaleString()}
-                          </span>
-                        )}
+                        <span className="text-xs text-[rgb(var(--blue))]/80">
+                          {t(lang, "fromPrice")}₪{price.toLocaleString()}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -364,49 +355,6 @@ export function ClientPage(props: Props) {
                   ) : null;
                 })()}
 
-                {/* Monthly add-ons section */}
-                {isMonthly ? (
-                  <div className="mt-4 border-t border-white/10 pt-3">
-                    <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-0.5">
-                      {t(lang, "monthlyAddonsTitle")}
-                    </h4>
-                    <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
-                    <div className="space-y-2">
-                      {MONTHLY_ADDONS.map((addon) => (
-                        <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                          <div className="flex items-center gap-2 min-w-0">
-                            <input
-                              type="checkbox"
-                              checked={!!selectedAddons[addon.id]}
-                              onChange={() => toggleAddon(addon.id)}
-                              className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
-                            />
-                            <div className="min-w-0">
-                              <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
-                              <span className="text-[10px] text-white/50 ms-1">₪{addon.price} {t(lang, "addonPerMonth")}</span>
-                            </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => setAddonDetailModal(addon)}
-                            className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
-                          >
-                            {t(lang, "addonDetails")}
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                    {addonsTotal > 0 && (
-                      <p className="mt-2 text-xs font-medium text-[rgb(var(--blue))]">
-                        {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
-                      </p>
-                    )}
-                  </div>
-                ) : (
-                  <div className="mt-4 border-t border-white/10 pt-3">
-                    <p className="text-[10px] text-white/30 italic">{t(lang, "addonOnlyMonthly")}</p>
-                  </div>
-                )}
 
                 {/* Action buttons */}
                 <div className="mt-4 flex items-center gap-2">
@@ -414,25 +362,24 @@ export function ClientPage(props: Props) {
                     type="button"
                     onClick={() => {
                       const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-                      // Find the selected business type label
-                      const bizTypeLabel = globalBizType
-                        ? pickL10n(lang, businessTypeOptions.find((bt) => bt.key === globalBizType)?.label ?? { he: globalBizType, en: globalBizType })
-                        : null;
-                      // Build add-ons line for Monthly
-                      let addonsLine = "";
-                      if (isMonthly && MONTHLY_ADDONS.some((a) => selectedAddons[a.id])) {
-                        const parts = MONTHLY_ADDONS.map((a) => {
-                          const yes = !!selectedAddons[a.id];
-                          const label = t(lang, a.titleKey);
-                          return `${label} ${lang === "he" ? (yes ? "כן" : "לא") : (yes ? "Yes" : "No")}`;
+                      const icon = pkgIcon(detail);
+                      // Collect selected add-on names for Monthly
+                      const addonNames: string[] = [];
+                      if (isMonthly) {
+                        MONTHLY_ADDONS.forEach((a) => {
+                          if (selectedAddons[a.id]) {
+                            addonNames.push(t(lang, a.titleKey));
+                          }
                         });
-                        addonsLine = lang === "he"
-                          ? `\nתוספות: ${parts.join(", ")}`
-                          : `\nAdd-ons: ${parts.join(", ")}`;
                       }
-                      const msg = lang === "he"
-                        ? `היי! אני רוצה את חבילת ${pkgLabel}.${bizTypeLabel ? `\nסוג עסק: ${bizTypeLabel}` : ""}${addonsLine}\nאפשר פרטים ותיאום?`
-                        : `Hi! I'd like to order the ${pkgLabel} package.${bizTypeLabel ? `\nBusiness type: ${bizTypeLabel}` : ""}${addonsLine}\nCan I get details and schedule?`;
+                      const msg = buildWhatsAppMessage({
+                        packageName: pkgLabel,
+                        packageIcon: icon,
+                        discountedPrice: hasDiscount ? finalPrice : undefined,
+                        basePrice: price > 0 ? price : undefined,
+                        selectedAddons: addonNames.length > 0 ? addonNames : undefined,
+                        lang,
+                      });
                       openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
                     }}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
@@ -511,10 +458,73 @@ export function ClientPage(props: Props) {
                     </div>
                   )}
 
+                  {/* Monthly: selectable add-ons (only in expanded details) */}
+                  {isMonthly && (
+                    <div>
+                      <h4 className="text-xs font-semibold text-[rgb(var(--blue))] mb-0.5">
+                        {t(lang, "monthlyAddonsTitle")}
+                      </h4>
+                      <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
+                      <div className="space-y-2">
+                        {MONTHLY_ADDONS.map((addon) => (
+                          <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                            <div className="flex items-center gap-2 min-w-0">
+                              <input
+                                type="checkbox"
+                                checked={!!selectedAddons[addon.id]}
+                                onChange={() => toggleAddon(addon.id)}
+                                className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
+                              />
+                              <div className="min-w-0">
+                                <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
+                                <span className="text-[10px] text-white/50 ms-1">₪{addon.price} {t(lang, "addonPerMonth")}</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setAddonDetailModal(addon)}
+                              className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
+                            >
+                              {t(lang, "addonDetails")}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      {addonsTotal > 0 && (
+                        <p className="mt-2 text-xs font-medium text-[rgb(var(--blue))]">
+                          {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Starter/Business: add-ons availability note */}
+                  {!isMonthly && (
+                    <div>
+                      <p className="text-[11px] text-white/40 italic">
+                        {t(lang, "addonsAvailableOnlyMonthly")}
+                      </p>
+                    </div>
+                  )}
+
                   {/* First-order discount in card */}
                   {props.discountConfig.enabled && (
                     <div className="text-[11px] text-green-400/80">
                       🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })} ({props.discountConfig.percent}%)
+                    </div>
+                  )}
+
+                  {/* Price after discount — shown only in expanded details */}
+                  {hasDiscount && (
+                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                      <div className="text-[10px] text-white/40 mb-1">{t(lang, "priceAfterDiscount")}</div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
+                        <span className="text-sm font-bold text-[rgb(var(--blue))]">₪{finalPrice.toLocaleString()}</span>
+                        <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
+                          -{discountPercent}%
+                        </span>
+                      </div>
                     </div>
                   )}
                 </div>

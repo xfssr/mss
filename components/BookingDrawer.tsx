@@ -184,8 +184,8 @@ export function BookingDrawer(props: BookingDrawerProps) {
     if (props.sourceType === "solution") {
       tags.push(props.solutionSlug);
     }
-    if (smmOn) tags.push("SMM");
-    if (targetOn) tags.push("Target Ads");
+    if (smmOn) tags.push("SMM Lite");
+    if (targetOn) tags.push("Ads Targeting (Meta)");
     return tags;
   }, [props, lang, smmOn, targetOn, categoryLabel]);
 
