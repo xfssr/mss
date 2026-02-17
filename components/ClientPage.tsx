@@ -24,6 +24,7 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
+import { PackageExamples } from "@/components/PackageExamples";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -69,14 +70,17 @@ const PACKAGE_CARDS = [
   {
     id: "starter",
     badge: "popular" as const,
+    defaultCatalogIndex: 0,
   },
   {
     id: "business",
     badge: "popular" as const,
+    defaultCatalogIndex: 1,
   },
   {
     id: "monthly",
     badge: undefined,
+    defaultCatalogIndex: 2,
   },
 ] as const;
 
@@ -105,6 +109,7 @@ export function ClientPage(props: Props) {
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
+  const [pkgExampleSlug, setPkgExampleSlug] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -129,6 +134,11 @@ export function ClientPage(props: Props) {
   const catalogPreview = useMemo(
     () => (catalogPreviewSlug ? props.catalogs.find((c) => c.slug === catalogPreviewSlug) ?? null : null),
     [props.catalogs, catalogPreviewSlug],
+  );
+
+  const pkgExampleCatalog = useMemo(
+    () => (pkgExampleSlug ? props.catalogs.find((c) => c.slug === pkgExampleSlug) ?? null : null),
+    [props.catalogs, pkgExampleSlug],
   );
 
   const messagePreview = useMemo(() => {
@@ -302,6 +312,19 @@ export function ClientPage(props: Props) {
                     ))}
                   </div>
                 )}
+
+                {/* Example thumbnails */}
+                {(() => {
+                  const exCatalog = selectedCatalog ?? props.catalogs[pkg.defaultCatalogIndex] ?? props.catalogs[0];
+                  const exItems = exCatalog?.examples?.slice(0, 4) ?? [];
+                  return exItems.length > 0 ? (
+                    <PackageExamples
+                      lang={lang}
+                      examples={exItems}
+                      onThumbnailClick={() => setPkgExampleSlug(exCatalog.slug)}
+                    />
+                  ) : null;
+                })()}
 
                 {/* Action buttons */}
                 <div className="mt-4 flex items-center gap-2">
@@ -498,6 +521,15 @@ export function ClientPage(props: Props) {
           lang={lang}
           catalog={catalogPreview}
           onClose={() => setCatalogPreviewSlug(null)}
+        />
+      )}
+
+      {/* Package examples preview modal */}
+      {pkgExampleCatalog && (
+        <CatalogPreviewModal
+          lang={lang}
+          catalog={pkgExampleCatalog}
+          onClose={() => setPkgExampleSlug(null)}
         />
       )}
     </div>
