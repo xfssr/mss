@@ -45,6 +45,16 @@ export function HowItWorksHero(props: { lang: Lang }) {
           </a>
         ))}
       </div>
+
+      {/* CTA at bottom of How it works */}
+      <div className="mt-6 text-center">
+        <a
+          href="#packages"
+          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+        >
+          {t(lang, "letsStart")}
+        </a>
+      </div>
     </div>
   );
 }
