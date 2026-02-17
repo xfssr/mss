@@ -421,13 +421,14 @@ export function ClientPage(props: Props) {
                       // Build add-ons line for Monthly
                       let addonsLine = "";
                       if (isMonthly && MONTHLY_ADDONS.some((a) => selectedAddons[a.id])) {
-                        const smmYes = selectedAddons["smm-lite"];
-                        const adsYes = selectedAddons["ads-meta"];
-                        if (lang === "he") {
-                          addonsLine = `\nתוספות: SMM Lite ${smmYes ? "כן" : "לא"}, Ads Meta ${adsYes ? "כן" : "לא"}`;
-                        } else {
-                          addonsLine = `\nAdd-ons: SMM Lite ${smmYes ? "Yes" : "No"}, Ads Meta ${adsYes ? "Yes" : "No"}`;
-                        }
+                        const parts = MONTHLY_ADDONS.map((a) => {
+                          const yes = !!selectedAddons[a.id];
+                          const label = t(lang, a.titleKey);
+                          return `${label} ${lang === "he" ? (yes ? "כן" : "לא") : (yes ? "Yes" : "No")}`;
+                        });
+                        addonsLine = lang === "he"
+                          ? `\nתוספות: ${parts.join(", ")}`
+                          : `\nAdd-ons: ${parts.join(", ")}`;
                       }
                       const msg = lang === "he"
                         ? `היי! אני רוצה את חבילת ${pkgLabel}.${bizTypeLabel ? `\nסוג עסק: ${bizTypeLabel}` : ""}${addonsLine}\nאפשר פרטים ותיאום?`
