@@ -39,7 +39,7 @@ export function SolutionsClient(props: {
       <Section id="solutions" title={t(lang, "sectionSolutions")}>
         <div className="mb-4">
           <Link
-            href="/#catalog"
+            href="/#packages"
             className="inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white transition-colors"
           >
             <span aria-hidden="true">←</span>

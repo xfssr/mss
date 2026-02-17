@@ -5,17 +5,7 @@ import type { CatalogExample, Catalog } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
-/** Maps business type selector values to catalog slugs for filtering. */
-export const BUSINESS_TYPES = [
-  { key: "bars", i18nKey: "bizTypeBars" },
-  { key: "restaurants", i18nKey: "bizTypeRestaurants" },
-  { key: "hotels", i18nKey: "bizTypeHotels" },
-  { key: "events", i18nKey: "bizTypeEvents" },
-  { key: "real-estate", i18nKey: "bizTypeRealEstate" },
-  { key: "services", i18nKey: "bizTypeServices" },
-] as const;
-
-export type BusinessTypeKey = (typeof BUSINESS_TYPES)[number]["key"];
+export type BusinessTypeKey = string;
 
 /** Resolve which catalog slug to use for a given business type key.
  *  When no exact catalog exists for a type, we fall back to the
@@ -34,30 +24,42 @@ function catalogSlugForType(key: BusinessTypeKey): string {
       return "hotels"; // interior/property photography style
     case "services":
       return "events"; // people & action shots style
+    default:
+      return key; // use slug directly for catalog-derived types
   }
+}
+
+/** Derive business type options from catalog data (single source of truth). */
+export function getBusinessTypesFromCatalogs(catalogs: Catalog[]): { key: string; label: { he: string; en: string } }[] {
+  return catalogs
+    .filter((c) => c.slug !== "restaurant-menu-website")
+    .map((c) => ({
+      key: c.slug,
+      label: c.title,
+    }));
 }
 
 /**
  * Compact example thumbnails strip for package cards.
  * Shows 1 main thumbnail + up to 3 small thumbnails.
- * Includes a compact business-type selector to filter examples.
+ * No per-card selector — controlled by the global business type selector.
  */
 export function PackageExamples(props: {
   lang: Lang;
   examples: CatalogExample[];
   catalogs: Catalog[];
   businessType: BusinessTypeKey | null;
-  onBusinessTypeChange: (bt: BusinessTypeKey | null) => void;
   onThumbnailClick: (catalogSlug: string) => void;
 }) {
-  const { lang, examples, catalogs, businessType, onBusinessTypeChange, onThumbnailClick } = props;
+  const { lang, examples, catalogs, businessType, onThumbnailClick } = props;
 
   // Resolve displayed examples: if a business type is selected, pick from matching catalog
   let displayExamples = examples;
   let activeCatalogSlug: string | undefined;
 
   if (businessType) {
-    const slug = catalogSlugForType(businessType);
+    // First try direct slug match, then use the mapping
+    const slug = catalogs.find((c) => c.slug === businessType) ? businessType : catalogSlugForType(businessType);
     const matched = catalogs.find((c) => c.slug === slug);
     if (matched && matched.examples.length > 0) {
       displayExamples = matched.examples.slice(0, 4);
@@ -86,27 +88,9 @@ export function PackageExamples(props: {
 
   return (
     <div className="mt-3">
-      <div className="flex items-center justify-between gap-2 mb-1.5">
-        <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider">
-          {t(lang, "pkgExamples")}
-        </p>
-        <select
-          value={businessType ?? ""}
-          onChange={(e) => {
-            const val = e.target.value;
-            onBusinessTypeChange(val ? (val as BusinessTypeKey) : null);
-          }}
-          className="text-[10px] rounded-lg border border-white/10 bg-black/35 px-2 py-1 text-white/70 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] max-w-[130px] truncate"
-          aria-label={t(lang, "bizTypeLabel")}
-        >
-          <option value="">{t(lang, "bizTypeLabel")}</option>
-          {BUSINESS_TYPES.map((bt) => (
-            <option key={bt.key} value={bt.key}>
-              {t(lang, bt.i18nKey)}
-            </option>
-          ))}
-        </select>
-      </div>
+      <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1.5">
+        {t(lang, "pkgExamples")}
+      </p>
       <div className="flex gap-1.5">
         {/* Main thumbnail */}
         <button

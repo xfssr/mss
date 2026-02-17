@@ -246,6 +246,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Business type selector
     bizTypeLabel: "בחר סוג עסק",
+    bizTypeAll: "הכל",
+    bizTypeHint: "בחרו סוג עסק כדי לראות דוגמאות רלוונטיות בחבילות",
     bizTypeBars: "ברים / חיי לילה",
     bizTypeRestaurants: "מסעדות / אוכל",
     bizTypeHotels: "מלונות",
@@ -490,6 +492,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Business type selector
     bizTypeLabel: "Choose business type",
+    bizTypeAll: "All",
+    bizTypeHint: "Pick a business type to see matching examples inside the packages",
     bizTypeBars: "Bars / Nightlife",
     bizTypeRestaurants: "Restaurants / Food",
     bizTypeHotels: "Hotels",

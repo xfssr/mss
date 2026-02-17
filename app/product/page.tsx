@@ -282,7 +282,7 @@ export default async function ProductPage(props: {
         name: lang === "he" ? "יצירת תוכן וניהול סושיאל" : "Content creation & social media management",
         provider: { "@id": `${siteUrl}#org` },
         areaServed: "IL",
-        url: `${siteUrl}/#catalog`,
+        url: `${siteUrl}/#packages`,
       },
     ],
   };
@@ -465,7 +465,7 @@ export default async function ProductPage(props: {
             {/* CTAs */}
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
-                href="/#catalog"
+                href="/#packages"
                 className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-5 py-3 text-sm text-white/90 font-medium hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
               >
                 {ui.goToCatalogs}

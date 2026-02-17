@@ -15,7 +15,6 @@ import type { PackageDetail } from "@/lib/packageConfigStore";
 import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
-import { CatalogGrid } from "@/components/CatalogGrid";
 import { CatalogPreviewModal } from "@/components/CatalogPreviewModal";
 import { MiniScreenPanel } from "@/components/MiniScreenPanel";
 import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
@@ -24,7 +23,7 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
-import { PackageExamples, type BusinessTypeKey } from "@/components/PackageExamples";
+import { PackageExamples, getBusinessTypesFromCatalogs, type BusinessTypeKey } from "@/components/PackageExamples";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -110,7 +109,7 @@ export function ClientPage(props: Props) {
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
   const [pkgExampleSlug, setPkgExampleSlug] = useState<string | null>(null);
-  const [pkgBizType, setPkgBizType] = useState<Record<string, BusinessTypeKey | null>>({});
+  const [globalBizType, setGlobalBizType] = useState<BusinessTypeKey | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -142,6 +141,12 @@ export function ClientPage(props: Props) {
     [props.catalogs, pkgExampleSlug],
   );
 
+  // Derive business type options from catalog data (single source of truth)
+  const businessTypeOptions = useMemo(
+    () => getBusinessTypesFromCatalogs(portfolioCatalogs),
+    [portfolioCatalogs],
+  );
+
   const messagePreview = useMemo(() => {
     return buildMessage({ lang, reservation: DEFAULT_RESERVATION });
   }, [lang]);
@@ -152,7 +157,7 @@ export function ClientPage(props: Props) {
     else if (typeof next.catalog === "string") sp.set("catalog", next.catalog);
 
     const qs = sp.toString();
-    router.replace(qs ? `/?${qs}#catalog` : "/#catalog");
+    router.replace(qs ? `/?${qs}` : "/");
   }
 
   function openCatalog(slug: string) {
@@ -173,8 +178,8 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  function scrollToCatalog() {
-    const el = document.getElementById("catalog");
+  function scrollToPackages() {
+    const el = document.getElementById("packages");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -197,7 +202,7 @@ export function ClientPage(props: Props) {
               <div className="mt-8">
                 <button
                   type="button"
-                  onClick={scrollToCatalog}
+                  onClick={scrollToPackages}
                   className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "letsStart")}
@@ -215,14 +220,7 @@ export function ClientPage(props: Props) {
         </div>
       </Section>
 
-      <Section id="catalog" title={t(lang, "sectionCatalog")}>
-        <CatalogGrid
-          lang={lang}
-          catalogs={portfolioCatalogs}
-          selectedSlug={selectedCatalog?.slug ?? undefined}
-          onSelect={(slug) => openCatalog(slug)}
-        />
-      </Section>
+      {/* Catalog section hidden from homepage but data kept for admin/media source */}
 
       {selectedCatalog && panelOpen && selectedCategoryDetail ? (
         <CategoryDetailModal
@@ -252,7 +250,33 @@ export function ClientPage(props: Props) {
 
       {/* ===== Package selection section ===== */}
       <Section id="packages" title={t(lang, "choosePackage")}>
-        <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
+        <p className="text-sm text-white/70 mb-4">{t(lang, "choosePackageSubtitle")}</p>
+
+        {/* Global business type selector */}
+        <div className="mb-6">
+          <label htmlFor="global-biz-type" className="block text-sm font-medium text-white/80 mb-1">
+            {t(lang, "bizTypeLabel")}
+          </label>
+          <select
+            id="global-biz-type"
+            value={globalBizType ?? ""}
+            onChange={(e) => {
+              const val = e.target.value;
+              setGlobalBizType(val || null);
+            }}
+            className="text-sm rounded-xl border border-white/15 bg-black/40 px-4 py-2.5 text-white/90 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] w-full sm:w-auto sm:min-w-[220px]"
+            aria-label={t(lang, "bizTypeLabel")}
+          >
+            <option value="">{t(lang, "bizTypeAll")}</option>
+            {businessTypeOptions.map((bt) => (
+              <option key={bt.key} value={bt.key}>
+                {pickL10n(lang, bt.label)}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1.5 text-xs text-white/50">{t(lang, "bizTypeHint")}</p>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
@@ -314,9 +338,9 @@ export function ClientPage(props: Props) {
                   </div>
                 )}
 
-                {/* Example thumbnails */}
+                {/* Example thumbnails — controlled by global selector */}
                 {(() => {
-                  const exCatalog = selectedCatalog ?? props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
+                  const exCatalog = props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
                   if (!exCatalog) return null;
                   const exItems = exCatalog.examples?.slice(0, 4) ?? [];
                   return exItems.length > 0 ? (
@@ -324,10 +348,7 @@ export function ClientPage(props: Props) {
                       lang={lang}
                       examples={exItems}
                       catalogs={props.catalogs}
-                      businessType={pkgBizType[pkg.id] ?? null}
-                      onBusinessTypeChange={(bt) =>
-                        setPkgBizType((prev) => ({ ...prev, [pkg.id]: bt }))
-                      }
+                      businessType={globalBizType}
                       onThumbnailClick={(slug) => setPkgExampleSlug(slug)}
                     />
                   ) : null;
@@ -339,9 +360,13 @@ export function ClientPage(props: Props) {
                     type="button"
                     onClick={() => {
                       const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                      // Find the selected business type label
+                      const bizTypeLabel = globalBizType
+                        ? pickL10n(lang, businessTypeOptions.find((bt) => bt.key === globalBizType)?.label ?? { he: globalBizType, en: globalBizType })
+                        : null;
                       const msg = lang === "he"
-                        ? `היי! מעוניין/ת בחבילת ${pkgLabel}. אשמח לפרטים!`
-                        : `Hi! I'm interested in the ${pkgLabel} package. I'd love to learn more!`;
+                        ? `היי! אני רוצה להזמין חבילה: ${pkgLabel}.${bizTypeLabel ? `\nסוג עסק: ${bizTypeLabel}` : ""}\nאפשר פרטים ותיאום?`
+                        : `Hi! I'd like to order the ${pkgLabel} package.${bizTypeLabel ? `\nBusiness type: ${bizTypeLabel}` : ""}\nCan I get details and schedule?`;
                       openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
                     }}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
