@@ -119,7 +119,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "לבחור חבילה זו",
 
-    choosePackage: "בחרו חבילה",
+    choosePackage: "בחרו חבילת צילום שמתאימה לעסק",
     choosePackageSubtitle: "בחרו חבילה מוכנה או בנו חבילה מותאמת אישית — וממשיכים להזמנה.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4 שעות · 6 רילס · 20 תמונות",
@@ -254,6 +254,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     bizTypeEvents: "אירועים",
     bizTypeRealEstate: "נדל״ן",
     bizTypeServices: "שירותים קטנים",
+    bizTypeGateHint: "קודם בחר סוג עסק כדי לראות דוגמאות מתאימות",
+    bizTypeMicrocopy: "קודם בחר סוג עסק ואז בחר חבילה",
 
     // Monthly add-ons
     monthlyAddonsTitle: "תוספות חודשיות",
@@ -380,7 +382,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "Pick this package",
 
-    choosePackage: "Choose a package",
+    choosePackage: "Choose a photo package that fits your business",
     choosePackageSubtitle: "Pick a ready-made package or build your own — then proceed to order.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4h · 6 reels · 20 photos",
@@ -515,6 +517,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     bizTypeEvents: "Events",
     bizTypeRealEstate: "Real Estate",
     bizTypeServices: "Small Services",
+    bizTypeGateHint: "Choose a business type to see matching examples",
+    bizTypeMicrocopy: "First choose a business type, then pick a package",
 
     // Monthly add-ons
     monthlyAddonsTitle: "Monthly add-ons",
