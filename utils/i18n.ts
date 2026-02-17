@@ -240,6 +240,9 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package CTA
     pkgWhatsApp: "שלח ב-WhatsApp",
+
+    // Package card examples
+    pkgExamples: "דוגמאות",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -472,6 +475,9 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package CTA
     pkgWhatsApp: "Message on WhatsApp",
+
+    // Package card examples
+    pkgExamples: "Examples",
   },
 };
 
