@@ -22,7 +22,6 @@ import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
-import { BookingDrawer } from "@/components/BookingDrawer";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
@@ -103,8 +102,6 @@ export function ClientPage(props: Props) {
   }, [lang]);
 
   const [panelOpen, setPanelOpen] = useState(false);
-  const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
-  const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
@@ -163,11 +160,6 @@ export function ClientPage(props: Props) {
   function onSendWhatsApp() {
     const url = buildWaMeUrl(WHATSAPP_PHONE, messagePreview);
     openWhatsApp(url);
-  }
-
-  function onContinueToProduct(pkg?: string) {
-    setBookingPkg(pkg || "");
-    setBookingDrawerOpen(true);
   }
 
   function scrollToCatalog() {
@@ -237,7 +229,13 @@ export function ClientPage(props: Props) {
           open={panelOpen}
           catalog={selectedCatalog}
           onClose={closePanel}
-          onContinueToProduct={() => onContinueToProduct()}
+          onContinueToProduct={() => {
+            closePanel();
+            setTimeout(() => {
+              const el = document.getElementById("packages");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 100);
+          }}
         />
       ) : null}
 
@@ -502,18 +500,6 @@ export function ClientPage(props: Props) {
           onClose={() => setCatalogPreviewSlug(null)}
         />
       )}
-
-      {/* Booking Drawer */}
-      <BookingDrawer
-        lang={lang}
-        open={bookingDrawerOpen}
-        onClose={() => setBookingDrawerOpen(false)}
-        sourceType="package"
-        pkg={bookingPkg}
-        pricing={props.pricing}
-        discountConfig={props.discountConfig}
-        packageDetail={props.packageDetails.find((d) => d.id === bookingPkg)}
-      />
     </div>
   );
 }
