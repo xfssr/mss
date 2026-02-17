@@ -271,6 +271,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     addonWhatsIncluded: "מה כלול",
     addonNotIncluded: "לא כלול",
     finalTotalLabel: "סה״כ לתשלום",
+    backToHome: "חזרה לעמוד הראשי",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -534,6 +535,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     addonWhatsIncluded: "What's included",
     addonNotIncluded: "Not included",
     finalTotalLabel: "Total",
+    backToHome: "Back to homepage",
   },
 };
 

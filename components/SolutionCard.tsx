@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import type { SolutionItem } from "@/content/solutions";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
@@ -53,7 +54,13 @@ export function SolutionCard(props: {
           <span className="text-2xl shrink-0">{icon}</span>
           <div className="min-w-0">
             <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">
-              {pick(lang, item.label)}
+              <Link
+                href={`/product/${item.slug}`}
+                onClick={(e) => e.stopPropagation()}
+                className="hover:underline"
+              >
+                {pick(lang, item.label)}
+              </Link>
             </h3>
             <p className="mt-1 text-xs text-white/60 line-clamp-2">{pick(lang, item.subtitle)}</p>
           </div>

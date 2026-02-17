@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Catalog } from "@/types/catalog";
 import type { CategoryDetail } from "@/content/categoryDetails";
@@ -319,7 +320,9 @@ export function ClientPage(props: Props) {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="text-base sm:text-lg font-bold text-white">
-                        {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
+                        <Link href={`/product/${pkg.id}`} className="hover:text-[rgb(var(--blue))] transition-colors">
+                          {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
+                        </Link>
                       </h3>
                       {pkg.badge === "popular" ? (
                         <span className="text-[10px] rounded-full border border-[rgb(var(--blue))]/50 bg-[rgb(var(--blue))]/15 px-2.5 py-0.5 text-white/90 font-medium shadow-sm">

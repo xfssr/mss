@@ -97,7 +97,7 @@ export default async function Page() {
                   priceCurrency: "ILS",
                   price: p.priceFrom,
                   availability: "https://schema.org/InStock",
-                  url: `${siteUrl}/product?pkg=${p.id}`,
+                  url: `${siteUrl}/product/${p.id}`,
                 })),
               },
             },
