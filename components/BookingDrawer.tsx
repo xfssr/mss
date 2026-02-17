@@ -214,6 +214,15 @@ export function BookingDrawer(props: BookingDrawerProps) {
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
+  // Prevent body scroll when drawer is open
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const onCheck = useCallback(async () => {
     if (!validInput) {
       setAvail({ kind: "error", message: s.fillDateTime });

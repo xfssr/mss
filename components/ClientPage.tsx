@@ -81,6 +81,12 @@ const PACKAGE_CARDS = [
   },
 ] as const;
 
+const PKG_LABELS: Record<string, Record<Lang, string>> = {
+  starter: { he: "Starter", en: "Starter" },
+  business: { he: "Business", en: "Business" },
+  monthly: { he: "Monthly", en: "Monthly" },
+};
+
 export function ClientPage(props: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -303,7 +309,13 @@ export function ClientPage(props: Props) {
                 <div className="mt-4 flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => onContinueToProduct(pkg.id)}
+                    onClick={() => {
+                      const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                      const msg = lang === "he"
+                        ? `היי! מעוניין/ת בחבילת ${pkgLabel}. אשמח לפרטים!`
+                        : `Hi! I'm interested in the ${pkgLabel} package. I'd love to learn more!`;
+                      openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+                    }}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                   >
                     {t(lang, "pkgWhatsApp")}

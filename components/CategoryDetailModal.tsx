@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
-import { buildWaMeUrl, WHATSAPP_PHONE } from "@/utils/whatsapp";
+import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
 import type { PricingConfig } from "@/types/pricing";
 import type { DiscountConfig } from "@/lib/catalogOverridesStore";
-import { BookingDrawer } from "@/components/BookingDrawer";
 import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
 
 function pick(lang: Lang, v: { he: string; en: string }) {
@@ -24,9 +23,8 @@ export function CategoryDetailModal(props: {
   pricing?: PricingConfig;
   discountConfig?: DiscountConfig;
 }) {
-  const { lang, detail, onClose, catalogTitle, catalogSubtitle, pricing, discountConfig } = props;
+  const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [bookingOpen, setBookingOpen] = useState(false);
 
   const isRtl = lang === "he";
   const dir = isRtl ? "rtl" : "ltr";
@@ -39,8 +37,17 @@ export function CategoryDetailModal(props: {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  // Prevent body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
   function onPrimary() {
-    setBookingOpen(true);
+    const primaryWaUrl = buildWaMeUrl(WHATSAPP_PHONE, pick(lang, detail.whatsappTemplatePrimary));
+    openWhatsApp(primaryWaUrl);
   }
 
   const secondaryWaUrl = buildWaMeUrl(WHATSAPP_PHONE, pick(lang, detail.whatsappTemplateSecondary));
@@ -236,17 +243,6 @@ export function CategoryDetailModal(props: {
             </a>
           </div>
         </div>
-        {/* Booking Drawer */}
-        <BookingDrawer
-          lang={lang}
-          open={bookingOpen}
-          onClose={() => setBookingOpen(false)}
-          sourceType="solution"
-          solutionSlug={detail.slug}
-          pricing={pricing}
-          discountConfig={discountConfig}
-          categoryLabel={pick(lang, detail.label)}
-        />
       </div>
     </div>
   );
