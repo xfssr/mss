@@ -74,18 +74,12 @@ export async function generateMetadata({
 
   if (product.kind === "package") {
     const pkg = product.data;
-    title =
-      lang === "he"
-        ? `${pick(lang, pkg.title)} — Micro-Screen Studio`
-        : `${pick(lang, pkg.title)} — Micro-Screen Studio`;
+    title = `${pick(lang, pkg.title)} — Micro-Screen Studio`;
     description = pick(lang, pkg.subtitle);
     price = String(pkg.priceFrom);
   } else {
     const sol = product.data;
-    title =
-      lang === "he"
-        ? `${pick(lang, sol.label)} — Micro-Screen Studio`
-        : `${pick(lang, sol.label)} — Micro-Screen Studio`;
+    title = `${pick(lang, sol.label)} — Micro-Screen Studio`;
     description = pick(lang, sol.subtitle);
     if (sol.pricingTiers.length > 0) {
       const raw = pick(lang, sol.pricingTiers[0].range);
