@@ -19,7 +19,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "לכתוב ב-WhatsApp",
     heroHint: "בחרו קטגוריה → בחרו חבילה → מלאו תאריך/עיר → שולחים ב-WhatsApp.",
 
-    sectionCatalog: "קטלוגים",
+    sectionCatalog: "דוגמאות מצילומים אמיתיים לפי תחום",
     sectionAbout: "אודות",
     sectionContact: "יצירת קשר",
 
@@ -228,6 +228,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     navPricing: "מחירים",
     menuOpen: "תפריט",
     menuClose: "סגור",
+
+    // Catalog card
+    catalogOpen: "פתח",
+    goToPackages: "לחבילות",
+
+    // Catalog preview modal
+    tabPhotos: "תמונות",
+    tabVideo: "וידאו",
+    choosePackageBtn: "בחר חבילה",
+
+    // Package CTA
+    pkgWhatsApp: "שלח ב-WhatsApp",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -239,7 +251,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "Message on WhatsApp",
     heroHint: "Pick a category → build a package → add date/city → send via WhatsApp.",
 
-    sectionCatalog: "Catalogs",
+    sectionCatalog: "Real shoot examples by industry",
     sectionAbout: "About",
     sectionContact: "Contact",
 
@@ -448,6 +460,18 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     navPricing: "Pricing",
     menuOpen: "Menu",
     menuClose: "Close",
+
+    // Catalog card
+    catalogOpen: "Open",
+    goToPackages: "Go to packages",
+
+    // Catalog preview modal
+    tabPhotos: "Photos",
+    tabVideo: "Video",
+    choosePackageBtn: "Choose a package",
+
+    // Package CTA
+    pkgWhatsApp: "Message on WhatsApp",
   },
 };
 

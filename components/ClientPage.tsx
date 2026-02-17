@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { Catalog } from "@/types/catalog";
 import type { CategoryDetail } from "@/content/categoryDetails";
+import type { SolutionItem } from "@/content/solutions";
 import type { HeroMedia } from "@/types/hero";
 import type { PricingConfig } from "@/types/pricing";
 import type { PriceItem } from "@/types/price";
@@ -15,13 +16,15 @@ import { Navbar } from "@/components/Navbar";
 import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
 import { CatalogGrid } from "@/components/CatalogGrid";
+import { CatalogPreviewModal } from "@/components/CatalogPreviewModal";
 import { MiniScreenPanel } from "@/components/MiniScreenPanel";
 import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { BookingDrawer } from "@/components/BookingDrawer";
-import { QuickPreviewModal } from "@/components/QuickPreviewModal";
+import { SolutionCard } from "@/components/SolutionCard";
+import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -35,6 +38,7 @@ import {
 type Props = {
   catalogs: Catalog[];
   categoryDetails: CategoryDetail[];
+  solutions: SolutionItem[];
   settings: SiteSettings;
   prices: PriceItem[];
   heroMedia: HeroMedia[];
@@ -96,8 +100,8 @@ export function ClientPage(props: Props) {
   const [bookingDrawerOpen, setBookingDrawerOpen] = useState(false);
   const [bookingPkg, setBookingPkg] = useState("");
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
-  const [previewSlug, setPreviewSlug] = useState<string | null>(null);
-  const [packagesVisible, setPackagesVisible] = useState(false);
+  const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
+  const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -114,9 +118,14 @@ export function ClientPage(props: Props) {
     [props.categoryDetails, slugFromUrl],
   );
 
-  const previewCatalog = useMemo(
-    () => (previewSlug ? props.catalogs.find((c) => c.slug === previewSlug) ?? null : null),
-    [props.catalogs, previewSlug],
+  const selectedSolution = useMemo(
+    () => (selectedSolutionSlug ? props.solutions.find((s) => s.slug === selectedSolutionSlug) ?? null : null),
+    [props.solutions, selectedSolutionSlug],
+  );
+
+  const catalogPreview = useMemo(
+    () => (catalogPreviewSlug ? props.catalogs.find((c) => c.slug === catalogPreviewSlug) ?? null : null),
+    [props.catalogs, catalogPreviewSlug],
   );
 
   const messagePreview = useMemo(() => {
@@ -133,9 +142,7 @@ export function ClientPage(props: Props) {
   }
 
   function openCatalog(slug: string) {
-    setPanelOpen(true);
-    setPackagesVisible(true);
-    setParams({ catalog: slug });
+    setCatalogPreviewSlug(slug);
   }
 
   useEffect(() => {
@@ -157,23 +164,10 @@ export function ClientPage(props: Props) {
     setBookingDrawerOpen(true);
   }
 
-  function scrollToCatalogAndPreview() {
+  function scrollToCatalog() {
     const el = document.getElementById("catalog");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      const openPreview = () => {
-        if (portfolioCatalogs.length > 0) {
-          setPreviewSlug(portfolioCatalogs[0].slug);
-        }
-      };
-
-      // Use scrollend event when supported, with a timeout fallback
-      if ("onscrollend" in window) {
-        window.addEventListener("scrollend", openPreview, { once: true });
-      } else {
-        setTimeout(openPreview, 600);
-      }
     }
   }
 
@@ -194,7 +188,7 @@ export function ClientPage(props: Props) {
               <div className="mt-8">
                 <button
                   type="button"
-                  onClick={scrollToCatalogAndPreview}
+                  onClick={scrollToCatalog}
                   className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-8 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
                 >
                   {t(lang, "letsStart")}
@@ -220,9 +214,7 @@ export function ClientPage(props: Props) {
           catalogs={portfolioCatalogs}
           selectedSlug={selectedCatalog?.slug ?? undefined}
           onSelect={(slug) => openCatalog(slug)}
-          onPreview={(slug) => setPreviewSlug(slug)}
         />
-        <div className="mt-4 text-xs text-white/45">{t(lang, "flowHint")}</div>
       </Section>
 
       {selectedCatalog && panelOpen && selectedCategoryDetail ? (
@@ -245,8 +237,7 @@ export function ClientPage(props: Props) {
         />
       ) : null}
 
-      {/* ===== Package selection section (gated until user interacts with catalog) ===== */}
-      {packagesVisible && (
+      {/* ===== Package selection section ===== */}
       <Section id="packages" title={t(lang, "choosePackage")}>
         <p className="text-sm text-white/70 mb-6">{t(lang, "choosePackageSubtitle")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
@@ -318,7 +309,7 @@ export function ClientPage(props: Props) {
                     onClick={() => onContinueToProduct(pkg.id)}
                     className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                   >
-                    {t(lang, "pkgChoose")} →
+                    {t(lang, "pkgWhatsApp")}
                   </button>
                   {detail && (
                     <button
@@ -425,6 +416,22 @@ export function ClientPage(props: Props) {
           </p>
         )}
       </Section>
+
+      {/* Ready Solutions section - reusing existing /solutions data */}
+      {props.solutions.length > 0 && (
+        <Section id="solutions" title={t(lang, "sectionSolutions")}>
+          <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+            {props.solutions.map((item) => (
+              <SolutionCard
+                key={item.slug}
+                lang={lang}
+                item={item}
+                onSelect={() => setSelectedSolutionSlug(item.slug)}
+              />
+            ))}
+          </div>
+        </Section>
       )}
 
       <Section id="about" title={t(lang, "sectionAbout")}>
@@ -469,24 +476,23 @@ export function ClientPage(props: Props) {
 
       <Footer lang={lang} />
 
-      {/* Quick Preview Modal */}
-      {previewCatalog && (
-        <QuickPreviewModal
+      {/* Solution Detail Modal */}
+      {selectedSolution && (
+        <SolutionDetailModal
           lang={lang}
-          catalog={previewCatalog}
-          onClose={() => {
-            setPreviewSlug(null);
-            setPackagesVisible(true);
-          }}
-          onChoosePackage={() => {
-            setPreviewSlug(null);
-            setPackagesVisible(true);
-            onContinueToProduct();
-          }}
-          onWhatsApp={() => {
-            setPreviewSlug(null);
-            onSendWhatsApp();
-          }}
+          item={selectedSolution}
+          onClose={() => setSelectedSolutionSlug(null)}
+          pricing={props.pricing}
+          discountConfig={props.discountConfig}
+        />
+      )}
+
+      {/* Catalog Preview Modal (booking-style) */}
+      {catalogPreview && (
+        <CatalogPreviewModal
+          lang={lang}
+          catalog={catalogPreview}
+          onClose={() => setCatalogPreviewSlug(null)}
         />
       )}
 
