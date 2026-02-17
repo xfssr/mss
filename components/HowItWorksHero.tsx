@@ -14,9 +14,6 @@ export function HowItWorksHero(props: { lang: Lang }) {
 
   return (
     <div className="mt-8">
-      <h3 className="text-sm font-semibold text-white/70 text-center mb-4">
-        {t(lang, "howItWorksTitle")}
-      </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {STEPS.map((s, i) => (
           <a

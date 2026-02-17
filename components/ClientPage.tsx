@@ -267,8 +267,7 @@ export function ClientPage(props: Props) {
                     </div>
                     {price > 0 && (
                       <p className="mt-1 text-xs text-[rgb(var(--blue))]/80">
-                        {t(lang, "fromPrice")}₪{price.toLocaleString()}{" "}
-                        <span className="text-white/40">({t(lang, "priceEstimate")})</span>
+                        {t(lang, "fromPrice")}₪{price.toLocaleString()}
                       </p>
                     )}
                   </div>
@@ -411,8 +410,6 @@ export function ClientPage(props: Props) {
             🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
             {" — "}
             {props.discountConfig.percent}%
-            {" "}
-            <span className="text-white/40">({t(lang, "priceEstimate")})</span>
           </p>
         )}
       </Section>

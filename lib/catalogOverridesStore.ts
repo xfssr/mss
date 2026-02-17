@@ -60,8 +60,8 @@ export type DiscountConfig = {
 const DEFAULT_DISCOUNT: DiscountConfig = {
   enabled: true,
   percent: 20,
-  labelHe: "הנחת הזמנה ראשונה (הערכה)",
-  labelEn: "First-time discount (estimate)",
+  labelHe: "הנחת הזמנה ראשונה",
+  labelEn: "First-time discount",
 };
 
 export async function getDiscountConfig(): Promise<DiscountConfig> {
