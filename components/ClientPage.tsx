@@ -194,8 +194,6 @@ export function ClientPage(props: Props) {
                   {t(lang, "letsStart")}
                 </button>
               </div>
-
-              <div className="mt-3 text-xs text-white/50">{t(lang, "heroHint")}</div>
             </div>
 
             <div className="lg:col-span-5">

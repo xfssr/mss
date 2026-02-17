@@ -12,22 +12,22 @@ function isVideoUrl(url: string) {
     u.endsWith(".webm") ||
     u.endsWith(".mov") ||
     u.endsWith(".m4v") ||
-    u.includes("video/upload") // cloudinary hint (не обязательно, просто помогает)
+    u.includes("video/upload") // cloudinary hint
   );
 }
 
 type Props =
   | {
-      // ✅ Новый режим: один инпут, но пишет в 2 поля формы (previewImage/videoUrl)
+      // Media mode: single input that writes to 2 form fields (previewImage/videoUrl)
       label: string;
       imageName: string;
       videoName: string;
-      initialUrl?: string; // можно дать и видео, и фото — компонент сам поймет
+      initialUrl?: string; // accepts both video and photo — component auto-detects
       placeholder?: string;
       accept?: string; // default image/*,video/*
     }
   | {
-      // ✅ Старый режим (чтобы ничего не сломать в других местах)
+      // Legacy mode (keeps backward compatibility)
       name: string;
       defaultValue: string;
       label: string;
@@ -77,7 +77,7 @@ export function UploadUrlInput(props: Props) {
     }
   }
 
-  // ✅ для media-mode: что писать в hidden inputs
+  // For media-mode: determine which hidden inputs to populate
   const imageVal = mode === "media" ? (video ? "" : value) : "";
   const videoVal = mode === "media" ? (video ? value : "") : "";
 
@@ -87,7 +87,7 @@ export function UploadUrlInput(props: Props) {
         {props.label}
       </label>
 
-      {/* ✅ hidden inputs, чтобы action получил previewImage/videoUrl */}
+      {/* Hidden inputs so the form action receives previewImage/videoUrl */}
       {mode === "media" ? (
         <>
           <input type="hidden" name={(props as { imageName: string }).imageName} value={imageVal} />
@@ -101,7 +101,7 @@ export function UploadUrlInput(props: Props) {
           name={"name" in props ? props.name : undefined}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder={props.placeholder ?? "URL или Upload"}
+          placeholder={props.placeholder ?? "URL or Upload"}
           className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
         />
 
@@ -143,7 +143,7 @@ export function UploadUrlInput(props: Props) {
       ) : null}
 
       <div className="mt-2 text-[11px] text-white/45">
-        Upload: Cloudinary (если ENV заданы) или локально в <span className="font-mono">public/uploads</span>.
+        Upload: Cloudinary (if ENV vars are set) or locally to <span className="font-mono">public/uploads</span>.
       </div>
     </div>
   );
