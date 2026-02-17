@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
 
 type ExampleLike = {
   previewImage: string;
@@ -76,9 +77,10 @@ export function LightboxPreview(props: {
           <button
             type="button"
             onClick={props.onClose}
-            className="rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07]"
+            className="shrink-0 rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07]"
+            aria-label={t(props.lang, "close")}
           >
-            Close
+            ✕
           </button>
         </div>
 
@@ -122,8 +124,12 @@ export function LightboxPreview(props: {
               poster={item.previewImage}
               className="h-full w-full object-cover"
             />
+          ) : item?.previewImage ? (
+            <Image src={item.previewImage} alt={title || "Preview"} fill className="object-cover" />
           ) : (
-            <Image src={item?.previewImage || "https://picsum.photos/seed/fallback/1200/675"} alt={title || "Preview"} fill className="object-cover" />
+            <div className="absolute inset-0 flex items-center justify-center text-white/20 text-3xl">
+              📷
+            </div>
           )}
 
           {/* Arrows (desktop) */}

@@ -38,10 +38,11 @@ export function CatalogPreviewModal(props: {
   useEffect(() => {
     if (photos.length === 0 && videos.length > 0) {
       setActiveTab("video");
+      setActiveVideoIndex(videos.length > 0 ? 0 : null);
     } else {
       setActiveTab("photos");
+      setActiveVideoIndex(null);
     }
-    setActiveVideoIndex(null);
   }, [catalog.slug, photos.length, videos.length]);
 
   // ESC to close
@@ -136,7 +137,7 @@ export function CatalogPreviewModal(props: {
               </button>
               <button
                 type="button"
-                onClick={() => { setActiveTab("video"); setActiveVideoIndex(null); }}
+                onClick={() => { setActiveTab("video"); setActiveVideoIndex(0); }}
                 className={[
                   "flex-1 rounded-lg px-3 py-1.5 text-xs font-medium transition-all",
                   activeTab === "video"
@@ -279,7 +280,9 @@ function VideosView(props: {
           <video
             src={video.mediaUrl}
             autoPlay
+            muted
             playsInline
+            loop
             controls
             poster={video.posterUrl || undefined}
             className="h-full w-full object-cover"
