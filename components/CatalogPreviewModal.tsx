@@ -23,7 +23,7 @@ export function CatalogPreviewModal(props: {
   const [activeTab, setActiveTab] = useState<Tab>("photos");
   const [activeVideoIndex, setActiveVideoIndex] = useState<number | null>(null);
 
-  const examples = catalog.examples ?? [];
+  const examples = useMemo(() => catalog.examples ?? [], [catalog.examples]);
 
   const photos = useMemo(
     () => examples.filter((ex) => ex.mediaType === "IMAGE"),
