@@ -243,6 +243,15 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package card examples
     pkgExamples: "דוגמאות",
+
+    // Business type selector
+    bizTypeLabel: "בחר סוג עסק",
+    bizTypeBars: "ברים / חיי לילה",
+    bizTypeRestaurants: "מסעדות / אוכל",
+    bizTypeHotels: "מלונות",
+    bizTypeEvents: "אירועים",
+    bizTypeRealEstate: "נדל״ן",
+    bizTypeServices: "שירותים קטנים",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -478,6 +487,15 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package card examples
     pkgExamples: "Examples",
+
+    // Business type selector
+    bizTypeLabel: "Choose business type",
+    bizTypeBars: "Bars / Nightlife",
+    bizTypeRestaurants: "Restaurants / Food",
+    bizTypeHotels: "Hotels",
+    bizTypeEvents: "Events",
+    bizTypeRealEstate: "Real Estate",
+    bizTypeServices: "Small Services",
   },
 };
 

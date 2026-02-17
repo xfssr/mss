@@ -24,7 +24,7 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
-import { PackageExamples } from "@/components/PackageExamples";
+import { PackageExamples, type BusinessTypeKey } from "@/components/PackageExamples";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -110,6 +110,7 @@ export function ClientPage(props: Props) {
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
   const [pkgExampleSlug, setPkgExampleSlug] = useState<string | null>(null);
+  const [pkgBizType, setPkgBizType] = useState<Record<string, BusinessTypeKey | null>>({});
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -322,7 +323,12 @@ export function ClientPage(props: Props) {
                     <PackageExamples
                       lang={lang}
                       examples={exItems}
-                      onThumbnailClick={() => setPkgExampleSlug(exCatalog.slug)}
+                      catalogs={props.catalogs}
+                      businessType={pkgBizType[pkg.id] ?? null}
+                      onBusinessTypeChange={(bt) =>
+                        setPkgBizType((prev) => ({ ...prev, [pkg.id]: bt }))
+                      }
+                      onThumbnailClick={(slug) => setPkgExampleSlug(slug)}
                     />
                   ) : null;
                 })()}
