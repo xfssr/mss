@@ -1,12 +1,20 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getActiveSolutions } from "@/lib/solutionsStore";
 import { getDiscountConfig } from "@/lib/catalogOverridesStore";
 import { dbPricingToUi } from "@/lib/mappers";
+import { getSiteUrl } from "@/config/constants";
 import { SolutionsClient } from "./SolutionsClient";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `${getSiteUrl()}/solutions`,
+  },
+};
 
 export default async function SolutionsPage() {
   const solutions = await getActiveSolutions();
