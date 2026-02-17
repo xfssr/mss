@@ -17,21 +17,23 @@ export const BUSINESS_TYPES = [
 
 export type BusinessTypeKey = (typeof BUSINESS_TYPES)[number]["key"];
 
-/** Resolve which catalog slug to use for a given business type key. */
+/** Resolve which catalog slug to use for a given business type key.
+ *  When no exact catalog exists for a type, we fall back to the
+ *  most thematically similar catalog available in the data. */
 function catalogSlugForType(key: BusinessTypeKey): string {
   switch (key) {
     case "bars":
       return "bars";
     case "restaurants":
-      return "bars"; // closest available catalog
+      return "bars"; // food & drink share similar visual style
     case "hotels":
       return "hotels";
     case "events":
       return "events";
     case "real-estate":
-      return "hotels"; // closest available catalog
+      return "hotels"; // interior/property photography style
     case "services":
-      return "events"; // closest available catalog
+      return "events"; // people & action shots style
   }
 }
 
@@ -65,8 +67,9 @@ export function PackageExamples(props: {
 
   if (!activeCatalogSlug) {
     // Find the catalog that contains the default examples
+    const exampleKeys = new Set(examples.map((e) => `${e.id}:${e.mediaUrl}`));
     activeCatalogSlug = catalogs.find((c) =>
-      c.examples.some((ex) => examples.some((e) => e.id === ex.id && e.mediaUrl === ex.mediaUrl)),
+      c.examples.some((ex) => exampleKeys.has(`${ex.id}:${ex.mediaUrl}`)),
     )?.slug;
   }
 

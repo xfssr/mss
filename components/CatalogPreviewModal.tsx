@@ -38,7 +38,7 @@ export function CatalogPreviewModal(props: {
   useEffect(() => {
     if (photos.length === 0 && videos.length > 0) {
       setActiveTab("video");
-      setActiveVideoIndex(0);
+      setActiveVideoIndex(videos.length > 0 ? 0 : null);
     } else {
       setActiveTab("photos");
       setActiveVideoIndex(null);
