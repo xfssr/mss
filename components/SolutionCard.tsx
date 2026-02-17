@@ -61,7 +61,7 @@ export function SolutionCard(props: {
 
         {/* Pills */}
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {item.pills.slice(0, 4).map((pill, i) => (
+          {item.pills.map((pill, i) => (
             <span
               key={i}
               className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
