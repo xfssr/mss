@@ -268,10 +268,12 @@ export function ClientPage(props: Props) {
               </option>
             ))}
           </select>
-          <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeMicrocopy")}</p>
+          {!globalBizType && (
+            <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeMicrocopy")}</p>
+          )}
         </div>
 
-        <div className={`relative${globalBizType ? "" : " opacity-50 pointer-events-none select-none"}`}>
+        <div className={`relative${globalBizType ? "" : " opacity-50 pointer-events-none select-none"}`} aria-disabled={!globalBizType}>
           {!globalBizType && (
             <p className="mb-3 text-sm text-white/70 italic">{t(lang, "bizTypeGateHint")}</p>
           )}
