@@ -4,7 +4,7 @@ import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
 const STEPS = [
-  { icon: "📂", key: "howCompactStep1", href: "#catalog", step: "1" },
+  { icon: "📂", key: "howCompactStep1", href: "#packages", step: "1" },
   { icon: "📦", key: "howCompactStep2", href: "#packages", step: "2" },
   { icon: "💬", key: "howCompactStep3", href: "#contact", step: "3" },
 ] as const;

@@ -53,7 +53,7 @@ export function Footer(props: { lang: Lang }) {
             </a>
             <a
               className="hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-3 py-2 transition-all hover:bg-white/5"
-              href="#catalog"
+              href="#packages"
             >
               {t(props.lang, "footerCatalog")}
             </a>
