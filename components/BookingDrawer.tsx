@@ -170,7 +170,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
     const total = subtotal - discountAmount;
 
     return { lines, subtotal, discountAmount, total, discountPercent: discountConfig?.percent ?? 0 };
-  }, [pricing, props, lang, smmOn, targetOn, showDiscount, discountConfig]);
+  }, [pricing, props, lang, smmOn, targetOn, showDiscount, discountConfig, packageDetail]);
 
   // Selected tags
   const selectedTags = useMemo(() => {

@@ -340,7 +340,7 @@ export default async function ProductPage(props: {
       <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/[0.06] p-6 sm:p-10">
         {/* lang switch */}
         <div className="flex items-center justify-end gap-2">
-          <a
+          <Link
             href="/product?lang=he"
             className={[
               "px-3 py-1.5 text-xs rounded-lg border border-white/10",
@@ -348,8 +348,8 @@ export default async function ProductPage(props: {
             ].join(" ")}
           >
             עברית
-          </a>
-          <a
+          </Link>
+          <Link
             href="/product?lang=en"
             className={[
               "px-3 py-1.5 text-xs rounded-lg border border-white/10",
@@ -357,7 +357,7 @@ export default async function ProductPage(props: {
             ].join(" ")}
           >
             EN
-          </a>
+          </Link>
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-6 items-start">

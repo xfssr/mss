@@ -35,27 +35,29 @@ export function MiniScreenPanel(props: {
   const safeIndex = clamp(activeExampleIndex, 0, maxIdx);
   const activeExample = examples[safeIndex];
 
+  const { open, onClose } = props;
+
   useEffect(() => {
-    if (!props.open) return;
+    if (!open) return;
     setActiveExampleIndex(0);
     setLightboxOpen(false);
     setTilt({ rx: 0, ry: 0 });
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") props.onClose();
+      if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [props.open, props.onClose]);
+  }, [open, onClose]);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
-    if (!props.open) return;
+    if (!open) return;
     document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [props.open]);
+  }, [open]);
 
   const panelStyle = useMemo(() => {
     if (reducedMotion) return {};
