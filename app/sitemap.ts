@@ -1,17 +1,19 @@
 import type { MetadataRoute } from "next";
 import { getSiteUrl } from "@/config/constants";
-import { DEFAULT_SOLUTIONS } from "@/content/solutions";
+import { getActiveSolutions } from "@/lib/solutionsStore";
 
 /** Package slugs (static, mirrors app/product/[slug]/page.tsx). */
 const PACKAGE_SLUGS = ["starter", "business", "monthly"] as const;
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = getSiteUrl();
   const now = new Date();
 
+  const solutions = await getActiveSolutions();
+
   const productSlugs: string[] = [
     ...PACKAGE_SLUGS,
-    ...DEFAULT_SOLUTIONS.filter((s) => s.isActive).map((s) => s.slug),
+    ...solutions.map((s) => s.slug),
   ];
 
   return [
