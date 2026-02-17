@@ -70,17 +70,17 @@ const PACKAGE_CARDS = [
   {
     id: "starter",
     badge: "popular" as const,
-    defaultCatalogIndex: 0,
+    defaultCatalogSlug: "bars",
   },
   {
     id: "business",
     badge: "popular" as const,
-    defaultCatalogIndex: 1,
+    defaultCatalogSlug: "hotels",
   },
   {
     id: "monthly",
     badge: undefined,
-    defaultCatalogIndex: 2,
+    defaultCatalogSlug: "events",
   },
 ] as const;
 
@@ -315,8 +315,9 @@ export function ClientPage(props: Props) {
 
                 {/* Example thumbnails */}
                 {(() => {
-                  const exCatalog = selectedCatalog ?? props.catalogs[pkg.defaultCatalogIndex] ?? props.catalogs[0];
-                  const exItems = exCatalog?.examples?.slice(0, 4) ?? [];
+                  const exCatalog = selectedCatalog ?? props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
+                  if (!exCatalog) return null;
+                  const exItems = exCatalog.examples?.slice(0, 4) ?? [];
                   return exItems.length > 0 ? (
                     <PackageExamples
                       lang={lang}
