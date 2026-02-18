@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 import { Logo } from "@/components/Logo";
+import LogoIcon from "@/components/LogoIcon";
 
 /** Single source of truth for navigation items (used by both desktop and mobile). */
 export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] = [
@@ -29,6 +30,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
           aria-label="Micro-Screen Studio"
         >
+          <LogoIcon className="w-6 h-6 text-white flex-none" />
           <Logo variant="lockup" className="min-w-0" />
         </a>
 
