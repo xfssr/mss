@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import type { CatalogExample } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
@@ -36,6 +37,7 @@ export function ExamplesGalleryViewer(props: {
   const [animating, setAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   const max = Math.max(0, items.length - 1);
   const safeIdx = clamp(idx, 0, max);
@@ -155,7 +157,7 @@ export function ExamplesGalleryViewer(props: {
             const dx = Math.abs(touchStartX.current - touch.clientX);
             const dy = Math.abs((touchStartY.current ?? touch.clientY) - touch.clientY);
             // Prevent vertical scroll when swiping horizontally
-            if (dx > dy) e.preventDefault();
+            if (dx > dy && e.cancelable) e.preventDefault();
           }}
           onTouchEnd={(e) => {
             const touch = e.changedTouches[0];
@@ -176,7 +178,7 @@ export function ExamplesGalleryViewer(props: {
             {isVideo && mediaSrc ? (
               <video
                 src={mediaSrc}
-                autoPlay
+                autoPlay={!reducedMotion}
                 loop
                 playsInline
                 controls
