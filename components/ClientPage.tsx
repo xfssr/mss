@@ -1,10 +1,10 @@
 // components/ClientPage.tsx
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { Catalog } from "@/types/catalog";
+import type { Catalog, CatalogExample } from "@/types/catalog";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { SolutionItem } from "@/content/solutions";
 import type { HeroMedia } from "@/types/hero";
@@ -25,7 +25,9 @@ import { HowItWorksHero } from "@/components/HowItWorksHero";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { AddOnDetailModal } from "@/components/AddOnDetailModal";
+import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
 import { PackageExamples, getBusinessTypesFromCatalogs, type BusinessTypeKey } from "@/components/PackageExamples";
+import { packageIdToTier } from "@/utils/tierExamples";
 import { MONTHLY_ADDONS, type AddonConfig } from "@/config/addons";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
@@ -112,10 +114,22 @@ export function ClientPage(props: Props) {
   const [expandedPkg, setExpandedPkg] = useState<string | null>(null);
   const [selectedSolutionSlug, setSelectedSolutionSlug] = useState<string | null>(null);
   const [catalogPreviewSlug, setCatalogPreviewSlug] = useState<string | null>(null);
-  const [pkgExampleSlug, setPkgExampleSlug] = useState<string | null>(null);
+  const [galleryItems, setGalleryItems] = useState<CatalogExample[]>([]);
+  const [galleryStartIdx, setGalleryStartIdx] = useState(0);
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const [globalBizType, setGlobalBizType] = useState<BusinessTypeKey | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<Record<string, boolean>>({});
   const [addonDetailModal, setAddonDetailModal] = useState<AddonConfig | null>(null);
+
+  const openGallery = useCallback((items: CatalogExample[], startIndex: number) => {
+    setGalleryItems(items);
+    setGalleryStartIdx(startIndex);
+    setGalleryOpen(true);
+  }, []);
+
+  const closeGallery = useCallback(() => {
+    setGalleryOpen(false);
+  }, []);
 
   const slugFromUrl = searchParams.get("catalog");
 
@@ -140,11 +154,6 @@ export function ClientPage(props: Props) {
   const catalogPreview = useMemo(
     () => (catalogPreviewSlug ? props.catalogs.find((c) => c.slug === catalogPreviewSlug) ?? null : null),
     [props.catalogs, catalogPreviewSlug],
-  );
-
-  const pkgExampleCatalog = useMemo(
-    () => (pkgExampleSlug ? props.catalogs.find((c) => c.slug === pkgExampleSlug) ?? null : null),
-    [props.catalogs, pkgExampleSlug],
   );
 
   // Derive business type options from catalog data (single source of truth)
@@ -368,18 +377,19 @@ export function ClientPage(props: Props) {
                   </div>
                 )}
 
-                {/* Example thumbnails — controlled by global selector */}
+                {/* Example thumbnails — controlled by global selector, tier-differentiated */}
                 {(() => {
                   const exCatalog = props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
                   if (!exCatalog) return null;
-                  const exItems = exCatalog.examples?.slice(0, 4) ?? [];
+                  const exItems = exCatalog.examples ?? [];
                   return exItems.length > 0 ? (
                     <PackageExamples
                       lang={lang}
                       examples={exItems}
                       catalogs={props.catalogs}
                       businessType={globalBizType}
-                      onThumbnailClick={(slug) => setPkgExampleSlug(slug)}
+                      tier={packageIdToTier(pkg.id)}
+                      onThumbnailClick={openGallery}
                     />
                   ) : null;
                 })()}
@@ -655,14 +665,14 @@ export function ClientPage(props: Props) {
         />
       )}
 
-      {/* Package examples preview modal */}
-      {pkgExampleCatalog && (
-        <CatalogPreviewModal
-          lang={lang}
-          catalog={pkgExampleCatalog}
-          onClose={() => setPkgExampleSlug(null)}
-        />
-      )}
+      {/* Package examples gallery viewer */}
+      <ExamplesGalleryViewer
+        lang={lang}
+        open={galleryOpen}
+        items={galleryItems}
+        startIndex={galleryStartIdx}
+        onClose={closeGallery}
+      />
 
       {/* Add-on detail modal */}
       {addonDetailModal && (
