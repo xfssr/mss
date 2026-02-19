@@ -400,7 +400,19 @@ export async function updatePackageDetails(jsonStr: string) {
 }
 
 export async function saveTierExamplesAction(catalogSlug: string, jsonStr: string) {
-  const tiers: { tier1: number[]; tier2: number[]; tier3: number[] } = JSON.parse(jsonStr);
+  let tiers: { tier1: number[]; tier2: number[]; tier3: number[] };
+  try {
+    tiers = JSON.parse(jsonStr);
+  } catch {
+    throw new Error("Invalid tier data");
+  }
+  if (
+    !Array.isArray(tiers.tier1) ||
+    !Array.isArray(tiers.tier2) ||
+    !Array.isArray(tiers.tier3)
+  ) {
+    throw new Error("Invalid tier structure");
+  }
   const config = await getTierExamplesConfig();
   config[catalogSlug] = tiers;
   await saveTierExamplesConfig(config);

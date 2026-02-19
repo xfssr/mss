@@ -391,6 +391,7 @@ export function ClientPage(props: Props) {
                       businessType={globalBizType}
                       tier={packageIdToTier(pkg.id)}
                       tierConfig={props.tierExamplesConfig}
+                      catalogSlug={exCatalog.slug}
                       onThumbnailClick={openGallery}
                     />
                   ) : null;

@@ -97,13 +97,14 @@ export function PackageExamples(props: {
   businessType: BusinessTypeKey | null;
   tier: 1 | 2 | 3;
   tierConfig: TierExamplesConfig;
+  catalogSlug?: string;
   onThumbnailClick: (examples: CatalogExample[], startIndex: number) => void;
 }) {
   const { lang, examples, catalogs, businessType, tier, tierConfig, onThumbnailClick } = props;
 
   // Resolve displayed examples: if a business type is selected, pick from matching catalog
   let sourceExamples = examples;
-  let sourceSlug = "";
+  let sourceSlug = props.catalogSlug ?? "";
 
   if (businessType) {
     // First try direct slug match, then use the mapping
@@ -113,12 +114,6 @@ export function PackageExamples(props: {
       sourceExamples = matched.examples;
       sourceSlug = matched.slug;
     }
-  }
-
-  // If no slug resolved yet, try to find it from the catalogs matching examples
-  if (!sourceSlug) {
-    const match = catalogs.find((c) => c.examples === sourceExamples || (c.examples.length > 0 && c.examples[0]?.id === sourceExamples[0]?.id));
-    sourceSlug = match?.slug ?? "";
   }
 
   // Build tiered examples from explicit config and pick the appropriate tier

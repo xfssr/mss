@@ -32,6 +32,7 @@ export function AdminExamplesTierEditor(props: {
   const [activeTier, setActiveTier] = useState<0 | 1 | 2>(0);
   const [pending, startTransition] = useTransition();
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const tierKey = TIER_KEYS[activeTier];
   const assignedIds = new Set([...tiers.tier1, ...tiers.tier2, ...tiers.tier3]);
@@ -74,8 +75,14 @@ export function AdminExamplesTierEditor(props: {
 
   function save() {
     startTransition(async () => {
-      await saveTierExamplesAction(catalogSlug, JSON.stringify(tiers));
-      setSaved(true);
+      try {
+        await saveTierExamplesAction(catalogSlug, JSON.stringify(tiers));
+        setSaved(true);
+        setError(null);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to save");
+        setSaved(false);
+      }
     });
   }
 
@@ -152,6 +159,9 @@ export function AdminExamplesTierEditor(props: {
       >
         {pending ? "Saving…" : saved ? "Tier assignments saved ✓" : "Save tier assignments"}
       </button>
+      {error && (
+        <div className="mt-2 text-xs text-red-400">{error}</div>
+      )}
     </div>
   );
 }
