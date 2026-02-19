@@ -6,6 +6,8 @@ import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsSt
 import { getSolutions, saveSolutions } from "@/lib/solutionsStore";
 import { savePackageDetails, type PackageDetail } from "@/lib/packageConfigStore";
 import { disableCatalogSlug, enableCatalogSlug, saveDiscountConfig, type DiscountConfig } from "@/lib/catalogOverridesStore";
+import { getTierExamplesConfig, saveTierExamplesConfig } from "@/lib/tierExamplesStore";
+import type { TierExamplesConfig } from "@/types/catalog";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { SolutionItem } from "@/content/solutions";
 
@@ -391,6 +393,29 @@ export async function updateSolutionAction(jsonStr: string) {
 export async function updatePackageDetails(jsonStr: string) {
   const packages: PackageDetail[] = JSON.parse(jsonStr);
   await savePackageDetails(packages);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function saveTierExamplesAction(catalogSlug: string, jsonStr: string) {
+  let tiers: { tier1: number[]; tier2: number[]; tier3: number[] };
+  try {
+    tiers = JSON.parse(jsonStr);
+  } catch {
+    throw new Error("Invalid tier data");
+  }
+  if (
+    !Array.isArray(tiers.tier1) ||
+    !Array.isArray(tiers.tier2) ||
+    !Array.isArray(tiers.tier3)
+  ) {
+    throw new Error("Invalid tier structure");
+  }
+  const config = await getTierExamplesConfig();
+  config[catalogSlug] = tiers;
+  await saveTierExamplesConfig(config);
   revalidatePath("/");
   revalidatePath("/admin");
   revalidatePath("/product");

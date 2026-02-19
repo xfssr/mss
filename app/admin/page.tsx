@@ -26,10 +26,12 @@ import { AdminCategoryDetailEditor } from "@/components/admin/AdminCategoryDetai
 import { AdminSolutionEditor } from "@/components/admin/AdminSolutionEditor";
 import { AdminPackageEditor } from "@/components/admin/AdminPackageEditor";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { AdminExamplesTierEditor } from "@/components/admin/AdminExamplesTierEditor";
 import { getCategoryDetails } from "@/lib/categoryDetailsStore";
 import { getSolutions } from "@/lib/solutionsStore";
 import { getPackageDetails } from "@/lib/packageConfigStore";
 import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
+import { getTierExamplesConfig } from "@/lib/tierExamplesStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -60,6 +62,7 @@ export default async function AdminPage() {
   const packageDetails = await getPackageDetails();
   const disabledSlugs = await getDisabledCatalogSlugs();
   const discountConfig = await getDiscountConfig();
+  const tierExamplesConfig = await getTierExamplesConfig();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white" dir="ltr">
@@ -642,6 +645,22 @@ export default async function AdminPage() {
                       </div>
                     </form>
                   </div>
+
+                  <AdminExamplesTierEditor
+                    catalogSlug={c.slug}
+                    examples={c.examples
+                      .slice()
+                      .sort((a, b) => (a.order - b.order) || (a.id - b.id))
+                      .map((e) => ({
+                        id: e.id,
+                        titleEn: e.titleEn,
+                        mediaType: e.mediaType,
+                        mediaUrl: e.mediaUrl,
+                        posterUrl: e.posterUrl,
+                        order: e.order,
+                      }))}
+                    tierConfig={tierExamplesConfig}
+                  />
                 </div>
               </div>
             );
