@@ -1,4 +1,4 @@
-import type { CatalogExample } from "@/types/catalog";
+import type { CatalogExample, TierExamplesConfig } from "@/types/catalog";
 
 export type TieredExamples = {
   tier1: CatalogExample[];
@@ -7,15 +7,44 @@ export type TieredExamples = {
 };
 
 /**
- * Split a catalog's examples into 3 tier groups.
- * tier1 → Starter, tier2 → Business, tier3 → Monthly
+ * Build tiered examples from explicit tier config.
  *
- * Distributes examples round-robin across tiers so each gets
- * a roughly equal share while preserving order.
- *
- * Fallback rules:
- *  - tier2 empty → fallback to tier1
- *  - tier3 empty → fallback to tier2, then tier1
+ * Uses the stored tier ID lists to partition the given examples.
+ * Any examples not mentioned in any tier fall into tier1 as a
+ * safety net so nothing is silently dropped.
+ */
+export function buildTieredFromConfig(
+  examples: CatalogExample[],
+  catalogSlug: string,
+  config: TierExamplesConfig,
+): TieredExamples {
+  const entry = config[catalogSlug];
+
+  if (!entry) {
+    // No explicit config yet — all examples go to tier1
+    return { tier1: [...examples], tier2: [], tier3: [] };
+  }
+
+  const idSet1 = new Set(entry.tier1);
+  const idSet2 = new Set(entry.tier2);
+  const idSet3 = new Set(entry.tier3);
+
+  const tier1: CatalogExample[] = [];
+  const tier2: CatalogExample[] = [];
+  const tier3: CatalogExample[] = [];
+
+  for (const ex of examples) {
+    if (idSet3.has(ex.id)) tier3.push(ex);
+    else if (idSet2.has(ex.id)) tier2.push(ex);
+    else tier1.push(ex); // default bucket
+  }
+
+  return { tier1, tier2, tier3 };
+}
+
+/**
+ * @deprecated Use buildTieredFromConfig instead.
+ * Split a catalog's examples into 3 tier groups via round-robin.
  */
 export function splitExamplesIntoTiers(examples: CatalogExample[]): TieredExamples {
   const tier1: CatalogExample[] = [];

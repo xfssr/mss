@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import type { Catalog, CatalogExample } from "@/types/catalog";
+import type { Catalog, CatalogExample, TierExamplesConfig } from "@/types/catalog";
 import type { CategoryDetail } from "@/content/categoryDetails";
 import type { SolutionItem } from "@/content/solutions";
 import type { HeroMedia } from "@/types/hero";
@@ -50,6 +50,7 @@ type Props = {
   pricing: PricingConfig;
   discountConfig: DiscountConfig;
   packageDetails: PackageDetail[];
+  tierExamplesConfig: TierExamplesConfig;
 };
 
 function pickL10n(lang: Lang, v: { he: string; en: string }) {
@@ -389,6 +390,7 @@ export function ClientPage(props: Props) {
                       catalogs={props.catalogs}
                       businessType={globalBizType}
                       tier={packageIdToTier(pkg.id)}
+                      tierConfig={props.tierExamplesConfig}
                       onThumbnailClick={openGallery}
                     />
                   ) : null;

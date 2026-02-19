@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import type { CatalogExample, Catalog } from "@/types/catalog";
+import type { CatalogExample, Catalog, TierExamplesConfig } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
-import { splitExamplesIntoTiers, getExamplesForTier, type TieredExamples } from "@/utils/tierExamples";
+import { buildTieredFromConfig, getExamplesForTier } from "@/utils/tierExamples";
 
 export type BusinessTypeKey = string;
 
@@ -96,12 +96,14 @@ export function PackageExamples(props: {
   catalogs: Catalog[];
   businessType: BusinessTypeKey | null;
   tier: 1 | 2 | 3;
+  tierConfig: TierExamplesConfig;
   onThumbnailClick: (examples: CatalogExample[], startIndex: number) => void;
 }) {
-  const { lang, examples, catalogs, businessType, tier, onThumbnailClick } = props;
+  const { lang, examples, catalogs, businessType, tier, tierConfig, onThumbnailClick } = props;
 
   // Resolve displayed examples: if a business type is selected, pick from matching catalog
   let sourceExamples = examples;
+  let sourceSlug = "";
 
   if (businessType) {
     // First try direct slug match, then use the mapping
@@ -109,11 +111,18 @@ export function PackageExamples(props: {
     const matched = catalogs.find((c) => c.slug === slug);
     if (matched && matched.examples.length > 0) {
       sourceExamples = matched.examples;
+      sourceSlug = matched.slug;
     }
   }
 
-  // Split source examples into tiers and pick the appropriate one
-  const tiered: TieredExamples = splitExamplesIntoTiers(sourceExamples);
+  // If no slug resolved yet, try to find it from the catalogs matching examples
+  if (!sourceSlug) {
+    const match = catalogs.find((c) => c.examples === sourceExamples || (c.examples.length > 0 && c.examples[0]?.id === sourceExamples[0]?.id));
+    sourceSlug = match?.slug ?? "";
+  }
+
+  // Build tiered examples from explicit config and pick the appropriate tier
+  const tiered = buildTieredFromConfig(sourceExamples, sourceSlug, tierConfig);
   const displayExamples = getExamplesForTier(tiered, tier, 4);
 
   if (displayExamples.length === 0) return null;
