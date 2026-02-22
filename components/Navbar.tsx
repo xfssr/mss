@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
-import { Logo } from "@/components/Logo";
+//import { Logo } from "@/components/Logo";
 import LogoIcon from "@/components/LogoIcon";
 
 /** Single source of truth for navigation items (used by both desktop and mobile). */
