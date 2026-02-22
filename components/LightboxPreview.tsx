@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
@@ -37,12 +37,12 @@ export function LightboxPreview(props: {
   const title = useMemo(() => (item?.title?.[props.lang] || "").trim(), [item, props.lang]);
   const desc = useMemo(() => (item?.description?.[props.lang] || "").trim(), [item, props.lang]);
 
-  function prev() {
+  const prev = useCallback(() => {
     props.onIndex(clamp(idx - 1, 0, max));
-  }
-  function next() {
+  }, [idx, max, props]);
+  const next = useCallback(() => {
     props.onIndex(clamp(idx + 1, 0, max));
-  }
+  }, [idx, max, props]);
 
   useEffect(() => {
     if (!open) return;
@@ -53,8 +53,7 @@ export function LightboxPreview(props: {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, idx, max]);
+  }, [open, prev, next, props]);
 
   if (!open) return null;
 

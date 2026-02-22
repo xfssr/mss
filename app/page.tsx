@@ -76,7 +76,7 @@ export default async function Page() {
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "sales",
-          email: settings.email || "nisenem98@gmail.com",
+          ...(settings.email ? { email: settings.email } : {}),
         },
       },
       ...(packageDetails.length > 0

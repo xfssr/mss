@@ -76,7 +76,8 @@ export async function POST(req: Request) {
       holdId: hold.holdId,
       expiresAt: hold.expiresAt,
     });
-  } catch {
+  } catch (err) {
+    console.error("[hold] calendar error:", err);
     return NextResponse.json(
       { ok: false, error: "calendar_unavailable" },
       { status: 503 },
