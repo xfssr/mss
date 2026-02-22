@@ -18,7 +18,8 @@ export async function middleware(req: NextRequest) {
       url.searchParams.set("next", pathname);
       return NextResponse.redirect(url);
     }
-  } catch {
+  } catch (err) {
+    console.error("[middleware] cookie verification failed:", err);
     const url = req.nextUrl.clone();
     url.pathname = "/admin/login";
     url.searchParams.set("next", pathname);

@@ -37,23 +37,25 @@ export function LightboxPreview(props: {
   const title = useMemo(() => (item?.title?.[props.lang] || "").trim(), [item, props.lang]);
   const desc = useMemo(() => (item?.description?.[props.lang] || "").trim(), [item, props.lang]);
 
+  const { onIndex, onClose } = props;
+
   const prev = useCallback(() => {
-    props.onIndex(clamp(idx - 1, 0, max));
-  }, [idx, max, props]);
+    onIndex(clamp(idx - 1, 0, max));
+  }, [idx, max, onIndex]);
   const next = useCallback(() => {
-    props.onIndex(clamp(idx + 1, 0, max));
-  }, [idx, max, props]);
+    onIndex(clamp(idx + 1, 0, max));
+  }, [idx, max, onIndex]);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") props.onClose();
+      if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, prev, next, props]);
+  }, [open, prev, next, onClose]);
 
   if (!open) return null;
 
