@@ -30,7 +30,6 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
           aria-label="Micro-Screen Studio"
         >
-          //<LogoIcon className="w-6 h-6 text-white flex-none" />
           <Logo variant="lockup" className="min-w-0" />
         </a>
 
