@@ -1,4 +1,3 @@
-
 export default function LogoIcon({ className = "" }: { className?: string }) {
   return (
     <svg
@@ -12,7 +11,6 @@ export default function LogoIcon({ className = "" }: { className?: string }) {
       <rect x="30" y="22" width="10" height="10" rx="3" fill="currentColor" opacity="0.6" />
       <rect x="42" y="22" width="4" height="4" rx="2" fill="#FF2D2D" />
       <rect x="30" y="34" width="16" height="8" rx="3" fill="currentColor" opacity="0.35" />
-      <path d="M24 52h16" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
     </svg>
   );
 }
