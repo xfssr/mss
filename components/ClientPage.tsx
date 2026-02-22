@@ -286,38 +286,9 @@ export function ClientPage(props: Props) {
         />
       ) : null}
 
-      {/* ===== Problem section ===== */}
-      <Section id="problem" title={t(lang, "problemTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "problemIntro")}</p>
-          <ul className="space-y-3">
-            {(["problemPoint1", "problemPoint2", "problemPoint3", "problemPoint4"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">✗</span>
-                {t(lang, key)}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
-
-      {/* ===== Solution section ===== */}
-      <Section id="solution" title={t(lang, "solutionTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "solutionIntro")}</p>
-          <ul className="space-y-3">
-            {(["solutionPoint1", "solutionPoint2", "solutionPoint3", "solutionPoint4"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">▸</span>
-                {t(lang, key)}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-6 text-sm sm:text-base text-white/60 whitespace-pre-line italic">{t(lang, "solutionOutro")}</p>
-        </div>
-      </Section>
 
       {/* ===== Package selection section ===== */}
+      <div className="pkg-section-bg">
       <Section id="packages" title={t(lang, "choosePackage")}>
 
         {/* Global business type selector */}
@@ -654,6 +625,39 @@ export function ClientPage(props: Props) {
         )}
         </div>
       </Section>
+      </div>
+
+      {/* ===== Problem section ===== */}
+      <Section id="problem" title={t(lang, "problemTitle")}>
+        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
+          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "problemIntro")}</p>
+          <ul className="space-y-3">
+            {(["problemPoint1", "problemPoint2", "problemPoint3", "problemPoint4"] as const).map((key) => (
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
+                <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">✗</span>
+                {t(lang, key)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* ===== Solution section ===== */}
+      <Section id="solution" title={t(lang, "solutionTitle")}>
+        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
+          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "solutionIntro")}</p>
+          <ul className="space-y-3">
+            {(["solutionPoint1", "solutionPoint2", "solutionPoint3", "solutionPoint4"] as const).map((key) => (
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
+                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">▸</span>
+                {t(lang, key)}
+              </li>
+            ))}
+          </ul>
+          <p className="mt-6 text-sm sm:text-base text-white/60 whitespace-pre-line italic">{t(lang, "solutionOutro")}</p>
+        </div>
+      </Section>
+
 
       {/* Ready Solutions section - reusing existing /solutions data */}
       {props.solutions.length > 0 && (
