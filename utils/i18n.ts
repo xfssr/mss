@@ -272,6 +272,38 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     addonNotIncluded: "לא כלול",
     finalTotalLabel: "סה״כ לתשלום",
     backToHome: "חזרה לעמוד הראשי",
+
+    // Food-focused redesign
+    heroHeadline: "תוכן שמוכר את המנות שלך",
+    heroSub: "סרטוני וידאו קצרים למסעדות, שפים ועסקי אוכל בישראל.",
+    heroBullet1: "מציגים את המנות בצורה מעוררת תיאבון",
+    heroBullet2: "מגדילים חשיפה ואינטראקציה",
+    heroBullet3: "מביאים יותר לקוחות לשולחנות",
+    heroCtaAvailability: "בדוק זמינות",
+    heroCtaWa: "WhatsApp עכשיו",
+
+    problemTitle: "למה מסעדות מתקשות ברשתות?",
+    problemIntro: "מסעדות רבות מפסידות הכנסות כי:",
+    problemPoint1: "האוכל לא מוצג נכון ברשת",
+    problemPoint2: "הפרסום לא עקבי",
+    problemPoint3: "אין זמן לצילום ועריכה",
+    problemPoint4: "המתחרים פעילים יותר",
+
+    solutionTitle: "איך אני עוזר לך למכור יותר",
+    solutionIntro: "אני יוצר תוכן קצר שממוקד ב:",
+    solutionPoint1: "מנות דגל",
+    solutionPoint2: "אישיות השף",
+    solutionPoint3: "אווירת המטבח",
+    solutionPoint4: "אירועים ושירות חי",
+    solutionOutro: "זה לא רק צילום.\nזו אסטרטגיית תוכן לצמיחה.",
+
+    whyMeTitle: "למה לעבוד איתי?",
+    whyMeIntro: "עבדתי בתחום האירוח ואני מבין איך מסעדה פועלת.\nאני יודע לזהות מנות שמוכרות ולהפוך אותן לתוכן שמביא לקוחות.",
+    whyMePoint1: "רקע באירוח",
+    whyMePoint2: "מבין את זרימת השירות",
+    whyMePoint3: "מכיר שעות שיא",
+    whyMePoint4: "מתמקד במנות עם רווח גבוה",
+    whyMePoint5: "זמן אספקה מהיר",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -536,6 +568,38 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     addonNotIncluded: "Not included",
     finalTotalLabel: "Total",
     backToHome: "Back to homepage",
+
+    // Food-focused redesign
+    heroHeadline: "Content That Sells Your Dishes",
+    heroSub: "Short-form videos for restaurants, chefs and food businesses in Israel.",
+    heroBullet1: "Show your dishes in the most appetizing way",
+    heroBullet2: "Increase engagement & visibility",
+    heroBullet3: "Bring more guests to your tables",
+    heroCtaAvailability: "Check Availability",
+    heroCtaWa: "WhatsApp Now",
+
+    problemTitle: "Why Restaurants Struggle on Social Media",
+    problemIntro: "Many restaurants lose revenue because:",
+    problemPoint1: "Great dishes aren't shown properly",
+    problemPoint2: "Inconsistent posting",
+    problemPoint3: "No time to create content",
+    problemPoint4: "Competitors post more often",
+
+    solutionTitle: "How I Help You Sell More",
+    solutionIntro: "I create short-form content focused on:",
+    solutionPoint1: "Food-focused short-form videos",
+    solutionPoint2: "Chef personality & behind the scenes",
+    solutionPoint3: "Atmosphere & events",
+    solutionPoint4: "Content built for engagement",
+    solutionOutro: "It's not just filming.\nIt's a content strategy for growth.",
+
+    whyMeTitle: "Why Work With Me",
+    whyMeIntro: "I worked in hospitality and understand how a restaurant operates.\nI know how to identify dishes that sell and turn them into content that brings customers.",
+    whyMePoint1: "Background in hospitality",
+    whyMePoint2: "Understand service flow",
+    whyMePoint3: "Know peak hours",
+    whyMePoint4: "Focus on high-margin dishes",
+    whyMePoint5: "Fast turnaround",
   },
 };
 
