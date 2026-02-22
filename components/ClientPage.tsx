@@ -98,6 +98,14 @@ const PKG_LABELS: Record<string, Record<Lang, string>> = {
   monthly: { he: "Monthly", en: "Monthly" },
 };
 
+type PkgAccent = (typeof PACKAGE_CARDS)[number]["accent"];
+
+const PKG_CLASSES: Record<PkgAccent, { card: string; glow: string; accent: string; border: string }> = {
+  blue: { card: "pkg-card--blue", glow: "pkg-glow--blue", accent: "pkg-accent--blue", border: "pkg-border--blue" },
+  purple: { card: "pkg-card--purple", glow: "pkg-glow--purple", accent: "pkg-accent--purple", border: "pkg-border--purple" },
+  orange: { card: "pkg-card--orange", glow: "pkg-glow--orange", accent: "pkg-accent--orange", border: "pkg-border--orange" },
+};
+
 export function ClientPage(props: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -374,32 +382,33 @@ export function ClientPage(props: Props) {
               });
               openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
             };
+            const cls = PKG_CLASSES[pkg.accent];
             return (
             <div
               key={pkg.id}
-              className={`pkg-card pkg-card--${pkg.accent} overflow-hidden relative`}
+              className={`pkg-card ${cls.card} overflow-hidden relative`}
             >
               {/* Subtle glow overlay at top */}
-              <div className={`pkg-glow--${pkg.accent} absolute inset-0 pointer-events-none`} />
+              <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
               <div className="relative p-5 sm:p-6">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{pkgIcon(detail)}</span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className={`text-base sm:text-lg font-bold pkg-accent--${pkg.accent}`}>
+                      <h3 className={`text-base sm:text-lg font-bold ${cls.accent}`}>
                         <Link href={`/product/${pkg.id}`} className="hover:text-white transition-colors">
                           {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
                         </Link>
                       </h3>
                       {pkg.badge === "popular" ? (
-                        <span className={`text-[10px] rounded-full border pkg-border--${pkg.accent} bg-white/5 px-2.5 py-0.5 text-white/90 font-medium shadow-sm`}>
+                        <span className={`text-[10px] rounded-full border ${cls.border} bg-white/5 px-2.5 py-0.5 text-white/90 font-medium shadow-sm`}>
                           {t(lang, "popular")}
                         </span>
                       ) : null}
                     </div>
                     {price > 0 && (
                       <div className="mt-1 flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs pkg-accent--${pkg.accent} opacity-80`}>
+                        <span className={`text-xs ${cls.accent} opacity-80`}>
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -411,11 +420,11 @@ export function ClientPage(props: Props) {
                 {detail && (
                   <div className="mt-3 space-y-1">
                     <p className="text-xs text-white/60">
-                      <span className={`pkg-accent--${pkg.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
+                      <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
                       {pickL10n(lang, detail.bestFor)}
                     </p>
                     <p className="text-xs text-white/60">
-                      <span className={`pkg-accent--${pkg.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
+                      <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
                       {pickL10n(lang, detail.deliveryTime)}
                     </p>
                   </div>
@@ -427,7 +436,7 @@ export function ClientPage(props: Props) {
                     {detail.pills.map((pill, i) => (
                       <span
                         key={i}
-                        className={`text-[11px] rounded-full border pkg-border--${pkg.accent} bg-white/[0.04] px-2.5 py-0.5 text-white/70`}
+                        className={`text-[11px] rounded-full border ${cls.border} bg-white/[0.04] px-2.5 py-0.5 text-white/70`}
                       >
                         {pickL10n(lang, pill)}
                       </span>
@@ -479,16 +488,16 @@ export function ClientPage(props: Props) {
 
               {/* Expandable accordion */}
               {detail && isExpanded && (
-                <div className={`border-t pkg-border--${pkg.accent} px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200`}>
+                <div className={`border-t ${cls.border} px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200`}>
                   {/* What you get */}
                   <div>
-                    <h4 className={`text-xs font-semibold pkg-accent--${pkg.accent} mb-1.5`}>
+                    <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
                       {t(lang, "sectionWhatYouGet")}
                     </h4>
                     <ul className="space-y-1">
                       {detail.whatYouGet.map((item, i) => (
                         <li key={i} className="flex items-start gap-2 text-xs text-white/75">
-                          <span className={`pkg-accent--${pkg.accent} mt-0.5 shrink-0`}>✓</span>
+                          <span className={`${cls.accent} mt-0.5 shrink-0`}>✓</span>
                           {pickL10n(lang, item)}
                         </li>
                       ))}
@@ -509,7 +518,7 @@ export function ClientPage(props: Props) {
 
                   {/* Best for / Target audience */}
                   <div>
-                    <h4 className={`text-xs font-semibold pkg-accent--${pkg.accent} mb-1`}>
+                    <h4 className={`text-xs font-semibold ${cls.accent} mb-1`}>
                       {t(lang, "sectionBestFor")}
                     </h4>
                     <p className="text-xs text-white/65">{pickL10n(lang, detail.bestFor)}</p>
@@ -518,7 +527,7 @@ export function ClientPage(props: Props) {
                   {/* Add-ons */}
                   {detail.addOns.length > 0 && (
                     <div>
-                      <h4 className={`text-xs font-semibold pkg-accent--${pkg.accent} mb-1`}>
+                      <h4 className={`text-xs font-semibold ${cls.accent} mb-1`}>
                         {t(lang, "addonsLabel")}
                       </h4>
                       <ul className="space-y-0.5">
@@ -532,7 +541,7 @@ export function ClientPage(props: Props) {
                   {/* Monthly: selectable add-ons (only in expanded details) */}
                   {isMonthly && (
                     <div>
-                      <h4 className={`text-xs font-semibold pkg-accent--${pkg.accent} mb-0.5`}>
+                      <h4 className={`text-xs font-semibold ${cls.accent} mb-0.5`}>
                         {t(lang, "monthlyAddonsTitle")}
                       </h4>
                       <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
@@ -562,7 +571,7 @@ export function ClientPage(props: Props) {
                         ))}
                       </div>
                       {addonsTotal > 0 && (
-                        <p className={`mt-2 text-xs font-medium pkg-accent--${pkg.accent}`}>
+                        <p className={`mt-2 text-xs font-medium ${cls.accent}`}>
                           {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
                         </p>
                       )}
@@ -591,7 +600,7 @@ export function ClientPage(props: Props) {
                       <div className="text-[10px] text-white/40 mb-1">{t(lang, "priceAfterDiscount")}</div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
-                        <span className={`text-sm font-bold pkg-accent--${pkg.accent}`}>₪{finalPrice.toLocaleString()}</span>
+                        <span className={`text-sm font-bold ${cls.accent}`}>₪{finalPrice.toLocaleString()}</span>
                         <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
                           -{discountPercent}%
                         </span>
@@ -604,7 +613,7 @@ export function ClientPage(props: Props) {
                     <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
-                        <span className={`text-sm font-bold pkg-accent--${pkg.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
+                        <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
                       </div>
                     </div>
                   )}
