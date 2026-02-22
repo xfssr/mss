@@ -1,4 +1,5 @@
 import type { CatalogExample, TierExamplesConfig } from "@/types/catalog";
+import { DEFAULT_TIER_EXAMPLES_CONFIG } from "@/config/defaultTierExamples";
 
 export type TieredExamples = {
   tier1: CatalogExample[];
@@ -10,7 +11,10 @@ export type TieredExamples = {
  * Build tiered examples from explicit tier config.
  *
  * Uses the stored tier ID lists to partition the given examples.
- * Any examples not mentioned in any tier fall into tier1 as a
+ * When no DB config entry exists for a catalog, falls back to
+ * DEFAULT_TIER_EXAMPLES_CONFIG so static catalogs show distinct
+ * examples per package tier without any manual admin setup.
+ * If neither config has an entry, all examples go to tier1 as a
  * safety net so nothing is silently dropped.
  */
 export function buildTieredFromConfig(
@@ -18,10 +22,10 @@ export function buildTieredFromConfig(
   catalogSlug: string,
   config: TierExamplesConfig,
 ): TieredExamples {
-  const entry = config[catalogSlug];
+  const entry = config[catalogSlug] ?? DEFAULT_TIER_EXAMPLES_CONFIG[catalogSlug];
 
   if (!entry) {
-    // No explicit config yet — all examples go to tier1
+    // No explicit config — all examples go to tier1
     return { tier1: [...examples], tier2: [], tier3: [] };
   }
 
@@ -38,24 +42,6 @@ export function buildTieredFromConfig(
     else if (idSet2.has(ex.id)) tier2.push(ex);
     else tier1.push(ex); // default bucket
   }
-
-  return { tier1, tier2, tier3 };
-}
-
-/**
- * @deprecated Use buildTieredFromConfig instead.
- * Split a catalog's examples into 3 tier groups via round-robin.
- */
-export function splitExamplesIntoTiers(examples: CatalogExample[]): TieredExamples {
-  const tier1: CatalogExample[] = [];
-  const tier2: CatalogExample[] = [];
-  const tier3: CatalogExample[] = [];
-
-  const buckets = [tier1, tier2, tier3];
-
-  examples.forEach((ex, i) => {
-    buckets[i % 3].push(ex);
-  });
 
   return { tier1, tier2, tier3 };
 }
