@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
 
@@ -37,24 +37,25 @@ export function LightboxPreview(props: {
   const title = useMemo(() => (item?.title?.[props.lang] || "").trim(), [item, props.lang]);
   const desc = useMemo(() => (item?.description?.[props.lang] || "").trim(), [item, props.lang]);
 
-  function prev() {
-    props.onIndex(clamp(idx - 1, 0, max));
-  }
-  function next() {
-    props.onIndex(clamp(idx + 1, 0, max));
-  }
+  const { onIndex, onClose } = props;
+
+  const prev = useCallback(() => {
+    onIndex(clamp(idx - 1, 0, max));
+  }, [idx, max, onIndex]);
+  const next = useCallback(() => {
+    onIndex(clamp(idx + 1, 0, max));
+  }, [idx, max, onIndex]);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") props.onClose();
+      if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, idx, max]);
+  }, [open, prev, next, onClose]);
 
   if (!open) return null;
 

@@ -32,7 +32,8 @@ export async function GET(req: Request) {
       reason: result.reason,
       suggested: result.suggested,
     });
-  } catch {
+  } catch (err) {
+    console.error("[availability] calendar error:", err);
     return NextResponse.json(
       { ok: false, error: "calendar_unavailable" },
       { status: 503 },

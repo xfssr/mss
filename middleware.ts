@@ -11,7 +11,15 @@ export async function middleware(req: NextRequest) {
   const secret = process.env.ADMIN_COOKIE_SECRET || "";
   const cookie = req.cookies.get(ADMIN_COOKIE_NAME)?.value;
 
-  if (!secret || !(await verifyAdminCookieValue(secret, cookie))) {
+  try {
+    if (!secret || !(await verifyAdminCookieValue(secret, cookie))) {
+      const url = req.nextUrl.clone();
+      url.pathname = "/admin/login";
+      url.searchParams.set("next", pathname);
+      return NextResponse.redirect(url);
+    }
+  } catch (err) {
+    console.error("[middleware] cookie verification failed:", err);
     const url = req.nextUrl.clone();
     url.pathname = "/admin/login";
     url.searchParams.set("next", pathname);
