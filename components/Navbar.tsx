@@ -9,8 +9,9 @@ import LogoIcon from "@/components/LogoIcon";
 
 /** Single source of truth for navigation items (used by both desktop and mobile). */
 export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] = [
-  { labelKey: "navExamples", href: "/#examples", useLink: true },
-  { labelKey: "navPackages", href: "/#packages", useLink: true },
+  { labelKey: "navExamples", href: "/#packages", useLink: true },
+  { labelKey: "navSolutions", href: "/#solutions", useLink: true },
+  { labelKey: "navPricing", href: "/#packages", useLink: true },
   { labelKey: "navContact", href: "#contact" },
 ];
 
@@ -22,7 +23,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="border-b border-white/10 bg-black/30 backdrop-blur-sm md:sticky md:top-0 md:z-30">
+    <header className="sticky top-0 z-30 border-b border-white/10 bg-black/30 backdrop-blur-md sm:backdrop-blur-lg">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="#top"
