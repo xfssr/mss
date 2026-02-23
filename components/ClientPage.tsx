@@ -455,14 +455,6 @@ export function ClientPage(props: Props) {
                     </div>
                   </div>
 
-                  {/* Best for / Target audience */}
-                  <div>
-                    <h4 className={`text-xs font-semibold ${cls.accent} mb-1`}>
-                      {t(lang, "sectionBestFor")}
-                    </h4>
-                    <p className="text-xs text-white/65">{pickL10n(lang, detail.bestFor)}</p>
-                  </div>
-
                   {/* Add-ons */}
                   {detail.addOns.length > 0 && (
                     <div>
