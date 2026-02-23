@@ -25,7 +25,7 @@ export default {
         },
       },
       fontFamily: {
-        serif: ["'Playfair Display'", "Cormorant", "Georgia", "serif"],
+        serif: ["'Playfair Display'", "Georgia", "serif"],
       },
     },
   },
