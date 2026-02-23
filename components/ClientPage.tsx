@@ -25,7 +25,7 @@ import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { AddOnDetailModal } from "@/components/AddOnDetailModal";
 import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
-import { PackageExamples, getBusinessTypesFromCatalogs, type BusinessTypeKey } from "@/components/PackageExamples";
+import { PackageExamples } from "@/components/PackageExamples";
 import { packageIdToTier } from "@/utils/tierExamples";
 import { MONTHLY_ADDONS, type AddonConfig } from "@/config/addons";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
@@ -126,7 +126,6 @@ export function ClientPage(props: Props) {
   const [galleryItems, setGalleryItems] = useState<CatalogExample[]>([]);
   const [galleryStartIdx, setGalleryStartIdx] = useState(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
-  const [globalBizType, setGlobalBizType] = useState<BusinessTypeKey | null>(null);
   const [selectedAddons, setSelectedAddons] = useState<Record<string, boolean>>({});
   const [addonDetailModal, setAddonDetailModal] = useState<AddonConfig | null>(null);
 
@@ -163,12 +162,6 @@ export function ClientPage(props: Props) {
   const catalogPreview = useMemo(
     () => (catalogPreviewSlug ? props.catalogs.find((c) => c.slug === catalogPreviewSlug) ?? null : null),
     [props.catalogs, catalogPreviewSlug],
-  );
-
-  // Derive business type options from catalog data (single source of truth)
-  const businessTypeOptions = useMemo(
-    () => getBusinessTypesFromCatalogs(portfolioCatalogs),
-    [portfolioCatalogs],
   );
 
   const messagePreview = useMemo(() => {
@@ -298,37 +291,7 @@ export function ClientPage(props: Props) {
       <div className="pkg-section-bg">
       <Section id="packages" title={t(lang, "choosePackage")}>
 
-        {/* Global business type selector */}
-        <div className="mb-6">
-          <label htmlFor="global-biz-type" className="block text-lg font-semibold text-white mb-1 border-s-4 border-[rgb(var(--red))] ps-3">
-            {t(lang, "bizTypeLabel")}
-          </label>
-          <select
-            id="global-biz-type"
-            value={globalBizType ?? ""}
-            onChange={(e) => {
-              const val = e.target.value;
-              setGlobalBizType(val || null);
-            }}
-            className="text-sm rounded-xl border border-white/20 bg-black/40 px-4 py-3 text-white/90 outline-none focus:ring-1 focus:ring-[rgb(var(--blue))] w-full sm:w-auto sm:min-w-[240px]"
-            aria-label={t(lang, "bizTypeLabel")}
-          >
-            <option value="">{t(lang, "bizTypeLabel")}</option>
-            {businessTypeOptions.map((bt) => (
-              <option key={bt.key} value={bt.key}>
-                {pickL10n(lang, bt.label)}
-              </option>
-            ))}
-          </select>
-          {!globalBizType && (
-            <p className="mt-1.5 text-sm font-medium text-[rgb(var(--red))]/80">{t(lang, "bizTypeMicrocopy")}</p>
-          )}
-        </div>
-
-        <div className={`relative${globalBizType ? "" : " opacity-50 pointer-events-none select-none"}`} aria-disabled={!globalBizType}>
-          {!globalBizType && (
-            <p className="mb-3 text-sm text-white/70 italic">{t(lang, "bizTypeGateHint")}</p>
-          )}
+        <div className="relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
@@ -432,7 +395,7 @@ export function ClientPage(props: Props) {
                       lang={lang}
                       examples={exItems}
                       catalogs={props.catalogs}
-                      businessType={globalBizType}
+                      businessType={null}
                       tier={packageIdToTier(pkg.id)}
                       tierConfig={props.tierExamplesConfig}
                       catalogSlug={exCatalog.slug}
