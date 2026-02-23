@@ -18,7 +18,7 @@ import { Section } from "@/components/Section";
 import { CategoryDetailModal } from "@/components/CategoryDetailModal";
 import { CatalogPreviewModal } from "@/components/CatalogPreviewModal";
 import { MiniScreenPanel } from "@/components/MiniScreenPanel";
-import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
+
 import { Footer } from "@/components/Footer";
 import { HeroSlider } from "@/components/HeroSlider";
 import { SolutionCard } from "@/components/SolutionCard";
@@ -221,8 +221,6 @@ export function ClientPage(props: Props) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
-
-      <FloatingWhatsAppButton onClick={onSendWhatsApp} />
 
       <Section id="top">
         <div className="hero-glow">
@@ -612,7 +610,6 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
-        <SectionCta />
       </Section>
 
       {/* ===== Why Work With Me section ===== */}
@@ -628,7 +625,6 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
-        <SectionCta />
       </Section>
 
 
@@ -646,7 +642,6 @@ export function ClientPage(props: Props) {
               />
             ))}
           </div>
-          <SectionCta />
         </Section>
       )}
 
