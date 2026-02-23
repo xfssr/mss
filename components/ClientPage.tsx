@@ -24,6 +24,7 @@ import { HeroSlider } from "@/components/HeroSlider";
 import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { AddOnDetailModal } from "@/components/AddOnDetailModal";
+import { CaseStudiesSection } from "@/components/CaseStudiesSection";
 import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
 import { PackageExamples } from "@/components/PackageExamples";
 import { packageIdToTier } from "@/utils/tierExamples";
@@ -603,6 +604,9 @@ export function ClientPage(props: Props) {
           </ul>
         </div>
       </Section>
+
+      {/* ===== Case Studies section ===== */}
+      <CaseStudiesSection lang={lang} />
 
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")}>
