@@ -315,6 +315,21 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whoIsThisFor5: "אוכל בריא וקונספטים מיוחדים",
     whoIsThisFor6: "ברי קוקטייל וקונספטים ליליים",
     whoIsThisFor7: "מקומות בראנץ' ובוקר",
+
+    // Trust section
+    trustTitle: "עסקי אוכל ואירוח סומכים עלינו",
+    trustStat1Value: "50+",
+    trustStat1Label: "פרויקטים שהושלמו",
+    trustStat2Value: "30+",
+    trustStat2Label: "עסקים שקיבלו שירות",
+    trustStat3Value: "48 שעות",
+    trustStat3Label: "זמן אספקה ממוצע",
+    trustStat4Value: "100%",
+    trustStat4Label: "שביעות רצון לקוחות",
+
+    // CTA urgency
+    ctaUrgency: "זמינות מוגבלת בכל חודש",
+    sectionCtaWa: "שלח הודעה ב-WhatsApp",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -622,6 +637,21 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whoIsThisFor5: "Healthy Food & Specialty Concepts",
     whoIsThisFor6: "Cocktail Bars & Night Concepts",
     whoIsThisFor7: "Breakfast & Brunch Spots",
+
+    // Trust section
+    trustTitle: "Trusted by Food & Hospitality Businesses",
+    trustStat1Value: "50+",
+    trustStat1Label: "Projects Completed",
+    trustStat2Value: "30+",
+    trustStat2Label: "Businesses Served",
+    trustStat3Value: "48h",
+    trustStat3Label: "Average Delivery Time",
+    trustStat4Value: "100%",
+    trustStat4Label: "Client Satisfaction",
+
+    // CTA urgency
+    ctaUrgency: "Limited monthly availability",
+    sectionCtaWa: "Message on WhatsApp",
   },
 };
 
