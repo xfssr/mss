@@ -227,8 +227,8 @@ export function ClientPage(props: Props) {
         <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
-              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadline")}</h1>
+              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{pickL10n(lang, props.settings.heroSubtitle) || t(lang, "heroSupporting")}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
@@ -245,7 +245,7 @@ export function ClientPage(props: Props) {
                   {t(lang, "heroCtaAvailability")}
                 </a>
               </div>
-              <p className="mt-3 text-xs text-white/40">{t(lang, "ctaUrgency")}</p>
+              <p className="mt-3 text-xs text-white/40">{pickL10n(lang, props.settings.promoText) || t(lang, "ctaUrgency")}</p>
             </div>
 
             <div className="lg:col-span-5">
@@ -607,7 +607,7 @@ export function ClientPage(props: Props) {
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{t(lang, "whyMeIntro")}</p>
+          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
           <ul className="space-y-4">
             {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
