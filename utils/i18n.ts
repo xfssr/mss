@@ -19,8 +19,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "לכתוב ב-WhatsApp",
     heroHint: "בחרו קטגוריה → בחרו חבילה → מלאו תאריך/עיר → שולחים ב-WhatsApp.",
 
-    sectionCatalog: "קטלוגים",
-    sectionAbout: "אודות / מחירים (הערכה)",
+    sectionCatalog: "דוגמאות מצילומים אמיתיים לפי תחום",
+    sectionAbout: "אודות",
     sectionContact: "יצירת קשר",
 
     flowHint: "בחרו קטגוריה → דוגמאות → התאמת חבילה → הזמנה → WhatsApp.",
@@ -92,6 +92,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaPackages: "לבחור חבילה",
     heroCtaOrder: "להזמין עכשיו",
 
+    heroCtaCatalogs: "פתח קטלוגים",
+    heroCtaPricing: "מחירים",
+    howStartNow: "התחל עכשיו",
+    continueToPackage: "המשך לבחירת חבילה",
+
     filterAll: "הכל",
     filterFood: "מסעדות / שף",
     filterBar: "בר / ברמן",
@@ -114,7 +119,222 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "לבחור חבילה זו",
 
-    seoHeroDescription: "סרטוני רילס לעסקים · צילום סרטונים לתוכן לעסקים · הפקת סרטון תדמית לעסק · צילום דירה להשכרה",
+    choosePackage: "בחרו חבילה שמתאימה לכם",
+    choosePackageSubtitle: "בחרו חבילה מוכנה או בנו חבילה מותאמת אישית — וממשיכים להזמנה.",
+    pkgStarter: "Starter",
+    pkgStarterDesc: "4 שעות · 6 רילס · 20 תמונות",
+    pkgBusiness: "Business",
+    pkgBusinessDesc: "יום מלא · 10 רילס · 120 תמונות",
+    pkgMonthly: "Monthly",
+    pkgMonthlyDesc: "מנוי חודשי + ניהול סושיאל",
+    pkgChoose: "לבחור",
+
+    seoHeroDescription: "סרטוני רילס למסעדות, ברים, בתי קפה, מאפיות, קייטרינג ועסקי אוכל · צילום סרטונים לתוכן לעסקי אוכל ואירוח · הפקת סרטון תדמית לעסק",
+
+    navSolutions: "פתרונות מוכנים",
+    sectionSolutions: "פתרונות מוכנים",
+    solutionsIntro: "פתרונות מוכנים שאפשר להוסיף כתוספות אופציונליות.",
+    solutionView: "פרטים",
+    solutionChoose: "לבחור פתרון זה",
+
+    priceEstimate: "הערכה",
+    selectedLabel: "נבחר",
+    packageLabel: "חבילה",
+    addonsLabel: "תוספות",
+    totalLabel: "סה״כ",
+    discountLabel: "הנחה",
+    smmAddon: "SMM Lite",
+    targetAddon: "Ads Targeting (Meta)",
+    estimateNote: "המחיר הוא הערכה בלבד, לא הצעה מחייבת.",
+
+    howItWorksTitle: "איך זה עובד",
+    howItWorksSubtitle: "שלושה צעדים פשוטים — משיחה קצרה ועד תוכן מוכן לפרסום.",
+    howStep1Title: "שיחת פתיחה קצרה",
+    howStep1Desc: "מגדירים מטרות, סגנון ומה חשוב להדגיש בעסק שלכם.",
+    howStep2Title: "יום צילום ממוקד",
+    howStep2Desc: "מצלמים וידאו ותמונות קצרות שמותאמים לפלטפורמות חברתיות.",
+    howStep3Title: "אספקה מהירה",
+    howStep3Desc: "מקבלים קבצים ערוכים ומוכנים לפרסום בזמן שנקבע.",
+    howStep1Btn: "לראות דוגמאות",
+    howStep2Btn: "לבחור חבילה",
+    howStep3Btn: "להזמין",
+
+    sectionWhatYouGet: "מה מקבלים",
+    sectionBestFor: "מתאים ל",
+    sectionProcess: "התהליך",
+    sectionPricingRange: "טווח מחירים",
+    sectionWhyThisWorks: "למה זה עובד",
+    sectionFaq: "שאלות נפוצות",
+    sectionSocialProof: "הוכחה חברתית",
+
+    labelShootTime: "זמן צילום",
+    labelDelivery: "זמן אספקה",
+    labelLocations: "מיקומים",
+    labelRevisions: "תיקונים",
+
+    labelShoot: "זמן צילום",
+    labelDeliveryShort: "אספקה",
+
+    formBusinessType: "סוג עסק",
+    formLanguages: "שפות",
+    formGoalLabel: "מטרה",
+    productPageNote: "זו לא הזמנה. כאן רק מידע ומחירים.",
+
+    labelTargetAudience: "קהל יעד",
+    pkgCollapsedSummary: "מה כלול",
+    buildCustomPkg: "בניית חבילה מותאמת",
+    disableHint: "כבו קטגוריה כדי להסתיר אותה זמנית מהאתר",
+    chooseAnotherDate: "בחרו תאריך אחר",
+    navExamples: "דוגמאות",
+    navPackages: "חבילות",
+
+    // Homepage redesign
+    heroCtaSeePricing: "מחירון",
+    stickyCatalogs: "קטלוגים",
+    stickyWhatsApp: "WhatsApp",
+    clearFilters: "נקה סינון",
+    filterEvents: "אירועים",
+    filterHotels: "מלונות / צימרים",
+    filterRestaurants: "מסעדות",
+    filterRetail: "קמעונאות / אונליין",
+    filterServices: "שירותים",
+    previewBtn: "תצוגה מקדימה",
+    previewTitle: "תצוגה מקדימה",
+    previewChoosePackage: "בחירת חבילה",
+    previewWhatsApp: "שליחה ב-WhatsApp",
+    previewPlaceholder: "דוגמה",
+    pkgBestFor: "מתאים ל",
+    pkgDelivery: "אספקה",
+
+    // Pricing page
+    pricingCompareTitle: "השוואת חבילות",
+    pricingReels: "רילס",
+    pricingPhotos: "תמונות",
+    pricingLocations: "מיקומים",
+    pricingDelivery: "אספקה",
+    pricingBestFor: "מתאים ל",
+    pricingInfoBadge: "זו לא הזמנה — מידע ומחירים בלבד.",
+    pricingGoToCatalogs: "לקטלוגים",
+    pricingWhatsApp: "WhatsApp עם הודעה מוכנה",
+
+    // How it works compact
+    howCompactStep1: "בחרו קטלוג",
+    howCompactStep2: "בחרו חבילה",
+    howCompactStep3: "שלחו ב-WhatsApp",
+
+    // Mobile CTA
+    letsStart: "בוא נתחיל",
+
+    // Mobile nav
+    navPricing: "מחירים",
+    menuOpen: "תפריט",
+    menuClose: "סגור",
+
+    // Catalog card
+    catalogOpen: "פתח",
+    goToPackages: "לחבילות",
+
+    // Catalog preview modal
+    tabPhotos: "תמונות",
+    tabVideo: "וידאו",
+    choosePackageBtn: "בחר חבילה",
+
+    // Package CTA
+    pkgWhatsApp: "שלח ב-WhatsApp",
+
+    // Package card examples
+    pkgExamples: "דוגמאות",
+
+    // Business type selector
+    bizTypeLabel: "בחר סוג עסק",
+    bizTypeAll: "הכל",
+    bizTypeHint: "בחרו סוג עסק כדי לראות דוגמאות רלוונטיות בחבילות",
+    bizTypeBars: "ברים / חיי לילה",
+    bizTypeRestaurants: "מסעדות / אוכל",
+    bizTypeHotels: "מלונות",
+    bizTypeEvents: "אירועים",
+    bizTypeRealEstate: "נדל״ן",
+    bizTypeServices: "שירותים קטנים",
+    bizTypeGateHint: "קודם בחר סוג עסק כדי לראות דוגמאות מתאימות",
+    bizTypeMicrocopy: "קודם בחר סוג עסק ואז בחר חבילה",
+
+    // Monthly add-ons
+    monthlyAddonsTitle: "תוספות חודשיות",
+    monthlyAddonsHelper: "תוספות חודשיות, לא כלול במחיר החבילה",
+    addonDetails: "פרטים",
+    addonSmmLite: "SMM Lite",
+    addonAdsMeta: "Ads Targeting (Meta)",
+    addonPerMonth: "/ חודשי",
+    addonsTotal: "סה״כ תוספות",
+    addonOnlyMonthly: "זמין רק בחבילת Monthly",
+    addonsAvailableOnlyMonthly: "התוספות זמינות רק בבחירת חבילת חודשי",
+    priceAfterDiscount: "מחיר אחרי הנחה",
+    addonWhatsIncluded: "מה כלול",
+    addonNotIncluded: "לא כלול",
+    finalTotalLabel: "סה״כ לתשלום",
+    backToHome: "חזרה לעמוד הראשי",
+
+    // Food & hospitality redesign
+    heroHeadline: "מחפשים מישהו שיעשה בשבילכם תוכן איכותי לעסק?",
+    heroSub: "וידאו ותמונות קצרים שמוכרים אוכל, משקאות וחוויה — ומביאים לקוחות אמיתיים.",
+    heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
+    heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
+    heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
+    heroCtaAvailability: "לבחור חבילה",
+    heroCtaWa: "וואטסאפ עכשיו",
+
+    problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
+    problemIntro: "עסקי אוכל ואירוח רבים מפסידים הכנסות כי:",
+    problemPoint1: "המנות והאווירה לא מוצגים נכון ברשת",
+    problemPoint2: "הפרסום לא עקבי",
+    problemPoint3: "אין זמן לצילום ועריכה",
+    problemPoint4: "המתחרים פעילים יותר",
+
+    solutionTitle: "איך אני עוזר לך למכור יותר",
+    solutionIntro: "אני יוצר תוכן קצר שממוקד ב:",
+    solutionPoint1: "מנות שמוכרות",
+    solutionPoint2: "אווירה שמושכת לקוחות",
+    solutionPoint3: "תוכן שנבנה לחשיפה אמיתית",
+    solutionPoint4: "אירועים, שירות ואישיות המותג",
+    solutionOutro: "אני לא רק מצלם אוכל.\nאני מתמקד במנות שמוכרות, באווירה שמושכת ובתוכן שנבנה לחשיפה אמיתית.",
+
+    whyMeTitle: "יותר מצילום",
+    whyMeIntro: "אני מתמקד במנות שמוכרות, באווירה שממירה צפיות ללקוחות ובתוכן שמיועד לחשיפה. עם ניסיון בתחום האירוח, אני מבין זרימת שירות, שעות עומס ופסיכולוגיית לקוחות.",
+    whyMePoint1: "רקע באירוח ועסקי אוכל",
+    whyMePoint2: "מבין את זרימת השירות",
+    whyMePoint3: "מכיר שעות שיא",
+    whyMePoint4: "מתמקד במנות שמוכרות ובאווירה שמושכת",
+    whyMePoint5: "זמן אספקה מהיר",
+
+    // Who is this for section
+    whoIsThisForTitle: "למי זה מתאים?",
+    whoIsThisFor1: "מסעדות וברים",
+    whoIsThisFor2: "בתי קפה ומאפיות",
+    whoIsThisFor3: "אולמות אירועים וקייטרינג",
+    whoIsThisFor4: "שפים ומותגים אישיים",
+    whoIsThisFor5: "אוכל בריא וקונספטים מיוחדים",
+    whoIsThisFor6: "ברי קוקטייל וקונספטים ליליים",
+    whoIsThisFor7: "מקומות בראנץ' ובוקר",
+
+    // Trust section
+    trustTitle: "תוצאות שלקוחות כבר רואים בשטח",
+    trustStat1Value: "50+",
+    trustStat1Label: "פרויקטים שהושלמו",
+    trustStat2Value: "30+",
+    trustStat2Label: "עסקים שקיבלו שירות",
+    trustStat3Value: "48 שעות",
+    trustStat3Label: "זמן אספקה ממוצע",
+    trustStat4Value: "100%",
+    trustStat4Label: "שביעות רצון לקוחות",
+    testimonial1Quote: "התוכן שצולם אצלנו הביא פניות כבר בשבוע הראשון והרגיש בול כמו המותג שלנו.",
+    testimonial1Author: "בעלים, בר שכונתי",
+    testimonial2Quote: "קיבלנו סרטונים ותמונות שהיו מוכנים לפרסום ישר — וחסכו לנו המון זמן.",
+    testimonial2Author: "מנהלת שיווק, מסעדה",
+    portfolioIntro: "כמה דוגמאות לעבודות אחרונות שתוכלו לפתוח ולצפות בהן.",
+
+    // CTA urgency
+    ctaUrgency: "זמינות מוגבלת בכל חודש",
+    sectionCtaWa: "שלח הודעה ב-WhatsApp",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -126,8 +346,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaWhatsApp: "Message on WhatsApp",
     heroHint: "Pick a category → build a package → add date/city → send via WhatsApp.",
 
-    sectionCatalog: "Catalogs",
-    sectionAbout: "About / price guide",
+    sectionCatalog: "Real shoot examples by industry",
+    sectionAbout: "About",
     sectionContact: "Contact",
 
     flowHint: "Pick → Examples → Build a package → Reserve → WhatsApp.",
@@ -199,6 +419,11 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     heroCtaPackages: "Choose a package",
     heroCtaOrder: "Order now",
 
+    heroCtaCatalogs: "Open catalogs",
+    heroCtaPricing: "Pricing",
+    howStartNow: "Start now",
+    continueToPackage: "Continue to package",
+
     filterAll: "All",
     filterFood: "Food / Restaurant",
     filterBar: "Bar / Bartender",
@@ -221,7 +446,222 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "Pick this package",
 
-    seoHeroDescription: "Reels for businesses · Content video production · Business promo videos · Real estate photography",
+    choosePackage: "Choose the package that fits you",
+    choosePackageSubtitle: "Pick a ready-made package or build your own — then proceed to order.",
+    pkgStarter: "Starter",
+    pkgStarterDesc: "4h · 6 reels · 20 photos",
+    pkgBusiness: "Business",
+    pkgBusinessDesc: "Full day · 10 reels · 120 photos",
+    pkgMonthly: "Monthly",
+    pkgMonthlyDesc: "Monthly plan + social mgmt",
+    pkgChoose: "Choose",
+
+    seoHeroDescription: "Reels for restaurants, bars, coffee shops, bakeries, catering & food brands · Food & hospitality content · Business promo videos",
+
+    navSolutions: "Ready Solutions",
+    sectionSolutions: "Ready-Made Solutions",
+    solutionsIntro: "Ready solutions you can add as optional extras.",
+    solutionView: "View",
+    solutionChoose: "Choose this solution",
+
+    priceEstimate: "estimate",
+    selectedLabel: "Selected",
+    packageLabel: "Package",
+    addonsLabel: "Add-ons",
+    totalLabel: "Total",
+    discountLabel: "Discount",
+    smmAddon: "SMM Lite",
+    targetAddon: "Ads Targeting (Meta)",
+    estimateNote: "Price is an estimate only, not a binding offer.",
+
+    howItWorksTitle: "How it works",
+    howItWorksSubtitle: "A simple 3-step process from first message to ready-to-publish content.",
+    howStep1Title: "Quick discovery call",
+    howStep1Desc: "We align on your goals, style and what matters most for your business.",
+    howStep2Title: "Focused shoot day",
+    howStep2Desc: "We capture short-form video and photo content at your location.",
+    howStep3Title: "Fast delivery",
+    howStep3Desc: "You receive edited assets ready to publish in the agreed timeline.",
+    howStep1Btn: "View examples",
+    howStep2Btn: "Choose package",
+    howStep3Btn: "Order",
+
+    sectionWhatYouGet: "What you get",
+    sectionBestFor: "Best for",
+    sectionProcess: "Process",
+    sectionPricingRange: "Pricing range",
+    sectionWhyThisWorks: "Why this works",
+    sectionFaq: "FAQ",
+    sectionSocialProof: "Social proof",
+
+    labelShootTime: "Shoot time",
+    labelDelivery: "Delivery",
+    labelLocations: "Locations",
+    labelRevisions: "Revisions",
+
+    labelShoot: "Shoot",
+    labelDeliveryShort: "Delivery",
+
+    formBusinessType: "Business type",
+    formLanguages: "Languages",
+    formGoalLabel: "Goal",
+    productPageNote: "This is not an order. Information and pricing only.",
+
+    labelTargetAudience: "Target audience",
+    pkgCollapsedSummary: "What's included",
+    buildCustomPkg: "Build custom package",
+    disableHint: "Disable a category to temporarily hide it from the site",
+    chooseAnotherDate: "Choose another date",
+    navExamples: "Examples",
+    navPackages: "Packages",
+
+    // Homepage redesign
+    heroCtaSeePricing: "See pricing",
+    stickyCatalogs: "Catalogs",
+    stickyWhatsApp: "WhatsApp",
+    clearFilters: "Clear filters",
+    filterEvents: "Events",
+    filterHotels: "Hotels",
+    filterRestaurants: "Restaurants",
+    filterRetail: "Retail / Online",
+    filterServices: "Services",
+    previewBtn: "Preview",
+    previewTitle: "Quick Preview",
+    previewChoosePackage: "Choose package",
+    previewWhatsApp: "Send via WhatsApp",
+    previewPlaceholder: "Sample",
+    pkgBestFor: "Best for",
+    pkgDelivery: "Delivery",
+
+    // Pricing page
+    pricingCompareTitle: "Compare packages",
+    pricingReels: "Reels",
+    pricingPhotos: "Photos",
+    pricingLocations: "Locations",
+    pricingDelivery: "Delivery",
+    pricingBestFor: "Best for",
+    pricingInfoBadge: "This is not an order — information and pricing only.",
+    pricingGoToCatalogs: "Go to catalogs",
+    pricingWhatsApp: "WhatsApp with prefilled message",
+
+    // How it works compact
+    howCompactStep1: "Choose catalog",
+    howCompactStep2: "Pick a package",
+    howCompactStep3: "Send via WhatsApp",
+
+    // Mobile CTA
+    letsStart: "Let's start",
+
+    // Mobile nav
+    navPricing: "Pricing",
+    menuOpen: "Menu",
+    menuClose: "Close",
+
+    // Catalog card
+    catalogOpen: "Open",
+    goToPackages: "Go to packages",
+
+    // Catalog preview modal
+    tabPhotos: "Photos",
+    tabVideo: "Video",
+    choosePackageBtn: "Choose a package",
+
+    // Package CTA
+    pkgWhatsApp: "Message on WhatsApp",
+
+    // Package card examples
+    pkgExamples: "Examples",
+
+    // Business type selector
+    bizTypeLabel: "Choose business type",
+    bizTypeAll: "All",
+    bizTypeHint: "Choose a business type to see relevant examples in the packages",
+    bizTypeBars: "Bars / Nightlife",
+    bizTypeRestaurants: "Restaurants / Food",
+    bizTypeHotels: "Hotels",
+    bizTypeEvents: "Events",
+    bizTypeRealEstate: "Real Estate",
+    bizTypeServices: "Small Services",
+    bizTypeGateHint: "Choose a business type to see matching examples",
+    bizTypeMicrocopy: "First choose a business type, then pick a package",
+
+    // Monthly add-ons
+    monthlyAddonsTitle: "Monthly add-ons",
+    monthlyAddonsHelper: "Monthly add-ons, not included in package price",
+    addonDetails: "Details",
+    addonSmmLite: "SMM Lite",
+    addonAdsMeta: "Ads Targeting (Meta)",
+    addonPerMonth: "/ month",
+    addonsTotal: "Add-ons total",
+    addonOnlyMonthly: "Available only for Monthly",
+    addonsAvailableOnlyMonthly: "Add-ons are available only with the Monthly package",
+    priceAfterDiscount: "Price after discount",
+    addonWhatsIncluded: "What's included",
+    addonNotIncluded: "Not included",
+    finalTotalLabel: "Total",
+    backToHome: "Back to homepage",
+
+    // Food & hospitality redesign
+    heroHeadline: "Looking for someone to create high-quality content for your business?",
+    heroSub: "Short-form video & photo content that sells food, drinks and experience — and attracts real customers.",
+    heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
+    heroBullet2: "Increase visibility for your food & hospitality business",
+    heroBullet3: "Bring more customers through your doors",
+    heroCtaAvailability: "Choose a Package",
+    heroCtaWa: "WhatsApp Now",
+
+    problemTitle: "Why Food & Hospitality Businesses Struggle on Social Media",
+    problemIntro: "Many food and hospitality businesses lose revenue because:",
+    problemPoint1: "Great dishes and atmosphere aren't shown properly",
+    problemPoint2: "Inconsistent posting",
+    problemPoint3: "No time to create content",
+    problemPoint4: "Competitors post more often",
+
+    solutionTitle: "How I Help You Sell More",
+    solutionIntro: "I create short-form content focused on:",
+    solutionPoint1: "Dishes that sell",
+    solutionPoint2: "Atmosphere that converts",
+    solutionPoint3: "Content built for visibility",
+    solutionPoint4: "Events, service and brand personality",
+    solutionOutro: "I don't just film food.\nI focus on dishes that sell, atmosphere that converts and content built for visibility.",
+
+    whyMeTitle: "More Than Just Filming",
+    whyMeIntro: "I focus on dishes that sell, atmosphere that converts and content built for visibility. With experience in hospitality, I understand service flow, peak hours and guest psychology.",
+    whyMePoint1: "Background in food & hospitality",
+    whyMePoint2: "Understand service flow",
+    whyMePoint3: "Know peak hours",
+    whyMePoint4: "Focus on dishes that sell and atmosphere that attracts",
+    whyMePoint5: "Fast turnaround",
+
+    // Who is this for section
+    whoIsThisForTitle: "Who Is This For?",
+    whoIsThisFor1: "Restaurants & Bars",
+    whoIsThisFor2: "Coffee Shops & Bakeries",
+    whoIsThisFor3: "Event Venues & Catering",
+    whoIsThisFor4: "Chefs & Personal Brands",
+    whoIsThisFor5: "Healthy Food & Specialty Concepts",
+    whoIsThisFor6: "Cocktail Bars & Night Concepts",
+    whoIsThisFor7: "Breakfast & Brunch Spots",
+
+    // Trust section
+    trustTitle: "Social proof from real clients",
+    trustStat1Value: "50+",
+    trustStat1Label: "Projects Completed",
+    trustStat2Value: "30+",
+    trustStat2Label: "Businesses Served",
+    trustStat3Value: "48h",
+    trustStat3Label: "Average Delivery Time",
+    trustStat4Value: "100%",
+    trustStat4Label: "Client Satisfaction",
+    testimonial1Quote: "The content started bringing direct WhatsApp inquiries in the first week.",
+    testimonial1Author: "Owner, local cocktail bar",
+    testimonial2Quote: "Fast shoot, clean edits, and everything was ready to publish immediately.",
+    testimonial2Author: "Marketing manager, restaurant",
+    portfolioIntro: "A quick look at recent examples from real projects.",
+
+    // CTA urgency
+    ctaUrgency: "Limited monthly availability",
+    sectionCtaWa: "Message on WhatsApp",
   },
 };
 

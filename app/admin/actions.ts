@@ -2,6 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { getCategoryDetails, saveCategoryDetails } from "@/lib/categoryDetailsStore";
+import { getSolutions, saveSolutions } from "@/lib/solutionsStore";
+import { savePackageDetails, type PackageDetail } from "@/lib/packageConfigStore";
+import { disableCatalogSlug, enableCatalogSlug, saveDiscountConfig, type DiscountConfig } from "@/lib/catalogOverridesStore";
+import { getTierExamplesConfig, saveTierExamplesConfig } from "@/lib/tierExamplesStore";
+import type { TierExamplesConfig } from "@/types/catalog";
+import type { CategoryDetail } from "@/content/categoryDetails";
+import type { SolutionItem } from "@/content/solutions";
 
 function s(v: FormDataEntryValue | null, fallback = "") {
   return String(v ?? fallback);
@@ -47,6 +55,8 @@ export async function updateSettings(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updatePricingConfig(formData: FormData) {
@@ -72,6 +82,8 @@ export async function updatePricingConfig(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createHeroMedia(formData: FormData) {
@@ -85,6 +97,8 @@ export async function createHeroMedia(formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateHeroMedia(id: number, formData: FormData) {
@@ -99,12 +113,27 @@ export async function updateHeroMedia(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteHeroMedia(id: number) {
-  await prisma.heroMedia.delete({ where: { id } });
+  try {
+    const { count } = await prisma.heroMedia.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] heroMedia id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteHeroMedia] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
+  }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createPriceItem(formData: FormData) {
@@ -122,6 +151,8 @@ export async function createPriceItem(formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updatePriceItem(id: number, formData: FormData) {
@@ -140,12 +171,27 @@ export async function updatePriceItem(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deletePriceItem(id: number) {
-  await prisma.priceItem.delete({ where: { id } });
+  try {
+    const { count } = await prisma.priceItem.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] priceItem id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deletePriceItem] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
+  }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createCatalog(formData: FormData) {
@@ -172,6 +218,8 @@ export async function createCatalog(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateCatalog(id: number, formData: FormData) {
@@ -197,12 +245,56 @@ export async function updateCatalog(id: number, formData: FormData) {
 
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteCatalog(id: number) {
-  await prisma.catalog.delete({ where: { id } });
+  // Look up the slug before deleting so we can store a disable override
+  try {
+    const catalog = await prisma.catalog.findUnique({ where: { id }, select: { slug: true } });
+    if (catalog?.slug) {
+      await disableCatalogSlug(catalog.slug);
+    }
+    await prisma.catalog.deleteMany({ where: { id } });
+  } catch (err: unknown) {
+    // P2025: record not found — already deleted, treat as success
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteCatalog] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
+  }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function toggleCatalogActive(slug: string, isCurrentlyDisabled: boolean) {
+  if (isCurrentlyDisabled) {
+    await enableCatalogSlug(slug);
+  } else {
+    await disableCatalogSlug(slug);
+  }
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function updateDiscountConfig(formData: FormData) {
+  const config: DiscountConfig = {
+    enabled: b(formData.get("discountEnabled")),
+    percent: i(formData.get("discountPercent"), 10),
+    labelHe: s(formData.get("discountLabelHe"), "הנחת הזמנה ראשונה"),
+    labelEn: s(formData.get("discountLabelEn"), "First-order discount"),
+  };
+  await saveDiscountConfig(config);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function createExample(catalogId: number, formData: FormData) {
@@ -222,6 +314,8 @@ export async function createExample(catalogId: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function updateExample(id: number, formData: FormData) {
@@ -241,10 +335,89 @@ export async function updateExample(id: number, formData: FormData) {
   });
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }
 
 export async function deleteExample(id: number) {
-  await prisma.example.delete({ where: { id } });
+  try {
+    const { count } = await prisma.example.deleteMany({ where: { id } });
+    if (count === 0 && process.env.NODE_ENV === "development") {
+      console.warn(`[admin] example id=${id} already deleted`);
+    }
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && (err as { code: string }).code === "P2025") {
+      console.warn("[deleteExample] Record already deleted (P2025), id:", id);
+    } else {
+      throw err;
+    }
+  }
   revalidatePath("/");
   revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function updateCategoryDetailAction(jsonStr: string) {
+  const parsed: CategoryDetail = JSON.parse(jsonStr);
+  const all = await getCategoryDetails();
+  const idx = all.findIndex((d) => d.slug === parsed.slug);
+  if (idx >= 0) {
+    all[idx] = parsed;
+  } else {
+    all.push(parsed);
+  }
+  await saveCategoryDetails(all);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function updateSolutionAction(jsonStr: string) {
+  const parsed: SolutionItem = JSON.parse(jsonStr);
+  const all = await getSolutions();
+  const idx = all.findIndex((d) => d.slug === parsed.slug);
+  if (idx >= 0) {
+    all[idx] = parsed;
+  } else {
+    all.push(parsed);
+  }
+  await saveSolutions(all);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/solutions");
+  revalidatePath("/product");
+}
+
+export async function updatePackageDetails(jsonStr: string) {
+  const packages: PackageDetail[] = JSON.parse(jsonStr);
+  await savePackageDetails(packages);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
+}
+
+export async function saveTierExamplesAction(catalogSlug: string, jsonStr: string) {
+  let tiers: { tier1: number[]; tier2: number[]; tier3: number[] };
+  try {
+    tiers = JSON.parse(jsonStr);
+  } catch {
+    throw new Error("Invalid tier data");
+  }
+  if (
+    !Array.isArray(tiers.tier1) ||
+    !Array.isArray(tiers.tier2) ||
+    !Array.isArray(tiers.tier3)
+  ) {
+    throw new Error("Invalid tier structure");
+  }
+  const config = await getTierExamplesConfig();
+  config[catalogSlug] = tiers;
+  await saveTierExamplesConfig(config);
+  revalidatePath("/");
+  revalidatePath("/admin");
+  revalidatePath("/product");
+  revalidatePath("/solutions");
 }

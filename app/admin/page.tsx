@@ -9,7 +9,9 @@ import {
   deleteExample,
   deleteHeroMedia,
   deletePriceItem,
+  toggleCatalogActive,
   updateCatalog,
+  updateDiscountConfig,
   updateExample,
   updateHeroMedia,
   updatePriceItem,
@@ -20,6 +22,16 @@ import { UploadUrlInput } from "@/components/admin/UploadUrlInput";
 import { AdminLangTabs } from "@/components/admin/AdminLangTabs";
 import { AdminAccordion } from "@/components/admin/AdminAccordion";
 import { AdminNav } from "@/components/admin/AdminNav";
+import { AdminCategoryDetailEditor } from "@/components/admin/AdminCategoryDetailEditor";
+import { AdminSolutionEditor } from "@/components/admin/AdminSolutionEditor";
+import { AdminPackageEditor } from "@/components/admin/AdminPackageEditor";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+import { AdminExamplesTierEditor } from "@/components/admin/AdminExamplesTierEditor";
+import { getCategoryDetails } from "@/lib/categoryDetailsStore";
+import { getSolutions } from "@/lib/solutionsStore";
+import { getPackageDetails } from "@/lib/packageConfigStore";
+import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
+import { getTierExamplesConfig } from "@/lib/tierExamplesStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -35,7 +47,7 @@ function tagsToCsv(tagsJson: string) {
 
 export default async function AdminPage() {
   const settings = await prisma.siteSettings.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
-  const pricing = await prisma.pricingConfig.upsert({ where: { id: 1 }, update: {}, create: { id: 1 } });
+  const pricing = await prisma.pricingConfig.upsert({ where: { id: 1 }, update: {}, create: { id: 1, currency: "₪" } });
 
   const hero = await prisma.heroMedia.findMany({ orderBy: [{ order: "asc" }, { id: "asc" }] });
   const priceItems = await prisma.priceItem.findMany({ orderBy: [{ order: "asc" }, { id: "asc" }] });
@@ -44,6 +56,13 @@ export default async function AdminPage() {
     include: { examples: true },
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
+
+  const categoryDetails = await getCategoryDetails();
+  const solutions = await getSolutions();
+  const packageDetails = await getPackageDetails();
+  const disabledSlugs = await getDisabledCatalogSlugs();
+  const discountConfig = await getDiscountConfig();
+  const tierExamplesConfig = await getTierExamplesConfig();
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white" dir="ltr">
@@ -175,7 +194,7 @@ export default async function AdminPage() {
                 <input name="monthlyStarter" type="number" defaultValue={pricing.monthlyStarter} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
               <label className="block">
-                <span className="text-[11px] text-white/55">Monthly Growth</span>
+                <span className="text-[11px] text-white/55">Monthly Business</span>
                 <input name="monthlyGrowth" type="number" defaultValue={pricing.monthlyGrowth} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
               </label>
               <label className="block">
@@ -196,6 +215,35 @@ export default async function AdminPage() {
             <button className="lg:col-span-3 mt-2 rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
               Save pricing config
             </button>
+          </form>
+        </AdminAccordion>
+
+        {/* ─── First-time discount ─── */}
+        <AdminAccordion title="First-time discount" id="discount-config">
+          <p className="text-xs text-white/40 mb-3">Configure the first-order discount shown to new users. Stored in contentOverridesJson (no DB changes).</p>
+          <form action={updateDiscountConfig} className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <label className="flex items-center gap-2 text-sm text-white/80">
+              <input type="checkbox" name="discountEnabled" defaultChecked={discountConfig.enabled} />
+              Enable first-time discount
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-white/55">Discount %</span>
+              <input name="discountPercent" type="number" defaultValue={discountConfig.percent} min={0} max={100} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <div />
+            <label className="block">
+              <span className="text-[11px] text-white/55">Label HE</span>
+              <input name="discountLabelHe" defaultValue={discountConfig.labelHe} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <label className="block">
+              <span className="text-[11px] text-white/55">Label EN</span>
+              <input name="discountLabelEn" defaultValue={discountConfig.labelEn} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
+            </label>
+            <div className="flex items-end">
+              <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                Save discount config
+              </button>
+            </div>
           </form>
         </AdminAccordion>
 
@@ -229,9 +277,7 @@ export default async function AdminPage() {
 
       <div className="lg:col-start-3 lg:row-start-1 lg:row-span-1 flex lg:justify-end">
         <form action={deleteHeroMedia.bind(null, h.id)}>
-          <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">
-            Delete
-          </button>
+          <DeleteButton />
         </form>
       </div>
     </div>
@@ -274,7 +320,7 @@ export default async function AdminPage() {
     <div className="flex items-start justify-between gap-3">
       <div className="text-sm text-white/55">id: <span className="font-mono">{p.id}</span></div>
       <form action={deletePriceItem.bind(null, p.id)}>
-        <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">Delete</button>
+        <DeleteButton />
       </form>
     </div>
 
@@ -380,16 +426,26 @@ export default async function AdminPage() {
         {/* ─── Catalogs ─── */}
         <AdminAccordion title="Catalogs" id="catalogs" count={catalogs.length}>
           <div className="space-y-4">
-            {catalogs.map((c) => (
-              <div key={c.id} className="rounded-3xl border border-white/10 bg-black/20 p-5">
+            {catalogs.map((c) => {
+              const isDisabled = disabledSlugs.has(c.slug);
+              return (
+              <div key={c.id} className={`rounded-3xl border p-5 ${isDisabled ? "border-red-500/30 bg-red-500/5" : "border-white/10 bg-black/20"}`}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="text-sm text-white/55">slug: <span className="font-mono">{c.slug}</span></div>
                     <div className="mt-1 text-lg font-semibold text-white">{c.titleEn}</div>
+                    {isDisabled && <div className="text-xs text-red-400 mt-1">⚠ Disabled — hidden on homepage</div>}
                   </div>
-                  <form action={deleteCatalog.bind(null, c.id)}>
-                    <button className="rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-sm text-white/85 hover:bg-white/[0.10]">Delete</button>
-                  </form>
+                  <div className="flex items-center gap-2">
+                    <form action={toggleCatalogActive.bind(null, c.slug, isDisabled)}>
+                      <button className={`rounded-xl border px-3 py-1.5 text-sm ${isDisabled ? "border-green-500/40 bg-green-500/20 text-green-300 hover:bg-green-500/30" : "border-yellow-500/40 bg-yellow-500/20 text-yellow-300 hover:bg-yellow-500/30"}`}>
+                        {isDisabled ? "Enable" : "Disable"}
+                      </button>
+                    </form>
+                    <form action={deleteCatalog.bind(null, c.id)}>
+                      <DeleteButton />
+                    </form>
+                  </div>
                 </div>
 
                 <form action={updateCatalog.bind(null, c.id)} className="mt-5 grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -479,9 +535,7 @@ export default async function AdminPage() {
                           <div className="flex items-start justify-between gap-3">
                             <div className="text-sm text-white/80">{e.titleEn}</div>
                             <form action={deleteExample.bind(null, e.id)}>
-                              <button className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-white/85 hover:bg-white/[0.10]">
-                                Delete
-                              </button>
+                              <DeleteButton className="rounded-xl border border-white/10 bg-white/[0.06] px-3 py-1.5 text-sm text-white/85 hover:bg-white/[0.10] disabled:opacity-40 disabled:pointer-events-none" />
                             </form>
                           </div>
 
@@ -591,9 +645,26 @@ export default async function AdminPage() {
                       </div>
                     </form>
                   </div>
+
+                  <AdminExamplesTierEditor
+                    catalogSlug={c.slug}
+                    examples={c.examples
+                      .slice()
+                      .sort((a, b) => (a.order - b.order) || (a.id - b.id))
+                      .map((e) => ({
+                        id: e.id,
+                        titleEn: e.titleEn,
+                        mediaType: e.mediaType,
+                        mediaUrl: e.mediaUrl,
+                        posterUrl: e.posterUrl,
+                        order: e.order,
+                      }))}
+                    tierConfig={tierExamplesConfig}
+                  />
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
 
           <div className="mt-8 rounded-3xl border border-white/10 bg-black/20 p-5">
@@ -679,6 +750,24 @@ export default async function AdminPage() {
               </div>
             </form>
           </div>
+        </AdminAccordion>
+
+        {/* ─── Packages ─── */}
+        <AdminAccordion title="Packages (unified pricing)" id="packages" count={packageDetails.length}>
+          <p className="text-xs text-white/40 mb-3">Edit unified package details: titles, subtitles, pricing, pills, shoot time, delivery, locations, revisions, best-for, what-you-get, add-ons (he/en).</p>
+          <AdminPackageEditor packages={packageDetails} />
+        </AdminAccordion>
+
+        {/* ─── Category Details (extended modal content) ─── */}
+        <AdminAccordion title="Category details (modal content)" id="category-details" count={categoryDetails.length}>
+          <p className="text-xs text-white/40 mb-3">Edit extended content for category detail modals: pills, bullets, pricing, FAQ, CTA labels, WhatsApp templates (he/en).</p>
+          <AdminCategoryDetailEditor details={categoryDetails} />
+        </AdminAccordion>
+
+        {/* ─── Solutions ─── */}
+        <AdminAccordion title="Solutions (ready-made packages)" id="solutions" count={solutions.length}>
+          <p className="text-xs text-white/40 mb-3">Edit solutions displayed on /solutions: titles, subtitles, pills, bullets, pricing, FAQ, CTA labels, WhatsApp templates (he/en). Toggle active/inactive.</p>
+          <AdminSolutionEditor solutions={solutions} />
         </AdminAccordion>
 
         <div className="text-xs text-white/45">

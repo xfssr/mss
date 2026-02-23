@@ -15,16 +15,43 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Prevent iOS Safari zoom on input focus (font-size must be >= 16px) */
+@media (max-width: 640px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
   color: rgb(var(--text));
   background:
-    radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
-    radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
-    linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
+    radial-gradient(1200px 800px at 20% 0%, rgba(24 30 52 / 0.65), rgba(10 14 24 / 1)),
+    radial-gradient(1000px 700px at 90% 30%, rgba(40 52 82 / 0.28), rgba(10 14 24 / 1)),
+    linear-gradient(180deg, rgba(8 11 20 / 1), rgba(6 8 16 / 1));
   background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+  z-index: -1;
+}
+
+/* Mobile: disable background-attachment:fixed (causes scroll jank & CLS on iOS/Android) */
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 ::selection { 
@@ -42,11 +69,11 @@ body {
   .cc-tilt { transform: none !important; transition: none !important; }
 }
 
-/* ПК/общая читаемость: делаем стекло плотнее */
+/* Dense glass for readability */
 .cc-glass {
   background: rgba(11, 15, 20, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px) saturate(1.2);
+  backdrop-filter: blur(8px) saturate(1.12);
   transition: all 0.3s ease;
 }
 
@@ -84,7 +111,96 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Улучшенные transitions для интерактивных элементов */
+/* Package card glassmorphism — matching solution card (cc-glass) style */
+.pkg-card {
+  background: rgba(11, 15, 20, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px) saturate(1.12);
+  border-radius: 1rem;
+  transition: transform 250ms ease, background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+.pkg-card:hover {
+  transform: translateY(-2px);
+  background: rgba(11, 15, 20, 0.65);
+  border-color: rgba(255, 255, 255, 0.30);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+}
+
+/* Neutral package card styling — uses --blue accent like solution cards */
+.pkg-card--neutral { box-shadow: none; }
+.pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+.pkg-accent--neutral { color: rgb(var(--blue)); }
+.pkg-glow--neutral { background: none; }
+.pkg-border--neutral { border-color: rgba(255, 255, 255, 0.15); }
+
+@media (prefers-reduced-motion: reduce) {
+  .pkg-card:hover { transform: none; }
+}
+
+/* Mobile: disable hover scale on package cards (prevents touch-triggered CLS) */
+@media (max-width: 640px) {
+  .pkg-card:hover { transform: none; }
+}
+
+/* Premium dark background for packages section */
+.pkg-section-bg {
+  position: relative;
+  background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+.pkg-section-bg::before {
+  content: "";
+  position: absolute;
+  inset: -80px 0 auto;
+  height: 240px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.08), transparent 72%);
+}
+
+/* Subtle gradient transitions between sections */
+.section-gradient-overlay {
+  position: relative;
+}
+.section-gradient-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--blue) / 0.03), transparent 70%);
+  pointer-events: none;
+}
+
+/* Hero radial glow */
+.hero-glow {
+  position: relative;
+}
+.hero-glow::before {
+  content: "";
+  position: absolute;
+  top: -120px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, 100vw);
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.08), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Trust section stat card */
+.trust-stat-card {
+  background: rgba(11, 15, 20, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+.trust-stat-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced transitions for interactive elements */
 @layer utilities {
   .transition-smooth {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -105,9 +221,15 @@ body {
   .safe-area-pb {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
+
+  .min-h-dvh-safe {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+    min-height: 100dvh;
+  }
 }
 
-/* Улучшенная типографика */
+/* Improved typography */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;

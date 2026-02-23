@@ -28,5 +28,15 @@ export type Catalog = {
 
   tags: string[];
   popular?: boolean;
+  microCta?: L10n;
   examples: CatalogExample[];
 };
+
+/**
+ * Per-catalog tier assignments.
+ * Keys are catalog slugs; values map each tier to an array of example IDs.
+ */
+export type TierExamplesConfig = Record<
+  string,
+  { tier1: number[]; tier2: number[]; tier3: number[] }
+>;

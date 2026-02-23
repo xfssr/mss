@@ -9,6 +9,13 @@ import {
   dbPriceToUi,
   dbSettingsToUi,
 } from "@/lib/mappers";
+import { getCategoryDetails } from "@/lib/categoryDetailsStore";
+import { mergeCatalogsWithDefaults } from "@/lib/mergeCatalogs";
+import { getDisabledCatalogSlugs, getDiscountConfig } from "@/lib/catalogOverridesStore";
+import { getPackageDetails } from "@/lib/packageConfigStore";
+import { getTierExamplesConfig } from "@/lib/tierExamplesStore";
+import { getActiveSolutions } from "@/lib/solutionsStore";
+import { SAME_AS, SEO, getSiteUrl } from "@/config/constants";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
@@ -22,7 +29,7 @@ export default async function Page() {
   const pricing = await prisma.pricingConfig.upsert({
     where: { id: 1 },
     update: {},
-    create: { id: 1 },
+    create: { id: 1, currency: "₪" },
   });
 
   const heroMedia = await prisma.heroMedia.findMany({
@@ -38,23 +45,80 @@ export default async function Page() {
     orderBy: [{ popular: "desc" }, { titleEn: "asc" }],
   });
 
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://studioscreen.vercel.app";
+  const categoryDetails = await getCategoryDetails();
+  const disabledSlugs = await getDisabledCatalogSlugs();
+  const discountConfig = await getDiscountConfig();
+  const packageDetails = await getPackageDetails();
+  const tierExamplesConfig = await getTierExamplesConfig();
+  const solutions = await getActiveSolutions();
+
+  const siteUrl = getSiteUrl();
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Micro-Screen Studio",
-    url: siteUrl,
-    areaServed: "IL",
-    sameAs: ["https://instagram.com/emil_edition"],
-    description:
-      "Content for businesses: reels, photos, shoots and social media management. Choose catalog → package → date/city → send via WhatsApp.",
-    contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: settings.email || "nisenem98@gmail.com",
-    },
+    "@graph": [
+      {
+        "@type": ["ProfessionalService", "LocalBusiness"],
+        "@id": `${siteUrl}#service`,
+        name: SEO.siteName,
+        url: siteUrl,
+        image: `${siteUrl}/og.jpg`,
+        description: SEO.description,
+        priceRange: "$$",
+        areaServed: [
+          { "@type": "Country", "@id": "#country-il", name: "Israel" },
+          {
+            "@type": "City",
+            name: "Tel Aviv-Yafo",
+            containedInPlace: { "@id": "#country-il" },
+          },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "IL",
+          addressLocality: "Tel Aviv-Yafo",
+        },
+        knowsAbout: [
+          "Food marketing",
+          "Restaurant content",
+          "Instagram reels for restaurants",
+          "Hospitality marketing Israel",
+          "Restaurant video content Israel",
+        ],
+        sameAs: [...SAME_AS],
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          ...(settings.email ? { email: settings.email } : {}),
+        },
+      },
+      ...(packageDetails.length > 0
+        ? [
+            {
+              "@type": "Product",
+              "@id": `${siteUrl}#packages`,
+              name: "Content Packages",
+              brand: { "@type": "Brand", name: SEO.siteName },
+              offers: {
+                "@type": "AggregateOffer",
+                priceCurrency: "ILS",
+                lowPrice: Math.min(...packageDetails.map((p) => p.priceFrom)),
+                highPrice: Math.max(...packageDetails.map((p) => p.priceFrom)),
+                offerCount: packageDetails.length,
+                offers: packageDetails.map((p) => ({
+                  "@type": "Offer",
+                  name: p.title.en,
+                  description: p.subtitle.en,
+                  priceCurrency: "ILS",
+                  price: p.priceFrom,
+                  availability: "https://schema.org/InStock",
+                  url: `${siteUrl}/product/${p.id}`,
+                })),
+              },
+            },
+          ]
+        : []),
+    ],
   };
 
   return (
@@ -67,11 +131,16 @@ export default async function Page() {
 
       <Suspense fallback={null}>
         <ClientPage
-          catalogs={catalogs.map(dbCatalogToUi)}
+          catalogs={mergeCatalogsWithDefaults(catalogs.map(dbCatalogToUi), disabledSlugs)}
+          categoryDetails={categoryDetails}
+          solutions={solutions}
           settings={dbSettingsToUi(settings)}
           prices={prices.map(dbPriceToUi)}
           heroMedia={heroMedia.map(dbHeroToUi)}
           pricing={dbPricingToUi(pricing)}
+          discountConfig={discountConfig}
+          packageDetails={packageDetails}
+          tierExamplesConfig={tierExamplesConfig}
         />
       </Suspense>
     </>

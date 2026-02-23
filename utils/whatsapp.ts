@@ -29,7 +29,16 @@ export function buildWaMeUrl(phone: string, text: string) {
 }
 
 export function openWhatsApp(url: string) {
-  window.open(url, "_blank", "noopener,noreferrer");
+  // On mobile, window.open() is often blocked or unreliable.
+  // Using window.location.href provides more reliable navigation on mobile devices.
+  const isMobile = typeof navigator !== "undefined" &&
+    /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  if (isMobile) {
+    window.location.href = url;
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
 }
 
 export async function copyToClipboard(text: string) {
@@ -51,6 +60,52 @@ export async function copyToClipboard(text: string) {
       return false;
     }
   }
+}
+
+export function buildWhatsAppMessage(args: {
+  packageName: string;
+  packageIcon: string;
+  discountedPrice?: number;
+  basePrice?: number;
+  selectedAddons?: string[];
+  lang: Lang;
+}): string {
+  const { packageName, packageIcon, discountedPrice, basePrice, selectedAddons, lang } = args;
+
+  const priceValue = discountedPrice ?? basePrice;
+
+  if (lang === "he") {
+    const lines: string[] = [
+      "היי! 👋",
+      `מעניין אותי החבילה: ${packageIcon} ${packageName}`,
+    ];
+    if (discountedPrice != null) {
+      lines.push(`מחיר אחרי הנחה: ₪${discountedPrice.toLocaleString()}`);
+    } else if (basePrice != null) {
+      lines.push(`מחיר: ₪${basePrice.toLocaleString()}`);
+    }
+    if (selectedAddons && selectedAddons.length > 0) {
+      lines.push(`תוספות: ${selectedAddons.join(", ")}`);
+    }
+    lines.push("אפשר פרטים ותיאום? תודה!");
+    return lines.join("\n");
+  }
+
+  // English
+  const lines: string[] = [
+    "Hi! 👋",
+    `I'm interested in: ${packageIcon} ${packageName}`,
+  ];
+  if (discountedPrice != null) {
+    lines.push(`Price after discount: ₪${discountedPrice.toLocaleString()}`);
+  } else if (basePrice != null) {
+    lines.push(`Price: ₪${basePrice.toLocaleString()}`);
+  }
+  if (selectedAddons && selectedAddons.length > 0) {
+    lines.push(`Add-ons: ${selectedAddons.join(", ")}`);
+  }
+  lines.push("Can I get details and schedule? Thanks!");
+  return lines.join("\n");
 }
 
 export function buildMessage(args: {

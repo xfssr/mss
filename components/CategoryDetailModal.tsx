@@ -1,0 +1,249 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import type { CategoryDetail } from "@/content/categoryDetails";
+import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
+import { buildWaMeUrl, openWhatsApp, WHATSAPP_PHONE } from "@/utils/whatsapp";
+import type { PricingConfig } from "@/types/pricing";
+import type { DiscountConfig } from "@/lib/catalogOverridesStore";
+import { DRAWER_BACKDROP_CLASS, MODAL_PANEL_CLASS, MODAL_HEADER_CLASS, MODAL_FOOTER_CLASS } from "@/lib/drawerStyles";
+
+function pick(lang: Lang, v: { he: string; en: string }) {
+  const s = v?.[lang] ?? "";
+  return s?.trim() ? s : v.he;
+}
+
+export function CategoryDetailModal(props: {
+  lang: Lang;
+  detail: CategoryDetail;
+  catalogTitle: { he: string; en: string };
+  catalogSubtitle: { he: string; en: string };
+  onClose: () => void;
+  pricing?: PricingConfig;
+  discountConfig?: DiscountConfig;
+}) {
+  const { lang, detail, onClose, catalogTitle, catalogSubtitle } = props;
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  const isRtl = lang === "he";
+  const dir = isRtl ? "rtl" : "ltr";
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  // Prevent body scroll
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
+
+  function onPrimary() {
+    const primaryWaUrl = buildWaMeUrl(WHATSAPP_PHONE, pick(lang, detail.whatsappTemplatePrimary));
+    openWhatsApp(primaryWaUrl);
+  }
+
+  const secondaryWaUrl = buildWaMeUrl(WHATSAPP_PHONE, pick(lang, detail.whatsappTemplateSecondary));
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center px-3 sm:px-6 pt-[calc(env(safe-area-inset-top)+0.75rem)] pb-[calc(env(safe-area-inset-bottom)+0.75rem)]"
+      role="dialog"
+      aria-modal="true"
+      dir={dir}
+    >
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label="Close"
+        className={DRAWER_BACKDROP_CLASS}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div className={MODAL_PANEL_CLASS}>
+
+        {/* Header */}
+        <div className={MODAL_HEADER_CLASS}>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-xs text-white/50">{pick(lang, detail.label)}</div>
+              <h2 className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))]">
+                {pick(lang, catalogTitle)}
+              </h2>
+              <p className="mt-1 text-sm text-white/70">{pick(lang, catalogSubtitle)}</p>
+
+              {/* Pills */}
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {detail.pills.map((pill, i) => (
+                  <span
+                    key={i}
+                    className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
+                  >
+                    {pick(lang, pill)}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="shrink-0 rounded-xl border border-white/12 bg-black/35 px-3 py-2 text-sm text-white/90 hover:bg-white/[0.07] hover:border-white/20"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable body */}
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-4 sm:px-6 py-4 sm:py-5 space-y-6">
+
+          {/* B) What you get */}
+          <section>
+            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              {t(lang, "sectionWhatYouGet")}
+            </h3>
+            <ul className="space-y-1.5">
+              {detail.whatYouGet.map((item, i) => (
+                <li key={i} className="flex items-start gap-2 text-sm text-white/80">
+                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✓</span>
+                  {pick(lang, item)}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* C) Best for */}
+          <section>
+            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+              {t(lang, "sectionBestFor")}
+            </h3>
+            <p className="text-sm text-white/70">{pick(lang, detail.bestFor)}</p>
+          </section>
+
+          {/* D) Process timeline */}
+          <section>
+            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
+              {t(lang, "sectionProcess")}
+            </h3>
+            <div className="flex items-start gap-2 sm:gap-4">
+              {detail.process.map((step, i) => (
+                <div key={i} className="flex-1 text-center">
+                  <div className="mx-auto w-8 h-8 rounded-full bg-[rgb(var(--blue))]/15 border border-[rgb(var(--blue))]/30 flex items-center justify-center text-sm font-bold text-[rgb(var(--blue))]">
+                    {i + 1}
+                  </div>
+                  <div className="mt-1.5 text-xs text-white/70">{pick(lang, step.title)}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* E) Pricing range */}
+          <section>
+            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              {t(lang, "sectionPricingRange")}
+            </h3>
+            <div className="grid grid-cols-3 gap-2">
+              {detail.pricingTiers.map((tier, i) => (
+                <div key={i} className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-center">
+                  <div className="text-xs text-white/50 font-medium">{tier.label}</div>
+                  <div className="mt-1 text-sm font-semibold text-white">{pick(lang, tier.range)}</div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-white/45">{pick(lang, detail.pricingNote)}</p>
+          </section>
+
+          {/* F) Why this works */}
+          {detail.whyThisWorks.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+                {t(lang, "sectionWhyThisWorks")}
+              </h3>
+              <ul className="space-y-1">
+                {detail.whyThisWorks.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-white/75">
+                    <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">→</span>
+                    {pick(lang, item)}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
+          {/* G) FAQ accordion */}
+          {detail.faq.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+                {t(lang, "sectionFaq")}
+              </h3>
+              <div className="space-y-1">
+                {detail.faq.map((item, i) => (
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/[0.03] overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                      className="w-full flex items-center justify-between gap-2 px-3 py-2.5 text-sm text-white/85 hover:bg-white/[0.04] transition-colors text-start"
+                    >
+                      <span>{pick(lang, item.q)}</span>
+                      <span className="shrink-0 text-white/40 text-xs">{openFaq === i ? "−" : "+"}</span>
+                    </button>
+                    {openFaq === i && (
+                      <div className="px-3 pb-3 text-sm text-white/60 leading-relaxed">{pick(lang, item.a)}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* H) Social proof placeholders */}
+          {detail.socialProof.length > 0 && (
+            <section>
+              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+                {t(lang, "sectionSocialProof")}
+              </h3>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {detail.socialProof.map((card, i) => (
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/[0.04] p-3 text-center">
+                    <div className="text-xs text-white/60">{pick(lang, card.title)}</div>
+                    <div className="mt-1 text-[10px] text-white/30 italic">Placeholder</div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* Sticky CTA footer */}
+        <div className={MODAL_FOOTER_CLASS}>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <button
+              type="button"
+              onClick={onPrimary}
+              className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200"
+            >
+              {pick(lang, detail.ctaPrimary)}
+            </button>
+            <a
+              href={secondaryWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+            >
+              {pick(lang, detail.ctaSecondary)}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

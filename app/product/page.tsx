@@ -3,19 +3,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import { SAME_AS, getSiteUrl } from "@/config/constants";
+import { BookingSectionToggle } from "@/components/BookingSectionToggle";
+import { getPackageDetails } from "@/lib/packageConfigStore";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 type Lang = "he" | "en";
-
-function getSiteUrl() {
-  const env = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (env) return env.replace(/\/+$/, "");
-  const vercel = process.env.VERCEL_URL?.trim();
-  if (vercel) return `https://${vercel}`;
-  return "https://studioscreen.vercel.app";
-}
 
 function parseLang(searchParams?: Record<string, string | string[] | undefined>): Lang {
   const raw = searchParams?.lang;
@@ -56,26 +51,57 @@ async function getLowestPriceFromDb() {
   }
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const siteUrl = getSiteUrl();
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}): Promise<Metadata> {
+  const SITE_URL =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.SITE_URL ||
+    "https://www.mscreenstudio.online";
+  const resolvedParams = searchParams ? await searchParams : undefined;
+  const lang = parseLang(resolvedParams);
   const firstPrice = await getLowestPriceFromDb();
 
+  const isProduction =
+    (process.env.VERCEL_ENV || "production") === "production";
+
+  const title =
+    lang === "he"
+      ? "Micro-Screen Studio — חבילות תוכן"
+      : "Micro-Screen Studio — Content Packages";
+  const description =
+    lang === "he"
+      ? "חבילות תוכן לעסקים: רילס, צילום, הפקות וניהול סושיאל. הזמנה ב-WhatsApp."
+      : "Content packages for businesses: reels, photos, shoots and social media management. Order via WhatsApp.";
+
   return {
-    title: "Packages & Pricing · Micro-Screen Studio | חבילות ומחירים",
-    description: "תוכן לעסקים: סרטוני רילס לעסקים, צילום סרטונים לתוכן לעסקים, הפקת סרטון תדמית לעסק, צילום דירה להשכרה. בחרו קטלוג → חבילה → תאריך/עיר → שלחו ב-WhatsApp.",
-    robots: { index: true, follow: true },
+    title,
+    description,
+    alternates: {
+      canonical: "https://www.mscreenstudio.online/product",
+      languages: {
+        he: `${SITE_URL}/product?lang=he`,
+        en: `${SITE_URL}/product?lang=en`,
+      },
+    },
+    robots: isProduction
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     openGraph: {
       type: "website",
-      url: `${siteUrl}/product`,
-      title: "Micro-Screen Studio — Content Packages",
-      description: "Reels, photos, shoots and social media management. Quick WhatsApp booking.",
-      images: [{ url: `${siteUrl}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio — Professional content packages for businesses" }],
+      url: `${SITE_URL}/product`,
+      locale: lang === "he" ? "he_IL" : "en_US",
+      title,
+      description,
+      images: [{ url: `${SITE_URL}/og.jpg`, width: 1200, height: 630, alt: "Micro-Screen Studio — Professional content packages for businesses" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Micro-Screen Studio — Content Packages",
-      description: "Reels, photos, shoots and social media management. Contact via WhatsApp.",
-      images: [`${siteUrl}/og.jpg`],
+      title,
+      description,
+      images: [`${SITE_URL}/og.jpg`],
     },
     other: {
       "og:type": "product",
@@ -93,9 +119,17 @@ export default async function ProductPage(props: {
   const lang = parseLang(searchParams);
   const dir = lang === "he" ? "rtl" : "ltr";
 
+  const catalogRaw = searchParams?.catalog;
+  const catalogFromUrl = (Array.isArray(catalogRaw) ? catalogRaw[0] : catalogRaw) ?? "";
+  const pkgRaw = searchParams?.pkg;
+  const pkgFromUrl = (Array.isArray(pkgRaw) ? pkgRaw[0] : pkgRaw) ?? "";
+  const whatsappPhone = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "15551234567";
+
   const prices = await prisma.priceItem.findMany({
     orderBy: [{ order: "asc" }, { id: "asc" }],
   });
+
+  const packageDetails = await getPackageDetails();
 
   const offers = prices
     .map((p: any) => {
@@ -116,6 +150,22 @@ export default async function ProductPage(props: {
       };
     })
     .filter((o) => o.name);
+
+  // If pkg query param is provided, filter to show only the matching package
+  const matchedOffers = pkgFromUrl
+    ? offers.filter((o) => {
+        const q = pkgFromUrl.toLowerCase();
+        return (
+          o.name.toLowerCase().includes(q) ||
+          o.title.en.toLowerCase().includes(q) ||
+          o.title.he.toLowerCase().includes(q)
+        );
+      })
+    : [];
+  // Only apply pkg-specific layout (hide FAQ, etc.) when filter actually matched
+  const hasPkgFilter = !!(pkgFromUrl && matchedOffers.length > 0);
+  // Show matched offers when filter matches, otherwise fall back to all offers
+  const filteredOffers = hasPkgFilter ? matchedOffers : offers;
 
   // Build Offer nodes (from DB)
   const offerNodes = offers
@@ -195,7 +245,7 @@ export default async function ProductPage(props: {
         name: "Micro-Screen Studio",
         url: siteUrl,
         logo: `${siteUrl}/apple-touch-icon.png`,
-        sameAs: ["https://instagram.com/emil_edition"],
+        sameAs: [...SAME_AS],
       },
       {
         "@type": "Product",
@@ -232,7 +282,7 @@ export default async function ProductPage(props: {
         name: lang === "he" ? "יצירת תוכן וניהול סושיאל" : "Content creation & social media management",
         provider: { "@id": `${siteUrl}#org` },
         areaServed: "IL",
-        url: `${siteUrl}/#catalog`,
+        url: `${siteUrl}/#packages`,
       },
     ],
   };
@@ -251,21 +301,35 @@ export default async function ProductPage(props: {
     from: lang === "he" ? "החל מ-" : "From",
     noPackages: lang === "he" ? "עדיין אין חבילות ב-DB. הוסיפו ב-Admin → Prices." : "No packages in DB yet. Add them in Admin → Prices.",
     faqTitle: lang === "he" ? "שאלות נפוצות" : "FAQ",
+    infoNote: lang === "he" ? "זו לא הזמנה — מידע ומחירים בלבד." : "This is not an order — information and pricing only.",
+    compareTitle: lang === "he" ? "השוואת חבילות" : "Compare packages",
+    reels: lang === "he" ? "רילס" : "Reels",
+    photos: lang === "he" ? "תמונות" : "Photos",
+    locations: lang === "he" ? "מיקומים" : "Locations",
+    delivery: lang === "he" ? "אספקה" : "Delivery",
+    bestFor: lang === "he" ? "מתאים ל" : "Best for",
+    goToCatalogs: lang === "he" ? "לקטלוגים" : "Go to catalogs",
+    whatsappCta: lang === "he" ? "WhatsApp עם הודעה מוכנה" : "WhatsApp with prefilled message",
   };
+
+  /** Pick localized value from {he,en} */
+  function pickPkg(v: { he: string; en: string }) {
+    const s = (lang === "en" ? v.en : v.he).trim();
+    return s || v.he.trim() || v.en.trim();
+  }
+
+  const whatsappMsg = encodeURIComponent(
+    lang === "he"
+      ? "היי, אני מעוניין לשמוע על חבילות תוכן"
+      : "Hi, I'd like to learn about content packages",
+  );
+  const waLink = `https://wa.me/${whatsappPhone}?text=${whatsappMsg}`;
 
   return (
     <main
       dir={dir}
       className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white px-4 py-10"
-      itemScope
-      itemType="https://schema.org/Product"
     >
-      {/* Microdata (extra hint for parsers) */}
-      <meta itemProp="name" content="Micro-Screen Studio — Content Packages" />
-      <meta itemProp="image" content={`${siteUrl}/og.jpg`} />
-      <meta itemProp="url" content={`${siteUrl}/product?lang=${lang}`} />
-      <meta itemProp="description" content="Content packages: reels, photos, shoots and social media management." />
-
       {/* JSON-LD */}
       <script
         type="application/ld+json"
@@ -274,9 +338,9 @@ export default async function ProductPage(props: {
       />
 
       <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/[0.06] p-6 sm:p-10">
-        {/* simple lang switch */}
+        {/* lang switch */}
         <div className="flex items-center justify-end gap-2">
-          <a
+          <Link
             href="/product?lang=he"
             className={[
               "px-3 py-1.5 text-xs rounded-lg border border-white/10",
@@ -284,8 +348,8 @@ export default async function ProductPage(props: {
             ].join(" ")}
           >
             עברית
-          </a>
-          <a
+          </Link>
+          <Link
             href="/product?lang=en"
             className={[
               "px-3 py-1.5 text-xs rounded-lg border border-white/10",
@@ -293,7 +357,7 @@ export default async function ProductPage(props: {
             ].join(" ")}
           >
             EN
-          </a>
+          </Link>
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-6 items-start">
@@ -302,24 +366,62 @@ export default async function ProductPage(props: {
           </div>
 
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]" itemProp="name">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]">
               {ui.title}
             </h1>
 
             <p className="mt-2 text-white/70">
-              {ui.subtitle} <span className="text-white/85">{siteUrl}/product?lang={lang}</span>
+              {ui.subtitle}
             </p>
+
+            {/* Info badge */}
+            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-1.5 text-xs text-[rgb(var(--blue))]">
+              <span aria-hidden="true">ℹ️</span>
+              {ui.infoNote}
+            </div>
 
             <div className="mt-3 text-sm text-white/75">
               {ui.from} <span className="font-semibold text-white">₪ {lowestOffer}</span>
             </div>
 
+            {/* Comparison blocks (mobile-first stacked) */}
+            {packageDetails.length > 0 && (
+              <div className="mt-5 rounded-2xl border border-white/10 bg-black/20 p-4">
+                <div className="text-sm font-medium text-white/90 mb-3">{ui.compareTitle}</div>
+                <div className="space-y-3">
+                  {packageDetails.map((pkg) => (
+                    <div key={pkg.id} className="rounded-xl border border-white/10 bg-black/25 p-3">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="text-sm font-semibold text-white">{pickPkg(pkg.title)}</div>
+                        <div className="text-sm font-semibold text-[rgb(var(--blue))] whitespace-nowrap">
+                          ₪{pkg.priceFrom.toLocaleString()}+
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
+                        <div className="text-white/50">{ui.reels}</div>
+                        <div className="text-white/80">{pickPkg(pkg.pills[0] ?? { he: "—", en: "—" })}</div>
+                        <div className="text-white/50">{ui.photos}</div>
+                        <div className="text-white/80">{pickPkg(pkg.pills[2] ?? pkg.pills[1] ?? { he: "—", en: "—" })}</div>
+                        <div className="text-white/50">{ui.locations}</div>
+                        <div className="text-white/80">{pickPkg(pkg.locations)}</div>
+                        <div className="text-white/50">{ui.delivery}</div>
+                        <div className="text-white/80">{pickPkg(pkg.deliveryTime)}</div>
+                        <div className="text-white/50">{ui.bestFor}</div>
+                        <div className="text-white/80 col-span-1">{pickPkg(pkg.bestFor)}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* DB price items */}
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">{ui.packages}</div>
 
-              {offers.length ? (
+              {filteredOffers.length ? (
                 <div className="mt-3 space-y-3">
-                  {offers.map((o) => {
+                  {filteredOffers.map((o) => {
                     const name = pickByLang(lang, { he: o.title.he || o.name, en: o.title.en || o.name });
                     const note = pickByLang(lang, { he: o.note.he || "", en: o.note.en || "" });
                     const details = pickByLang(lang, { he: o.details.he || "", en: o.details.en || "" });
@@ -344,6 +446,7 @@ export default async function ProductPage(props: {
               )}
             </div>
 
+            {!hasPkgFilter && (
             <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
               <div className="text-sm font-medium text-white/90">{ui.faqTitle}</div>
               <div className="mt-3 space-y-3">
@@ -355,21 +458,27 @@ export default async function ProductPage(props: {
                 ))}
               </div>
             </div>
+            )}
 
+            <BookingSectionToggle lang={lang} whatsappPhone={whatsappPhone} catalogFromUrl={catalogFromUrl} pkgFromUrl={pkgFromUrl} />
+
+            {/* CTAs */}
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
-                href="/#catalog"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10]"
+                href="/#packages"
+                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-5 py-3 text-sm text-white/90 font-medium hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
               >
-                {ui.viewCatalogs}
+                {ui.goToCatalogs}
               </Link>
 
-              <Link
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3 text-sm text-white/85 hover:bg-white/[0.10] hover:border-white/20 transition-all"
               >
-                {ui.contact}
-              </Link>
+                {ui.whatsappCta}
+              </a>
             </div>
           </div>
         </div>
