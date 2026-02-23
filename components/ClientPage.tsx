@@ -76,19 +76,19 @@ const PACKAGE_CARDS = [
     id: "starter",
     badge: "popular" as const,
     defaultCatalogSlug: "bars",
-    accent: "blue",
+    accent: "neutral",
   },
   {
     id: "business",
     badge: "popular" as const,
     defaultCatalogSlug: "hotels",
-    accent: "purple",
+    accent: "neutral",
   },
   {
     id: "monthly",
     badge: undefined,
     defaultCatalogSlug: "events",
-    accent: "orange",
+    accent: "neutral",
   },
 ] as const;
 
@@ -101,9 +101,7 @@ const PKG_LABELS: Record<string, Record<Lang, string>> = {
 type PkgAccent = (typeof PACKAGE_CARDS)[number]["accent"];
 
 const PKG_CLASSES: Record<PkgAccent, { card: string; glow: string; accent: string; border: string }> = {
-  blue: { card: "pkg-card--blue", glow: "pkg-glow--blue", accent: "pkg-accent--blue", border: "pkg-border--blue" },
-  purple: { card: "pkg-card--purple", glow: "pkg-glow--purple", accent: "pkg-accent--purple", border: "pkg-border--purple" },
-  orange: { card: "pkg-card--orange", glow: "pkg-glow--orange", accent: "pkg-accent--orange", border: "pkg-border--orange" },
+  neutral: { card: "pkg-card--neutral", glow: "pkg-glow--neutral", accent: "pkg-accent--neutral", border: "pkg-border--neutral" },
 };
 
 export function ClientPage(props: Props) {

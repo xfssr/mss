@@ -93,7 +93,7 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Package card glassmorphism with color accents */
+/* Package card glassmorphism — neutral styling */
 .pkg-card {
   background: rgba(15, 20, 30, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -106,23 +106,12 @@ body {
   border-color: rgba(255, 255, 255, 0.18);
 }
 
-.pkg-card--blue { box-shadow: 0 0 40px -12px rgba(59, 130, 246, 0.25); }
-.pkg-card--blue:hover { box-shadow: 0 4px 50px -8px rgba(59, 130, 246, 0.4); }
-.pkg-accent--blue { color: rgb(96, 165, 250); }
-.pkg-glow--blue { background: radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.12), transparent 70%); }
-.pkg-border--blue { border-color: rgba(59, 130, 246, 0.3); }
-
-.pkg-card--purple { box-shadow: 0 0 40px -12px rgba(139, 92, 246, 0.25); }
-.pkg-card--purple:hover { box-shadow: 0 4px 50px -8px rgba(139, 92, 246, 0.4); }
-.pkg-accent--purple { color: rgb(167, 139, 250); }
-.pkg-glow--purple { background: radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.12), transparent 70%); }
-.pkg-border--purple { border-color: rgba(139, 92, 246, 0.3); }
-
-.pkg-card--orange { box-shadow: 0 0 40px -12px rgba(249, 115, 22, 0.25); }
-.pkg-card--orange:hover { box-shadow: 0 4px 50px -8px rgba(249, 115, 22, 0.4); }
-.pkg-accent--orange { color: rgb(251, 146, 60); }
-.pkg-glow--orange { background: radial-gradient(ellipse at 50% 0%, rgba(249, 115, 22, 0.12), transparent 70%); }
-.pkg-border--orange { border-color: rgba(249, 115, 22, 0.3); }
+/* Neutral package card styling — consistent for all tiers */
+.pkg-card--neutral { box-shadow: 0 0 30px -12px rgba(255, 255, 255, 0.06); }
+.pkg-card--neutral:hover { box-shadow: 0 4px 40px -8px rgba(255, 255, 255, 0.10); }
+.pkg-accent--neutral { color: rgba(255, 255, 255, 0.88); }
+.pkg-glow--neutral { background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.03), transparent 70%); }
+.pkg-border--neutral { border-color: rgba(255, 255, 255, 0.12); }
 
 @media (prefers-reduced-motion: reduce) {
   .pkg-card:hover { transform: none; }
