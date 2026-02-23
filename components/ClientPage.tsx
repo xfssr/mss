@@ -223,14 +223,7 @@ export function ClientPage(props: Props) {
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
               <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{t(lang, "heroSub")}</p>
 
-              <ul className="mt-5 space-y-2">
-                {(["heroBullet1", "heroBullet2", "heroBullet3"] as const).map((key) => (
-                  <li key={key} className="flex items-start gap-2 text-sm sm:text-base text-white/80">
-                    <span className="text-green-400 mt-0.5 shrink-0">✔</span>
-                    {t(lang, key)}
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-3 text-sm sm:text-base text-white/60 italic">{t(lang, "heroSupporting")}</p>
 
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <a
@@ -253,20 +246,6 @@ export function ClientPage(props: Props) {
               <HeroSlider lang={lang} items={props.heroMedia} intervalMs={2400} />
             </div>
           </div>
-        </div>
-      </Section>
-
-      {/* ===== Who Is This For section ===== */}
-      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <ul className="space-y-3">
-            {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
-                {t(lang, key)}
-              </li>
-            ))}
-          </ul>
         </div>
       </Section>
 
@@ -639,14 +618,13 @@ export function ClientPage(props: Props) {
       </Section>
       </div>
 
-      {/* ===== Problem section ===== */}
-      <Section id="problem" title={t(lang, "problemTitle")}>
+      {/* ===== Who Is This For section ===== */}
+      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "problemIntro")}</p>
           <ul className="space-y-3">
-            {(["problemPoint1", "problemPoint2", "problemPoint3", "problemPoint4"] as const).map((key) => (
+            {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">✗</span>
+                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
                 {t(lang, key)}
               </li>
             ))}
@@ -654,19 +632,18 @@ export function ClientPage(props: Props) {
         </div>
       </Section>
 
-      {/* ===== Solution section ===== */}
-      <Section id="solution" title={t(lang, "solutionTitle")}>
+      {/* ===== Why Work With Me section ===== */}
+      <Section id="why-me" title={t(lang, "whyMeTitle")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 mb-4">{t(lang, "solutionIntro")}</p>
+          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-5">{t(lang, "whyMeIntro")}</p>
           <ul className="space-y-3">
-            {(["solutionPoint1", "solutionPoint2", "solutionPoint3", "solutionPoint4"] as const).map((key) => (
+            {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">▸</span>
+                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
                 {t(lang, key)}
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm sm:text-base text-white/60 whitespace-pre-line italic">{t(lang, "solutionOutro")}</p>
         </div>
       </Section>
 
@@ -687,27 +664,6 @@ export function ClientPage(props: Props) {
           </div>
         </Section>
       )}
-
-      {/* ===== Why Work With Me section ===== */}
-      <Section id="why-me" title={t(lang, "whyMeTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-5">{t(lang, "whyMeIntro")}</p>
-          <ul className="space-y-3">
-            {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
-                {t(lang, key)}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
-
-      <Section id="about" title={t(lang, "sectionAbout")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
-          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.aboutText)}</div>
-        </div>
-      </Section>
 
       <Section id="contact" title={t(lang, "sectionContact")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">

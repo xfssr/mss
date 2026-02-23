@@ -16,9 +16,9 @@ export const SAME_AS = [
 
 export const SEO = {
   title:
-    "Micro-Screen Studio | תוכן שמוכר אוכל וחוויה למסעדות, ברים, קפה וקייטרינג",
+    "Micro-Screen Studio | Food Marketing & Restaurant Video Content Israel",
   description:
-    "תוכן וידאו קצר למסעדות, ברים, בתי קפה, מאפיות, קייטרינג ועסקי אוכל בישראל. הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
+    "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel. Instagram reels for restaurants. Hospitality marketing Israel.",
   locale: "he_IL",
   siteName: "Micro-Screen Studio",
 } as const;

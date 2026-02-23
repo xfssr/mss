@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: "/og.jpg",
         width: 1200,
         height: 630,
-        alt: "Micro-Screen Studio — יצירת תוכן מקצועי לעסקים",
+        alt: "Micro-Screen Studio — Food marketing and restaurant video content in Israel",
       },
     ],
   },
