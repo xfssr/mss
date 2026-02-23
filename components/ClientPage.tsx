@@ -219,7 +219,7 @@ export function ClientPage(props: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
+    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="top">

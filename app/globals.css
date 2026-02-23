@@ -11,6 +11,10 @@
   --stroke: 255 255 255;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html { 
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -34,6 +38,13 @@ body {
     radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
     linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
   background-attachment: fixed;
+}
+
+/* Mobile: disable background-attachment:fixed (causes scroll jank & CLS on iOS/Android) */
+@media (max-width: 1024px) {
+  body {
+    background-attachment: scroll;
+  }
 }
 
 ::selection { 
@@ -119,6 +130,11 @@ body {
   .pkg-card:hover { transform: none; }
 }
 
+/* Mobile: disable hover scale on package cards (prevents touch-triggered CLS) */
+@media (max-width: 640px) {
+  .pkg-card:hover { transform: none; }
+}
+
 /* Premium dark background for packages section */
 .pkg-section-bg {
   background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
@@ -148,7 +164,7 @@ body {
   top: -120px;
   left: 50%;
   transform: translateX(-50%);
-  width: 900px;
+  width: min(900px, 100vw);
   height: 600px;
   background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.08), transparent 70%);
   pointer-events: none;
@@ -188,6 +204,11 @@ body {
 
   .safe-area-pb {
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+
+  .min-h-dvh-safe {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
