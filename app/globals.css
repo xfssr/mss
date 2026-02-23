@@ -93,25 +93,27 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Package card glassmorphism — neutral styling */
+/* Package card glassmorphism — matching solution card (cc-glass) style */
 .pkg-card {
-  background: rgba(15, 20, 30, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(16px) saturate(1.3);
-  border-radius: 1.25rem;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: rgba(11, 15, 20, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
 }
 .pkg-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-4px);
+  background: rgba(11, 15, 20, 0.65);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Neutral package card styling — consistent for all tiers */
-.pkg-card--neutral { box-shadow: 0 0 30px -12px rgba(255, 255, 255, 0.06); }
-.pkg-card--neutral:hover { box-shadow: 0 4px 40px -8px rgba(255, 255, 255, 0.10); }
-.pkg-accent--neutral { color: rgba(255, 255, 255, 0.88); }
-.pkg-glow--neutral { background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.03), transparent 70%); }
-.pkg-border--neutral { border-color: rgba(255, 255, 255, 0.12); }
+/* Neutral package card styling — uses --blue accent like solution cards */
+.pkg-card--neutral { box-shadow: none; }
+.pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+.pkg-accent--neutral { color: rgb(var(--blue)); }
+.pkg-glow--neutral { background: none; }
+.pkg-border--neutral { border-color: rgba(255, 255, 255, 0.15); }
 
 @media (prefers-reduced-motion: reduce) {
   .pkg-card:hover { transform: none; }
