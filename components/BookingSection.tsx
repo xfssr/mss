@@ -198,7 +198,7 @@ export function BookingSection({
   };
 
   const inputCls =
-    "mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
+    "mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[#C6A75E] focus:border-[#C6A75E]/50 transition-all";
 
   return (
     <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
@@ -243,7 +243,7 @@ export function BookingSection({
           type="button"
           onClick={onCheck}
           disabled={avail.kind === "checking"}
-          className="w-full rounded-xl border border-[rgb(var(--blue))]/40 bg-[rgb(var(--blue))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--blue))]/30 disabled:opacity-50 transition-all"
+          className="w-full rounded-xl border border-[#C6A75E]/30 bg-[#C6A75E]/10 px-5 py-3 text-sm text-white hover:bg-[#C6A75E]/20 disabled:opacity-50 transition-all"
         >
           {avail.kind === "checking" ? s.checking : s.checkBtn}
         </button>
@@ -278,7 +278,7 @@ export function BookingSection({
             type="button"
             onClick={onHold}
             disabled={hold.kind === "holding"}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30 disabled:opacity-50 transition-all"
+            className="w-full rounded-xl border border-[#C6A75E]/30 bg-[#C6A75E]/10 px-5 py-3 text-sm text-white hover:bg-[#C6A75E]/20 disabled:opacity-50 transition-all"
           >
             {hold.kind === "holding" ? s.holding : s.holdBtn}
           </button>

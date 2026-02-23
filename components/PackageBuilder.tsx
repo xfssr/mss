@@ -133,7 +133,7 @@ export function PackageBuilder(props: {
                 className={[
                   "relative text-left rounded-2xl border overflow-hidden",
                   "bg-black/20 hover:bg-white/[0.06] transition",
-                  active ? "border-[rgb(var(--red))]/50 shadow-lg" : "border-white/10 hover:border-white/20",
+                  active ? "border-[#C6A75E]/40 shadow-lg" : "border-white/10 hover:border-white/20",
                 ].join(" ")}
               >
                 <div className="p-3 sm:p-4">
@@ -150,7 +150,7 @@ export function PackageBuilder(props: {
                     {badge ? (
                       <div className={[
                         "shrink-0 rounded-full px-1.5 py-0.5 text-[9px] border",
-                        active ? "border-[rgb(var(--red))]/35 bg-[rgb(var(--red))]/15 text-white" : "border-white/12 bg-white/[0.05] text-white/70",
+                        active ? "border-[#C6A75E]/30 bg-[#C6A75E]/10 text-white" : "border-white/12 bg-white/[0.05] text-white/70",
                       ].join(" ")}>
                         {badge}
                       </div>
@@ -172,7 +172,7 @@ export function PackageBuilder(props: {
             className={[
               "relative text-left rounded-2xl border overflow-hidden",
               "bg-black/20 hover:bg-white/[0.06] transition",
-              customActive ? "border-[rgb(var(--blue))]/50 shadow-lg" : "border-white/10 hover:border-white/20",
+              customActive ? "border-[#C6A75E]/40 shadow-lg" : "border-white/10 hover:border-white/20",
             ].join(" ")}
           >
             <div className="p-3 sm:p-4">
@@ -202,7 +202,7 @@ export function PackageBuilder(props: {
               <select
                 value={d.monthlyPlan}
                 onChange={(e) => props.onChange({ ...d, monthlyPlan: e.target.value as MonthlyPlan })}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[#C6A75E]"
               >
                 {MONTHLY.map((x) => (
                   <option key={x.key} value={x.key}>
@@ -217,7 +217,7 @@ export function PackageBuilder(props: {
               <select
                 value={d.duration}
                 onChange={(e) => props.onChange({ ...d, duration: e.target.value as ShootDuration })}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[#C6A75E]"
                 disabled={d.monthlyPlan !== "none"}
               >
                 {DURATIONS.map((x) => (
@@ -239,7 +239,7 @@ export function PackageBuilder(props: {
                 max={100}
                 value={d.reels}
                 onChange={(e) => props.onChange({ ...d, reels: Number(e.target.value || 0) })}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[#C6A75E]"
                 disabled={d.monthlyPlan !== "none"}
               />
             </label>
@@ -252,7 +252,7 @@ export function PackageBuilder(props: {
                 max={500}
                 value={d.photos}
                 onChange={(e) => props.onChange({ ...d, photos: Number(e.target.value || 0) })}
-                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+                className="mt-2 w-full rounded-xl border border-white/10 bg-black/35 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[#C6A75E]"
                 disabled={d.monthlyPlan !== "none"}
               />
             </label>
@@ -314,7 +314,7 @@ export function PackageBuilder(props: {
           <button
             type="button"
             onClick={() => props.onApply(calc.summaryLines)}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30"
+            className="w-full rounded-xl border border-[#C6A75E]/30 bg-[#C6A75E]/10 px-4 py-3 text-sm text-white hover:bg-[#C6A75E]/20"
           >
             {t(props.lang, "packageApply")}
           </button>

@@ -274,14 +274,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "חזרה לעמוד הראשי",
 
     // Food & hospitality redesign
-    heroHeadline: "תוכן שמוכר אוכל וחוויה",
+    heroHeadline: "מחפשים מישהו שייצור עבורכם תוכן ברמה גבוהה באמת?",
     heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג, אולמות אירועים ומותגי אוכל בישראל.",
-    heroSupporting: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
+    heroSupporting: "תוכן שמציג את העסק שלכם כמו מותג יוקרתי.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
-    heroCtaAvailability: "בדוק זמינות",
-    heroCtaWa: "וואטסאפ עכשיו",
+    heroCtaAvailability: "לצפייה בחבילות",
+    heroCtaWa: "וואטסאפ",
 
     problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
     problemIntro: "עסקי אוכל ואירוח רבים מפסידים הכנסות כי:",
@@ -596,14 +596,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "Back to homepage",
 
     // Food & hospitality redesign
-    heroHeadline: "Content That Sells Food & Experience",
+    heroHeadline: "Looking for content at a truly premium level?",
     heroSub: "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel.",
-    heroSupporting: "Turn your dishes, drinks and atmosphere into content that attracts real customers.",
+    heroSupporting: "Content that presents your business like a luxury brand.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",
-    heroCtaAvailability: "Check Availability",
-    heroCtaWa: "WhatsApp Now",
+    heroCtaAvailability: "View Packages",
+    heroCtaWa: "WhatsApp",
 
     problemTitle: "Why Food & Hospitality Businesses Struggle on Social Media",
     problemIntro: "Many food and hospitality businesses lose revenue because:",

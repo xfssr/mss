@@ -10,6 +10,24 @@ export default {
     "./types/**/*.{js,ts}",
     "./lib/**/*.{js,ts}",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {
+      colors: {
+        gold: {
+          DEFAULT: "#C6A75E",
+          dark: "#8E7B4F",
+          light: "#D4BA7A",
+        },
+        luxury: {
+          bg: "#0A0A0C",
+          card: "#141416",
+          surface: "#121214",
+        },
+      },
+      fontFamily: {
+        serif: ["'Playfair Display'", "Cormorant", "Georgia", "serif"],
+      },
+    },
+  },
   plugins: [],
 } satisfies Config;
