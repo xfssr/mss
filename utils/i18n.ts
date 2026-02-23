@@ -119,7 +119,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "לבחור חבילה זו",
 
-    choosePackage: "בחרו חבילה שמתאימה לכם",
+    choosePackage: "בחרו את החבילה המתאימה לעסק שלכם",
     choosePackageSubtitle: "בחרו חבילה מוכנה או בנו חבילה מותאמת אישית — וממשיכים להזמנה.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4 שעות · 6 רילס · 20 תמונות",
@@ -133,7 +133,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     navSolutions: "פתרונות מוכנים",
     sectionSolutions: "פתרונות מוכנים",
-    solutionsIntro: "פתרונות מוכנים שאפשר להוסיף כתוספות אופציונליות.",
+    solutionsIntro: "חבילות מוכנות לפי סוג העסק — בחרו, צפו בפרטים והזמינו.",
     solutionView: "פרטים",
     solutionChoose: "לבחור פתרון זה",
 
@@ -148,13 +148,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     estimateNote: "המחיר הוא הערכה בלבד, לא הצעה מחייבת.",
 
     howItWorksTitle: "איך זה עובד",
-    howItWorksSubtitle: "שלושה צעדים פשוטים — משיחה קצרה ועד תוכן מוכן לפרסום.",
-    howStep1Title: "שיחת פתיחה קצרה",
-    howStep1Desc: "מגדירים מטרות, סגנון ומה חשוב להדגיש בעסק שלכם.",
-    howStep2Title: "יום צילום ממוקד",
-    howStep2Desc: "מצלמים וידאו ותמונות קצרות שמותאמים לפלטפורמות חברתיות.",
-    howStep3Title: "אספקה מהירה",
-    howStep3Desc: "מקבלים קבצים ערוכים ומוכנים לפרסום בזמן שנקבע.",
+    howItWorksSubtitle: "צפו בדוגמאות בקטלוג → בחרו חבילה → בדקו זמינות ושלחו ב-WhatsApp.",
+    howStep1Title: "דוגמאות",
+    howStep1Desc: "גללו בקטלוג וצפו בדוגמאות של עבודות.",
+    howStep2Title: "חבילה",
+    howStep2Desc: "בחרו חבילה מוכנה או בנו משלכם.",
+    howStep3Title: "הזמנה",
+    howStep3Desc: "בדקו זמינות, שמרו שעה ושלחו ב-WhatsApp.",
     howStep1Btn: "לראות דוגמאות",
     howStep2Btn: "לבחור חבילה",
     howStep3Btn: "להזמין",
@@ -186,7 +186,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     disableHint: "כבו קטגוריה כדי להסתיר אותה זמנית מהאתר",
     chooseAnotherDate: "בחרו תאריך אחר",
     navExamples: "דוגמאות",
-    navPackages: "חבילות",
 
     // Homepage redesign
     heroCtaSeePricing: "מחירון",
@@ -275,12 +274,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "חזרה לעמוד הראשי",
 
     // Food & hospitality redesign
-    heroHeadline: "מחפשים מישהו שיעשה בשבילכם תוכן איכותי לעסק?",
-    heroSub: "וידאו ותמונות קצרים שמוכרים אוכל, משקאות וחוויה — ומביאים לקוחות אמיתיים.",
+    heroHeadline: "תוכן שמוכר אוכל וחוויה",
+    heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג, אולמות אירועים ומותגי אוכל בישראל.",
+    heroSupporting: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
-    heroCtaAvailability: "לבחור חבילה",
+    heroCtaAvailability: "בדוק זמינות",
     heroCtaWa: "וואטסאפ עכשיו",
 
     problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
@@ -317,7 +317,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whoIsThisFor7: "מקומות בראנץ' ובוקר",
 
     // Trust section
-    trustTitle: "תוצאות שלקוחות כבר רואים בשטח",
+    trustTitle: "עסקי אוכל ואירוח סומכים עלינו",
     trustStat1Value: "50+",
     trustStat1Label: "פרויקטים שהושלמו",
     trustStat2Value: "30+",
@@ -326,11 +326,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     trustStat3Label: "זמן אספקה ממוצע",
     trustStat4Value: "100%",
     trustStat4Label: "שביעות רצון לקוחות",
-    testimonial1Quote: "התוכן שצולם אצלנו הביא פניות כבר בשבוע הראשון והרגיש בול כמו המותג שלנו.",
-    testimonial1Author: "בעלים, בר שכונתי",
-    testimonial2Quote: "קיבלנו סרטונים ותמונות שהיו מוכנים לפרסום ישר — וחסכו לנו המון זמן.",
-    testimonial2Author: "מנהלת שיווק, מסעדה",
-    portfolioIntro: "כמה דוגמאות לעבודות אחרונות שתוכלו לפתוח ולצפות בהן.",
 
     // CTA urgency
     ctaUrgency: "זמינות מוגבלת בכל חודש",
@@ -446,7 +441,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "Pick this package",
 
-    choosePackage: "Choose the package that fits you",
+    choosePackage: "Choose the Right Package for Your Business",
     choosePackageSubtitle: "Pick a ready-made package or build your own — then proceed to order.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4h · 6 reels · 20 photos",
@@ -460,7 +455,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     navSolutions: "Ready Solutions",
     sectionSolutions: "Ready-Made Solutions",
-    solutionsIntro: "Ready solutions you can add as optional extras.",
+    solutionsIntro: "Ready-made packages by business type — pick, view details and order.",
     solutionView: "View",
     solutionChoose: "Choose this solution",
 
@@ -475,13 +470,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     estimateNote: "Price is an estimate only, not a binding offer.",
 
     howItWorksTitle: "How it works",
-    howItWorksSubtitle: "A simple 3-step process from first message to ready-to-publish content.",
-    howStep1Title: "Quick discovery call",
-    howStep1Desc: "We align on your goals, style and what matters most for your business.",
-    howStep2Title: "Focused shoot day",
-    howStep2Desc: "We capture short-form video and photo content at your location.",
-    howStep3Title: "Fast delivery",
-    howStep3Desc: "You receive edited assets ready to publish in the agreed timeline.",
+    howItWorksSubtitle: "Browse the catalog for examples → pick a package → check availability and send via WhatsApp.",
+    howStep1Title: "Examples",
+    howStep1Desc: "Scroll through the catalog and browse work samples.",
+    howStep2Title: "Package",
+    howStep2Desc: "Choose a preset or build your own.",
+    howStep3Title: "Order",
+    howStep3Desc: "Check availability, hold a slot and send via WhatsApp.",
     howStep1Btn: "View examples",
     howStep2Btn: "Choose package",
     howStep3Btn: "Order",
@@ -513,7 +508,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     disableHint: "Disable a category to temporarily hide it from the site",
     chooseAnotherDate: "Choose another date",
     navExamples: "Examples",
-    navPackages: "Packages",
 
     // Homepage redesign
     heroCtaSeePricing: "See pricing",
@@ -602,12 +596,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "Back to homepage",
 
     // Food & hospitality redesign
-    heroHeadline: "Looking for someone to create high-quality content for your business?",
-    heroSub: "Short-form video & photo content that sells food, drinks and experience — and attracts real customers.",
+    heroHeadline: "Content That Sells Food & Experience",
+    heroSub: "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel.",
+    heroSupporting: "Turn your dishes, drinks and atmosphere into content that attracts real customers.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",
-    heroCtaAvailability: "Choose a Package",
+    heroCtaAvailability: "Check Availability",
     heroCtaWa: "WhatsApp Now",
 
     problemTitle: "Why Food & Hospitality Businesses Struggle on Social Media",
@@ -644,7 +639,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whoIsThisFor7: "Breakfast & Brunch Spots",
 
     // Trust section
-    trustTitle: "Social proof from real clients",
+    trustTitle: "Trusted by Food & Hospitality Businesses",
     trustStat1Value: "50+",
     trustStat1Label: "Projects Completed",
     trustStat2Value: "30+",
@@ -653,11 +648,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     trustStat3Label: "Average Delivery Time",
     trustStat4Value: "100%",
     trustStat4Label: "Client Satisfaction",
-    testimonial1Quote: "The content started bringing direct WhatsApp inquiries in the first week.",
-    testimonial1Author: "Owner, local cocktail bar",
-    testimonial2Quote: "Fast shoot, clean edits, and everything was ready to publish immediately.",
-    testimonial2Author: "Marketing manager, restaurant",
-    portfolioIntro: "A quick look at recent examples from real projects.",
 
     // CTA urgency
     ctaUrgency: "Limited monthly availability",

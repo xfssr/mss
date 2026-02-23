@@ -11,6 +11,10 @@
   --stroke: 255 255 255;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html { 
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -30,21 +34,10 @@ html {
 body {
   color: rgb(var(--text));
   background:
-    radial-gradient(1200px 800px at 20% 0%, rgba(24 30 52 / 0.65), rgba(10 14 24 / 1)),
-    radial-gradient(1000px 700px at 90% 30%, rgba(40 52 82 / 0.28), rgba(10 14 24 / 1)),
-    linear-gradient(180deg, rgba(8 11 20 / 1), rgba(6 8 16 / 1));
+    radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
+    radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
+    linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
   background-attachment: fixed;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.7) 0.6px, transparent 0.6px);
-  background-size: 3px 3px;
-  z-index: -1;
 }
 
 /* Mobile: disable background-attachment:fixed (causes scroll jank & CLS on iOS/Android) */
@@ -73,7 +66,7 @@ body::before {
 .cc-glass {
   background: rgba(11, 15, 20, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(8px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.2);
   transition: all 0.3s ease;
 }
 
@@ -115,12 +108,12 @@ body::before {
 .pkg-card {
   background: rgba(11, 15, 20, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(8px) saturate(1.12);
+  backdrop-filter: blur(12px) saturate(1.2);
   border-radius: 1rem;
   transition: transform 250ms ease, background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
 }
 .pkg-card:hover {
-  transform: translateY(-2px);
+  transform: scale(1.03);
   background: rgba(11, 15, 20, 0.65);
   border-color: rgba(255, 255, 255, 0.30);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 8px 24px -4px rgba(0, 0, 0, 0.2);
@@ -144,18 +137,9 @@ body::before {
 
 /* Premium dark background for packages section */
 .pkg-section-bg {
-  position: relative;
   background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-}
-.pkg-section-bg::before {
-  content: "";
-  position: absolute;
-  inset: -80px 0 auto;
-  height: 240px;
-  pointer-events: none;
-  background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.08), transparent 72%);
 }
 
 /* Subtle gradient transitions between sections */
@@ -224,7 +208,6 @@ body::before {
 
   .min-h-dvh-safe {
     min-height: 100vh;
-    min-height: calc(var(--vh, 1vh) * 100);
     min-height: 100dvh;
   }
 }
