@@ -128,7 +128,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     fetch("/api/case-studies")
       .then((r) => (r.ok ? r.json() : []))
       .then((data: DbCaseStudy[]) => setCases(data))
-      .catch(() => {});
+      .catch((err) => { console.error("Failed to load case studies:", err); });
   }, []);
 
   const filtered =

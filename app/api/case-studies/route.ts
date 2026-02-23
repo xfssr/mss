@@ -97,11 +97,15 @@ const SEED_DATA = [
   },
 ];
 
+let seeded = false;
+
 async function seedIfEmpty() {
+  if (seeded) return;
   const count = await prisma.caseStudy.count();
   if (count === 0) {
     await prisma.caseStudy.createMany({ data: SEED_DATA });
   }
+  seeded = true;
 }
 
 export async function GET() {

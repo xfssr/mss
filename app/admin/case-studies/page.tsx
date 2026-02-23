@@ -106,7 +106,8 @@ export default function AdminCaseStudiesPage() {
       setError("Video URL must start with https://www.tiktok.com/");
       return;
     }
-    if (!form.titleEn || !form.titleHe || !form.category || !form.insightEn || !form.insightHe || !form.servicesEn || !form.servicesHe || !form.tagsEn || !form.tagsHe) {
+    const required: (keyof typeof form)[] = ["titleEn", "titleHe", "category", "insightEn", "insightHe", "servicesEn", "servicesHe", "tagsEn", "tagsHe"];
+    if (required.some((k) => !form[k])) {
       setError("Please fill all required fields");
       return;
     }

@@ -54,7 +54,7 @@ async function uploadToCloudinary(file: File) {
 }
 
 async function uploadToLocal(file: File) {
-  const ext = file.type === "image/png" ? ".png" : file.type === "image/webp" ? ".webp" : ".jpg";
+  const ext = file.type === "image/png" ? ".png" : file.type === "image/webp" ? ".webp" : file.type === "image/jpeg" ? ".jpg" : ".jpg";
   const uploadDir = path.join(process.cwd(), "public", "uploads");
   await mkdir(uploadDir, { recursive: true });
 
