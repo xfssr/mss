@@ -14,6 +14,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     navCatalog: "קטלוג",
     navAbout: "אודות",
     navContact: "יצירת קשר",
+    navPackages: "חבילות",
 
     heroCtaPick: "לבחור קטלוג",
     heroCtaWhatsApp: "לכתוב ב-WhatsApp",
@@ -73,7 +74,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     replyTime: "בדרך כלל עונה תוך 1–3 שעות.",
 
     footerTop: "למעלה",
-    footerCatalog: "קטלוג",
+    footerCatalog: "חבילות",
 
     catalogBenefit: "תוכן מקצועי לעסק שלך",
     openArrow: "פתיחה →",
@@ -274,13 +275,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "חזרה לעמוד הראשי",
 
     // Food & hospitality redesign
-    heroHeadline: "תוכן שמוכר אוכל וחוויה",
+    heroHeadline: "מחפשים מישהו שייצור תוכן איכותי לעסק שלכם?",
     heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג, אולמות אירועים ומותגי אוכל בישראל.",
-    heroSupporting: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
+    heroSupporting: "הופכים מנות, משקאות ואווירה לתוכן שמביא לקוחות אמיתיים.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
-    heroCtaAvailability: "בדוק זמינות",
+    heroCtaAvailability: "בחרו חבילה",
     heroCtaWa: "וואטסאפ עכשיו",
 
     problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
@@ -336,6 +337,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     navCatalog: "Catalog",
     navAbout: "About",
     navContact: "Contact",
+    navPackages: "Packages",
 
     heroCtaPick: "Pick a catalog",
     heroCtaWhatsApp: "Message on WhatsApp",
@@ -395,7 +397,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     replyTime: "Usually reply within 1–3 hours.",
 
     footerTop: "Top",
-    footerCatalog: "Catalog",
+    footerCatalog: "Packages",
 
     catalogBenefit: "Professional content for your business",
     openArrow: "Open →",
@@ -596,13 +598,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "Back to homepage",
 
     // Food & hospitality redesign
-    heroHeadline: "Content That Sells Food & Experience",
+    heroHeadline: "Are you looking for someone to create high-quality content for your business?",
     heroSub: "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel.",
-    heroSupporting: "Turn your dishes, drinks and atmosphere into content that attracts real customers.",
+    heroSupporting: "We turn your dishes, drinks and atmosphere into content that attracts real customers.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",
-    heroCtaAvailability: "Check Availability",
+    heroCtaAvailability: "Choose your package",
     heroCtaWa: "WhatsApp Now",
 
     problemTitle: "Why Food & Hospitality Businesses Struggle on Social Media",

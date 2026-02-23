@@ -32,7 +32,6 @@ import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
   buildMessage,
-  buildWhatsAppMessage,
   buildWaMeUrl,
   DEFAULT_RESERVATION,
   openWhatsApp,
@@ -91,12 +90,6 @@ const PACKAGE_CARDS = [
     accent: "neutral",
   },
 ] as const;
-
-const PKG_LABELS: Record<string, Record<Lang, string>> = {
-  starter: { he: "Starter", en: "Starter" },
-  business: { he: "Business", en: "Business" },
-  monthly: { he: "Monthly", en: "Monthly" },
-};
 
 type PkgAccent = (typeof PACKAGE_CARDS)[number]["accent"];
 
@@ -203,23 +196,8 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  function SectionCta() {
-    return (
-      <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-        <button
-          type="button"
-          onClick={onSendWhatsApp}
-          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-        >
-          {t(lang, "sectionCtaWa")}
-        </button>
-        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-      </div>
-    );
-  }
-
   return (
-    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
+    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0e1a2b] via-[#142840] to-[#0c1828] text-[rgb(var(--text))]">
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="top">
@@ -242,7 +220,7 @@ export function ClientPage(props: Props) {
                   href="#packages"
                   className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
                 >
-                  {t(lang, "heroCtaAvailability")}
+                  {t(lang, "heroCtaPackages")}
                 </a>
               </div>
               <p className="mt-3 text-xs text-white/40">{t(lang, "ctaUrgency")}</p>
@@ -300,27 +278,6 @@ export function ClientPage(props: Props) {
             const discountPercent = props.discountConfig.percent;
             const finalPrice = hasDiscount ? Math.round(price * (1 - discountPercent / 100)) : price;
             const isMonthly = pkg.id === "monthly";
-            const handleWhatsApp = () => {
-              const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-              const icon = pkgIcon(detail);
-              const addonNames: string[] = [];
-              if (isMonthly) {
-                MONTHLY_ADDONS.forEach((a) => {
-                  if (selectedAddons[a.id]) {
-                    addonNames.push(t(lang, a.titleKey));
-                  }
-                });
-              }
-              const msg = buildWhatsAppMessage({
-                packageName: pkgLabel,
-                packageIcon: icon,
-                discountedPrice: hasDiscount ? finalPrice : undefined,
-                basePrice: price > 0 ? price : undefined,
-                selectedAddons: addonNames.length > 0 ? addonNames : undefined,
-                lang,
-              });
-              openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
-            };
             const cls = PKG_CLASSES[pkg.accent];
             return (
             <div
@@ -404,22 +361,13 @@ export function ClientPage(props: Props) {
 
                 {/* Action buttons — CTA position depends on expand state */}
                 <div className="mt-5 flex items-center gap-3">
-                  {!isExpanded && (
-                    <button
-                      type="button"
-                      onClick={handleWhatsApp}
-                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-                    >
-                      {t(lang, "pkgWhatsApp")}
-                    </button>
-                  )}
                   {detail && (
                     <button
                       type="button"
                       onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
                       className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
                     >
-                      {isExpanded ? t(lang, "less") : t(lang, "more")}
+                      {isExpanded ? t(lang, "less") : t(lang, "solutionView")}
                     </button>
                   )}
                 </div>
@@ -557,16 +505,6 @@ export function ClientPage(props: Props) {
                     </div>
                   )}
 
-                  {/* WhatsApp CTA — shown at bottom when details are expanded */}
-                  <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
-                    <button
-                      type="button"
-                      onClick={handleWhatsApp}
-                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-                    >
-                      {t(lang, "pkgWhatsApp")}
-                    </button>
-                  </div>
                 </div>
               )}
 
@@ -592,8 +530,7 @@ export function ClientPage(props: Props) {
           </p>
         )}
 
-        {/* Section CTA */}
-        <SectionCta />
+        <p className="mt-6 text-xs text-white/45">{t(lang, "ctaUrgency")}</p>
         </div>
       </Section>
       </div>
@@ -662,14 +599,6 @@ export function ClientPage(props: Props) {
           <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <button
-              type="button"
-              onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
-            >
-              {t(lang, "contactWhatsApp")}
-            </button>
-
             <a
               href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
               target="_blank"
