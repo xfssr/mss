@@ -209,17 +209,17 @@ export function ClientPage(props: Props) {
         <button
           type="button"
           onClick={onSendWhatsApp}
-          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+          className="inline-flex items-center justify-center rounded-xl border border-[#C81E1E] bg-[#C81E1E] px-6 py-3 text-sm font-medium text-white hover:bg-[#E02D2D] hover:border-[#E02D2D] transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
         >
           {t(lang, "sectionCtaWa")}
         </button>
-        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
+        <span className="text-xs text-[#A9B2C3]/60">{t(lang, "ctaUrgency")}</span>
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
+    <div className="min-h-dvh-safe bg-gradient-to-b from-[#070B14] via-[#070B14] to-[#0E1625] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="top">
@@ -227,25 +227,25 @@ export function ClientPage(props: Props) {
         <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
-              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#F3F5F8] leading-tight">{t(lang, "heroHeadline")}</h1>
+              <p className="mt-6 text-base sm:text-lg text-[#A9B2C3] leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+                  className="inline-flex items-center justify-center rounded-xl border border-[#C81E1E] bg-[#C81E1E] px-7 py-4 text-base font-semibold text-white hover:bg-[#E02D2D] hover:border-[#E02D2D] transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[#C81E1E]/20"
                 >
                   {t(lang, "heroCtaWa")}
                 </button>
                 <a
                   href="#packages"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] px-6 py-4 text-sm font-medium text-[#A9B2C3] hover:bg-white/[0.08] hover:border-white/[0.12] transition-all duration-200 hover:-translate-y-0.5"
                 >
                   {t(lang, "heroCtaAvailability")}
                 </a>
               </div>
-              <p className="mt-3 text-xs text-white/40">{t(lang, "ctaUrgency")}</p>
+              <p className="mt-3 text-xs text-[#A9B2C3]/60">{t(lang, "ctaUrgency")}</p>
             </div>
 
             <div className="lg:col-span-5">
@@ -340,14 +340,14 @@ export function ClientPage(props: Props) {
                         </Link>
                       </h3>
                       {pkg.badge === "popular" ? (
-                        <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                        <span className="text-[10px] rounded-full border border-[#C81E1E]/40 bg-[#C81E1E]/10 text-[#C81E1E] px-2.5 py-0.5 font-medium shadow-sm">
                           {t(lang, "popular")}
                         </span>
                       ) : null}
                     </div>
                     {price > 0 && (
                       <div className="mt-1.5 flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
+                        <span className="text-sm font-semibold text-[#A9B2C3]">
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -408,7 +408,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                      className="inline-flex items-center justify-center rounded-xl border border-[#C81E1E] bg-[#C81E1E] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#E02D2D] hover:border-[#E02D2D] transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -549,7 +549,7 @@ export function ClientPage(props: Props) {
 
                   {/* Final total line for Monthly (package after discount + add-ons) */}
                   {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                    <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
+                    <div className="rounded-lg border border-[#1B2A44] bg-[#1B2A44]/40 px-3 py-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
                         <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
@@ -562,7 +562,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                      className="w-full inline-flex items-center justify-center rounded-xl border border-[#C81E1E] bg-[#C81E1E] px-4 py-3 text-sm font-medium text-white hover:bg-[#E02D2D] hover:border-[#E02D2D] transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -585,7 +585,7 @@ export function ClientPage(props: Props) {
 
         {/* First-time discount note */}
         {props.discountConfig.enabled && (
-          <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
+          <p className="mt-4 text-xs text-[#A9B2C3]/70">
             🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
             {" — "}
             {props.discountConfig.percent}%
@@ -604,7 +604,7 @@ export function ClientPage(props: Props) {
           <ul className="space-y-4">
             {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                <span className="text-[#C81E1E] mt-0.5 shrink-0">●</span>
                 {t(lang, key)}
               </li>
             ))}
@@ -619,7 +619,7 @@ export function ClientPage(props: Props) {
           <ul className="space-y-4">
             {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
+                <span className="text-[#C81E1E] mt-0.5 shrink-0">✔</span>
                 {t(lang, key)}
               </li>
             ))}
@@ -650,7 +650,7 @@ export function ClientPage(props: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl">
           {(["trustStat1", "trustStat2", "trustStat3", "trustStat4"] as const).map((key) => (
             <div key={key} className="trust-stat-card p-5 sm:p-6 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">{t(lang, `${key}Value`)}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-[#F3F5F8]">{t(lang, `${key}Value`)}</div>
               <div className="mt-2 text-xs sm:text-sm text-white/60">{t(lang, `${key}Label`)}</div>
             </div>
           ))}
@@ -665,7 +665,7 @@ export function ClientPage(props: Props) {
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+              className="inline-flex items-center justify-center rounded-xl border border-[#C81E1E] bg-[#C81E1E] px-7 py-4 text-base font-semibold text-white hover:bg-[#E02D2D] hover:border-[#E02D2D] transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[#C81E1E]/20"
             >
               {t(lang, "contactWhatsApp")}
             </button>

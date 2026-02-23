@@ -274,13 +274,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "חזרה לעמוד הראשי",
 
     // Food & hospitality redesign
-    heroHeadline: "תוכן שמוכר אוכל וחוויה",
+    heroHeadline: "מחפשים תוכן ברמה גבוהה לעסק שלכם?",
     heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג, אולמות אירועים ומותגי אוכל בישראל.",
-    heroSupporting: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
+    heroSupporting: "תוכן שמוכר אוכל, משקאות וחוויה — ומביא תוצאות אמיתיות.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
-    heroCtaAvailability: "בדוק זמינות",
+    heroCtaAvailability: "לבחור חבילה",
     heroCtaWa: "וואטסאפ עכשיו",
 
     problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
@@ -596,13 +596,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     backToHome: "Back to homepage",
 
     // Food & hospitality redesign
-    heroHeadline: "Content That Sells Food & Experience",
+    heroHeadline: "Looking for premium content for your business?",
     heroSub: "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel.",
-    heroSupporting: "Turn your dishes, drinks and atmosphere into content that attracts real customers.",
+    heroSupporting: "Content that sells food, drinks and experience — and drives real results.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",
-    heroCtaAvailability: "Check Availability",
+    heroCtaAvailability: "View Packages",
     heroCtaWa: "WhatsApp Now",
 
     problemTitle: "Why Food & Hospitality Businesses Struggle on Social Media",
