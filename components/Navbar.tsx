@@ -22,7 +22,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="border-b border-white/10 bg-black/30 backdrop-blur-sm">
+    <header className="border-b border-white/10 bg-black/30 backdrop-blur-sm md:sticky md:top-0 md:z-30">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="#top"

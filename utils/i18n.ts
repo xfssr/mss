@@ -277,7 +277,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // Food & hospitality redesign
     heroHeadline: "מחפשים מישהו שיעשה בשבילכם תוכן איכותי לעסק?",
     heroSub: "וידאו ותמונות קצרים שמוכרים אוכל, משקאות וחוויה — ומביאים לקוחות אמיתיים.",
-    heroSupporting: "וידאו ותמונות קצרים שמוכרים אוכל, משקאות וחוויה — ומביאים לקוחות אמיתיים.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
@@ -605,7 +604,6 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // Food & hospitality redesign
     heroHeadline: "Looking for someone to create high-quality content for your business?",
     heroSub: "Short-form video & photo content that sells food, drinks and experience — and attracts real customers.",
-    heroSupporting: "Short-form video & photo content that sells food, drinks and experience — and attracts real customers.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",

@@ -199,7 +199,7 @@ export function ClientPage(props: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
               <h1 className="text-[clamp(2rem,6vw,4.25rem)] font-bold text-[rgb(var(--blue))] leading-[1.15] max-w-3xl">{t(lang, "heroHeadline")}</h1>
-              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
+              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSub")}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
