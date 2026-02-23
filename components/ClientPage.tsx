@@ -256,6 +256,20 @@ export function ClientPage(props: Props) {
         </div>
       </Section>
 
+      {/* ===== Who Is This For section ===== */}
+      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")}>
+        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
+          <ul className="space-y-3">
+            {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5"] as const).map((key) => (
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
+                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                {t(lang, key)}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
       {/* Catalog section hidden from homepage but data kept for admin/media source */}
 
       {selectedCatalog && panelOpen && selectedCategoryDetail ? (
