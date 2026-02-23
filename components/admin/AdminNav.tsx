@@ -11,6 +11,10 @@ const sections = [
   { id: "solutions", label: "Solutions" },
 ] as const;
 
+const pages = [
+  { href: "/admin/case-studies", label: "Case Studies" },
+] as const;
+
 export function AdminNav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -46,6 +50,15 @@ export function AdminNav() {
             {s.label}
           </a>
         ))}
+        {pages.map((p) => (
+          <a
+            key={p.href}
+            href={p.href}
+            className="px-3 py-1.5 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors"
+          >
+            {p.label}
+          </a>
+        ))}
       </nav>
 
       {/* Mobile: dropdown select */}
@@ -71,6 +84,16 @@ export function AdminNav() {
                 className="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.06]"
               >
                 {s.label}
+              </a>
+            ))}
+            {pages.map((p) => (
+              <a
+                key={p.href}
+                href={p.href}
+                onClick={() => setMobileOpen(false)}
+                className="block px-4 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.06]"
+              >
+                {p.label}
               </a>
             ))}
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Lang } from "@/utils/i18n";
 
 /* ─── local translations ─── */
@@ -49,126 +49,26 @@ const L = {
   },
 } as const;
 
-/* ─── data ─── */
-type CaseStudy = {
+/* ─── types ─── */
+type DbCaseStudy = {
   id: string;
-  category: "food" | "restaurant" | "street" | "kitchen" | "bar";
-  title: { en: string; he: string };
-  tags: { en: string; he: string };
+  category: string;
   videoUrl: string;
-  thumbnail: string;
-  metrics: {
-    views: string;
-    avgWatch: string;
-    fullWatch: string;
-    followers: string;
-    forYou?: string;
-  };
-  insight: { en: string; he: string };
-  services: { en: string; he: string };
+  titleEn: string;
+  titleHe: string;
+  tagsEn: string;
+  tagsHe: string;
+  views: string;
+  avgWatch: string;
+  fullWatch: string;
+  followers: string;
+  forYou: string | null;
+  insightEn: string;
+  insightHe: string;
+  servicesEn: string;
+  servicesHe: string;
+  thumbnailUrl: string;
 };
-
-const caseStudies: CaseStudy[] = [
-  {
-    id: "cs-1",
-    category: "street",
-    title: { en: "Street Food — Viral Reach", he: "אוכל רחוב — חשיפה ויראלית" },
-    tags: { en: "UGC • Street • TikTok", he: "UGC • רחוב • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7368112073059978497",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "244K", avgWatch: "32.5s", fullWatch: "12.8%", followers: "+624" },
-    insight: { en: "High reach driven by organic street food appeal", he: "חשיפה גבוהה בזכות תוכן אוכל רחוב אותנטי" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-2",
-    category: "restaurant",
-    title: { en: "Restaurant Spotlight — Strong Retention", he: "מסעדה בזרקור — ריטנשן חזק" },
-    tags: { en: "UGC • Backstage • TikTok", he: "UGC • מאחורי הקלעים • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7437403806054370568",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "49K", avgWatch: "12.99s", fullWatch: "23.1%", followers: "+31", forYou: "87.2%" },
-    insight: { en: "For You page drove 87% of views — proof of algorithmic fit", he: "87% מהצפיות הגיעו מדף ה-For You — התאמה אלגוריתמית מוכחת" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-3",
-    category: "food",
-    title: { en: "Food Close-Up — Appetite Appeal", he: "צילום אוכל — משיכה חזותית" },
-    tags: { en: "UGC • POV • TikTok", he: "UGC • POV • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7367327238452382993",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Close-up food visuals drive emotional engagement", he: "צילומי תקריב של אוכל מעוררים מעורבות רגשית" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-4",
-    category: "kitchen",
-    title: { en: "Kitchen POV — Fast Retention", he: "מטבח POV — ריטנשן גבוה" },
-    tags: { en: "UGC • POV • TikTok", he: "UGC • POV • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7367299135583669505",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Behind-the-scenes kitchen content keeps viewers watching", he: "תוכן מאחורי הקלעים מהמטבח שומר על הצופים" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-5",
-    category: "bar",
-    title: { en: "Bar Vibes — Night Energy", he: "אווירת בר — אנרגיה לילית" },
-    tags: { en: "UGC • Nightlife • TikTok", he: "UGC • חיי לילה • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7453474459144523026",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Nightlife energy captured to attract younger audiences", he: "אנרגיית חיי לילה שמושכת קהל צעיר" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-6",
-    category: "restaurant",
-    title: { en: "Fine Dining — Premium Feel", he: "מסעדה — תחושת פרימיום" },
-    tags: { en: "UGC • Cinematic • TikTok", he: "UGC • קולנועי • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7466110123199581458",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Cinematic framing elevates brand positioning", he: "מסגור קולנועי מעלה את מיצוב המותג" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-7",
-    category: "street",
-    title: { en: "Street Food — High Reach", he: "אוכל רחוב — חשיפה גבוהה" },
-    tags: { en: "UGC • Street • TikTok", he: "UGC • רחוב • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7569940567610658066",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Authentic street food content performs well organically", he: "תוכן אוכל רחוב אותנטי עובד מצוין אורגנית" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-8",
-    category: "food",
-    title: { en: "Food Styling — Visual Impact", he: "סטיילינג אוכל — אימפקט חזותי" },
-    tags: { en: "UGC • Styling • TikTok", he: "UGC • סטיילינג • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7287123791048625426",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Styled food content drives saves and shares", he: "תוכן אוכל מעוצב מניע שמירות ושיתופים" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-  {
-    id: "cs-9",
-    category: "kitchen",
-    title: { en: "Kitchen Action — Behind the Scenes", he: "מטבח בפעולה — מאחורי הקלעים" },
-    tags: { en: "UGC • Backstage • TikTok", he: "UGC • מאחורי הקלעים • טיקטוק" },
-    videoUrl: "https://www.tiktok.com/@emilnisenblatt/video/7451286146975370503",
-    thumbnail: "/images/case-placeholder.webp",
-    metrics: { views: "—", avgWatch: "—", fullWatch: "—", followers: "—" },
-    insight: { en: "Raw kitchen footage builds trust and authenticity", he: "צילומי מטבח גולמיים בונים אמון ואותנטיות" },
-    services: { en: "Concept • Filming • Editing • Captions", he: "קונספט • צילום • עריכה • כתוביות" },
-  },
-];
 
 const FILTER_KEYS = ["all", "food", "restaurant", "street", "kitchen", "bar"] as const;
 type FilterKey = (typeof FILTER_KEYS)[number];
@@ -220,13 +120,21 @@ function IconPlay() {
 /* ─── component ─── */
 export function CaseStudiesSection({ lang }: { lang: Lang }) {
   const [selected, setSelected] = useState<FilterKey>("all");
+  const [cases, setCases] = useState<DbCaseStudy[]>([]);
   const tx = L[lang];
   const isRtl = lang === "he";
 
+  useEffect(() => {
+    fetch("/api/case-studies")
+      .then((r) => (r.ok ? r.json() : []))
+      .then((data: DbCaseStudy[]) => setCases(data))
+      .catch(() => {});
+  }, []);
+
   const filtered =
     selected === "all"
-      ? caseStudies
-      : caseStudies.filter((c) => c.category === selected);
+      ? cases
+      : cases.filter((c) => c.category === selected);
 
   return (
     <section
@@ -272,15 +180,18 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
             >
               {/* video preview (9:16 frame) */}
               <div className="relative aspect-[9/16] max-h-[280px] bg-gradient-to-b from-white/[0.03] to-transparent overflow-hidden" aria-hidden="true">
+                {cs.thumbnailUrl && (
+                  <img src={cs.thumbnailUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                )}
                 <div className="absolute inset-0 flex items-center justify-center text-white/30 group-hover:text-white/60 transition-colors duration-300">
                   <div className="rounded-full bg-white/10 p-3 backdrop-blur-sm border border-white/10 group-hover:bg-white/20 transition-all duration-300">
                     <IconPlay />
                   </div>
                 </div>
                 {/* For You badge */}
-                {cs.metrics.forYou && (
+                {cs.forYou && (
                   <div className="absolute top-3 end-3 rounded-full bg-green-500/20 border border-green-400/30 px-2.5 py-0.5 text-[10px] font-medium text-green-400 backdrop-blur-sm">
-                    {tx.forYouBadge} {cs.metrics.forYou}
+                    {tx.forYouBadge} {cs.forYou}
                   </div>
                 )}
               </div>
@@ -289,26 +200,26 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               <div className="p-5">
                 {/* title + tags */}
                 <h3 className="text-sm font-bold text-white/90">
-                  {cs.title[lang]}
+                  {lang === "he" ? cs.titleHe : cs.titleEn}
                 </h3>
-                <p className="mt-1 text-[11px] text-white/40">{cs.tags[lang]}</p>
+                <p className="mt-1 text-[11px] text-white/40">{lang === "he" ? cs.tagsHe : cs.tagsEn}</p>
 
                 {/* metrics 2×2 grid */}
                 <div className="mt-4 grid grid-cols-2 gap-2">
-                  <MetricCell icon={<IconEye />} label={tx.views} value={cs.metrics.views} />
-                  <MetricCell icon={<IconClock />} label={tx.avgWatch} value={cs.metrics.avgWatch} />
-                  <MetricCell icon={<IconTarget />} label={tx.fullWatch} value={cs.metrics.fullWatch} />
-                  <MetricCell icon={<IconUsers />} label={tx.followers} value={cs.metrics.followers} />
+                  <MetricCell icon={<IconEye />} label={tx.views} value={cs.views} />
+                  <MetricCell icon={<IconClock />} label={tx.avgWatch} value={cs.avgWatch} />
+                  <MetricCell icon={<IconTarget />} label={tx.fullWatch} value={cs.fullWatch} />
+                  <MetricCell icon={<IconUsers />} label={tx.followers} value={cs.followers} />
                 </div>
 
                 {/* insight */}
                 <p className="mt-4 text-xs text-white/50 italic border-s-2 border-[rgb(var(--blue))]/30 ps-3">
-                  {cs.insight[lang]}
+                  {lang === "he" ? cs.insightHe : cs.insightEn}
                 </p>
 
                 {/* services */}
                 <p className="mt-2 text-[10px] text-white/35">
-                  {cs.services[lang]}
+                  {lang === "he" ? cs.servicesHe : cs.servicesEn}
                 </p>
 
                 {/* CTA */}
@@ -316,7 +227,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                   href={cs.videoUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  aria-label={`${tx.cta} — ${cs.title[lang]}`}
+                  aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
                   className="mt-4 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
                 >
                   {tx.cta}
