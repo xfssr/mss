@@ -210,6 +210,21 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
+  function SectionCta() {
+    return (
+      <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
+        <button
+          type="button"
+          onClick={onSendWhatsApp}
+          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+        >
+          {t(lang, "sectionCtaWa")}
+        </button>
+        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
@@ -617,16 +632,7 @@ export function ClientPage(props: Props) {
         )}
 
         {/* Section CTA */}
-        <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-          <button
-            type="button"
-            onClick={onSendWhatsApp}
-            className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-          >
-            {t(lang, "sectionCtaWa")}
-          </button>
-          <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-        </div>
+        <SectionCta />
         </div>
       </Section>
       </div>
@@ -643,16 +649,7 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
-        <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-          <button
-            type="button"
-            onClick={onSendWhatsApp}
-            className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-          >
-            {t(lang, "sectionCtaWa")}
-          </button>
-          <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-        </div>
+        <SectionCta />
       </Section>
 
       {/* ===== Why Work With Me section ===== */}
@@ -668,16 +665,7 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
-        <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-          <button
-            type="button"
-            onClick={onSendWhatsApp}
-            className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-          >
-            {t(lang, "sectionCtaWa")}
-          </button>
-          <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-        </div>
+        <SectionCta />
       </Section>
 
 
@@ -695,16 +683,7 @@ export function ClientPage(props: Props) {
               />
             ))}
           </div>
-          <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-            <button
-              type="button"
-              onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-            >
-              {t(lang, "sectionCtaWa")}
-            </button>
-            <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-          </div>
+          <SectionCta />
         </Section>
       )}
 
