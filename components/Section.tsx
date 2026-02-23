@@ -6,7 +6,7 @@ export function Section(props: PropsWithChildren<{ id: string; title?: string; e
       <div className="relative mx-auto w-full max-w-6xl">
         {props.eyebrow ? <div className="text-xs tracking-[0.2em] uppercase text-[#A9B2C3] font-medium">{props.eyebrow}</div> : null}
         {props.title ? (
-          <h2 className="mt-2 font-bold text-[#F3F5F8] tracking-wide">{props.title}</h2>
+          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[#F3F5F8] tracking-wide">{props.title}</h2>
         ) : null}
         <div className="mt-12 sm:mt-14">{props.children}</div>
       </div>
