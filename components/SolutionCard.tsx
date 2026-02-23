@@ -36,7 +36,7 @@ export function SolutionCard(props: {
     <button
       type="button"
       onClick={onSelect}
-      className="group text-start cc-glass rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/25 hover:bg-white/[0.10] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+      className="group text-start cc-glass rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/25 hover:bg-white/[0.10] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
     >
       {item.cover && (
         <div className="relative aspect-[16/9] w-full overflow-hidden">
@@ -53,7 +53,7 @@ export function SolutionCard(props: {
         <div className="flex items-center gap-3">
           <span className="text-2xl shrink-0">{icon}</span>
           <div className="min-w-0">
-            <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--blue))] transition-colors">
+            <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-[rgb(var(--accent))] transition-colors">
               <Link
                 href={`/product/${item.slug}`}
                 onClick={(e) => e.stopPropagation()}
@@ -80,13 +80,13 @@ export function SolutionCard(props: {
 
         {/* Price range hint */}
         {item.pricingTiers.length > 0 && (
-          <div className="mt-2 text-[11px] text-[rgb(var(--blue))]/70">
+          <div className="mt-2 text-[11px] text-[rgb(var(--accent))]/70">
             {t(lang, "fromPrice")}{pick(lang, item.pricingTiers[0].range)}
           </div>
         )}
 
         <div className="mt-4">
-          <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/30 bg-[rgb(var(--red))]/10 px-4 py-2 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--red))]/20 group-hover:border-[rgb(var(--red))]/50 transition-all">
+          <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-4 py-2 text-xs font-medium text-white/90 group-hover:bg-[rgb(var(--accent))]/20 group-hover:border-[rgb(var(--accent))]/50 transition-all">
             {t(lang, "solutionView")} →
           </span>
         </div>

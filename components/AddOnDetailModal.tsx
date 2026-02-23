@@ -55,7 +55,7 @@ export function AddOnDetailModal(props: {
         <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 border-b border-white/10 bg-white/[0.03] backdrop-blur">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h2 className="text-lg font-semibold text-[rgb(var(--blue))]">
+              <h2 className="text-lg font-semibold text-[rgb(var(--accent))]">
                 {t(lang, addon.titleKey)}
               </h2>
               <p className="mt-1 text-sm text-white/70">
@@ -76,13 +76,13 @@ export function AddOnDetailModal(props: {
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain [-webkit-overflow-scrolling:touch] px-4 sm:px-6 py-4 sm:py-5 space-y-4">
           {/* What's included */}
           <section>
-            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "addonWhatsIncluded")}
             </h3>
             <ul className="space-y-1.5">
               {addon.bullets.map((bullet, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✓</span>
+                  <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">✓</span>
                   {pick(lang, bullet)}
                 </li>
               ))}

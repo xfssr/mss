@@ -351,7 +351,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
   if (!open) return null;
 
   const inputCls =
-    "mt-1.5 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--blue))] focus:border-[rgb(var(--blue))]/50 transition-all";
+    "mt-1.5 w-full rounded-xl border border-white/10 bg-black/35 px-4 py-2.5 text-base text-white placeholder:text-white/30 outline-none focus:ring-2 focus:ring-[rgb(var(--accent))] focus:border-[rgb(var(--accent))]/50 transition-all";
 
   return (
     <div
@@ -373,7 +373,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
         {/* Header */}
         <div className={DRAWER_HEADER_CLASS}>
           <div className="flex items-center justify-between gap-3">
-            <h2 className="text-base sm:text-lg font-semibold text-[rgb(var(--blue))]">
+            <h2 className="text-base sm:text-lg font-semibold text-[rgb(var(--accent))]">
               {s.title}
             </h2>
             <button
@@ -392,7 +392,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
               {selectedTags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[11px] rounded-full border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-2.5 py-0.5 text-white/80"
+                  className="text-[11px] rounded-full border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-2.5 py-0.5 text-white/80"
                 >
                   {tag}
                 </span>
@@ -418,7 +418,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
                       <div
                         className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-semibold border transition-colors ${
                           isActive
-                            ? "border-[rgb(var(--blue))] bg-[rgb(var(--blue))]/25 text-[rgb(var(--blue))]"
+                            ? "border-[rgb(var(--accent))] bg-[rgb(var(--accent))]/25 text-[rgb(var(--accent))]"
                             : "border-white/15 bg-white/[0.04] text-white/30"
                         }`}
                       >
@@ -431,7 +431,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
                     {step < 3 && (
                       <div
                         className={`flex-1 h-px mx-1.5 transition-colors ${
-                          step < currentStep ? "bg-[rgb(var(--blue))]/40" : "bg-white/10"
+                          step < currentStep ? "bg-[rgb(var(--accent))]/40" : "bg-white/10"
                         }`}
                       />
                     )}
@@ -447,7 +447,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
           {/* Compact package summary */}
           {packageDetail && props.sourceType === "package" && (
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3 space-y-2">
-              <div className="text-xs font-semibold text-[rgb(var(--blue))]">
+              <div className="text-xs font-semibold text-[rgb(var(--accent))]">
                 {pickL10n(lang, packageDetail.title)}
               </div>
               <div className="flex flex-wrap gap-1.5">
@@ -478,7 +478,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
                   type="checkbox"
                   checked={smmOn}
                   onChange={(e) => setSmmOn(e.target.checked)}
-                  className="accent-[rgb(var(--blue))]"
+                  className="accent-[rgb(var(--accent))]"
                 />
                 {t(lang, "smmAddon")} — ₪{pricing.socialManagement.toLocaleString()}
               </label>
@@ -487,7 +487,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
                   type="checkbox"
                   checked={targetOn}
                   onChange={(e) => setTargetOn(e.target.checked)}
-                  className="accent-[rgb(var(--blue))]"
+                  className="accent-[rgb(var(--accent))]"
                 />
                 {t(lang, "targetAddon")} — ₪{pricing.targetingSetup.toLocaleString()}
               </label>
@@ -584,7 +584,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
               type="button"
               onClick={onCheck}
               disabled={avail.kind === "checking"}
-              className="w-full rounded-xl border border-[rgb(var(--blue))]/40 bg-[rgb(var(--blue))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--blue))]/30 disabled:opacity-50 transition-all"
+              className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30 disabled:opacity-50 transition-all"
             >
               {avail.kind === "checking" ? s.checking : s.checkBtn}
             </button>
@@ -596,7 +596,7 @@ export function BookingDrawer(props: BookingDrawerProps) {
               type="button"
               onClick={onHold}
               disabled={hold.kind === "holding"}
-              className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30 disabled:opacity-50 transition-all"
+              className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30 disabled:opacity-50 transition-all"
             >
               {hold.kind === "holding" ? s.holding : s.holdBtn}
             </button>

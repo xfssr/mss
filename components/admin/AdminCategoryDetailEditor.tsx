@@ -210,7 +210,7 @@ export function AdminCategoryDetailEditor(props: { details: CategoryDetail[] }) 
         type="button"
         disabled={pending}
         onClick={() => save(d)}
-        className="w-full rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/20 disabled:opacity-50 transition-all"
+        className="w-full rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/20 disabled:opacity-50 transition-all"
       >
         {pending ? "Saving…" : saved ? "Saved ✓" : "Save category detail"}
       </button>

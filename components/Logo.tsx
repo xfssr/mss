@@ -28,14 +28,14 @@ if (variant === "mark") {
         <span className="text-base font-semibold tracking-tight text-white/95 whitespace-nowrap overflow-hidden text-ellipsis">
           Micro-Screen Studio
         </span>
-        <span className="h-2.5 w-2.5 rounded-full bg-[rgb(var(--red))] flex-none" aria-hidden="true" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))] flex-none" aria-hidden="true" />
       </span>
 
       {/* DESKTOP: 2 lines like your reference */}
       <span className="hidden sm:inline-flex sm:flex-col items-start leading-none">
         <span className="inline-flex items-center gap-2">
           <span className="text-2xl font-semibold tracking-tight text-white/95">Micro-Screen</span>
-          <span className="h-2.5 w-2.5 rounded-full bg-[rgb(var(--red))]" aria-hidden="true" />
+          <span className="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]" aria-hidden="true" />
         </span>
         <span className="mt-2 text-xs uppercase tracking-[0.42em] text-white/65">STUDIO</span>
       </span>

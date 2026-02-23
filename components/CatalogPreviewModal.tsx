@@ -103,7 +103,7 @@ export function CatalogPreviewModal(props: {
         <div className="shrink-0 px-4 sm:px-6 pt-4 sm:pt-5 pb-3 border-b border-white/10 bg-white/[0.03] backdrop-blur">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <h2 className="text-lg sm:text-xl font-semibold text-[rgb(var(--blue))] truncate">
+              <h2 className="text-lg sm:text-xl font-semibold text-[rgb(var(--accent))] truncate">
                 {pick(lang, catalog.title)}
               </h2>
               <p className="mt-0.5 text-xs text-white/60 line-clamp-1">
@@ -187,7 +187,7 @@ export function CatalogPreviewModal(props: {
           <button
             type="button"
             onClick={scrollToPackages}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-5 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/35 hover:border-[rgb(var(--accent))]/60 transition-all"
           >
             {t(lang, "choosePackageBtn")}
           </button>
@@ -240,7 +240,7 @@ function PhotosView(props: { lang: Lang; items: CatalogExample[] }) {
               className={[
                 "shrink-0 relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden border transition-all",
                 isActive
-                  ? "border-[rgb(var(--red))]/60 ring-1 ring-[rgb(var(--red))]/30"
+                  ? "border-[rgb(var(--accent))]/60 ring-1 ring-[rgb(var(--accent))]/30"
                   : "border-white/10 hover:border-white/25",
               ].join(" ")}
               aria-label={pick(lang, ex.title) || `Photo ${idx + 1}`}

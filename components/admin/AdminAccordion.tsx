@@ -25,7 +25,7 @@ export function AdminAccordion({
         aria-expanded={open}
         className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-white/[0.03] transition-colors"
       >
-        <span className="text-xl font-semibold text-[rgb(var(--blue))] flex items-center gap-2">
+        <span className="text-xl font-semibold text-[rgb(var(--accent))] flex items-center gap-2">
           {title}
           {count !== undefined && (
             <span className="text-xs font-normal text-white/40 bg-white/[0.06] rounded-full px-2 py-0.5">

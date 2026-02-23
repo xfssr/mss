@@ -133,7 +133,7 @@ export function MiniScreenPanel(props: {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/55">{props.lang === "he" ? "קטלוג" : "Catalog"}</div>
-              <div className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))]">{props.catalog.title[props.lang]}</div>
+              <div className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--accent))]">{props.catalog.title[props.lang]}</div>
               <DescriptionClamp
                 lang={props.lang}
                 text={props.catalog.longDescription[props.lang]}
