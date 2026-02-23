@@ -210,6 +210,21 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
+  function SectionCta() {
+    return (
+      <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
+        <button
+          type="button"
+          onClick={onSendWhatsApp}
+          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+        >
+          {t(lang, "sectionCtaWa")}
+        </button>
+        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
@@ -217,35 +232,36 @@ export function ClientPage(props: Props) {
       <FloatingWhatsAppButton onClick={onSendWhatsApp} />
 
       <Section id="top">
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        <div className="hero-glow">
+        <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
-              <p className="mt-4 text-base sm:text-lg text-white/80 leading-relaxed">{t(lang, "heroSub")}</p>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
+              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
 
-              <p className="mt-3 text-sm sm:text-base text-white/60 italic">{t(lang, "heroSupporting")}</p>
-
-              <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                <a
-                  href="#packages"
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/40 bg-[rgb(var(--blue))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/35 hover:border-[rgb(var(--blue))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-                >
-                  {t(lang, "heroCtaAvailability")}
-                </a>
+              <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
                 >
                   {t(lang, "heroCtaWa")}
                 </button>
+                <a
+                  href="#packages"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
+                >
+                  {t(lang, "heroCtaAvailability")}
+                </a>
               </div>
+              <p className="mt-3 text-xs text-white/40">{t(lang, "ctaUrgency")}</p>
             </div>
 
             <div className="lg:col-span-5">
               <HeroSlider lang={lang} items={props.heroMedia} intervalMs={2400} />
             </div>
           </div>
+        </div>
         </div>
       </Section>
 
@@ -313,7 +329,7 @@ export function ClientPage(props: Props) {
           {!globalBizType && (
             <p className="mb-3 text-sm text-white/70 italic">{t(lang, "bizTypeGateHint")}</p>
           )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {PACKAGE_CARDS.map((pkg) => {
             const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
             const detail = props.packageDetails.find((d) => d.id === pkg.id);
@@ -352,12 +368,12 @@ export function ClientPage(props: Props) {
             >
               {/* Subtle glow overlay at top */}
               <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
-              <div className="relative p-5 sm:p-6">
+              <div className="relative p-6 sm:p-8">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">{pkgIcon(detail)}</span>
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className={`text-base sm:text-lg font-bold ${cls.accent}`}>
+                      <h3 className={`text-lg sm:text-xl font-bold ${cls.accent}`}>
                         <Link href={`/product/${pkg.id}`} className="hover:text-white transition-colors">
                           {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
                         </Link>
@@ -369,8 +385,8 @@ export function ClientPage(props: Props) {
                       ) : null}
                     </div>
                     {price > 0 && (
-                      <div className="mt-1 flex items-center gap-2 flex-wrap">
-                        <span className="text-xs text-[rgb(var(--blue))]/70">
+                      <div className="mt-1.5 flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -380,12 +396,12 @@ export function ClientPage(props: Props) {
 
                 {/* Best for + Delivery (always visible) */}
                 {detail && (
-                  <div className="mt-3 space-y-1">
-                    <p className="text-xs text-white/60">
+                  <div className="mt-4 space-y-1.5 border-t border-white/[0.06] pt-4">
+                    <p className="text-[11px] text-white/50">
                       <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
                       {pickL10n(lang, detail.bestFor)}
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-[11px] text-white/50">
                       <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
                       {pickL10n(lang, detail.deliveryTime)}
                     </p>
@@ -394,7 +410,7 @@ export function ClientPage(props: Props) {
 
                 {/* Tag pills */}
                 {detail && detail.pills.length > 0 && (
-                  <div className="mt-3 flex flex-wrap gap-1.5">
+                  <div className="mt-4 flex flex-wrap gap-2">
                     {detail.pills.map((pill, i) => (
                       <span
                         key={i}
@@ -426,12 +442,12 @@ export function ClientPage(props: Props) {
                 })()}
 
                 {/* Action buttons — CTA position depends on expand state */}
-                <div className="mt-4 flex items-center gap-2">
+                <div className="mt-5 flex items-center gap-3">
                   {!isExpanded && (
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -440,7 +456,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
-                      className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-2 text-xs font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
+                      className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
                     >
                       {isExpanded ? t(lang, "less") : t(lang, "more")}
                     </button>
@@ -450,7 +466,7 @@ export function ClientPage(props: Props) {
 
               {/* Expandable accordion */}
               {detail && isExpanded && (
-                <div className="border-t border-white/15 px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200">
+                <div className="border-t border-white/15 px-6 sm:px-8 py-5 space-y-4 text-sm animate-in slide-in-from-top-2 duration-200">
                   {/* What you get */}
                   <div>
                     <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
@@ -595,7 +611,7 @@ export function ClientPage(props: Props) {
 
               {/* Collapsed summary when accordion is closed */}
               {detail && !isExpanded && (
-                <div className="border-t border-white/10 px-5 sm:px-6 py-2">
+                <div className="border-t border-white/10 px-6 sm:px-8 py-3">
                   <p className="text-[11px] text-white/45">
                     {t(lang, "pkgCollapsedSummary")}: {detail.pills.map((p) => pickL10n(lang, p)).join(", ")}
                   </p>
@@ -614,14 +630,17 @@ export function ClientPage(props: Props) {
             {props.discountConfig.percent}%
           </p>
         )}
+
+        {/* Section CTA */}
+        <SectionCta />
         </div>
       </Section>
       </div>
 
       {/* ===== Who Is This For section ===== */}
       <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <ul className="space-y-3">
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
+          <ul className="space-y-4">
             {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
                 <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
@@ -630,13 +649,14 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
+        <SectionCta />
       </Section>
 
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-5">{t(lang, "whyMeIntro")}</p>
-          <ul className="space-y-3">
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
+          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{t(lang, "whyMeIntro")}</p>
+          <ul className="space-y-4">
             {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
                 <span className="text-green-400 mt-0.5 shrink-0">✔</span>
@@ -645,14 +665,15 @@ export function ClientPage(props: Props) {
             ))}
           </ul>
         </div>
+        <SectionCta />
       </Section>
 
 
       {/* Ready Solutions section - reusing existing /solutions data */}
       {props.solutions.length > 0 && (
         <Section id="solutions" title={t(lang, "sectionSolutions")}>
-          <p className="text-sm text-white/70 mb-6">{t(lang, "solutionsIntro")}</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+          <p className="text-sm text-white/70 mb-8">{t(lang, "solutionsIntro")}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {props.solutions.map((item) => (
               <SolutionCard
                 key={item.slug}
@@ -662,18 +683,31 @@ export function ClientPage(props: Props) {
               />
             ))}
           </div>
+          <SectionCta />
         </Section>
       )}
 
+      {/* ===== Trust & Authority section ===== */}
+      <Section id="trust" title={t(lang, "trustTitle")}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl">
+          {(["trustStat1", "trustStat2", "trustStat3", "trustStat4"] as const).map((key) => (
+            <div key={key} className="trust-stat-card p-5 sm:p-6 text-center">
+              <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">{t(lang, `${key}Value`)}</div>
+              <div className="mt-2 text-xs sm:text-sm text-white/60">{t(lang, `${key}Label`)}</div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
       <Section id="contact" title={t(lang, "sectionContact")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-8 shadow-lg">
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
           <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
             >
               {t(lang, "contactWhatsApp")}
             </button>
@@ -682,20 +716,24 @@ export function ClientPage(props: Props) {
               href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
             >
               {t(lang, "contactInstagram")}
             </a>
 
             <a
               href={`mailto:${props.settings.email}`}
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
             >
               {t(lang, "contactEmail")}
             </a>
           </div>
 
-          <div className="mt-5 text-xs text-white/50">{t(lang, "replyTime")}</div>
+          <div className="mt-4 flex items-center gap-3">
+            <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
+            <span className="text-xs text-white/35">·</span>
+            <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
+          </div>
         </div>
       </Section>
 
