@@ -76,19 +76,19 @@ const PACKAGE_CARDS = [
     id: "starter",
     badge: "popular" as const,
     defaultCatalogSlug: "bars",
-    accent: "blue",
+    accent: "neutral",
   },
   {
     id: "business",
     badge: "popular" as const,
     defaultCatalogSlug: "hotels",
-    accent: "purple",
+    accent: "neutral",
   },
   {
     id: "monthly",
     badge: undefined,
     defaultCatalogSlug: "events",
-    accent: "orange",
+    accent: "neutral",
   },
 ] as const;
 
@@ -101,9 +101,7 @@ const PKG_LABELS: Record<string, Record<Lang, string>> = {
 type PkgAccent = (typeof PACKAGE_CARDS)[number]["accent"];
 
 const PKG_CLASSES: Record<PkgAccent, { card: string; glow: string; accent: string; border: string }> = {
-  blue: { card: "pkg-card--blue", glow: "pkg-glow--blue", accent: "pkg-accent--blue", border: "pkg-border--blue" },
-  purple: { card: "pkg-card--purple", glow: "pkg-glow--purple", accent: "pkg-accent--purple", border: "pkg-border--purple" },
-  orange: { card: "pkg-card--orange", glow: "pkg-glow--orange", accent: "pkg-accent--orange", border: "pkg-border--orange" },
+  neutral: { card: "pkg-card--neutral", glow: "pkg-glow--neutral", accent: "pkg-accent--neutral", border: "pkg-border--neutral" },
 };
 
 export function ClientPage(props: Props) {
@@ -372,14 +370,14 @@ export function ClientPage(props: Props) {
                         </Link>
                       </h3>
                       {pkg.badge === "popular" ? (
-                        <span className={`text-[10px] rounded-full border ${cls.border} bg-white/5 px-2.5 py-0.5 text-white/90 font-medium shadow-sm`}>
+                        <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
                           {t(lang, "popular")}
                         </span>
                       ) : null}
                     </div>
                     {price > 0 && (
                       <div className="mt-1 flex items-center gap-2 flex-wrap">
-                        <span className={`text-xs ${cls.accent} opacity-80`}>
+                        <span className="text-xs text-[rgb(var(--blue))]/70">
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -407,7 +405,7 @@ export function ClientPage(props: Props) {
                     {detail.pills.map((pill, i) => (
                       <span
                         key={i}
-                        className={`text-[11px] rounded-full border ${cls.border} bg-white/[0.04] px-2.5 py-0.5 text-white/70`}
+                        className={`text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70`}
                       >
                         {pickL10n(lang, pill)}
                       </span>
@@ -459,7 +457,7 @@ export function ClientPage(props: Props) {
 
               {/* Expandable accordion */}
               {detail && isExpanded && (
-                <div className={`border-t ${cls.border} px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200`}>
+                <div className="border-t border-white/15 px-5 sm:px-6 py-4 space-y-3 text-sm animate-in slide-in-from-top-2 duration-200">
                   {/* What you get */}
                   <div>
                     <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
