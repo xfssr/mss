@@ -8,7 +8,7 @@ import type { SolutionItem } from "@/content/solutions";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Section } from "@/components/Section";
-import { FloatingWhatsAppButton } from "@/components/FloatingWhatsAppButton";
+
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
 import { DEFAULT_LANG, STORAGE_KEY_LANG, t, type Lang } from "@/utils/i18n";
 import {
@@ -76,8 +76,6 @@ export function ProductSlugClient(props: {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
-      <FloatingWhatsAppButton onClick={onWhatsApp} />
-
       {/* Breadcrumb */}
       <div className="mx-auto max-w-4xl px-4 pt-6">
         <Link
