@@ -128,6 +128,13 @@ body {
   .pkg-card:hover { transform: none; }
 }
 
+/* Premium dark background for packages section */
+.pkg-section-bg {
+  background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
 /* Enhanced transitions for interactive elements */
 @layer utilities {
   .transition-smooth {
