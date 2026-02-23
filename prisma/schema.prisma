@@ -130,3 +130,39 @@ model Example {
 
   @@index([catalogId])
 }
+
+model CaseStudy {
+  id           String   @id @default(cuid())
+  order        Int      @default(0)
+
+  category     String
+  videoUrl     String
+
+  titleEn      String
+  titleHe      String
+
+  tagsEn       String
+  tagsHe       String
+
+  views        String   @default("—")
+  avgWatch     String   @default("—")
+  fullWatch    String   @default("—")
+  followers    String   @default("—")
+  forYou       String?
+
+  insightEn    String
+  insightHe    String
+
+  servicesEn   String
+  servicesHe   String
+
+  thumbnailUrl String
+
+  isPublished  Boolean  @default(true)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([order])
+  @@index([isPublished])
+}
