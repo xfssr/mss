@@ -47,7 +47,7 @@ export function AdminPackageEditor(props: { packages: PackageDetail[] }) {
           type="button"
           disabled={pending}
           onClick={save}
-          className="w-full rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/20 disabled:opacity-50 transition-all"
+          className="w-full rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/20 disabled:opacity-50 transition-all"
         >
           {pending ? "Saving…" : saved ? "Saved ✓" : "Save all packages"}
         </button>
@@ -117,7 +117,7 @@ export function AdminPackageEditor(props: { packages: PackageDetail[] }) {
       <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
         <legend className="text-xs text-white/55 px-1">Active</legend>
         <label className="flex items-center gap-2 text-sm text-white/80 cursor-pointer">
-          <input type="checkbox" checked={d.active !== false} onChange={(e) => updateField(id, (x) => ({ ...x, active: e.target.checked }))} className="accent-[rgb(var(--blue))]" />
+          <input type="checkbox" checked={d.active !== false} onChange={(e) => updateField(id, (x) => ({ ...x, active: e.target.checked }))} className="accent-[rgb(var(--accent))]" />
           Enable / Disable this package
         </label>
       </fieldset>
@@ -205,7 +205,7 @@ export function AdminPackageEditor(props: { packages: PackageDetail[] }) {
         type="button"
         disabled={pending}
         onClick={save}
-        className="w-full rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/20 disabled:opacity-50 transition-all"
+        className="w-full rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/20 disabled:opacity-50 transition-all"
       >
         {pending ? "Saving…" : saved ? "Saved ✓" : "Save all packages"}
       </button>

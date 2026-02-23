@@ -13,7 +13,7 @@ export function AdminLangTabs({ heContent, enContent }: { heContent: ReactNode; 
           onClick={() => setLang("he")}
           className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             lang === "he"
-              ? "bg-[rgb(var(--blue))]/20 text-[rgb(var(--blue))] border border-[rgb(var(--blue))]/30"
+              ? "bg-[rgb(var(--accent))]/20 text-[rgb(var(--accent))] border border-[rgb(var(--accent))]/30"
               : "text-white/50 hover:text-white/70 border border-transparent"
           }`}
         >
@@ -24,7 +24,7 @@ export function AdminLangTabs({ heContent, enContent }: { heContent: ReactNode; 
           onClick={() => setLang("en")}
           className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             lang === "en"
-              ? "bg-[rgb(var(--blue))]/20 text-[rgb(var(--blue))] border border-[rgb(var(--blue))]/30"
+              ? "bg-[rgb(var(--accent))]/20 text-[rgb(var(--accent))] border border-[rgb(var(--accent))]/30"
               : "text-white/50 hover:text-white/70 border border-transparent"
           }`}
         >

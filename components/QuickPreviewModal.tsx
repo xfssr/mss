@@ -169,7 +169,7 @@ export function QuickPreviewModal(props: {
           <button
             type="button"
             onClick={onChoosePackage}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/35 hover:border-[rgb(var(--accent))]/60 transition-all"
           >
             {t(lang, "previewChoosePackage")}
           </button>

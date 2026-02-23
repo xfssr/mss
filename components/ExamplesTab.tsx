@@ -111,7 +111,7 @@ export function ExamplesTab(props: {
                   onClick={() => props.onSelectExample(idx)}
                   className={[
                     "relative aspect-[16/9] overflow-hidden rounded-xl border",
-                    active ? "border-[rgb(var(--red))]/60 ring-1 ring-[rgb(var(--red))]/30" : "border-white/10 hover:border-white/20",
+                    active ? "border-[rgb(var(--accent))]/60 ring-1 ring-[rgb(var(--accent))]/30" : "border-white/10 hover:border-white/20",
                   ].join(" ")}
                   aria-label={ex.title?.[lang] || `Example ${idx + 1}`}
                 >
@@ -155,7 +155,7 @@ export function ExamplesTab(props: {
             <button
               type="button"
               onClick={props.onContinueToProduct}
-              className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30 transition-all"
+              className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30 transition-all"
             >
               {t(lang, "continueToPackage")}
             </button>

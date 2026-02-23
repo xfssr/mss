@@ -74,7 +74,7 @@ export function ProductSlugClient(props: {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
+    <div className="min-h-screen bg-gradient-to-b from-[#070A12] via-[#0D1525] to-[#121E33] text-[rgb(var(--text))]">
       <Navbar lang={lang} onSetLang={setLang} />
       {/* Breadcrumb */}
       <div className="mx-auto max-w-4xl px-4 pt-6">
@@ -126,7 +126,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
         <div className="flex items-center gap-4 mb-6">
           <span className="text-4xl">{icon}</span>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--accent))]">
               {pick(lang, pkg.title)}
             </h1>
             <p className="mt-1 text-sm text-white/70">
@@ -159,7 +159,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
 
         {/* What you get */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
             {t(lang, "sectionWhatYouGet")}
           </h2>
           <ul className="space-y-1.5">
@@ -168,7 +168,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
                 key={i}
                 className="flex items-start gap-2 text-sm text-white/80"
               >
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">
+                <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">
                   ✓
                 </span>
                 {pick(lang, item)}
@@ -207,7 +207,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
 
         {/* Best for */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-1">
             {t(lang, "sectionBestFor")}
           </h2>
           <p className="text-sm text-white/70">{pick(lang, pkg.bestFor)}</p>
@@ -216,7 +216,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
         {/* Add-ons */}
         {pkg.addOns.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+            <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-1">
               {t(lang, "addonsLabel")}
             </h2>
             <ul className="space-y-0.5">
@@ -231,7 +231,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
 
         {/* Target audience */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-1">
             {t(lang, "labelTargetAudience")}
           </h2>
           <p className="text-sm text-white/70">
@@ -244,7 +244,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
           <button
             type="button"
             onClick={handleWhatsApp}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="flex-1 inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-5 py-3.5 text-sm font-medium text-white hover:bg-[#E85D2A] transition-all"
           >
             {t(lang, "pkgWhatsApp")}
           </button>
@@ -285,7 +285,7 @@ function SolutionPage(props: {
         <div className="flex items-center gap-4 mb-4">
           <span className="text-4xl">{icon}</span>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">
+            <h1 className="text-2xl sm:text-3xl font-bold text-[rgb(var(--accent))]">
               {pick(lang, sol.label)}
             </h1>
             <p className="mt-1 text-sm text-white/70">
@@ -308,7 +308,7 @@ function SolutionPage(props: {
 
         {/* What you get */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
             {t(lang, "sectionWhatYouGet")}
           </h2>
           <ul className="space-y-1.5">
@@ -317,7 +317,7 @@ function SolutionPage(props: {
                 key={i}
                 className="flex items-start gap-2 text-sm text-white/80"
               >
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">
+                <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">
                   ✓
                 </span>
                 {pick(lang, bullet)}
@@ -328,7 +328,7 @@ function SolutionPage(props: {
 
         {/* Best for */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-1">
             {t(lang, "sectionBestFor")}
           </h2>
           <p className="text-sm text-white/70">{pick(lang, sol.bestFor)}</p>
@@ -336,13 +336,13 @@ function SolutionPage(props: {
 
         {/* Process */}
         <div className="mb-6">
-          <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
+          <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-3">
             {t(lang, "sectionProcess")}
           </h2>
           <div className="flex items-start gap-2 sm:gap-4">
             {sol.process.map((step, i) => (
               <div key={i} className="flex-1 text-center">
-                <div className="mx-auto w-8 h-8 rounded-full bg-[rgb(var(--blue))]/15 border border-[rgb(var(--blue))]/30 flex items-center justify-center text-sm font-bold text-[rgb(var(--blue))]">
+                <div className="mx-auto w-8 h-8 rounded-full bg-[rgb(var(--accent))]/15 border border-[rgb(var(--accent))]/30 flex items-center justify-center text-sm font-bold text-[rgb(var(--accent))]">
                   {i + 1}
                 </div>
                 <div className="mt-1.5 text-xs text-white/70">
@@ -356,7 +356,7 @@ function SolutionPage(props: {
         {/* Pricing range */}
         {sol.pricingTiers.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionPricingRange")}
             </h2>
             <div
@@ -385,7 +385,7 @@ function SolutionPage(props: {
         {/* Why this works */}
         {sol.whyThisWorks.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionWhyThisWorks")}
             </h2>
             <ul className="space-y-1">
@@ -394,7 +394,7 @@ function SolutionPage(props: {
                   key={i}
                   className="flex items-start gap-2 text-sm text-white/75"
                 >
-                  <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">
+                  <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">
                     →
                   </span>
                   {pick(lang, bullet)}
@@ -407,7 +407,7 @@ function SolutionPage(props: {
         {/* FAQ */}
         {sol.faq.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionFaq")}
             </h2>
             <div className="space-y-1">
@@ -440,7 +440,7 @@ function SolutionPage(props: {
         {/* Social proof */}
         {sol.socialProof.length > 0 && (
           <div className="mb-6">
-            <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h2 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionSocialProof")}
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -463,7 +463,7 @@ function SolutionPage(props: {
           <button
             type="button"
             onClick={handlePrimary}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="flex-1 inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-5 py-3.5 text-sm font-medium text-white hover:bg-[#E85D2A] transition-all"
           >
             {pick(lang, sol.ctaPrimary)}
           </button>

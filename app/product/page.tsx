@@ -328,7 +328,7 @@ export default async function ProductPage(props: {
   return (
     <main
       dir={dir}
-      className="min-h-screen bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white px-4 py-10"
+      className="min-h-screen bg-gradient-to-b from-[#070A12] via-[#0D1525] to-[#121E33] text-[rgb(var(--text))] px-4 py-10"
     >
       {/* JSON-LD */}
       <script
@@ -366,7 +366,7 @@ export default async function ProductPage(props: {
           </div>
 
           <div className="min-w-0 flex-1">
-            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--blue))]">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-[rgb(var(--accent))]">
               {ui.title}
             </h1>
 
@@ -375,7 +375,7 @@ export default async function ProductPage(props: {
             </p>
 
             {/* Info badge */}
-            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-1.5 text-xs text-[rgb(var(--blue))]">
+            <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-1.5 text-xs text-[rgb(var(--accent))]">
               <span aria-hidden="true">ℹ️</span>
               {ui.infoNote}
             </div>
@@ -393,7 +393,7 @@ export default async function ProductPage(props: {
                     <div key={pkg.id} className="rounded-xl border border-white/10 bg-black/25 p-3">
                       <div className="flex items-start justify-between gap-3 mb-2">
                         <div className="text-sm font-semibold text-white">{pickPkg(pkg.title)}</div>
-                        <div className="text-sm font-semibold text-[rgb(var(--blue))] whitespace-nowrap">
+                        <div className="text-sm font-semibold text-[rgb(var(--accent))] whitespace-nowrap">
                           ₪{pkg.priceFrom.toLocaleString()}+
                         </div>
                       </div>
@@ -466,7 +466,7 @@ export default async function ProductPage(props: {
             <div className="mt-5 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/#packages"
-                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-5 py-3 text-sm text-white/90 font-medium hover:bg-[rgb(var(--blue))]/20 hover:border-[rgb(var(--blue))]/50 transition-all"
+                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-5 py-3 text-sm text-white/90 font-medium hover:bg-[rgb(var(--accent))]/20 hover:border-[rgb(var(--accent))]/50 transition-all"
               >
                 {ui.goToCatalogs}
               </Link>

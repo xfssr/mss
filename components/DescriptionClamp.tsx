@@ -22,7 +22,7 @@ export function DescriptionClamp(props: { lang: Lang; text: string; className?: 
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="ml-1 text-[rgb(var(--blue))] hover:underline text-xs"
+          className="ml-1 text-[rgb(var(--accent))] hover:underline text-xs"
         >
           {expanded ? t(props.lang, "showLess") : t(props.lang, "showMore")}
         </button>

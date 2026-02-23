@@ -75,7 +75,7 @@ export function CategoryDetailModal(props: {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <div className="text-xs text-white/50">{pick(lang, detail.label)}</div>
-              <h2 className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--blue))]">
+              <h2 className="mt-1 text-lg sm:text-2xl font-semibold text-[rgb(var(--accent))]">
                 {pick(lang, catalogTitle)}
               </h2>
               <p className="mt-1 text-sm text-white/70">{pick(lang, catalogSubtitle)}</p>
@@ -108,13 +108,13 @@ export function CategoryDetailModal(props: {
 
           {/* B) What you get */}
           <section>
-            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionWhatYouGet")}
             </h3>
             <ul className="space-y-1.5">
               {detail.whatYouGet.map((item, i) => (
                 <li key={i} className="flex items-start gap-2 text-sm text-white/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✓</span>
+                  <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">✓</span>
                   {pick(lang, item)}
                 </li>
               ))}
@@ -123,7 +123,7 @@ export function CategoryDetailModal(props: {
 
           {/* C) Best for */}
           <section>
-            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-1">
+            <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-1">
               {t(lang, "sectionBestFor")}
             </h3>
             <p className="text-sm text-white/70">{pick(lang, detail.bestFor)}</p>
@@ -131,13 +131,13 @@ export function CategoryDetailModal(props: {
 
           {/* D) Process timeline */}
           <section>
-            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-3">
+            <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-3">
               {t(lang, "sectionProcess")}
             </h3>
             <div className="flex items-start gap-2 sm:gap-4">
               {detail.process.map((step, i) => (
                 <div key={i} className="flex-1 text-center">
-                  <div className="mx-auto w-8 h-8 rounded-full bg-[rgb(var(--blue))]/15 border border-[rgb(var(--blue))]/30 flex items-center justify-center text-sm font-bold text-[rgb(var(--blue))]">
+                  <div className="mx-auto w-8 h-8 rounded-full bg-[rgb(var(--accent))]/15 border border-[rgb(var(--accent))]/30 flex items-center justify-center text-sm font-bold text-[rgb(var(--accent))]">
                     {i + 1}
                   </div>
                   <div className="mt-1.5 text-xs text-white/70">{pick(lang, step.title)}</div>
@@ -148,7 +148,7 @@ export function CategoryDetailModal(props: {
 
           {/* E) Pricing range */}
           <section>
-            <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+            <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
               {t(lang, "sectionPricingRange")}
             </h3>
             <div className="grid grid-cols-3 gap-2">
@@ -165,13 +165,13 @@ export function CategoryDetailModal(props: {
           {/* F) Why this works */}
           {detail.whyThisWorks.length > 0 && (
             <section>
-              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
                 {t(lang, "sectionWhyThisWorks")}
               </h3>
               <ul className="space-y-1">
                 {detail.whyThisWorks.map((item, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm text-white/75">
-                    <span className="text-[rgb(var(--red))] mt-0.5 shrink-0">→</span>
+                    <span className="text-[rgb(var(--accent))] mt-0.5 shrink-0">→</span>
                     {pick(lang, item)}
                   </li>
                 ))}
@@ -182,7 +182,7 @@ export function CategoryDetailModal(props: {
           {/* G) FAQ accordion */}
           {detail.faq.length > 0 && (
             <section>
-              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
                 {t(lang, "sectionFaq")}
               </h3>
               <div className="space-y-1">
@@ -208,7 +208,7 @@ export function CategoryDetailModal(props: {
           {/* H) Social proof placeholders */}
           {detail.socialProof.length > 0 && (
             <section>
-              <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
+              <h3 className="text-sm font-semibold text-[rgb(var(--accent))] mb-2">
                 {t(lang, "sectionSocialProof")}
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -229,7 +229,7 @@ export function CategoryDetailModal(props: {
             <button
               type="button"
               onClick={onPrimary}
-              className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200"
+              className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/35 hover:border-[rgb(var(--accent))]/60 transition-all duration-200"
             >
               {pick(lang, detail.ctaPrimary)}
             </button>

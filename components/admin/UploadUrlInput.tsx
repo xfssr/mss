@@ -102,7 +102,7 @@ export function UploadUrlInput(props: Props) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder={props.placeholder ?? "URL or Upload"}
-          className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--blue))]"
+          className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]"
         />
 
         <input
@@ -128,7 +128,7 @@ export function UploadUrlInput(props: Props) {
         </button>
       </div>
 
-      {error ? <div className="mt-2 text-xs text-[rgb(var(--red))]">{error}</div> : null}
+      {error ? <div className="mt-2 text-xs text-[rgb(var(--accent))]">{error}</div> : null}
 
       {hasPreview ? (
         <div className="mt-2 overflow-hidden rounded-xl border border-white/10 bg-black/20">

@@ -7,8 +7,8 @@ import { WHATSAPP_PHONE } from "@/utils/whatsapp";
 
 export function Footer(props: { lang: Lang }) {
   return (
-    <footer className="border-t border-white/10 bg-black/20 backdrop-blur-sm">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 pb-24 sm:pb-12 text-sm text-white/50">
+    <footer className="border-t border-white/[0.08] bg-[#070A12]/60 backdrop-blur-sm">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 pb-24 sm:pb-12 text-sm text-[rgb(var(--text2))]/50">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="font-medium">© {new Date().getFullYear()} Micro-Screen Studio</div>
           <div className="flex items-center gap-4">
@@ -58,13 +58,13 @@ export function Footer(props: { lang: Lang }) {
               </svg>
             </a>
             <a
-              className="hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-3 py-2 transition-all hover:bg-white/5"
+              className="hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-3 py-2 transition-all hover:bg-white/5"
               href="#top"
             >
               {t(props.lang, "footerTop")}
             </a>
             <a
-              className="hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-3 py-2 transition-all hover:bg-white/5"
+              className="hover:text-white/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-3 py-2 transition-all hover:bg-white/5"
               href="#packages"
             >
               {t(props.lang, "footerCatalog")}

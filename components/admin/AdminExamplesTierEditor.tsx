@@ -101,7 +101,7 @@ export function AdminExamplesTierEditor(props: {
             onClick={() => setActiveTier(i as 0 | 1 | 2)}
             className={`rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
               activeTier === i
-                ? "bg-[rgb(var(--blue))]/20 border border-[rgb(var(--blue))]/40 text-white"
+                ? "bg-[rgb(var(--accent))]/20 border border-[rgb(var(--accent))]/40 text-white"
                 : "bg-white/[0.04] border border-white/10 text-white/60 hover:bg-white/[0.08]"
             }`}
           >
@@ -155,7 +155,7 @@ export function AdminExamplesTierEditor(props: {
         type="button"
         disabled={pending}
         onClick={save}
-        className="w-full rounded-xl border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-4 py-2 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/20 disabled:opacity-50 transition-all"
+        className="w-full rounded-xl border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-4 py-2 text-sm font-medium text-white hover:bg-[rgb(var(--accent))]/20 disabled:opacity-50 transition-all"
       >
         {pending ? "Saving…" : saved ? "Tier assignments saved ✓" : "Save tier assignments"}
       </button>

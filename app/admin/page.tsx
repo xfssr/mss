@@ -79,7 +79,7 @@ export default async function AdminPage() {
       <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-8 space-y-4">
         {/* ─── Homepage content ─── */}
         <section id="homepage" className="cc-glass rounded-3xl p-6">
-          <h2 className="text-xl font-semibold text-[rgb(var(--blue))]">Homepage content</h2>
+          <h2 className="text-xl font-semibold text-[rgb(var(--accent))]">Homepage content</h2>
           <p className="text-xs text-white/40 mt-1">Hero, promo, about &amp; contact texts for the main page</p>
 
           <form action={updateSettings} className="mt-4">
@@ -145,7 +145,7 @@ export default async function AdminPage() {
               </label>
             </div>
 
-            <button className="mt-4 w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+            <button className="mt-4 w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
               Save settings
             </button>
           </form>
@@ -212,7 +212,7 @@ export default async function AdminPage() {
               </label>
             </div>
 
-            <button className="lg:col-span-3 mt-2 rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+            <button className="lg:col-span-3 mt-2 rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
               Save pricing config
             </button>
           </form>
@@ -240,7 +240,7 @@ export default async function AdminPage() {
               <input name="discountLabelEn" defaultValue={discountConfig.labelEn} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
             </label>
             <div className="flex items-end">
-              <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+              <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                 Save discount config
               </button>
             </div>
@@ -269,7 +269,7 @@ export default async function AdminPage() {
             <input name="order" type="number" defaultValue={h.order} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
           </label>
 
-          <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+          <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
             Save
           </button>
         </div>
@@ -304,7 +304,7 @@ export default async function AdminPage() {
                   <input name="order" type="number" defaultValue={0} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
                 </label>
 
-                <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                   Create hero slide
                 </button>
               </div>
@@ -364,7 +364,7 @@ export default async function AdminPage() {
             <input name="order" type="number" defaultValue={p.order} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
           </label>
           <div className="flex items-end">
-            <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+            <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
               Save
             </button>
           </div>
@@ -415,7 +415,7 @@ export default async function AdminPage() {
                   <span className="text-[11px] text-white/55">Order</span>
                   <input name="order" type="number" defaultValue={0} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none" />
                 </label>
-                <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                   Create price item
                 </button>
               </div>
@@ -517,7 +517,7 @@ export default async function AdminPage() {
                       <textarea name="promoVideoDescriptionEn" defaultValue={c.promoVideoDescriptionEn} rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
                     </label>
 
-                    <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                    <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                       Save catalog
                     </button>
                   </div>
@@ -590,7 +590,7 @@ export default async function AdminPage() {
                                 <textarea name="descriptionEn" defaultValue={e.descriptionEn} rows={5} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
                               </label>
 
-                              <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                              <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                                 Save example
                               </button>
                             </div>
@@ -639,7 +639,7 @@ export default async function AdminPage() {
                           <span className="text-[11px] text-white/55">Description EN</span>
                           <textarea name="descriptionEn" defaultValue="" rows={5} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
                         </label>
-                        <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                        <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                           Create example
                         </button>
                       </div>
@@ -744,7 +744,7 @@ export default async function AdminPage() {
                   <textarea name="promoVideoDescriptionEn" defaultValue="" rows={3} className="mt-1 w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-sm text-white outline-none resize-none" />
                 </label>
 
-                <button className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30">
+                <button className="w-full rounded-xl border border-[rgb(var(--accent))]/40 bg-[rgb(var(--accent))]/20 px-4 py-3 text-sm text-white hover:bg-[rgb(var(--accent))]/30">
                   Create catalog
                 </button>
               </div>

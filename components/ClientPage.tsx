@@ -74,7 +74,7 @@ function pkgIcon(detail?: PackageDetail): string {
 const PACKAGE_CARDS = [
   {
     id: "starter",
-    badge: "popular" as const,
+    badge: undefined,
     defaultCatalogSlug: "bars",
     accent: "neutral",
   },
@@ -209,17 +209,17 @@ export function ClientPage(props: Props) {
         <button
           type="button"
           onClick={onSendWhatsApp}
-          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+          className="inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-6 py-3 text-sm font-medium text-white hover:bg-[#E85D2A] transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
         >
           {t(lang, "sectionCtaWa")}
         </button>
-        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
+        <span className="text-xs text-[rgb(var(--text2))]/50">{t(lang, "ctaUrgency")}</span>
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
+    <div className="min-h-dvh-safe bg-gradient-to-b from-[#070A12] via-[#0D1525] to-[#121E33] text-[rgb(var(--text))]">
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="top">
@@ -227,25 +227,25 @@ export function ClientPage(props: Props) {
         <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{t(lang, "heroHeadline")}</h1>
-              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
+              <h1 className="font-bold text-[rgb(var(--accent))] leading-tight">{t(lang, "heroHeadline")}</h1>
+              <p className="mt-6 text-base sm:text-lg text-[rgb(var(--text2))] leading-relaxed max-w-xl">{t(lang, "heroSupporting")}</p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+                  className="inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-7 py-4 text-base font-semibold text-white hover:bg-[#E85D2A] transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[#FF8C42]/20"
                 >
                   {t(lang, "heroCtaWa")}
                 </button>
                 <a
                   href="#packages"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--accent))]/30 bg-transparent px-6 py-4 text-sm font-medium text-white/80 hover:bg-[rgb(var(--accent))]/10 hover:border-[rgb(var(--accent))]/50 transition-all duration-200 hover:-translate-y-0.5"
                 >
                   {t(lang, "heroCtaAvailability")}
                 </a>
               </div>
-              <p className="mt-3 text-xs text-white/40">{t(lang, "ctaUrgency")}</p>
+              <p className="mt-3 text-xs text-[rgb(var(--text2))]/50">{t(lang, "ctaUrgency")}</p>
             </div>
 
             <div className="lg:col-span-5">
@@ -340,14 +340,14 @@ export function ClientPage(props: Props) {
                         </Link>
                       </h3>
                       {pkg.badge === "popular" ? (
-                        <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                        <span className="text-[10px] rounded-full border border-[#CFA34D]/40 bg-[#CFA34D]/15 px-2.5 py-0.5 text-[#CFA34D] font-medium shadow-sm">
                           {t(lang, "popular")}
                         </span>
                       ) : null}
                     </div>
                     {price > 0 && (
                       <div className="mt-1.5 flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
+                        <span className="text-sm font-semibold text-[rgb(var(--accent))]/80">
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -408,7 +408,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                      className="inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-5 py-2.5 text-sm font-medium text-white hover:bg-[#E85D2A] transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -492,7 +492,7 @@ export function ClientPage(props: Props) {
                                 type="checkbox"
                                 checked={!!selectedAddons[addon.id]}
                                 onChange={() => toggleAddon(addon.id)}
-                                className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
+                                className="accent-[rgb(var(--accent))] w-4 h-4 shrink-0"
                               />
                               <div className="min-w-0">
                                 <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
@@ -549,7 +549,7 @@ export function ClientPage(props: Props) {
 
                   {/* Final total line for Monthly (package after discount + add-ons) */}
                   {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                    <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
+                    <div className="rounded-lg border border-[rgb(var(--accent))]/30 bg-[rgb(var(--accent))]/10 px-3 py-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
                         <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
@@ -562,7 +562,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                      className="w-full inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-4 py-3 text-sm font-medium text-white hover:bg-[#E85D2A] transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -585,7 +585,7 @@ export function ClientPage(props: Props) {
 
         {/* First-time discount note */}
         {props.discountConfig.enabled && (
-          <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
+          <p className="mt-4 text-xs text-[rgb(var(--accent))]/70">
             🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
             {" — "}
             {props.discountConfig.percent}%
@@ -603,8 +603,8 @@ export function ClientPage(props: Props) {
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
           <ul className="space-y-4">
             {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-[rgb(var(--text2))]">
+                <span className="text-[rgb(var(--gold))] mt-0.5 shrink-0">●</span>
                 {t(lang, key)}
               </li>
             ))}
@@ -615,11 +615,11 @@ export function ClientPage(props: Props) {
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
-          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{t(lang, "whyMeIntro")}</p>
+          <p className="text-sm sm:text-base text-[rgb(var(--text2))]/80 whitespace-pre-line leading-relaxed mb-6">{t(lang, "whyMeIntro")}</p>
           <ul className="space-y-4">
             {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-[rgb(var(--text2))]">
+                <span className="text-[rgb(var(--gold))] mt-0.5 shrink-0">✔</span>
                 {t(lang, key)}
               </li>
             ))}
@@ -650,7 +650,7 @@ export function ClientPage(props: Props) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl">
           {(["trustStat1", "trustStat2", "trustStat3", "trustStat4"] as const).map((key) => (
             <div key={key} className="trust-stat-card p-5 sm:p-6 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">{t(lang, `${key}Value`)}</div>
+              <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--accent))]">{t(lang, `${key}Value`)}</div>
               <div className="mt-2 text-xs sm:text-sm text-white/60">{t(lang, `${key}Label`)}</div>
             </div>
           ))}
@@ -659,13 +659,13 @@ export function ClientPage(props: Props) {
 
       <Section id="contact" title={t(lang, "sectionContact")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
-          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
+          <div className="text-sm sm:text-base text-[rgb(var(--text2))] whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+              className="inline-flex items-center justify-center rounded-xl bg-[#FF8C42] px-7 py-4 text-base font-semibold text-white hover:bg-[#E85D2A] transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[#FF8C42]/20"
             >
               {t(lang, "contactWhatsApp")}
             </button>
@@ -674,23 +674,23 @@ export function ClientPage(props: Props) {
               href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.10] hover:border-white/15 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
             >
               {t(lang, "contactInstagram")}
             </a>
 
             <a
               href={`mailto:${props.settings.email}`}
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.10] hover:border-white/15 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
             >
               {t(lang, "contactEmail")}
             </a>
           </div>
 
           <div className="mt-4 flex items-center gap-3">
-            <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
+            <div className="text-xs text-[rgb(var(--text2))]/60">{t(lang, "replyTime")}</div>
             <span className="text-xs text-white/35">·</span>
-            <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
+            <div className="text-xs text-[rgb(var(--text2))]/50">{t(lang, "ctaUrgency")}</div>
           </div>
         </div>
       </Section>
