@@ -271,7 +271,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
             >
               {/* video preview (9:16 frame) */}
-              <div className="relative aspect-[9/16] max-h-[280px] bg-gradient-to-b from-white/[0.03] to-transparent overflow-hidden">
+              <div className="relative aspect-[9/16] max-h-[280px] bg-gradient-to-b from-white/[0.03] to-transparent overflow-hidden" aria-hidden="true">
                 <div className="absolute inset-0 flex items-center justify-center text-white/30 group-hover:text-white/60 transition-colors duration-300">
                   <div className="rounded-full bg-white/10 p-3 backdrop-blur-sm border border-white/10 group-hover:bg-white/20 transition-all duration-300">
                     <IconPlay />
@@ -316,6 +316,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                   href={cs.videoUrl}
                   target="_blank"
                   rel="noreferrer noopener"
+                  aria-label={`${tx.cta} — ${cs.title[lang]}`}
                   className="mt-4 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
                 >
                   {tx.cta}
