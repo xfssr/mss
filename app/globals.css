@@ -3,14 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --bg0: 10 10 12;
-  --bg1: 18 18 20;
-  --blue: 198 167 94;
-  --red: 198 167 94;
-  --gold: 198 167 94;
-  --gold-dark: 142 123 79;
-  --text: 245 243 238;
-  --text-secondary: 185 181 172;
+  --bg0: 7 11 20;
+  --bg1: 14 22 37;
+  --blue: 27 42 68;
+  --red: 200 30 30;
+  --text: 243 245 248;
+  --text-secondary: 169 178 195;
   --stroke: 255 255 255;
 }
 
@@ -36,7 +34,7 @@ html {
 
 body {
   color: rgb(var(--text));
-  background: #0A0A0C;
+  background: linear-gradient(180deg, #070B14 0%, #0E1625 100%);
   background-attachment: fixed;
 }
 
@@ -48,13 +46,13 @@ body {
 }
 
 ::selection { 
-  background: rgba(var(--gold) / 0.35);
+  background: rgba(var(--red) / 0.35);
   color: rgb(var(--text));
 }
 
 @media (max-width: 640px) {
   .cc-glass {
-    background: rgba(20, 20, 22, 0.92) !important;
+    background: rgba(7, 11, 20, 0.95) !important;
     backdrop-filter: blur(4px) !important;
   }
   .cc-glare { opacity: 0.18 !important; }
@@ -64,15 +62,15 @@ body {
 
 /* Dense glass for readability */
 .cc-glass {
-  background: rgba(20, 20, 22, 0.75);
+  background: rgba(7, 11, 20, 0.70);
   border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px) saturate(1.2);
   transition: all 0.3s ease;
 }
 
 .cc-glass:hover {
-  background: rgba(20, 20, 22, 0.85);
-  border-color: rgba(198, 167, 94, 0.2);
+  background: rgba(14, 22, 37, 0.80);
+  border-color: rgba(255, 255, 255, 0.10);
 }
 
 
@@ -104,28 +102,28 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Package card — luxury fine dining style */
+/* Package card — deep navy premium style */
 .pkg-card {
-  background: #141416;
-  border: 1px solid rgba(198, 167, 94, 0.3);
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(12px) saturate(1.2);
   border-radius: 1rem;
-  box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
   transition: transform 250ms ease, background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
 }
 .pkg-card:hover {
-  transform: translateY(-4px);
-  background: #1a1a1e;
-  border-color: rgba(198, 167, 94, 0.55);
+  transform: translateY(-6px);
+  background: #1a2438;
+  border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 8px 24px -4px rgba(0, 0, 0, 0.3);
 }
 
-/* Neutral package card styling — uses gold accent */
-.pkg-card--neutral { box-shadow: none; }
-.pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); }
-.pkg-accent--neutral { color: #C6A75E; }
+/* Neutral package card styling — uses blue highlight accent */
+.pkg-card--neutral { box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35); }
+.pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.45); }
+.pkg-accent--neutral { color: #F3F5F8; }
 .pkg-glow--neutral { background: none; }
-.pkg-border--neutral { border-color: rgba(198, 167, 94, 0.2); }
+.pkg-border--neutral { border-color: rgba(255, 255, 255, 0.06); }
 
 @media (prefers-reduced-motion: reduce) {
   .pkg-card:hover { transform: none; }
@@ -138,7 +136,7 @@ body {
 
 /* Premium dark background for packages section */
 .pkg-section-bg {
-  background: #121214;
+  background: #0E1625;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
@@ -151,7 +149,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(198, 167, 94, 0.02), transparent 70%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27, 42, 68, 0.04), transparent 70%);
   pointer-events: none;
 }
 
@@ -163,21 +161,21 @@ body {
   content: "";
   position: absolute;
   inset: -40px;
-  background: radial-gradient(ellipse at center, transparent 40%, rgba(10, 10, 12, 0.7) 100%);
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(7, 11, 20, 0.7) 100%);
   pointer-events: none;
   z-index: 0;
 }
 
 /* Trust section stat card */
 .trust-stat-card {
-  background: #141416;
-  border: 1px solid rgba(198, 167, 94, 0.15);
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   border-radius: 1rem;
   transition: border-color 250ms ease, box-shadow 250ms ease;
 }
 .trust-stat-card:hover {
-  border-color: rgba(198, 167, 94, 0.35);
+  border-color: rgba(255, 255, 255, 0.12);
   box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.3);
 }
 
@@ -196,7 +194,7 @@ body {
   }
   
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A75E] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C81E1E] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
   }
 
   .safe-area-pb {
@@ -209,17 +207,21 @@ body {
   }
 }
 
-/* Improved typography — luxury fine dining */
+/* Typography — clean modern sans-serif */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: 0.01em;
+    letter-spacing: -0.01em;
   }
 
-  h1, h2 {
-    font-family: 'Playfair Display', Georgia, serif;
-    letter-spacing: 0.03em;
+  h1 {
+    font-size: clamp(30px, 4vw, 54px);
+  }
+
+  h2 {
+    font-size: clamp(22px, 2.8vw, 34px);
+    letter-spacing: 0.02em;
   }
   
   p {

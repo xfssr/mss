@@ -23,7 +23,7 @@ export function HeroSlider(props: { lang: Lang; items: HeroMedia[]; intervalMs?:
   if (!safeItems.length) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-[#C6A75E]/20 bg-black/25 shadow-2xl backdrop-blur-sm">
+    <div className="relative overflow-hidden rounded-3xl border border-white/[0.06] bg-black/25 shadow-2xl backdrop-blur-sm">
       <div className="relative aspect-[16/10] sm:aspect-[16/9]">
         {safeItems.map((it, i) => {
           const active = i === idx;
@@ -59,7 +59,7 @@ export function HeroSlider(props: { lang: Lang; items: HeroMedia[]; intervalMs?:
               onClick={() => setIdx(i)}
               className={[
                 "h-1.5 rounded-full transition-all duration-300",
-                i === idx ? "w-6 bg-[#C6A75E]" : "w-1.5 bg-white/30 hover:bg-white/50",
+                i === idx ? "w-6 bg-[#F3F5F8]" : "w-1.5 bg-white/30 hover:bg-white/50",
               ].join(" ")}
               aria-label={`Go to slide ${i + 1}`}
             />

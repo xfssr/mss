@@ -13,19 +13,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        gold: {
-          DEFAULT: "#C6A75E",
-          dark: "#8E7B4F",
-          light: "#D4BA7A",
+        navy: {
+          DEFAULT: "#070B14",
+          light: "#0E1625",
+          highlight: "#1B2A44",
+          card: "#111827",
         },
-        luxury: {
-          bg: "#0A0A0C",
-          card: "#141416",
-          surface: "#121214",
+        cta: {
+          DEFAULT: "#C81E1E",
+          hover: "#E02D2D",
+          dark: "#B11226",
         },
-      },
-      fontFamily: {
-        serif: ["'Playfair Display'", "Georgia", "serif"],
       },
     },
   },
