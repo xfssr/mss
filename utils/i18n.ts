@@ -119,7 +119,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "לבחור חבילה זו",
 
-    choosePackage: "בחרו חבילת צילום שמתאימה לעסק",
+    choosePackage: "בחרו את החבילה המתאימה לעסק שלכם",
     choosePackageSubtitle: "בחרו חבילה מוכנה או בנו חבילה מותאמת אישית — וממשיכים להזמנה.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4 שעות · 6 רילס · 20 תמונות",
@@ -275,12 +275,13 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Food & hospitality redesign
     heroHeadline: "תוכן שמוכר אוכל וחוויה",
-    heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג ועסקי אוכל בישראל.",
+    heroSub: "סרטוני וידאו קצרים למסעדות, ברים, בתי קפה, מאפיות, קייטרינג, אולמות אירועים ומותגי אוכל בישראל.",
+    heroSupporting: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים.",
     heroBullet1: "הופכים מנות, קוקטיילים ואווירה לתוכן שמביא לקוחות אמיתיים",
     heroBullet2: "מגדילים חשיפה לעסקי אוכל ואירוח",
     heroBullet3: "מביאים יותר לקוחות לעסק שלכם",
     heroCtaAvailability: "בדוק זמינות",
-    heroCtaWa: "WhatsApp עכשיו",
+    heroCtaWa: "וואטסאפ עכשיו",
 
     problemTitle: "למה עסקי אוכל ואירוח מתקשים ברשתות?",
     problemIntro: "עסקי אוכל ואירוח רבים מפסידים הכנסות כי:",
@@ -297,8 +298,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionPoint4: "אירועים, שירות ואישיות המותג",
     solutionOutro: "אני לא רק מצלם אוכל.\nאני מתמקד במנות שמוכרות, באווירה שמושכת ובתוכן שנבנה לחשיפה אמיתית.",
 
-    whyMeTitle: "למה לעבוד איתי?",
-    whyMeIntro: "עבדתי בתחום האירוח ואני מבין איך עסקי אוכל פועלים.\nאני יודע לזהות מנות שמוכרות ולהפוך אותן לתוכן שמביא לקוחות.",
+    whyMeTitle: "יותר מצילום",
+    whyMeIntro: "אני מתמקד במנות שמוכרות, באווירה שממירה צפיות ללקוחות ובתוכן שמיועד לחשיפה. עם ניסיון בתחום האירוח, אני מבין זרימת שירות, שעות עומס ופסיכולוגיית לקוחות.",
     whyMePoint1: "רקע באירוח ועסקי אוכל",
     whyMePoint2: "מבין את זרימת השירות",
     whyMePoint3: "מכיר שעות שיא",
@@ -306,12 +307,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whyMePoint5: "זמן אספקה מהיר",
 
     // Who is this for section
-    whoIsThisForTitle: "השירות מתאים ל:",
+    whoIsThisForTitle: "למי זה מתאים?",
     whoIsThisFor1: "מסעדות וברים",
     whoIsThisFor2: "בתי קפה ומאפיות",
     whoIsThisFor3: "אולמות אירועים וקייטרינג",
     whoIsThisFor4: "שפים ומותגים אישיים",
-    whoIsThisFor5: "מותגי אוכל בריא",
+    whoIsThisFor5: "אוכל בריא וקונספטים מיוחדים",
+    whoIsThisFor6: "ברי קוקטייל וקונספטים ליליים",
+    whoIsThisFor7: "מקומות בראנץ' ובוקר",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -423,7 +426,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     pickThis: "Pick this package",
 
-    choosePackage: "Choose a photo package that fits your business",
+    choosePackage: "Choose the Right Package for Your Business",
     choosePackageSubtitle: "Pick a ready-made package or build your own — then proceed to order.",
     pkgStarter: "Starter",
     pkgStarterDesc: "4h · 6 reels · 20 photos",
@@ -579,7 +582,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Food & hospitality redesign
     heroHeadline: "Content That Sells Food & Experience",
-    heroSub: "Short-form videos for restaurants, bars, coffee shops, bakeries, catering and food brands in Israel.",
+    heroSub: "Short-form video content for restaurants, bars, coffee shops, bakeries, catering, event venues and food brands in Israel.",
+    heroSupporting: "Turn your dishes, drinks and atmosphere into content that attracts real customers.",
     heroBullet1: "Turn your dishes, drinks and atmosphere into content that attracts real customers",
     heroBullet2: "Increase visibility for your food & hospitality business",
     heroBullet3: "Bring more customers through your doors",
@@ -601,8 +605,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     solutionPoint4: "Events, service and brand personality",
     solutionOutro: "I don't just film food.\nI focus on dishes that sell, atmosphere that converts and content built for visibility.",
 
-    whyMeTitle: "Why Work With Me",
-    whyMeIntro: "I worked in hospitality and understand how food & hospitality businesses operate.\nI know how to identify dishes that sell and turn them into content that brings customers.",
+    whyMeTitle: "More Than Just Filming",
+    whyMeIntro: "I focus on dishes that sell, atmosphere that converts and content built for visibility. With experience in hospitality, I understand service flow, peak hours and guest psychology.",
     whyMePoint1: "Background in food & hospitality",
     whyMePoint2: "Understand service flow",
     whyMePoint3: "Know peak hours",
@@ -610,12 +614,14 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     whyMePoint5: "Fast turnaround",
 
     // Who is this for section
-    whoIsThisForTitle: "This service is perfect for:",
+    whoIsThisForTitle: "Who Is This For?",
     whoIsThisFor1: "Restaurants & Bars",
-    whoIsThisFor2: "Coffee shops & Bakeries",
-    whoIsThisFor3: "Event venues & Catering",
-    whoIsThisFor4: "Chefs & Personal brands",
-    whoIsThisFor5: "Healthy food brands",
+    whoIsThisFor2: "Coffee Shops & Bakeries",
+    whoIsThisFor3: "Event Venues & Catering",
+    whoIsThisFor4: "Chefs & Personal Brands",
+    whoIsThisFor5: "Healthy Food & Specialty Concepts",
+    whoIsThisFor6: "Cocktail Bars & Night Concepts",
+    whoIsThisFor7: "Breakfast & Brunch Spots",
   },
 };
 

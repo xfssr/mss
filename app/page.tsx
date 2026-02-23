@@ -58,12 +58,13 @@ export default async function Page() {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "ProfessionalService",
+        "@type": ["ProfessionalService", "LocalBusiness"],
         "@id": `${siteUrl}#service`,
         name: SEO.siteName,
         url: siteUrl,
         image: `${siteUrl}/og.jpg`,
         description: SEO.description,
+        priceRange: "$$",
         areaServed: [
           { "@type": "Country", "@id": "#country-il", name: "Israel" },
           {
@@ -71,6 +72,18 @@ export default async function Page() {
             name: "Tel Aviv-Yafo",
             containedInPlace: { "@id": "#country-il" },
           },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          addressCountry: "IL",
+          addressLocality: "Tel Aviv-Yafo",
+        },
+        knowsAbout: [
+          "Food marketing",
+          "Restaurant content",
+          "Instagram reels for restaurants",
+          "Hospitality marketing Israel",
+          "Restaurant video content Israel",
         ],
         sameAs: [...SAME_AS],
         contactPoint: {
