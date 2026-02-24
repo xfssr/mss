@@ -3,11 +3,6 @@ export type Lang = "he" | "en";
 export const DEFAULT_LANG: Lang = "he";
 export const STORAGE_KEY_LANG = "cc_lang_v1";
 
-export const DIR_BY_LANG: Record<Lang, "rtl" | "ltr"> = {
-  he: "rtl",
-  en: "ltr",
-};
-
 export const STRINGS: Record<Lang, Record<string, string>> = {
   he: {
     appName: "Micro-Screen Studio",

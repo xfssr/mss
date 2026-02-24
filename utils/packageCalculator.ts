@@ -13,17 +13,6 @@ export type PackageDraft = {
   targetingSetup: boolean;
 };
 
-export const DEFAULT_PACKAGE: PackageDraft = {
-  duration: "4h",
-  reels: 3,
-  photos: 20,
-  monthlyPlan: "none",
-  socialManagement: false,
-  targetingSetup: false,
-};
-
-export const STORAGE_KEY_PACKAGE = "cc_package_v2";
-
 type Line = { label: string; amount: number };
 
 function durationLabel(lang: Lang, d: ShootDuration) {

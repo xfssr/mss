@@ -27,11 +27,6 @@ export async function getCategoryDetails(): Promise<CategoryDetail[]> {
   return [...stored, ...missing];
 }
 
-export async function getCategoryDetailBySlug(slug: string): Promise<CategoryDetail | undefined> {
-  const all = await getCategoryDetails();
-  return all.find((d) => d.slug === slug);
-}
-
 export async function saveCategoryDetails(details: CategoryDetail[]): Promise<void> {
   try {
     const row = await prisma.siteSettings.findFirst({ where: { id: 1 } });
