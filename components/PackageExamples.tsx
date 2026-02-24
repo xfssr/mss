@@ -30,16 +30,6 @@ function catalogSlugForType(key: BusinessTypeKey): string {
   }
 }
 
-/** Derive business type options from catalog data (single source of truth). */
-export function getBusinessTypesFromCatalogs(catalogs: Catalog[]): { key: string; label: { he: string; en: string } }[] {
-  return catalogs
-    .filter((c) => c.slug !== "restaurant-menu-website")
-    .map((c) => ({
-      key: c.slug,
-      label: c.title,
-    }));
-}
-
 /** Skeleton placeholder for a single thumbnail slot. */
 function ThumbSkeleton() {
   return (

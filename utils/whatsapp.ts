@@ -1,8 +1,6 @@
 import type { Lang } from "@/utils/i18n";
 
 export const WHATSAPP_PHONE = process.env.NEXT_PUBLIC_WHATSAPP_PHONE || "15551234567";
-export const STORAGE_KEY_RESERVATION = "cc_reservation_v3";
-
 export type ReservationDraft = {
   date: string;
   time: string;
@@ -38,27 +36,6 @@ export function openWhatsApp(url: string) {
     window.location.href = url;
   } else {
     window.open(url, "_blank", "noopener,noreferrer");
-  }
-}
-
-export async function copyToClipboard(text: string) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    try {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      document.body.appendChild(ta);
-      ta.select();
-      const ok = document.execCommand("copy");
-      document.body.removeChild(ta);
-      return ok;
-    } catch {
-      return false;
-    }
   }
 }
 
