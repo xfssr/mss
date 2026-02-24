@@ -27,6 +27,7 @@ import { AddOnDetailModal } from "@/components/AddOnDetailModal";
 import { CaseStudiesSection } from "@/components/CaseStudiesSection";
 import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
 import { PackageExamples } from "@/components/PackageExamples";
+import { PackageExamplesFromApi } from "@/components/PackageExamplesFromApi";
 import { packageIdToTier } from "@/utils/tierExamples";
 import { MONTHLY_ADDONS, type AddonConfig } from "@/config/addons";
 import { useLocalStorageState } from "@/hooks/useLocalStorageState";
@@ -551,6 +552,11 @@ export function ClientPage(props: Props) {
                   )}
 
                   {/* WhatsApp CTA — shown at bottom when details are expanded */}
+                  <PackageExamplesFromApi
+                    lang={lang}
+                    tierKey={`tier${packageIdToTier(pkg.id)}`}
+                    catalogKey={pkg.defaultCatalogSlug}
+                  />
                   <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
                     <button
                       type="button"
