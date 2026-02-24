@@ -37,6 +37,7 @@ export function ExamplesGalleryViewer(props: {
   const [animating, setAnimating] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   const max = Math.max(0, items.length - 1);
@@ -48,6 +49,15 @@ export function ExamplesGalleryViewer(props: {
     setIdx(props.startIndex);
     setDirection(null);
   }, [props.startIndex, items]);
+
+  // Programmatically trigger play for iOS Safari where autoPlay attribute alone may not work
+  useEffect(() => {
+    if (!open || reducedMotion) return;
+    const v = videoRef.current;
+    if (v) {
+      v.play().catch(() => {/* ignore – browser blocked autoplay */});
+    }
+  }, [open, safeIdx, reducedMotion]);
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -177,6 +187,7 @@ export function ExamplesGalleryViewer(props: {
           >
             {isVideo && mediaSrc ? (
               <video
+                ref={videoRef}
                 src={mediaSrc}
                 autoPlay={!reducedMotion}
                 muted

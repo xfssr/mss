@@ -55,7 +55,8 @@ function ExampleThumb(props: {
 }) {
   const { ex, lang, onClick } = props;
   const isVideo = ex.mediaType === "VIDEO";
-  const thumbSrc = isVideo ? (ex.posterUrl || ex.mediaUrl) : ex.mediaUrl;
+  const hasPoster = isVideo && !!ex.posterUrl;
+  const thumbSrc = isVideo ? ex.posterUrl : ex.mediaUrl;
 
   return (
     <button
@@ -64,7 +65,15 @@ function ExampleThumb(props: {
       className="group relative shrink-0 aspect-[9/16] w-[56px] sm:w-[64px] rounded-lg overflow-hidden border border-white/10 bg-black/30 hover:border-white/25 transition-all"
       aria-label={t(lang, "pkgExamples")}
     >
-      {thumbSrc ? (
+      {isVideo && !hasPoster ? (
+        <video
+          src={`${ex.mediaUrl}#t=0.001`}
+          className="w-full h-full object-cover"
+          muted
+          playsInline
+          preload="metadata"
+        />
+      ) : thumbSrc ? (
         <Image
           src={thumbSrc}
           alt=""
