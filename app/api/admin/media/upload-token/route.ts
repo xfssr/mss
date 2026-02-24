@@ -15,7 +15,7 @@ const ALLOWED_CONTENT_TYPES = [
   "video/webm",
 ];
 
-const MAX_BYTES_VIDEO = 60 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 60 * 1024 * 1024;
 
 async function isAuthed() {
   const secret = process.env.ADMIN_COOKIE_SECRET || "";
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
       onBeforeGenerateToken: async () => {
         return {
           allowedContentTypes: ALLOWED_CONTENT_TYPES,
-          maximumSizeInBytes: MAX_BYTES_VIDEO,
+          maximumSizeInBytes: MAX_UPLOAD_BYTES,
           addRandomSuffix: true,
         };
       },
