@@ -29,5 +29,5 @@ export async function GET(req: Request) {
     posterUrl: ex.media.posterUrl,
   }));
 
-  return NextResponse.json(result);
+  return NextResponse.json({ ok: true, items: result });
 }

@@ -555,6 +555,7 @@ export function ClientPage(props: Props) {
                   <PackageExamplesFromApi
                     lang={lang}
                     tierKey={`tier${packageIdToTier(pkg.id)}`}
+                    onThumbnailClick={openGallery}
                   />
                   <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
                     <button
