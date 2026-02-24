@@ -13,7 +13,6 @@ type PackageExample = {
   id: string;
   order: number;
   isPublished: boolean;
-  catalogKey: string | null;
   tierKey: string;
   mediaId: string;
   media: MediaAsset;
@@ -25,19 +24,8 @@ const TIER_OPTIONS = [
   { value: "tier3", label: "Monthly (tier3)" },
 ] as const;
 
-const CATALOG_OPTIONS = [
-  { value: "", label: "All catalogs" },
-  { value: "bars", label: "Bars" },
-  { value: "hotels", label: "Hotels" },
-  { value: "events", label: "Events" },
-  { value: "restaurants", label: "Restaurants" },
-  { value: "real-estate", label: "Real Estate" },
-  { value: "other", label: "Other" },
-] as const;
-
 const emptyForm = {
   tierKey: "tier1" as string,
-  catalogKey: "" as string,
   posterUrl: "" as string,
 };
 
@@ -45,7 +33,6 @@ export default function AdminExamplesPage() {
   const [examples, setExamples] = useState<PackageExample[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterTier, setFilterTier] = useState("tier1");
-  const [filterCatalog, setFilterCatalog] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ ...emptyForm });
   const [file, setFile] = useState<File | null>(null);
@@ -58,20 +45,19 @@ export default function AdminExamplesPage() {
     setLoading(true);
     try {
       const params = new URLSearchParams({ tierKey: filterTier });
-      if (filterCatalog) params.set("catalogKey", filterCatalog);
       const res = await fetch(`/api/admin/examples?${params}`);
       if (res.ok) setExamples(await res.json());
     } finally {
       setLoading(false);
     }
-  }, [filterTier, filterCatalog]);
+  }, [filterTier]);
 
   useEffect(() => {
     fetchExamples();
   }, [fetchExamples]);
 
   function openAdd() {
-    setForm({ ...emptyForm, tierKey: filterTier, catalogKey: filterCatalog });
+    setForm({ ...emptyForm, tierKey: filterTier });
     setFile(null);
     setError("");
     setModalOpen(true);
@@ -104,7 +90,6 @@ export default function AdminExamplesPage() {
       // 2. Create example
       const payload = {
         tierKey: form.tierKey,
-        catalogKey: form.catalogKey || undefined,
         media: {
           url: uploadData.url,
           kind: uploadData.kind,
@@ -225,14 +210,6 @@ export default function AdminExamplesPage() {
               ))}
             </select>
           </div>
-          <div>
-            <label className={labelCls}>Catalog</label>
-            <select value={filterCatalog} onChange={(e) => setFilterCatalog(e.target.value)} className={inputCls + " w-44"}>
-              {CATALOG_OPTIONS.map((c) => (
-                <option key={c.value} value={c.value}>{c.label}</option>
-              ))}
-            </select>
-          </div>
         </div>
 
         {/* Loading */}
@@ -340,16 +317,6 @@ export default function AdminExamplesPage() {
                 <select value={form.tierKey} onChange={(e) => setForm((f) => ({ ...f, tierKey: e.target.value }))} className={inputCls}>
                   {TIER_OPTIONS.map((t) => (
                     <option key={t.value} value={t.value}>{t.label}</option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Catalog */}
-              <div>
-                <label className={labelCls}>Catalog (optional)</label>
-                <select value={form.catalogKey} onChange={(e) => setForm((f) => ({ ...f, catalogKey: e.target.value }))} className={inputCls}>
-                  {CATALOG_OPTIONS.map((c) => (
-                    <option key={c.value} value={c.value}>{c.label}</option>
                   ))}
                 </select>
               </div>

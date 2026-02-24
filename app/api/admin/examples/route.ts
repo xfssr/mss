@@ -19,11 +19,9 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const tierKey = searchParams.get("tierKey") || undefined;
-  const catalogKey = searchParams.get("catalogKey") || undefined;
 
   const where: Record<string, unknown> = {};
   if (tierKey) where.tierKey = tierKey;
-  if (catalogKey) where.catalogKey = catalogKey;
 
   const examples = await prisma.packageExample.findMany({
     where,
@@ -40,9 +38,8 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const { tierKey, catalogKey, media } = body as {
+  const { tierKey, media } = body as {
     tierKey: string;
-    catalogKey?: string;
     media: { url: string; kind: string; posterUrl?: string };
   };
 
@@ -52,7 +49,7 @@ export async function POST(req: Request) {
 
   const maxOrder = await prisma.packageExample.aggregate({
     _max: { order: true },
-    where: { tierKey, catalogKey: catalogKey ?? null },
+    where: { tierKey },
   });
   const nextOrder = (maxOrder._max.order ?? -1) + 1;
 
@@ -67,7 +64,6 @@ export async function POST(req: Request) {
   const example = await prisma.packageExample.create({
     data: {
       tierKey,
-      catalogKey: catalogKey || null,
       mediaId: asset.id,
       order: nextOrder,
     },
