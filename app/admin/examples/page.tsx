@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { upload } from "@vercel/blob/client";
 
 type MediaAsset = {
   id: string;
@@ -39,6 +40,7 @@ export default function AdminExamplesPage() {
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState("");
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
@@ -76,24 +78,27 @@ export default function AdminExamplesPage() {
 
     setSaving(true);
     setUploading(true);
+    setUploadProgress(0);
     setError("");
 
     try {
-      // 1. Upload file
-      const fd = new FormData();
-      fd.append("file", file);
-      const uploadRes = await fetch("/api/admin/media/upload", { method: "POST", body: fd });
-      const uploadData = await uploadRes.json();
-      if (!uploadRes.ok) throw new Error(uploadData.error || "Upload failed");
+      // 1. Upload file directly to Vercel Blob (client upload)
+      const blob = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/admin/media/upload-token",
+        onUploadProgress: (p) => setUploadProgress(Math.round(p.percentage)),
+      });
 
       setUploading(false);
+
+      const kind = file.type.startsWith("video/") ? "video" : "image";
 
       // 2. Create example
       const payload = {
         tierKey: form.tierKey,
         media: {
-          url: uploadData.url,
-          kind: uploadData.kind,
+          url: blob.url,
+          kind,
           posterUrl: form.posterUrl || undefined,
         },
       };
@@ -115,6 +120,7 @@ export default function AdminExamplesPage() {
     } finally {
       setSaving(false);
       setUploading(false);
+      setUploadProgress(0);
     }
   }
 
@@ -338,7 +344,7 @@ export default function AdminExamplesPage() {
             <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-white/10">
               <button onClick={() => setModalOpen(false)} className="px-4 py-2 rounded-xl border border-white/10 bg-white/5 text-sm text-white/70 hover:bg-white/10 transition-colors">Cancel</button>
               <button onClick={handleSave} disabled={saving} className="px-4 py-2 rounded-xl border border-[rgb(var(--blue))]/40 bg-[rgb(var(--blue))]/20 text-sm font-medium text-white hover:bg-[rgb(var(--blue))]/30 transition-colors disabled:opacity-50">
-                {uploading ? "Uploading…" : saving ? "Saving…" : "Save"}
+                {uploading ? `Uploading… ${uploadProgress}%` : saving ? "Saving…" : "Save"}
               </button>
             </div>
           </div>
