@@ -171,18 +171,6 @@ body {
   z-index: 0;
 }
 
-/* Trust section stat card */
-.trust-stat-card {
-  background: rgba(11, 15, 20, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  border-radius: 1rem;
-  transition: border-color 250ms ease, box-shadow 250ms ease;
-}
-.trust-stat-card:hover {
-  border-color: rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.2);
-}
 
 /* Enhanced transitions for interactive elements */
 @layer utilities {

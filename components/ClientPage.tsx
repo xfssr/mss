@@ -649,18 +649,6 @@ export function ClientPage(props: Props) {
         </Section>
       )}
 
-      {/* ===== Trust & Authority section ===== */}
-      <Section id="trust" title={t(lang, "trustTitle")}>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-6 max-w-4xl">
-          {(["trustStat1", "trustStat2", "trustStat3", "trustStat4"] as const).map((key) => (
-            <div key={key} className="trust-stat-card p-5 sm:p-6 text-center">
-              <div className="text-2xl sm:text-3xl font-bold text-[rgb(var(--blue))]">{t(lang, `${key}Value`)}</div>
-              <div className="mt-2 text-xs sm:text-sm text-white/60">{t(lang, `${key}Label`)}</div>
-            </div>
-          ))}
-        </div>
-      </Section>
-
       <Section id="contact" title={t(lang, "sectionContact")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
           <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
