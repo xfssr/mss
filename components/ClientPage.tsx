@@ -357,6 +357,32 @@ export function ClientPage(props: Props) {
                   </div>
                 </div>
 
+                {/* Example thumbnails — always visible, before pills/details */}
+                {(() => {
+                  const exCatalog = props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
+                  if (!exCatalog) return null;
+                  const exItems = exCatalog.examples ?? [];
+                  return exItems.length > 0 ? (
+                    <PackageExamples
+                      lang={lang}
+                      examples={exItems}
+                      catalogs={props.catalogs}
+                      businessType={null}
+                      tier={packageIdToTier(pkg.id)}
+                      tierConfig={props.tierExamplesConfig}
+                      catalogSlug={exCatalog.slug}
+                      onThumbnailClick={openGallery}
+                    />
+                  ) : null;
+                })()}
+
+                {/* API-fetched examples — always visible */}
+                <PackageExamplesFromApi
+                  lang={lang}
+                  tierKey={`tier${packageIdToTier(pkg.id)}`}
+                  onThumbnailClick={openGallery}
+                />
+
                 {/* Best for + Delivery (always visible) */}
                 {detail && (
                   <div className="mt-4 space-y-1.5 border-t border-white/[0.06] pt-4">
@@ -384,32 +410,6 @@ export function ClientPage(props: Props) {
                     ))}
                   </div>
                 )}
-
-                {/* Example thumbnails — controlled by global selector, tier-differentiated */}
-                {(() => {
-                  const exCatalog = props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
-                  if (!exCatalog) return null;
-                  const exItems = exCatalog.examples ?? [];
-                  return exItems.length > 0 ? (
-                    <PackageExamples
-                      lang={lang}
-                      examples={exItems}
-                      catalogs={props.catalogs}
-                      businessType={null}
-                      tier={packageIdToTier(pkg.id)}
-                      tierConfig={props.tierExamplesConfig}
-                      catalogSlug={exCatalog.slug}
-                      onThumbnailClick={openGallery}
-                    />
-                  ) : null;
-                })()}
-
-                {/* API-fetched examples — always visible (moved from expanded section) */}
-                <PackageExamplesFromApi
-                  lang={lang}
-                  tierKey={`tier${packageIdToTier(pkg.id)}`}
-                  onThumbnailClick={openGallery}
-                />
 
                 {/* Action buttons — CTA position depends on expand state */}
                 <div className="mt-5 flex items-center gap-3">
