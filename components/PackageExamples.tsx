@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import type { CatalogExample, Catalog, TierExamplesConfig } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
@@ -65,12 +64,10 @@ function ExampleThumb(props: {
       aria-label={t(lang, "pkgExamples")}
     >
       {thumbSrc ? (
-        <Image
+        <img
           src={thumbSrc}
           alt=""
-          fill
-          sizes="64px"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
       ) : (
@@ -80,7 +77,7 @@ function ExampleThumb(props: {
       )}
       {/* Play overlay for video items */}
       {isVideo && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="rounded-full bg-black/50 border border-white/15 w-6 h-6 flex items-center justify-center">
             <span className="text-white text-[9px]">▶</span>
           </div>
