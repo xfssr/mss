@@ -62,7 +62,7 @@ export function PackageExamplesFromApi(props: {
           return (
             <div
               key={idx}
-              className="group relative shrink-0 w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-white/10 bg-black/30"
+              className="group relative shrink-0 aspect-[9/16] w-[56px] sm:w-[64px] rounded-lg overflow-hidden border border-white/10 bg-black/30"
             >
               {isVideo && !item.posterUrl ? (
                 <video
@@ -76,7 +76,7 @@ export function PackageExamplesFromApi(props: {
                   src={thumbSrc}
                   alt=""
                   fill
-                  sizes="80px"
+                  sizes="64px"
                   className="object-cover"
                   loading="lazy"
                 />

@@ -40,6 +40,13 @@ export function getBusinessTypesFromCatalogs(catalogs: Catalog[]): { key: string
     }));
 }
 
+/** Skeleton placeholder for a single thumbnail slot. */
+function ThumbSkeleton() {
+  return (
+    <div className="shrink-0 aspect-[9/16] w-[56px] sm:w-[64px] rounded-lg border border-white/10 bg-white/[0.04] animate-pulse" />
+  );
+}
+
 /** Thumbnail for a single example — handles both image and video items. */
 function ExampleThumb(props: {
   ex: CatalogExample;
@@ -54,7 +61,7 @@ function ExampleThumb(props: {
     <button
       type="button"
       onClick={onClick}
-      className="group relative shrink-0 w-[72px] h-[72px] sm:w-20 sm:h-20 rounded-lg overflow-hidden border border-white/10 bg-black/30 hover:border-white/25 transition-all"
+      className="group relative shrink-0 aspect-[9/16] w-[56px] sm:w-[64px] rounded-lg overflow-hidden border border-white/10 bg-black/30 hover:border-white/25 transition-all"
       aria-label={t(lang, "pkgExamples")}
     >
       {thumbSrc ? (
@@ -62,7 +69,7 @@ function ExampleThumb(props: {
           src={thumbSrc}
           alt=""
           fill
-          sizes="80px"
+          sizes="64px"
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
         />
@@ -98,9 +105,26 @@ export function PackageExamples(props: {
   tier: 1 | 2 | 3;
   tierConfig: TierExamplesConfig;
   catalogSlug?: string;
+  loading?: boolean;
   onThumbnailClick: (examples: CatalogExample[], startIndex: number) => void;
 }) {
   const { lang, examples, catalogs, businessType, tier, tierConfig, onThumbnailClick } = props;
+
+  // Skeleton placeholders while loading
+  if (props.loading) {
+    return (
+      <div className="mt-3">
+        <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1.5">
+          {t(lang, "pkgExamples")}
+        </p>
+        <div className="flex gap-1.5">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <ThumbSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // Resolve displayed examples: if a business type is selected, pick from matching catalog
   let sourceExamples = examples;
@@ -120,13 +144,26 @@ export function PackageExamples(props: {
   const tiered = buildTieredFromConfig(sourceExamples, sourceSlug, tierConfig);
   const displayExamples = getExamplesForTier(tiered, tier, 4);
 
-  if (displayExamples.length === 0) return null;
+  // Empty state — subtle message instead of rendering nothing
+  if (displayExamples.length === 0) {
+    return (
+      <div className="mt-3">
+        <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1.5">
+          {t(lang, "pkgExamples")}
+        </p>
+        <p className="text-xs text-white/30 italic">
+          {t(lang, "pkgNoExamples")}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-3">
       <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1.5">
         {t(lang, "pkgExamples")}
       </p>
+      {/* 2-3 on mobile, 3-4 on desktop via hidden classes */}
       <div className="flex gap-1.5">
         {displayExamples.map((ex, idx) => (
           <ExampleThumb
