@@ -121,9 +121,10 @@ export function PackageExamplesFromApi(props: {
             >
               {isVideo && !item.posterUrl ? (
                 <video
-                  src={item.url}
+                  src={`${item.url}#t=0.001`}
                   className="w-full h-full object-cover"
                   muted
+                  playsInline
                   preload="metadata"
                 />
               ) : thumbSrc ? (
