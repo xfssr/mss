@@ -322,8 +322,31 @@ async function main() {
 
   for (const c of catalogs) {
     const tagsJson = JSON.stringify(c.tags);
-    const existing = await prisma.catalog.findUnique({ where: { slug: c.slug } });
-    if (existing) continue;
+    const existing = await prisma.catalog.findUnique({
+      where: { slug: c.slug },
+      include: { examples: { select: { id: true } } },
+    });
+
+    if (existing) {
+      // If catalog exists but has zero examples, re-seed the placeholder examples
+      if (existing.examples.length === 0 && c.examples.length > 0) {
+        await prisma.example.createMany({
+          data: c.examples.map((e) => ({
+            catalogId: existing.id,
+            titleHe: e.titleHe,
+            titleEn: e.titleEn,
+            mediaType: e.videoUrl ? "VIDEO" : "IMAGE",
+            mediaUrl: e.videoUrl || e.previewImage,
+            posterUrl: e.videoUrl ? e.previewImage : null,
+            descriptionHe: e.descriptionHe,
+            descriptionEn: e.descriptionEn,
+            link: e.link,
+            order: e.order,
+          })),
+        });
+      }
+      continue;
+    }
 
     await prisma.catalog.create({
       data: {
