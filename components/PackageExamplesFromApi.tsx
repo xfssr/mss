@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import type { CatalogExample } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
@@ -126,11 +127,12 @@ export function PackageExamplesFromApi(props: {
                   preload="metadata"
                 />
               ) : thumbSrc ? (
-                <img
+                <Image
                   src={thumbSrc}
                   alt=""
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  loading="lazy"
+                  fill
+                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  sizes="64px"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-white/20 text-lg">

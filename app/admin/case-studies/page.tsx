@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 type CaseStudy = {
   id: string;
@@ -233,9 +234,9 @@ export default function AdminCaseStudiesPage() {
           {cases.map((cs, idx) => (
             <div key={cs.id} className="rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl p-4 flex items-center gap-4">
               {/* Thumbnail */}
-              <div className="w-16 h-16 rounded-lg bg-white/5 overflow-hidden shrink-0">
+              <div className="relative w-16 h-16 rounded-lg bg-white/5 overflow-hidden shrink-0">
                 {cs.thumbnailUrl ? (
-                  <img src={cs.thumbnailUrl} alt="" className="w-full h-full object-cover" />
+                  <Image src={cs.thumbnailUrl} alt="" fill className="object-cover" sizes="64px" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-white/20 text-xs">No img</div>
                 )}
@@ -387,8 +388,8 @@ export default function AdminCaseStudiesPage() {
                 <input type="file" accept="image/jpeg,image/png,image/webp" onChange={handleUpload} disabled={uploading} className="block w-full text-sm text-white/50 file:mr-3 file:rounded-lg file:border file:border-white/10 file:bg-white/5 file:px-3 file:py-1.5 file:text-sm file:text-white/70 hover:file:bg-white/10 file:transition-colors" />
                 {uploading && <p className="text-xs text-white/40 mt-1">Uploading…</p>}
                 {form.thumbnailUrl && (
-                  <div className="mt-2 w-24 h-24 rounded-lg overflow-hidden border border-white/10">
-                    <img src={form.thumbnailUrl} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="relative mt-2 w-24 h-24 rounded-lg overflow-hidden border border-white/10">
+                    <Image src={form.thumbnailUrl} alt="Preview" fill className="object-cover" sizes="96px" />
                   </div>
                 )}
               </div>

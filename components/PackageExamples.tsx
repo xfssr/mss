@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { CatalogExample, Catalog, TierExamplesConfig } from "@/types/catalog";
 import type { Lang } from "@/utils/i18n";
 import { t } from "@/utils/i18n";
@@ -64,11 +65,12 @@ function ExampleThumb(props: {
       aria-label={t(lang, "pkgExamples")}
     >
       {thumbSrc ? (
-        <img
+        <Image
           src={thumbSrc}
           alt=""
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          loading="lazy"
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="64px"
         />
       ) : (
         <div className="absolute inset-0 flex items-center justify-center text-white/20 text-lg">

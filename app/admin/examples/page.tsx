@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 type MediaAsset = {
   id: string;
@@ -229,7 +230,7 @@ export default function AdminExamplesPage() {
                 {ex.media.kind === "video" ? (
                   <>
                     {ex.media.posterUrl ? (
-                      <img src={ex.media.posterUrl} alt="" className="w-full h-full object-cover" />
+                      <Image src={ex.media.posterUrl} alt="" fill className="object-cover" sizes="150px" />
                     ) : (
                       <video src={ex.media.url} className="w-full h-full object-cover" muted preload="metadata" />
                     )}
@@ -240,7 +241,7 @@ export default function AdminExamplesPage() {
                     </div>
                   </>
                 ) : (
-                  <img src={ex.media.url} alt="" className="w-full h-full object-cover" />
+                  <Image src={ex.media.url} alt="" fill className="object-cover" sizes="150px" />
                 )}
                 {/* Kind badge */}
                 <span className="absolute top-1 left-1 rounded bg-black/60 px-1.5 py-0.5 text-[9px] text-white/70 uppercase">
