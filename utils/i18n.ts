@@ -243,6 +243,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package card examples
     pkgExamples: "דוגמאות",
+    pkgNoExamples: "דוגמאות יתווספו בקרוב",
 
     // Business type selector
     bizTypeLabel: "בחר סוג עסק",
@@ -565,6 +566,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
 
     // Package card examples
     pkgExamples: "Examples",
+    pkgNoExamples: "Examples coming soon",
 
     // Business type selector
     bizTypeLabel: "Choose business type",

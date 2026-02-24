@@ -119,7 +119,7 @@ export function ExamplesGalleryViewer(props: {
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f14]/98 shadow-2xl">
+      <div className="relative w-full max-w-md sm:max-w-lg lg:max-w-4xl max-h-[90dvh] overflow-hidden rounded-2xl border border-white/10 bg-[#0b0f14]/98 shadow-2xl flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-white/10">
           <div className="min-w-0 flex items-center gap-3">
@@ -143,9 +143,9 @@ export function ExamplesGalleryViewer(props: {
           </button>
         </div>
 
-        {/* Media area with transitions */}
+        {/* Media area with transitions — portrait-friendly aspect ratio */}
         <div
-          className="relative aspect-[16/9] bg-black/40 overflow-hidden"
+          className="relative aspect-[9/16] sm:aspect-[3/4] lg:aspect-[16/9] min-h-0 flex-1 bg-black/40 overflow-hidden"
           onTouchStart={(e) => {
             const touch = e.touches[0];
             touchStartX.current = touch.clientX;
