@@ -404,6 +404,13 @@ export function ClientPage(props: Props) {
                   ) : null;
                 })()}
 
+                {/* API-fetched examples — always visible (moved from expanded section) */}
+                <PackageExamplesFromApi
+                  lang={lang}
+                  tierKey={`tier${packageIdToTier(pkg.id)}`}
+                  onThumbnailClick={openGallery}
+                />
+
                 {/* Action buttons — CTA position depends on expand state */}
                 <div className="mt-5 flex items-center gap-3">
                   {!isExpanded && (
@@ -552,11 +559,6 @@ export function ClientPage(props: Props) {
                   )}
 
                   {/* WhatsApp CTA — shown at bottom when details are expanded */}
-                  <PackageExamplesFromApi
-                    lang={lang}
-                    tierKey={`tier${packageIdToTier(pkg.id)}`}
-                    onThumbnailClick={openGallery}
-                  />
                   <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
                     <button
                       type="button"
