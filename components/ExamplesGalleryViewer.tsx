@@ -179,6 +179,7 @@ export function ExamplesGalleryViewer(props: {
               <video
                 src={mediaSrc}
                 autoPlay={!reducedMotion}
+                muted
                 loop
                 playsInline
                 controls
