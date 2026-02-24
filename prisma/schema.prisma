@@ -166,3 +166,33 @@ model CaseStudy {
   @@index([order])
   @@index([isPublished])
 }
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  kind      String   // "image" | "video"
+  url       String   // blob URL
+  posterUrl String?  // optional for videos
+  width     Int?
+  height    Int?
+  createdAt DateTime @default(now())
+
+  packageExamples PackageExample[]
+}
+
+model PackageExample {
+  id          String   @id @default(cuid())
+  order       Int      @default(0)
+  isPublished Boolean  @default(true)
+
+  catalogKey  String?  // e.g. "bars" | "hotels" | "events"
+  tierKey     String   // e.g. "tier1" | "tier2" | "tier3"
+
+  mediaId     String
+  media       MediaAsset @relation(fields: [mediaId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([tierKey, catalogKey, order])
+  @@index([isPublished])
+}

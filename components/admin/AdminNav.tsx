@@ -13,6 +13,7 @@ const sections = [
 
 const pages = [
   { href: "/admin/case-studies", label: "Case Studies" },
+  { href: "/admin/examples", label: "Examples" },
 ] as const;
 
 export function AdminNav() {
