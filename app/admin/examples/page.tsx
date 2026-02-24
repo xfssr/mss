@@ -179,8 +179,10 @@ export default function AdminExamplesPage() {
       setError("Only jpg, png, webp, gif, mp4, mov, webm allowed");
       return;
     }
-    if (f.size > 60 * 1024 * 1024) {
-      setError("Max 60MB for videos, 8MB for images");
+    const isVideo = f.type.startsWith("video/");
+    const maxSize = isVideo ? 60 * 1024 * 1024 : 8 * 1024 * 1024;
+    if (f.size > maxSize) {
+      setError(isVideo ? "Max 60MB for videos" : "Max 8MB for images");
       return;
     }
     setFile(f);
