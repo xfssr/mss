@@ -111,7 +111,7 @@ function IconUsers() {
 }
 function IconPlay() {
   return (
-    <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
+    <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
       <path d="M8 5v14l11-7z" />
     </svg>
   );
@@ -178,13 +178,37 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               key={cs.id}
               className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
             >
-              {/* video preview (9:16 frame) */}
-              <div className="relative aspect-[9/16] max-h-[280px] bg-gradient-to-b from-white/[0.03] to-transparent overflow-hidden" aria-hidden="true">
+              {/* cinematic preview */}
+              <a
+                href={cs.videoUrl}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
+                className="relative block aspect-video rounded-2xl overflow-hidden border border-white/10"
+              >
+                {/* blurred background */}
                 {cs.thumbnailUrl && (
-                  <img src={cs.thumbnailUrl} alt="" className="absolute inset-0 w-full h-full object-cover" />
+                  <img
+                    src={cs.thumbnailUrl}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-55"
+                  />
                 )}
-                <div className="absolute inset-0 flex items-center justify-center text-white/30 group-hover:text-white/60 transition-colors duration-300">
-                  <div className="rounded-full bg-white/10 p-3 backdrop-blur-sm border border-white/10 group-hover:bg-white/20 transition-all duration-300">
+                {/* centered phone frame */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="relative aspect-[9/16] h-[85%] rounded-2xl border border-white/15 shadow-lg overflow-hidden">
+                    {cs.thumbnailUrl && (
+                      <img
+                        src={cs.thumbnailUrl}
+                        alt={lang === "he" ? cs.titleHe : cs.titleEn}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                </div>
+                {/* play button */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="flex items-center justify-center w-11 h-11 rounded-full bg-black/55 border border-white/20 text-white/90">
                     <IconPlay />
                   </div>
                 </div>
@@ -194,7 +218,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                     {tx.forYouBadge} {cs.forYou}
                   </div>
                 )}
-              </div>
+              </a>
 
               {/* content */}
               <div className="p-5">
