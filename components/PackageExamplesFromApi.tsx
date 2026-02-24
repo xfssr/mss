@@ -27,7 +27,7 @@ function toCatalogExamples(items: ExampleItem[]): CatalogExample[] {
 
 /**
  * Fetches and displays package examples from the /api/examples endpoint.
- * Shown inside the expanded "More/פרטים" section of package cards.
+ * Shown in the always-visible top area of package cards.
  */
 export function PackageExamplesFromApi(props: {
   lang: Lang;
