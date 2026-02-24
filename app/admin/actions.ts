@@ -298,18 +298,33 @@ export async function updateDiscountConfig(formData: FormData) {
 }
 
 export async function createExample(catalogId: number, formData: FormData) {
+  let order = i(formData.get("order"));
+  if (order === 0) {
+    const last = await prisma.example.findFirst({
+      where: { catalogId },
+      orderBy: { order: "desc" },
+      select: { order: true },
+    });
+    order = (last?.order ?? 0) + 1;
+  }
+
+  const mediaUrl = s(formData.get("videoUrl")) || s(formData.get("previewImage")) || s(formData.get("imageUrl")) || "";
+  if (!mediaUrl) {
+    throw new Error("At least one media URL (image or video) is required");
+  }
+
   await prisma.example.create({
     data: {
       catalogId,
       titleHe: s(formData.get("titleHe")),
       titleEn: s(formData.get("titleEn")),
       mediaType: s(formData.get("videoUrl")) ? "VIDEO" : "IMAGE",
-      mediaUrl: s(formData.get("videoUrl")) || s(formData.get("previewImage")) || s(formData.get("imageUrl")) || "",
+      mediaUrl,
       posterUrl: s(formData.get("videoUrl")) ? (s(formData.get("previewImage")) || s(formData.get("imageUrl"))) : null,
       descriptionHe: s(formData.get("descriptionHe")),
       descriptionEn: s(formData.get("descriptionEn")),
       link: s(formData.get("link")),
-      order: i(formData.get("order")),
+      order,
     },
   });
   revalidatePath("/");

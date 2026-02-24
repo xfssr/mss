@@ -126,6 +126,12 @@ export async function POST(req: Request) {
     const url = await uploadToLocal(file);
     return NextResponse.json({ url });
   } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : "upload failed" }, { status: 400 });
+    const msg = e instanceof Error ? e.message : "upload failed";
+    const isReadOnly = msg.includes("EROFS") || msg.includes("read-only");
+    const hint = isReadOnly
+      ? "File upload failed: filesystem is read-only (Vercel). Configure Cloudinary env vars (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET) or paste an external URL instead."
+      : msg;
+    console.error("[upload]", msg);
+    return NextResponse.json({ error: hint }, { status: 400 });
   }
 }
