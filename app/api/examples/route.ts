@@ -6,7 +6,6 @@ export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const tierKey = searchParams.get("tierKey");
-  const catalogKey = searchParams.get("catalogKey") || undefined;
 
   if (!tierKey) {
     return NextResponse.json({ error: "tierKey is required" }, { status: 400 });
@@ -16,7 +15,6 @@ export async function GET(req: Request) {
     tierKey,
     isPublished: true,
   };
-  if (catalogKey) where.catalogKey = catalogKey;
 
   const examples = await prisma.packageExample.findMany({
     where,

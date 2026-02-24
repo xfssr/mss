@@ -555,7 +555,6 @@ export function ClientPage(props: Props) {
                   <PackageExamplesFromApi
                     lang={lang}
                     tierKey={`tier${packageIdToTier(pkg.id)}`}
-                    catalogKey={pkg.defaultCatalogSlug}
                   />
                   <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
                     <button

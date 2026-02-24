@@ -24,7 +24,6 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
   if (body.isPublished !== undefined) data.isPublished = body.isPublished;
   if (body.order !== undefined) data.order = body.order;
   if (body.tierKey !== undefined) data.tierKey = body.tierKey;
-  if (body.catalogKey !== undefined) data.catalogKey = body.catalogKey || null;
 
   const updated = await prisma.packageExample.update({
     where: { id },

@@ -18,15 +18,13 @@ type ExampleItem = {
 export function PackageExamplesFromApi(props: {
   lang: Lang;
   tierKey: string;
-  catalogKey?: string;
 }) {
-  const { lang, tierKey, catalogKey } = props;
+  const { lang, tierKey } = props;
   const [items, setItems] = useState<ExampleItem[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams({ tierKey });
-    if (catalogKey) params.set("catalogKey", catalogKey);
     fetch(`/api/examples?${params}`)
       .then((r) => (r.ok ? r.json() : []))
       .then((data: ExampleItem[]) => {
@@ -34,7 +32,7 @@ export function PackageExamplesFromApi(props: {
         setLoaded(true);
       })
       .catch(() => setLoaded(true));
-  }, [tierKey, catalogKey]);
+  }, [tierKey]);
 
   if (!loaded) return null;
 

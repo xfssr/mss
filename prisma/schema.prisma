@@ -184,8 +184,7 @@ model PackageExample {
   order       Int      @default(0)
   isPublished Boolean  @default(true)
 
-  catalogKey  String?  // e.g. "bars" | "hotels" | "events"
-  tierKey     String   // e.g. "tier1" | "tier2" | "tier3"
+  tierKey     String   // "tier1" | "tier2" | "tier3"
 
   mediaId     String
   media       MediaAsset @relation(fields: [mediaId], references: [id], onDelete: Cascade)
@@ -193,6 +192,6 @@ model PackageExample {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  @@index([tierKey, catalogKey, order])
+  @@index([tierKey, order])
   @@index([isPublished])
 }
