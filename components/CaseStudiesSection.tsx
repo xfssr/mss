@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import type { Lang } from "@/utils/i18n";
 
 /* ─── local translations ─── */
@@ -188,20 +189,24 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               >
                 {/* blurred background */}
                 {cs.thumbnailUrl && (
-                  <img
+                  <Image
                     src={cs.thumbnailUrl}
                     alt=""
-                    className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-55"
+                    fill
+                    className="object-cover blur-xl scale-110 opacity-55"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 )}
                 {/* centered phone frame */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative aspect-[9/16] h-[85%] rounded-2xl border border-white/15 shadow-lg overflow-hidden">
                     {cs.thumbnailUrl && (
-                      <img
+                      <Image
                         src={cs.thumbnailUrl}
                         alt={lang === "he" ? cs.titleHe : cs.titleEn}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        sizes="200px"
                       />
                     )}
                   </div>
