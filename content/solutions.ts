@@ -16,8 +16,7 @@ export type SolutionSocialProof = {
 };
 
 export type SolutionExample = {
-  title: L10n;
-  description: L10n;
+  photo: string;
 };
 
 export type SolutionItem = {
@@ -122,9 +121,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "יותר הזמנות (סלוט לקייס)", en: "More bookings (case slot)" } },
     ],
     examples: [
-      { title: { he: "מסעדת שף בתל אביב", en: "Chef restaurant in Tel Aviv" }, description: { he: "תפריט QR + מיני-אתר עם הזמנות ב-WhatsApp", en: "QR menu + mini site with WhatsApp ordering" } },
-      { title: { he: "קפה שכונתי", en: "Neighborhood café" }, description: { he: "עמוד אחד + תפריט דיגיטלי + סט פוסטים", en: "One-pager + digital menu + post set" } },
-      { title: { he: "בר סושי פופ-אפ", en: "Pop-up sushi bar" }, description: { he: "תפריט מובייל + רילס + כפתור הזמנה", en: "Mobile menu + reels + order button" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לקבל דוגמה לתפריט + עמוד", en: "Get a menu + page example" },
     ctaSecondary: { he: "שאלה מהירה ב-WhatsApp", en: "Quick question on WhatsApp" },
@@ -188,9 +187,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "מותג שקפץ בסושיאל", en: "Brand that jumped on social" } },
     ],
     examples: [
-      { title: { he: "שף מאפים – סדנאות", en: "Pastry chef – workshops" }, description: { he: "עמוד אישי + 5 רילס + תוכנית תוכן חודשית", en: "Personal page + 5 reels + monthly content plan" } },
-      { title: { he: "שף פרטי – אירועים", en: "Private chef – events" }, description: { he: "צילום מנות + ביו + תבניות סטוריז", en: "Dish photography + bio + story templates" } },
-      { title: { he: "שף קייטרינג", en: "Catering chef" }, description: { he: "עמוד הזמנות + רילס מאחורי הקלעים", en: "Booking page + behind-the-scenes reels" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לבנות עמוד שף + 3 רעיונות רילס", en: "Build a chef page + 3 reel ideas" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -242,9 +241,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "בר שעלה בביקורים", en: "Bar that increased visits" } },
     ],
     examples: [
-      { title: { he: "בר קוקטיילים בנמל", en: "Port cocktail bar" }, description: { he: "10 רילס + מיני-אתר + קמפיין WhatsApp", en: "10 reels + mini site + WhatsApp campaign" } },
-      { title: { he: "ספיקאיזי מרכז העיר", en: "Downtown speakeasy" }, description: { he: "תוכן אווירה + תפריט דיגיטלי + ריטרגטינג", en: "Atmosphere content + digital menu + retargeting" } },
-      { title: { he: "בר על הגג – אירועים", en: "Rooftop bar – events" }, description: { he: "רילס Happy Hour + קמפיין הזמנות", en: "Happy Hour reels + booking campaign" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "להקים קמפיין WhatsApp לבר", en: "Set up a WhatsApp campaign for bar" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -295,9 +294,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "חנות פרחים שהגדילה מכירות", en: "Flower shop that increased sales" } },
     ],
     examples: [
-      { title: { he: "חנות פרחים בשרון", en: "Flower shop in Sharon" }, description: { he: "קטלוג WhatsApp + צילום בוקטים + SEO מקומי", en: "WhatsApp catalog + bouquet photos + local SEO" } },
-      { title: { he: "פלוריסט אירועים", en: "Event florist" }, description: { he: "עמוד סגנונות + טופס הזמנה מובנה", en: "Style page + structured order form" } },
-      { title: { he: "משלוח פרחים אקספרס", en: "Express flower delivery" }, description: { he: "מיני-אתר + סטוריז יומיים + משלוח היום", en: "Mini site + daily stories + same-day delivery" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לבנות קטלוג WhatsApp לפרחים", en: "Build a WhatsApp catalog for flowers" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -348,9 +347,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "סטודיו שהגדיל פניות", en: "Studio that increased inquiries" } },
     ],
     examples: [
-      { title: { he: "סטודיו ריאליסטי", en: "Realistic tattoo studio" }, description: { he: "גלריה + WhatsApp Flow + פוסטי לפני/אחרי", en: "Gallery + WhatsApp Flow + before/after posts" } },
-      { title: { he: "קעקועים מינימליסטיים", en: "Minimalist tattoos" }, description: { he: "תיק עבודות נקי + מיני-אתר + סינון", en: "Clean portfolio + mini site + screening" } },
-      { title: { he: "סטודיו ג׳אפני מסורתי", en: "Traditional Japanese studio" }, description: { he: "צילום סגנונות + קמפיין לידים + FAQ", en: "Style photography + lead campaign + FAQ" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "להקים עמוד תיק עבודות + סינון", en: "Set up a portfolio page + screening" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -401,9 +400,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "מכון שהכפיל לקוחות", en: "Salon that doubled clients" } },
     ],
     examples: [
-      { title: { he: "סטודיו ציפורניים בצפון", en: "Nail studio up north" }, description: { he: "12 רילס + מיני-אתר + WhatsApp Auto", en: "12 reels + mini site + WhatsApp Auto" } },
-      { title: { he: "מכון יופי – טיפולי פנים", en: "Beauty salon – facials" }, description: { he: "תוכן לפני/אחרי + עמוד הזמנה + סטוריז", en: "Before/after content + booking page + stories" } },
-      { title: { he: "מאפרת כלות", en: "Bridal makeup artist" }, description: { he: "רילס תהליך + תבניות שבועיות + מבצע", en: "Process reels + weekly templates + promo" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לבנות מערכת פניות לציפורניים", en: "Build a nail booking system" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -454,9 +453,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "מותג שהכפיל מכירות", en: "Brand that doubled sales" } },
     ],
     examples: [
-      { title: { he: "מותג טיפוח טבעי", en: "Natural skincare brand" }, description: { he: "צילום מוצר + UGC + דף נחיתה לקטגוריה", en: "Product photography + UGC + category landing page" } },
-      { title: { he: "חנות איפור אונליין", en: "Online makeup store" }, description: { he: "סרטוני מוצר + Meta Ads + שיפור המרות", en: "Product videos + Meta Ads + conversion optimization" } },
-      { title: { he: "מותג שיער בוטיק", en: "Boutique hair brand" }, description: { he: "דפי מוצר + Retargeting + טקסטים מוכנים", en: "Product pages + Retargeting + ready-made copy" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לבנות דף מוצר שממיר", en: "Build a converting product page" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -507,9 +506,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "דירה שהושכרה ביום", en: "Apartment rented in a day" } },
     ],
     examples: [
-      { title: { he: "דירת 3 חדרים בתל אביב", en: "3-room apartment in Tel Aviv" }, description: { he: "צילום + וידאו + מיני-עמוד + WhatsApp סינון", en: "Photography + video + mini page + WhatsApp screening" } },
-      { title: { he: "דירת Airbnb בירושלים", en: "Airbnb in Jerusalem" }, description: { he: "צילום מקצועי + סרטון סיור + פוסט מודעה", en: "Professional photography + tour video + listing post" } },
-      { title: { he: "פנטהאוז להשכרה", en: "Penthouse for rent" }, description: { he: "צילום פרימיום + עמוד מודעה + פרסום ממומן", en: "Premium photography + listing page + paid promotion" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "לקבל עמוד מודעה לדירה", en: "Get a listing page for your property" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
@@ -560,9 +559,9 @@ export const DEFAULT_SOLUTIONS: SolutionItem[] = [
       { title: { he: "עסק שהתחיל עם תוכן מקצועי", en: "Business that started with professional content" } },
     ],
     examples: [
-      { title: { he: "מאמנת כושר עצמאית", en: "Freelance fitness coach" }, description: { he: "6 רילס + מיני-אתר + WhatsApp Auto", en: "6 reels + mini site + WhatsApp Auto" } },
-      { title: { he: "שירותי ניקיון", en: "Cleaning services" }, description: { he: "תמונות + אתר תבניתי + קמפיין Messages", en: "Photos + template site + Messages campaign" } },
-      { title: { he: "סטודיו יוגה חדש", en: "New yoga studio" }, description: { he: "רילס + תוכנית תוכן + תשובות מהירות", en: "Reels + content plan + quick replies" } },
+      { photo: "" },
+      { photo: "" },
+      { photo: "" },
     ],
     ctaPrimary: { he: "להתחיל Quick Start", en: "Start Quick Start" },
     ctaSecondary: { he: "שאלה ב-WhatsApp", en: "Question on WhatsApp" },
