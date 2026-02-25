@@ -315,6 +315,21 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // CTA urgency
     ctaUrgency: "זמינות מוגבלת בכל חודש",
     sectionCtaWa: "שלח הודעה ב-WhatsApp",
+
+    // Collab section
+    navCollab: "שיתופי פעולה",
+    collabTitle: "שיתופי פעולה (Collab)",
+    collabSubtitle: "מספר מקומות מוגבל בכל חודש",
+    collabBody: "לעיתים אני פותח 1–2 מקומות בחודש לשיתוף פעולה עם עסקים מעניינים.\nזה מתאים לעסק בתחילת הדרך או לפרויקט עם פוטנציאל שיווקי ברור.\nההטבה מוגבלת ובאישור בלבד.",
+    collabBullet1: "צילום קצר + עריכה בסיסית",
+    collabBullet2: "אישור שימוש בתיק עבודות + תיוג",
+    collabBullet3: "אפשרות לברטר לפי ערך מוסכם",
+    collabBullet4: "לא מתאים לכל עסק",
+    collabCta: "בדוק התאמה לשיתוף פעולה",
+    collabDisclaimer: "נפתח לפי זמינות ובהתאם להתאמה.",
+    collabSpots: "1–2 מקומות / חודש",
+    collabApproval: "באישור בלבד",
+    collabWaMessage: "היי! אני רוצה לבדוק שיתוף פעולה (Collab).\nשם העסק:\nתחום:\nמיקום:\nמה צריך לצלם:\nקישור לאינסטגרם/טיקטוק:\n",
   },
   en: {
     appName: "Micro-Screen Studio",
@@ -627,6 +642,21 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     // CTA urgency
     ctaUrgency: "Limited monthly availability",
     sectionCtaWa: "Message on WhatsApp",
+
+    // Collab section
+    navCollab: "Collab",
+    collabTitle: "Collaboration (Collab)",
+    collabSubtitle: "Limited spots each month",
+    collabBody: "Sometimes I open 1–2 collaboration spots per month for interesting businesses.\nBest for new brands or projects with clear marketing potential.\nLimited and approval-only.",
+    collabBullet1: "Short shoot + basic edit",
+    collabBullet2: "Portfolio usage + tagging",
+    collabBullet3: "Barter possible (agreed value)",
+    collabBullet4: "Not for every business",
+    collabCta: "Check if we're a fit",
+    collabDisclaimer: "Opens based on availability and fit.",
+    collabSpots: "1–2 spots / month",
+    collabApproval: "Approval only",
+    collabWaMessage: "Hi! I'd like to check a collaboration (Collab).\nBusiness name:\nNiche:\nLocation:\nWhat to shoot:\nInstagram/TikTok link:\n",
   },
 };
 
