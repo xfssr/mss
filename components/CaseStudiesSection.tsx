@@ -120,10 +120,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     >
       <div className="relative mx-auto w-full max-w-6xl">
         {/* header */}
-        <div className="diamond-ornament mt-2 mb-3">
-          <span className="diamond-ornament-gem" />
-        </div>
-        <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-gold-gradient tracking-tight">
+        <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
           {tx.title}
         </h2>
         <p className="mt-3 text-sm sm:text-base text-white/60">{tx.subtitle}</p>
@@ -134,7 +131,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
           {cases.map((cs) => (
             <div
               key={cs.id}
-              className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-[rgb(var(--gold))]/30 hover:shadow-[0_0_20px_rgba(var(--gold)/0.08)] gold-border-glow"
+              className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
             >
               {/* cinematic preview */}
               <a
@@ -185,7 +182,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               {/* content */}
               <div className="p-3 sm:p-4">
                 {/* title + tags */}
-                <h3 className="text-xs font-bold text-white/90 gold-accent-line inline-block">
+                <h3 className="text-xs font-bold text-white/90">
                   {lang === "he" ? cs.titleHe : cs.titleEn}
                 </h3>
                 <p className="mt-0.5 text-[10px] text-white/40">{lang === "he" ? cs.tagsHe : cs.tagsEn}</p>
@@ -199,7 +196,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 </div>
 
                 {/* insight */}
-                <p className="mt-3 text-[10px] text-white/50 italic border-s-2 border-[rgb(var(--gold))]/30 ps-2">
+                <p className="mt-3 text-[10px] text-white/50 italic border-s-2 border-[rgb(var(--blue))]/30 ps-2">
                   {lang === "he" ? cs.insightHe : cs.insightEn}
                 </p>
 
@@ -214,7 +211,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
-                  className="mt-3 btn-gold inline-flex items-center justify-center rounded-xl px-4 py-2 text-xs font-medium transition-all duration-200 w-full"
+                  className="mt-3 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
                 >
                   {tx.cta}
                 </a>

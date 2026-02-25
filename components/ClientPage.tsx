@@ -212,7 +212,7 @@ export function ClientPage(props: Props) {
         <button
           type="button"
           onClick={onSendWhatsApp}
-          className="btn-gold inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
+          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
         >
           {t(lang, "sectionCtaWa")}
         </button>
@@ -222,48 +222,28 @@ export function ClientPage(props: Props) {
   }
 
   return (
-    <div className="min-h-dvh-safe bg-gradient-to-b from-[#05060a] via-[#0a0c10] to-[#05060a] text-white grain-overlay">
+    <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
 
       <Section id="top">
-        <div className="hero-glow section-glow relative">
-        {/* Rotating gold ring orbits */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-          <div className="gold-ring-orbit absolute w-[500px] h-[500px] opacity-30" />
-          <div className="gold-ring-orbit absolute w-[700px] h-[700px] opacity-15" style={{ animationDirection: "reverse", animationDuration: "35s" }} />
-        </div>
-        {/* Floating gold pulse dots */}
-        <div className="absolute top-20 left-[15%] w-2 h-2 rounded-full bg-[rgb(var(--gold))] opacity-40" style={{ animation: "pulse-gold 3s ease-in-out infinite, float 6s ease-in-out infinite" }} aria-hidden="true" />
-        <div className="absolute top-40 right-[10%] w-1.5 h-1.5 rounded-full bg-[rgb(var(--gold-bright))] opacity-30" style={{ animation: "pulse-gold 4s ease-in-out infinite 1s, float 8s ease-in-out infinite 2s" }} aria-hidden="true" />
-        <div className="absolute bottom-32 left-[25%] w-1 h-1 rounded-full bg-[rgb(var(--gold-intense))] opacity-25" style={{ animation: "pulse-gold 5s ease-in-out infinite 2s, float 7s ease-in-out infinite 1s" }} aria-hidden="true" />
-        <div className="relative glass-ultra rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl ornament-corner">
-          {/* Multi-layer overlays */}
-          <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-[rgb(var(--gold))]/[0.03] to-transparent pointer-events-none" />
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative">
+        <div className="hero-glow">
+        <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             <div className="lg:col-span-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight" style={{ color: "#05060a", WebkitTextStroke: "0px", background: "linear-gradient(135deg, rgb(var(--gold-bright)), rgb(var(--gold)), rgb(var(--gold-dark)))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadline")}</h1>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadline")}</h1>
               <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{pickL10n(lang, props.settings.heroSubtitle) || t(lang, "heroSupporting")}</p>
-
-              {/* Glass-pill trust bullets */}
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["⚡ Premium Quality", "🎯 Fast Delivery", "✨ Creative Direction"].map((bullet) => (
-                  <span key={bullet} className="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--gold))]/15 bg-white/[0.04] backdrop-blur-sm px-3 py-1 text-[11px] text-white/70">
-                    {bullet}
-                  </span>
-                ))}
-              </div>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="btn-gold inline-flex items-center justify-center rounded-xl px-7 py-4 text-base font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
                 >
                   {t(lang, "heroCtaWa")}
                 </button>
                 <a
                   href="#packages"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-[rgb(var(--gold))]/20 transition-all duration-200 hover:-translate-y-0.5"
+                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
                 >
                   {t(lang, "heroCtaAvailability")}
                 </a>
@@ -275,8 +255,6 @@ export function ClientPage(props: Props) {
               <HeroSlider lang={lang} items={props.heroMedia} intervalMs={2400} />
             </div>
           </div>
-          {/* Bottom fade-to-black */}
-          <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#05060a] to-transparent rounded-b-3xl pointer-events-none" />
         </div>
         </div>
       </Section>
@@ -311,7 +289,7 @@ export function ClientPage(props: Props) {
 
 
       {/* ===== Package selection section ===== */}
-      <div className="pkg-section-bg luxury-bg-alt">
+      <div className="pkg-section-bg">
       <Section id="packages" title={t(lang, "choosePackage")}>
 
         <div className="relative">
@@ -350,7 +328,7 @@ export function ClientPage(props: Props) {
             return (
             <div
               key={pkg.id}
-              className={`pkg-card ${cls.card} card-shine overflow-hidden relative gold-border-glow`}
+              className={`pkg-card ${cls.card} overflow-hidden relative`}
             >
               {/* Subtle glow overlay at top */}
               <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
@@ -372,7 +350,7 @@ export function ClientPage(props: Props) {
                     </div>
                     {price > 0 && (
                       <div className="mt-1.5 flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold text-[rgb(var(--gold))]/80">
+                        <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
                           {t(lang, "fromPrice")}₪{price.toLocaleString()}
                         </span>
                       </div>
@@ -440,7 +418,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="btn-gold inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-medium transition-all"
+                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -516,7 +494,7 @@ export function ClientPage(props: Props) {
                                 type="checkbox"
                                 checked={!!selectedAddons[addon.id]}
                                 onChange={() => toggleAddon(addon.id)}
-                                className="accent-[rgb(var(--gold))] w-4 h-4 shrink-0"
+                                className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
                               />
                               <div className="min-w-0">
                                 <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
@@ -573,7 +551,7 @@ export function ClientPage(props: Props) {
 
                   {/* Final total line for Monthly (package after discount + add-ons) */}
                   {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                    <div className="rounded-lg border border-[rgb(var(--gold))]/30 bg-[rgb(var(--gold))]/10 px-3 py-2">
+                    <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
                         <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
@@ -586,7 +564,7 @@ export function ClientPage(props: Props) {
                     <button
                       type="button"
                       onClick={handleWhatsApp}
-                      className="w-full btn-gold inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-medium transition-all"
+                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
                     >
                       {t(lang, "pkgWhatsApp")}
                     </button>
@@ -609,7 +587,7 @@ export function ClientPage(props: Props) {
 
         {/* First-time discount note */}
         {props.discountConfig.enabled && (
-          <p className="mt-4 text-xs text-[rgb(var(--gold))]/70">
+          <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
             🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
             {" — "}
             {props.discountConfig.percent}%
@@ -626,20 +604,15 @@ export function ClientPage(props: Props) {
 
       {/* ===== Who Is This For section ===== */}
       <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")} centered>
-        <div className="relative">
-          {/* Side ambient glows */}
-          <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--gold))]/[0.03] rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--gold))]/[0.03] rounded-full blur-3xl pointer-events-none" />
-          <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto ornament-corner">
-            <ul className="space-y-4">
-              {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
-                <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                  <span className="text-[rgb(var(--gold))] mt-0.5 shrink-0">●</span>
-                  {t(lang, key)}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
+          <ul className="space-y-4">
+            {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
+                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                {t(lang, key)}
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
@@ -652,20 +625,16 @@ export function ClientPage(props: Props) {
 
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")} centered>
-        <div className="relative">
-          <div className="absolute -left-16 top-1/3 w-32 h-64 bg-[rgb(var(--gold))]/[0.03] rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -right-16 top-1/3 w-32 h-64 bg-[rgb(var(--gold))]/[0.03] rounded-full blur-3xl pointer-events-none" />
-          <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto ornament-corner">
-            <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
-            <ul className="space-y-4">
-              {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
-                <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                  <span className="text-[rgb(var(--gold))] mt-0.5 shrink-0">✔</span>
-                  {t(lang, key)}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
+          <ul className="space-y-4">
+            {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
+              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
+                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
+                {t(lang, key)}
+              </li>
+            ))}
+          </ul>
         </div>
       </Section>
 
@@ -693,45 +662,39 @@ export function ClientPage(props: Props) {
       <div className="section-divider" />
 
       <Section id="contact" title={t(lang, "sectionContact")}>
-        <div className="relative">
-          {/* Ambient radial glow */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-            <div className="w-[500px] h-[300px] bg-[rgb(var(--gold))]/[0.04] rounded-full blur-3xl" />
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
+          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+            <button
+              type="button"
+              onClick={onSendWhatsApp}
+              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+            >
+              {t(lang, "contactWhatsApp")}
+            </button>
+
+            <a
+              href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+            >
+              {t(lang, "contactInstagram")}
+            </a>
+
+            <a
+              href={`mailto:${props.settings.email}`}
+              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+            >
+              {t(lang, "contactEmail")}
+            </a>
           </div>
-          <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg ornament-corner relative">
-            <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <button
-                type="button"
-                onClick={onSendWhatsApp}
-                className="btn-gold inline-flex items-center justify-center rounded-xl px-7 py-4 text-base font-semibold transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-              >
-                {t(lang, "contactWhatsApp")}
-              </button>
-
-              <a
-                href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-[rgb(var(--gold))]/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-              >
-                {t(lang, "contactInstagram")}
-              </a>
-
-              <a
-                href={`mailto:${props.settings.email}`}
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-[rgb(var(--gold))]/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
-              >
-                {t(lang, "contactEmail")}
-              </a>
-            </div>
-
-            <div className="mt-4 flex items-center gap-3">
-              <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
-              <span className="text-xs text-[rgb(var(--gold))]/40">◆</span>
-              <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
-            </div>
+          <div className="mt-4 flex items-center gap-3">
+            <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
+            <span className="text-xs text-white/35">·</span>
+            <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
           </div>
         </div>
       </Section>
