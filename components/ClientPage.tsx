@@ -25,6 +25,7 @@ import { SolutionCard } from "@/components/SolutionCard";
 import { SolutionDetailModal } from "@/components/SolutionDetailModal";
 import { AddOnDetailModal } from "@/components/AddOnDetailModal";
 import { CaseStudiesSection } from "@/components/CaseStudiesSection";
+import { CollabSection } from "@/components/CollabSection";
 import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
 import { PackageExamples } from "@/components/PackageExamples";
 import { PackageExamplesFromApi } from "@/components/PackageExamplesFromApi";
@@ -648,6 +649,9 @@ export function ClientPage(props: Props) {
           </div>
         </Section>
       )}
+
+      {/* ===== Collaboration section ===== */}
+      <CollabSection lang={lang} />
 
       <Section id="contact" title={t(lang, "sectionContact")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">

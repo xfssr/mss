@@ -12,6 +12,7 @@ export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] 
   { labelKey: "navExamples", href: "/#case-studies", useLink: true },
   { labelKey: "navSolutions", href: "/#solutions", useLink: true },
   { labelKey: "navPricing", href: "/#packages", useLink: true },
+  { labelKey: "navCollab", href: "/#collab", useLink: true },
   { labelKey: "navContact", href: "#contact" },
 ];
 
