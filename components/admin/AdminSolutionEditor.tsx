@@ -259,11 +259,11 @@ export function AdminSolutionEditor(props: { solutions: SolutionItem[] }) {
 
       {/* Examples */}
       <fieldset className="rounded-xl border border-white/10 p-3 space-y-3">
-        <legend className="text-xs text-white/55 px-1">Examples (3 per category)</legend>
+        <legend className="text-xs text-white/55 px-1">Example photos (3 per category)</legend>
         {(d.examples ?? []).map((ex, i) => (
           <div key={i} className="space-y-1 rounded-lg border border-white/5 p-2">
             <div className="flex items-center justify-between">
-              <div className="text-[10px] text-white/40">Example {i + 1}</div>
+              <div className="text-[10px] text-white/40">Photo {i + 1}</div>
               <button
                 type="button"
                 onClick={() => updateField(slug, (x) => ({ ...x, examples: (x.examples ?? []).filter((_, j) => j !== i) }))}
@@ -272,22 +272,18 @@ export function AdminSolutionEditor(props: { solutions: SolutionItem[] }) {
                 Remove
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <input value={ex.title.he} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], title: { ...exs[i].title, he: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Title HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
-              <input value={ex.title.en} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], title: { ...exs[i].title, en: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Title EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <input value={ex.description.he} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], description: { ...exs[i].description, he: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Description HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
-              <input value={ex.description.en} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], description: { ...exs[i].description, en: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Description EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
-            </div>
+            <input value={ex.photo} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], photo: e.target.value }; return { ...x, examples: exs }; })} placeholder="Photo URL" className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+            {ex.photo && (
+              <img src={ex.photo} alt="" className="mt-1 h-20 w-20 rounded-lg object-cover border border-white/10" />
+            )}
           </div>
         ))}
         <button
           type="button"
-          onClick={() => updateField(slug, (x) => ({ ...x, examples: [...(x.examples ?? []), { title: { he: "", en: "" }, description: { he: "", en: "" } }] }))}
+          onClick={() => updateField(slug, (x) => ({ ...x, examples: [...(x.examples ?? []), { photo: "" }] }))}
           className="w-full rounded-lg border border-dashed border-white/15 bg-white/[0.03] px-3 py-2 text-xs text-white/50 hover:bg-white/[0.06] hover:text-white/70"
         >
-          + Add example
+          + Add example photo
         </button>
       </fieldset>
 

@@ -469,23 +469,18 @@ function SolutionPage(props: {
         )}
 
         {/* Examples */}
-        {sol.examples && sol.examples.length > 0 && (
+        {sol.examples && sol.examples.length > 0 && sol.examples.some(ex => ex.photo) && (
           <div className="mb-6">
             <h2 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
               {t(lang, "sectionExamples")}
             </h2>
-            <div className="space-y-2">
-              {sol.examples.map((ex, i) => (
+            <div className="grid grid-cols-3 gap-2">
+              {sol.examples.filter(ex => ex.photo).map((ex, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-white/10 bg-white/[0.04] p-3"
+                  className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden aspect-square"
                 >
-                  <div className="text-sm font-medium text-white/85">
-                    {pick(lang, ex.title)}
-                  </div>
-                  <div className="mt-1 text-xs text-white/55">
-                    {pick(lang, ex.description)}
-                  </div>
+                  <img src={ex.photo} alt="" className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>

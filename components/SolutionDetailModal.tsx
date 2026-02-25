@@ -230,16 +230,15 @@ export function SolutionDetailModal(props: {
           )}
 
           {/* Examples */}
-          {item.examples && item.examples.length > 0 && (
+          {item.examples && item.examples.length > 0 && item.examples.some(ex => ex.photo) && (
             <section>
               <h3 className="text-sm font-semibold text-[rgb(var(--blue))] mb-2">
                 {t(lang, "sectionExamples")}
               </h3>
-              <div className="space-y-2">
-                {item.examples.map((ex, i) => (
-                  <div key={i} className="rounded-xl border border-white/10 bg-white/[0.04] p-3">
-                    <div className="text-sm font-medium text-white/85">{pick(lang, ex.title)}</div>
-                    <div className="mt-1 text-xs text-white/55">{pick(lang, ex.description)}</div>
+              <div className="grid grid-cols-3 gap-2">
+                {item.examples.filter(ex => ex.photo).map((ex, i) => (
+                  <div key={i} className="rounded-xl border border-white/10 bg-white/[0.04] overflow-hidden aspect-square">
+                    <img src={ex.photo} alt="" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
