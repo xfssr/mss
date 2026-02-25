@@ -126,15 +126,15 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
         <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-silver-gradient tracking-tight">
           {tx.title}
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-white/60">{tx.subtitle}</p>
-        <p className="mt-1 text-sm text-white/50">{tx.desc}</p>
+        <p className="mt-3 text-sm sm:text-base text-[rgb(var(--muted))]">{tx.subtitle}</p>
+        <p className="mt-1 text-sm text-[rgb(var(--muted))]/80">{tx.desc}</p>
 
         {/* cards grid */}
         <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {cases.map((cs) => (
             <div
               key={cs.id}
-              className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-[rgb(var(--silver))]/30 hover:shadow-[0_0_20px_rgba(var(--silver)/0.08)] silver-border-glow"
+              className="group relative rounded-2xl border border-white/10 bg-[rgba(var(--panel)/0.04)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-[rgb(var(--blue))]/20 hover:shadow-[0_0_20px_rgba(var(--blue)/0.06)] silver-border-glow"
             >
               {/* cinematic preview */}
               <a
@@ -199,7 +199,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 </div>
 
                 {/* insight */}
-                <p className="mt-3 text-[10px] text-white/50 italic border-s-2 border-[rgb(var(--silver))]/30 ps-2">
+                <p className="mt-3 text-[10px] text-[rgb(var(--muted))]/70 italic border-s-2 border-[rgb(var(--blue))]/20 ps-2">
                   {lang === "he" ? cs.insightHe : cs.insightEn}
                 </p>
 
@@ -231,11 +231,11 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
 function MetricCell({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-1.5">
-      <div className="flex items-center gap-1 text-white/40">
+      <div className="flex items-center gap-1 text-[rgb(var(--muted))]/60">
         {icon}
         <span className="text-[8px] uppercase tracking-wider">{label}</span>
       </div>
-      <div className="mt-0.5 text-xs font-bold text-white/85">{value}</div>
+      <div className="mt-0.5 text-xs font-bold text-[rgb(var(--blueBright))]">{value}</div>
     </div>
   );
 }
