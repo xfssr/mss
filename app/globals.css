@@ -10,11 +10,11 @@
   --text: 235 235 242;
   --stroke: 255 255 255;
 
-  /* Gold palette */
-  --gold: 212 175 55;
-  --gold-bright: 255 215 0;
-  --gold-dark: 184 134 11;
-  --gold-intense: 218 165 32;
+  /* Silver palette */
+  --silver: 192 200 220;
+  --silver-bright: 225 230 242;
+  --silver-dark: 140 150 170;
+  --silver-intense: 175 185 205;
 }
 
 html, body {
@@ -68,17 +68,18 @@ body {
   .cc-tilt { transform: none !important; transition: none !important; }
 }
 
-/* Dense glass for readability */
+/* Dense glass for readability (ultra glans) */
 .cc-glass {
-  background: rgba(11, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(11, 15, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px) saturate(1.3);
   transition: all 0.3s ease;
 }
 
 .cc-glass:hover {
-  background: rgba(11, 15, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(11, 15, 20, 0.6);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 40px -10px rgba(var(--silver) / 0.08);
 }
 
 
@@ -93,9 +94,9 @@ body {
 }
 
 .cc-glare {
-  opacity: 0.85;
-  background: radial-gradient(640px 340px at var(--mx) var(--my), rgba(255 255 255 / 0.14), rgba(255 255 255 / 0.00) 60%);
-  box-shadow: inset 0 1px 0 rgba(255 255 255 / 0.14), inset 0 -1px 0 rgba(0 0 0 / 0.35);
+  opacity: 0.9;
+  background: radial-gradient(640px 340px at var(--mx) var(--my), rgba(255 255 255 / 0.18), rgba(255 255 255 / 0.00) 60%);
+  box-shadow: inset 0 1px 0 rgba(255 255 255 / 0.16), inset 0 -1px 0 rgba(0 0 0 / 0.35);
   transition: opacity 220ms ease;
 }
 
@@ -156,14 +157,14 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--gold) / 0.02), transparent 70%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--silver) / 0.02), transparent 70%);
   pointer-events: none;
 }
 
 /* Thin decorative divider between sections */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.2) 30%, rgba(var(--gold) / 0.2) 70%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silver) / 0.2) 30%, rgba(var(--silver) / 0.2) 70%, transparent);
   margin: 0 auto;
   max-width: 72rem;
 }
@@ -180,7 +181,7 @@ body {
   transform: translateX(-50%);
   width: min(900px, 100vw);
   height: 600px;
-  background: radial-gradient(ellipse at center, rgba(var(--gold) / 0.06), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silver) / 0.06), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -232,7 +233,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   LUXURY DESIGN SYSTEM — Gold palette, animations & effects
+   LUXURY DESIGN SYSTEM — Silver palette, animations & effects
    ═══════════════════════════════════════════════════════════ */
 
 /* ─── Keyframe Animations ─── */
@@ -241,14 +242,14 @@ body {
   100% { background-position: 200% 0; }
 }
 
-@keyframes pulse-gold {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px rgba(var(--gold) / 0.3); }
-  50% { opacity: 1; box-shadow: 0 0 20px rgba(var(--gold) / 0.6); }
+@keyframes pulse-silver {
+  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px rgba(var(--silver) / 0.3); }
+  50% { opacity: 1; box-shadow: 0 0 20px rgba(var(--silver) / 0.6); }
 }
 
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(var(--gold) / 0.25), 0 0 30px rgba(var(--gold) / 0.1); }
-  50% { box-shadow: 0 0 20px rgba(var(--gold) / 0.45), 0 0 50px rgba(var(--gold) / 0.2); }
+@keyframes glow-pulse-silver {
+  0%, 100% { box-shadow: 0 0 10px rgba(var(--silver) / 0.25), 0 0 30px rgba(var(--silver) / 0.1); }
+  50% { box-shadow: 0 0 20px rgba(var(--silver) / 0.45), 0 0 50px rgba(var(--silver) / 0.2); }
 }
 
 @keyframes float {
@@ -284,15 +285,17 @@ body {
   100% { transform: translateX(200%) skewX(-15deg); }
 }
 
-/* ─── Glass Ultra — heavy blur with multi-layer glass ─── */
+/* ─── Glass Ultra — heavy blur with multi-layer glass (ultra glans) ─── */
 .glass-ultra {
-  background: linear-gradient(135deg, rgba(11, 15, 20, 0.7) 0%, rgba(15, 18, 28, 0.55) 50%, rgba(11, 15, 20, 0.7) 100%);
-  border: 1px solid rgba(var(--gold) / 0.12);
-  backdrop-filter: blur(30px) saturate(1.4);
+  background: linear-gradient(135deg, rgba(11, 15, 20, 0.65) 0%, rgba(18, 22, 32, 0.5) 50%, rgba(11, 15, 20, 0.65) 100%);
+  border: 1px solid rgba(var(--silver) / 0.18);
+  backdrop-filter: blur(36px) saturate(1.5);
   box-shadow:
-    0 0 0 1px rgba(var(--gold) / 0.05) inset,
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 20px 60px -12px rgba(0, 0, 0, 0.5);
+    0 0 0 1px rgba(var(--silver) / 0.08) inset,
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 -1px 0 rgba(255, 255, 255, 0.02) inset,
+    0 20px 60px -12px rgba(0, 0, 0, 0.5),
+    0 0 80px -20px rgba(var(--silver) / 0.06);
 }
 
 /* ─── Card Shine — diagonal light sweep on hover ─── */
@@ -304,7 +307,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(var(--gold) / 0.06) 45%, rgba(var(--gold) / 0.12) 50%, rgba(var(--gold) / 0.06) 55%, transparent 60%);
+  background: linear-gradient(105deg, transparent 38%, rgba(var(--silver) / 0.08) 44%, rgba(var(--silver) / 0.16) 50%, rgba(var(--silver) / 0.08) 56%, transparent 62%);
   transform: translateX(-100%) skewX(-15deg);
   pointer-events: none;
   transition: none;
@@ -323,7 +326,7 @@ body {
   position: absolute;
   width: 24px;
   height: 24px;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--silver) / 0.3);
   pointer-events: none;
 }
 .ornament-corner::before {
@@ -332,7 +335,7 @@ body {
   border-top: 1px solid;
   border-left: 1px solid;
   border-color: inherit;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--silver) / 0.3);
 }
 .ornament-corner::after {
   bottom: -1px;
@@ -340,7 +343,7 @@ body {
   border-bottom: 1px solid;
   border-right: 1px solid;
   border-color: inherit;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--silver) / 0.3);
 }
 
 /* ─── Diamond Ornament — centered diamond separator ─── */
@@ -356,17 +359,17 @@ body {
   flex: 1;
   max-width: 80px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silver) / 0.4), transparent);
 }
 .diamond-ornament-gem {
   width: 6px;
   height: 6px;
-  background: rgba(var(--gold) / 0.6);
+  background: rgba(var(--silver) / 0.6);
   transform: rotate(45deg);
   flex-shrink: 0;
 }
 
-/* ─── Section Glow — radial gold ambient glow ─── */
+/* ─── Section Glow — radial silver ambient glow ─── */
 .section-glow {
   position: relative;
 }
@@ -378,7 +381,7 @@ body {
   transform: translateX(-50%);
   width: min(800px, 100vw);
   height: 500px;
-  background: radial-gradient(ellipse at center, rgba(var(--gold) / 0.06), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silver) / 0.06), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -406,8 +409,8 @@ body {
 
 .luxury-gradient-mesh {
   background:
-    radial-gradient(600px 400px at 20% 30%, rgba(var(--gold) / 0.03), transparent 70%),
-    radial-gradient(500px 350px at 80% 60%, rgba(var(--gold) / 0.02), transparent 70%),
+    radial-gradient(600px 400px at 20% 30%, rgba(var(--silver) / 0.03), transparent 70%),
+    radial-gradient(500px 350px at 80% 60%, rgba(var(--silver) / 0.02), transparent 70%),
     linear-gradient(180deg, rgba(5, 6, 10, 1), rgba(8, 10, 16, 1));
 }
 
@@ -419,82 +422,82 @@ body {
   background: rgba(5, 6, 10, 0.9);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(var(--gold) / 0.3), rgba(var(--gold) / 0.15));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.3), rgba(var(--silver) / 0.15));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(var(--gold) / 0.5), rgba(var(--gold) / 0.25));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.5), rgba(var(--silver) / 0.25));
 }
 
-/* ─── Gold Gradient Text ─── */
-.text-gold-gradient {
-  background: linear-gradient(135deg, rgb(var(--gold-bright)), rgb(var(--gold)), rgb(var(--gold-dark)));
+/* ─── Silver Gradient Text ─── */
+.text-silver-gradient {
+  background: linear-gradient(135deg, rgb(var(--silver-bright)), rgb(var(--silver)), rgb(var(--silver-dark)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ─── Gold Glow Button ─── */
-.btn-gold {
+/* ─── Silver Glow Button ─── */
+.btn-silver {
   position: relative;
-  border: 1px solid rgba(var(--gold) / 0.4);
-  background: rgba(var(--gold) / 0.12);
-  color: rgb(var(--gold-bright));
+  border: 1px solid rgba(var(--silver) / 0.4);
+  background: rgba(var(--silver) / 0.12);
+  color: rgb(var(--silver-bright));
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
   transition: all 0.3s ease;
 }
-.btn-gold:hover {
-  background: rgba(var(--gold) / 0.2);
-  border-color: rgba(var(--gold) / 0.6);
-  box-shadow: 0 0 20px rgba(var(--gold) / 0.15), 0 0 40px rgba(var(--gold) / 0.05);
+.btn-silver:hover {
+  background: rgba(var(--silver) / 0.2);
+  border-color: rgba(var(--silver) / 0.6);
+  box-shadow: 0 0 20px rgba(var(--silver) / 0.15), 0 0 40px rgba(var(--silver) / 0.05);
 }
 
-/* ─── Hero Gold Ring Orbit ─── */
-.gold-ring-orbit {
-  border: 1px solid rgba(var(--gold) / 0.12);
+/* ─── Hero Silver Ring Orbit ─── */
+.silver-ring-orbit {
+  border: 1px solid rgba(var(--silver) / 0.12);
   border-radius: 50%;
   animation: rotate-slow 25s linear infinite;
 }
 
 /* ─── Pulsing Glow Ring (Process steps) ─── */
-.glow-ring {
-  box-shadow: 0 0 0 2px rgba(var(--gold) / 0.2);
-  animation: glow-pulse 3s ease-in-out infinite;
+.glow-ring-silver {
+  box-shadow: 0 0 0 2px rgba(var(--silver) / 0.2);
+  animation: glow-pulse-silver 3s ease-in-out infinite;
 }
 
-/* ─── Expanding Gold Accent Line ─── */
-.gold-accent-line {
+/* ─── Expanding Silver Accent Line ─── */
+.silver-accent-line {
   position: relative;
 }
-.gold-accent-line::after {
+.silver-accent-line::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silver) / 0.6), transparent);
   transition: width 0.4s ease, left 0.4s ease;
 }
-.gold-accent-line:hover::after {
+.silver-accent-line:hover::after {
   width: 80%;
   left: 10%;
 }
 
-/* ─── Gold Border Glow on hover ─── */
-.gold-border-glow {
+/* ─── Silver Border Glow on hover ─── */
+.silver-border-glow {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.gold-border-glow:hover {
-  border-color: rgba(var(--gold) / 0.35);
-  box-shadow: 0 0 15px rgba(var(--gold) / 0.1), 0 4px 30px rgba(0, 0, 0, 0.3);
+.silver-border-glow:hover {
+  border-color: rgba(var(--silver) / 0.35);
+  box-shadow: 0 0 15px rgba(var(--silver) / 0.1), 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gold-ring-orbit { animation: none; }
-  .glow-ring { animation: none; }
+  .silver-ring-orbit { animation: none; }
+  .glow-ring-silver { animation: none; }
   .card-shine:hover::after { animation: none; }
   .grain-overlay::after { animation: none; }
 }

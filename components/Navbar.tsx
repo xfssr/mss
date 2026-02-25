@@ -17,21 +17,21 @@ export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] 
 ];
 
 const navLinkClass =
-  "px-3 py-2 text-sm text-white/70 hover:text-[rgb(var(--gold-bright))] hover:bg-white/5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--gold))]";
+  "px-3 py-2 text-sm text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--silver))]";
 
 export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
   const isHe = props.lang === "he";
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-[rgb(var(--gold))]/10 bg-[rgba(5,6,10,0.75)] backdrop-blur-[24px]">
+    <header className="sticky top-0 z-30 border-b border-[rgb(var(--silver))]/10 bg-[rgba(5,6,10,0.75)] backdrop-blur-[24px]">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="#top"
-          className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--gold))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
+          className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--silver))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
           aria-label="Micro-Screen Studio"
         >
-          <Logo variant="lockup" className="min-w-0 text-gold-gradient" />
+          <Logo variant="lockup" className="min-w-0 text-silver-gradient" />
         </a>
 
         <nav className="flex items-center gap-2" aria-label="Main navigation">
@@ -53,7 +53,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           {/* Mobile hamburger button */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-lg text-white/70 hover:text-[rgb(var(--gold-bright))] hover:bg-white/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--gold))]"
+            className="md:hidden p-2 rounded-lg text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--silver))]"
             aria-label={t(props.lang, mobileOpen ? "menuClose" : "menuOpen")}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
@@ -66,7 +66,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           </button>
 
           {/* Language switcher (always visible) */}
-          <div className="ml-2 inline-flex rounded-xl border border-[rgb(var(--gold))]/15 bg-black/30 p-1 backdrop-blur-sm" role="group" aria-label="Language">
+          <div className="ml-2 inline-flex rounded-xl border border-[rgb(var(--silver))]/15 bg-black/30 p-1 backdrop-blur-sm" role="group" aria-label="Language">
             <button
               type="button"
               onClick={() => props.onSetLang("he")}
@@ -95,13 +95,13 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
 
       {/* Mobile dropdown menu */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-[rgb(var(--gold))]/10 bg-[rgba(5,6,10,0.85)] backdrop-blur-[24px]">
+        <div className="md:hidden border-t border-[rgb(var(--silver))]/10 bg-[rgba(5,6,10,0.85)] backdrop-blur-[24px]">
           <div className="flex flex-col px-4 py-2">
             {NAV_ITEMS.map((item) =>
               item.useLink ? (
                 <Link
                   key={item.labelKey}
-                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--gold-bright))] hover:bg-white/5 rounded-lg transition-all"
+                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all"
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -110,7 +110,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
               ) : (
                 <a
                   key={item.labelKey}
-                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--gold-bright))] hover:bg-white/5 rounded-lg transition-all"
+                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all"
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                 >

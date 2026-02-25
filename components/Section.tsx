@@ -11,7 +11,7 @@ export function Section(props: PropsWithChildren<{ id: string; title?: string; s
             <div className={`diamond-ornament mt-2 mb-3 ${center ? "justify-center" : ""}`}>
               <span className="diamond-ornament-gem" />
             </div>
-            <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold text-gold-gradient tracking-tight ${center}`}>{props.title}</h2>
+            <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold text-silver-gradient tracking-tight ${center}`}>{props.title}</h2>
           </>
         ) : null}
         {props.subtitle ? (
