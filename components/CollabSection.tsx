@@ -14,9 +14,7 @@ export function CollabSection({ lang }: { lang: Lang }) {
   };
 
   return (
-    <Section id="collab" title={t(lang, "collabTitle")}>
-      <p className="text-sm text-white/60 -mt-6 mb-8">{t(lang, "collabSubtitle")}</p>
-
+    <Section id="collab" title={t(lang, "collabTitle")} subtitle={t(lang, "collabSubtitle")}>
       <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
           {/* Left: body + bullets */}

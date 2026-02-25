@@ -154,6 +154,14 @@ body {
   pointer-events: none;
 }
 
+/* Thin decorative divider between sections */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--blue) / 0.15) 30%, rgba(var(--blue) / 0.15) 70%, transparent);
+  margin: 0 auto;
+  max-width: 72rem;
+}
+
 /* Hero radial glow */
 .hero-glow {
   position: relative;

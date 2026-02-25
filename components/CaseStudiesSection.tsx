@@ -120,10 +120,10 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     >
       <div className="relative mx-auto w-full max-w-6xl">
         {/* header */}
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
+        <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
           {tx.title}
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-white/75">{tx.subtitle}</p>
+        <p className="mt-3 text-sm sm:text-base text-white/60">{tx.subtitle}</p>
         <p className="mt-1 text-sm text-white/50">{tx.desc}</p>
 
         {/* cards grid */}
