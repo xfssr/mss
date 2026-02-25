@@ -161,6 +161,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     sectionWhyThisWorks: "למה זה עובד",
     sectionFaq: "שאלות נפוצות",
     sectionSocialProof: "הוכחה חברתית",
+    sectionOutcome: "תוצאה צפויה",
+    sectionExamples: "דוגמאות",
 
     labelShootTime: "זמן צילום",
     labelDelivery: "זמן אספקה",
@@ -488,6 +490,8 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     sectionWhyThisWorks: "Why this works",
     sectionFaq: "FAQ",
     sectionSocialProof: "Social proof",
+    sectionOutcome: "Expected outcome",
+    sectionExamples: "Examples",
 
     labelShootTime: "Shoot time",
     labelDelivery: "Delivery",

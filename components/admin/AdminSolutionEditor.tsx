@@ -151,6 +151,15 @@ export function AdminSolutionEditor(props: { solutions: SolutionItem[] }) {
         </div>
       </fieldset>
 
+      {/* Outcome */}
+      <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
+        <legend className="text-xs text-white/55 px-1">Outcome</legend>
+        <div className="grid grid-cols-2 gap-2">
+          <input value={d.outcome?.he ?? ""} onChange={(e) => updateField(slug, (x) => ({ ...x, outcome: { ...(x.outcome ?? { he: "", en: "" }), he: e.target.value } }))} placeholder="HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+          <input value={d.outcome?.en ?? ""} onChange={(e) => updateField(slug, (x) => ({ ...x, outcome: { ...(x.outcome ?? { he: "", en: "" }), en: e.target.value } }))} placeholder="EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+        </div>
+      </fieldset>
+
       {/* Process steps */}
       <fieldset className="rounded-xl border border-white/10 p-3 space-y-2">
         <legend className="text-xs text-white/55 px-1">Process steps</legend>
@@ -246,6 +255,40 @@ export function AdminSolutionEditor(props: { solutions: SolutionItem[] }) {
           <textarea value={d.whatsappTemplateSecondary.he} onChange={(e) => updateField(slug, (x) => ({ ...x, whatsappTemplateSecondary: { ...x.whatsappTemplateSecondary, he: e.target.value } }))} rows={2} placeholder="HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none resize-y" />
           <textarea value={d.whatsappTemplateSecondary.en} onChange={(e) => updateField(slug, (x) => ({ ...x, whatsappTemplateSecondary: { ...x.whatsappTemplateSecondary, en: e.target.value } }))} rows={2} placeholder="EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none resize-y" />
         </div>
+      </fieldset>
+
+      {/* Examples */}
+      <fieldset className="rounded-xl border border-white/10 p-3 space-y-3">
+        <legend className="text-xs text-white/55 px-1">Examples (3 per category)</legend>
+        {(d.examples ?? []).map((ex, i) => (
+          <div key={i} className="space-y-1 rounded-lg border border-white/5 p-2">
+            <div className="flex items-center justify-between">
+              <div className="text-[10px] text-white/40">Example {i + 1}</div>
+              <button
+                type="button"
+                onClick={() => updateField(slug, (x) => ({ ...x, examples: (x.examples ?? []).filter((_, j) => j !== i) }))}
+                className="text-[10px] text-red-400 hover:text-red-300"
+              >
+                Remove
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <input value={ex.title.he} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], title: { ...exs[i].title, he: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Title HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+              <input value={ex.title.en} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], title: { ...exs[i].title, en: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Title EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <input value={ex.description.he} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], description: { ...exs[i].description, he: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Description HE" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+              <input value={ex.description.en} onChange={(e) => updateField(slug, (x) => { const exs = [...(x.examples ?? [])]; exs[i] = { ...exs[i], description: { ...exs[i].description, en: e.target.value } }; return { ...x, examples: exs }; })} placeholder="Description EN" className="rounded-xl border border-white/10 bg-black/30 px-3 py-1.5 text-sm text-white outline-none" />
+            </div>
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={() => updateField(slug, (x) => ({ ...x, examples: [...(x.examples ?? []), { title: { he: "", en: "" }, description: { he: "", en: "" } }] }))}
+          className="w-full rounded-lg border border-dashed border-white/15 bg-white/[0.03] px-3 py-2 text-xs text-white/50 hover:bg-white/[0.06] hover:text-white/70"
+        >
+          + Add example
+        </button>
       </fieldset>
 
       {/* Save */}
