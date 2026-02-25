@@ -600,9 +600,11 @@ export function ClientPage(props: Props) {
       </Section>
       </div>
 
+      <div className="section-divider" />
+
       {/* ===== Who Is This For section ===== */}
-      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
+      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")} centered>
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
           <ul className="space-y-4">
             {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
               <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
@@ -614,12 +616,16 @@ export function ClientPage(props: Props) {
         </div>
       </Section>
 
+      <div className="section-divider" />
+
       {/* ===== Case Studies section ===== */}
       <CaseStudiesSection lang={lang} />
 
+      <div className="section-divider" />
+
       {/* ===== Why Work With Me section ===== */}
-      <Section id="why-me" title={t(lang, "whyMeTitle")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl">
+      <Section id="why-me" title={t(lang, "whyMeTitle")} centered>
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
           <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
           <ul className="space-y-4">
             {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
@@ -632,11 +638,11 @@ export function ClientPage(props: Props) {
         </div>
       </Section>
 
+      <div className="section-divider" />
 
       {/* Ready Solutions section - reusing existing /solutions data */}
       {props.solutions.length > 0 && (
-        <Section id="solutions" title={t(lang, "sectionSolutions")}>
-          <p className="text-sm text-white/70 mb-8">{t(lang, "solutionsIntro")}</p>
+        <Section id="solutions" title={t(lang, "sectionSolutions")} subtitle={t(lang, "solutionsIntro")}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {props.solutions.map((item) => (
               <SolutionCard
@@ -652,6 +658,8 @@ export function ClientPage(props: Props) {
 
       {/* ===== Collaboration section ===== */}
       <CollabSection lang={lang} />
+
+      <div className="section-divider" />
 
       <Section id="contact" title={t(lang, "sectionContact")}>
         <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
