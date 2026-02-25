@@ -18,14 +18,6 @@ const L = {
     forYouBadge: "For You",
     insightLabel: "Insight",
     servicesLabel: "Services",
-    filters: {
-      all: "All",
-      food: "Food",
-      restaurant: "Restaurant",
-      street: "Street",
-      kitchen: "Kitchen POV",
-      bar: "Bar",
-    },
   },
   he: {
     title: "תיקי עבודות — ביצועים אמיתיים",
@@ -39,14 +31,6 @@ const L = {
     forYouBadge: "For You",
     insightLabel: "תובנה",
     servicesLabel: "שירותים",
-    filters: {
-      all: "הכל",
-      food: "אוכל",
-      restaurant: "מסעדה",
-      street: "רחוב",
-      kitchen: "מטבח POV",
-      bar: "בר",
-    },
   },
 } as const;
 
@@ -70,9 +54,6 @@ type DbCaseStudy = {
   servicesHe: string;
   thumbnailUrl: string;
 };
-
-const FILTER_KEYS = ["all", "food", "restaurant", "street", "kitchen", "bar"] as const;
-type FilterKey = (typeof FILTER_KEYS)[number];
 
 /* ─── icons (inline SVG to avoid dependencies) ─── */
 function IconEye() {
@@ -120,7 +101,6 @@ function IconPlay() {
 
 /* ─── component ─── */
 export function CaseStudiesSection({ lang }: { lang: Lang }) {
-  const [selected, setSelected] = useState<FilterKey>("all");
   const [cases, setCases] = useState<DbCaseStudy[]>([]);
   const tx = L[lang];
   const isRtl = lang === "he";
@@ -131,11 +111,6 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
       .then((data: DbCaseStudy[]) => setCases(data))
       .catch((err) => { console.error("Failed to load case studies:", err); });
   }, []);
-
-  const filtered =
-    selected === "all"
-      ? cases
-      : cases.filter((c) => c.category === selected);
 
   return (
     <section
@@ -151,30 +126,9 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
         <p className="mt-3 text-base sm:text-lg text-white/75">{tx.subtitle}</p>
         <p className="mt-1 text-sm text-white/50">{tx.desc}</p>
 
-        {/* filter chips */}
-        <div className="mt-8 flex flex-wrap gap-2">
-          {FILTER_KEYS.map((key) => {
-            const active = selected === key;
-            return (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setSelected(key)}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200 border ${
-                  active
-                    ? "border-[rgb(var(--blue))]/60 bg-[rgb(var(--blue))]/20 text-white"
-                    : "border-white/10 bg-white/[0.04] text-white/60 hover:bg-white/[0.08] hover:border-white/20"
-                }`}
-              >
-                {tx.filters[key]}
-              </button>
-            );
-          })}
-        </div>
-
         {/* cards grid */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {filtered.map((cs) => (
+        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+          {cases.map((cs) => (
             <div
               key={cs.id}
               className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
@@ -226,15 +180,15 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
               </a>
 
               {/* content */}
-              <div className="p-5">
+              <div className="p-3 sm:p-4">
                 {/* title + tags */}
-                <h3 className="text-sm font-bold text-white/90">
+                <h3 className="text-xs font-bold text-white/90">
                   {lang === "he" ? cs.titleHe : cs.titleEn}
                 </h3>
-                <p className="mt-1 text-[11px] text-white/40">{lang === "he" ? cs.tagsHe : cs.tagsEn}</p>
+                <p className="mt-0.5 text-[10px] text-white/40">{lang === "he" ? cs.tagsHe : cs.tagsEn}</p>
 
                 {/* metrics 2×2 grid */}
-                <div className="mt-4 grid grid-cols-2 gap-2">
+                <div className="mt-3 grid grid-cols-2 gap-1.5">
                   <MetricCell icon={<IconEye />} label={tx.views} value={cs.views} />
                   <MetricCell icon={<IconClock />} label={tx.avgWatch} value={cs.avgWatch} />
                   <MetricCell icon={<IconTarget />} label={tx.fullWatch} value={cs.fullWatch} />
@@ -242,12 +196,12 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 </div>
 
                 {/* insight */}
-                <p className="mt-4 text-xs text-white/50 italic border-s-2 border-[rgb(var(--blue))]/30 ps-3">
+                <p className="mt-3 text-[10px] text-white/50 italic border-s-2 border-[rgb(var(--blue))]/30 ps-2">
                   {lang === "he" ? cs.insightHe : cs.insightEn}
                 </p>
 
                 {/* services */}
-                <p className="mt-2 text-[10px] text-white/35">
+                <p className="mt-1.5 text-[9px] text-white/35">
                   {lang === "he" ? cs.servicesHe : cs.servicesEn}
                 </p>
 
@@ -257,7 +211,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
-                  className="mt-4 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
+                  className="mt-3 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
                 >
                   {tx.cta}
                 </a>
@@ -273,12 +227,12 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
 /* ─── metric cell sub-component ─── */
 function MetricCell({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-white/[0.03] px-3 py-2.5">
-      <div className="flex items-center gap-1.5 text-white/40">
+    <div className="rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-1.5">
+      <div className="flex items-center gap-1 text-white/40">
         {icon}
-        <span className="text-[9px] uppercase tracking-wider">{label}</span>
+        <span className="text-[8px] uppercase tracking-wider">{label}</span>
       </div>
-      <div className="mt-1 text-sm font-bold text-white/85">{value}</div>
+      <div className="mt-0.5 text-xs font-bold text-white/85">{value}</div>
     </div>
   );
 }
