@@ -9,8 +9,10 @@
   --bg2: 16 18 28;
   --panel: 255 255 255;
   --panel2: 255 255 255;
-  --blue: 45 125 255;
-  --blueBright: 0 163 255;
+  --blue: 53 90 230;
+  --blueBright: 77 163 255;
+  --blueSoft: 77 163 255;  /* use at 0.18 opacity for subtle glow */
+  --focus: 77 163 255;     /* use at 0.35 opacity for focus rings */
   --red: 255 107 107;
   --text: 245 247 255;
   --muted: 180 185 200;
@@ -97,7 +99,7 @@ body {
 .cc-glass:hover {
   background: rgba(var(--panel) / 0.08);
   border-color: rgba(var(--border) / 0.16);
-  box-shadow: 0 4px 40px -10px rgba(var(--blue) / 0.08);
+  box-shadow: 0 4px 30px -10px rgba(var(--shadow) / 0.3);
 }
 
 
@@ -150,13 +152,13 @@ body {
   transform: scale(1.03);
   background: rgba(var(--panel) / 0.08);
   border-color: rgba(var(--border) / 0.20);
-  box-shadow: 0 25px 50px -12px rgba(var(--shadow) / 0.4), 0 0 30px -8px rgba(var(--blue) / 0.06);
+  box-shadow: 0 25px 50px -12px rgba(var(--shadow) / 0.4);
 }
 
 /* Neutral package card styling — uses --blue accent like solution cards */
 .pkg-card--neutral { box-shadow: none; }
 .pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-.pkg-accent--neutral { color: rgb(var(--blue)); }
+.pkg-accent--neutral { color: rgb(var(--silver-bright)); }
 .pkg-glow--neutral { background: none; }
 .pkg-border--neutral { border-color: rgba(255, 255, 255, 0.15); }
 
@@ -184,7 +186,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--blue) / 0.015), transparent 70%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--silverWarm) / 0.01), transparent 70%);
   pointer-events: none;
 }
 
@@ -208,7 +210,7 @@ body {
   transform: translateX(-50%);
   width: min(900px, 100vw);
   height: 600px;
-  background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.04), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silverWarm) / 0.03), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -229,7 +231,7 @@ body {
   }
   
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
   }
 
   .safe-area-pb {
@@ -270,13 +272,13 @@ body {
 }
 
 @keyframes pulse-silver {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px rgba(var(--blue) / 0.2); }
-  50% { opacity: 1; box-shadow: 0 0 20px rgba(var(--blue) / 0.4); }
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 6px rgba(var(--silver) / 0.15); }
+  50% { opacity: 0.8; box-shadow: 0 0 12px rgba(var(--silver) / 0.25); }
 }
 
 @keyframes glow-pulse-silver {
-  0%, 100% { box-shadow: 0 0 10px rgba(var(--blue) / 0.15), 0 0 30px rgba(var(--blue) / 0.06); }
-  50% { box-shadow: 0 0 20px rgba(var(--blue) / 0.3), 0 0 50px rgba(var(--blue) / 0.12); }
+  0%, 100% { box-shadow: 0 0 8px rgba(var(--blue) / 0.08), 0 0 20px rgba(var(--blue) / 0.03); }
+  50% { box-shadow: 0 0 14px rgba(var(--blue) / 0.14), 0 0 30px rgba(var(--blue) / 0.06); }
 }
 
 @keyframes float {
@@ -398,7 +400,7 @@ body {
 .diamond-ornament-gem {
   width: 6px;
   height: 6px;
-  background: rgba(var(--blue) / 0.5);
+  background: rgba(var(--silverWarm) / 0.5);
   transform: rotate(45deg);
   flex-shrink: 0;
 }
@@ -415,7 +417,7 @@ body {
   transform: translateX(-50%);
   width: min(800px, 100vw);
   height: 500px;
-  background: radial-gradient(ellipse at center, rgba(var(--blue) / 0.03), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silverWarm) / 0.025), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -443,8 +445,8 @@ body {
 
 .luxury-gradient-mesh {
   background:
-    radial-gradient(600px 400px at 20% 30%, rgba(var(--blue) / 0.02), transparent 70%),
-    radial-gradient(500px 350px at 80% 60%, rgba(var(--blue) / 0.015), transparent 70%),
+    radial-gradient(600px 400px at 20% 30%, rgba(var(--silverWarm) / 0.015), transparent 70%),
+    radial-gradient(500px 350px at 80% 60%, rgba(var(--silverWarm) / 0.01), transparent 70%),
     linear-gradient(180deg, rgba(6, 8, 14, 1), rgba(8, 10, 16, 1));
 }
 
@@ -456,11 +458,11 @@ body {
   background: rgba(6, 8, 14, 0.9);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(var(--blue) / 0.3), rgba(var(--blue) / 0.12));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.25), rgba(var(--silver) / 0.10));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(var(--blue) / 0.5), rgba(var(--blue) / 0.2));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.40), rgba(var(--silver) / 0.18));
 }
 
 /* ─── Warm-Silver Gradient Text ─── */
@@ -475,7 +477,7 @@ body {
 .btn-silver {
   position: relative;
   border: 1px solid rgba(var(--silverWarm) / 0.3);
-  background: linear-gradient(135deg, rgba(var(--silverWarm) / 0.08), rgba(var(--blue) / 0.06));
+  background: rgba(var(--panel) / 0.06);
   color: rgb(var(--silver-bright));
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -483,9 +485,9 @@ body {
   transition: all 0.3s ease;
 }
 .btn-silver:hover {
-  background: linear-gradient(135deg, rgba(var(--silverWarm) / 0.12), rgba(var(--blue) / 0.12));
-  border-color: rgba(var(--blue) / 0.4);
-  box-shadow: 0 0 20px rgba(var(--blue) / 0.15), 0 0 40px rgba(var(--blue) / 0.05);
+  background: rgba(var(--panel) / 0.10);
+  border-color: rgba(var(--silverWarm) / 0.45);
+  box-shadow: 0 0 16px rgba(var(--blueSoft) / 0.12);
   color: #fff;
 }
 
@@ -498,9 +500,9 @@ body {
   transition: all 0.3s ease;
 }
 .btn-secondary:hover {
-  border-color: rgba(var(--blue) / 0.25);
-  color: rgb(var(--blue));
-  background: rgba(var(--blue) / 0.04);
+  border-color: rgba(var(--silverWarm) / 0.3);
+  color: rgb(var(--blueBright));
+  background: transparent;
 }
 
 /* ─── Hero Ring Orbit ─── */
@@ -510,9 +512,9 @@ body {
   animation: rotate-slow 25s linear infinite;
 }
 
-/* ─── Pulsing Glow Ring (blue accent) ─── */
+/* ─── Pulsing Glow Ring (subtle accent) ─── */
 .glow-ring-silver {
-  box-shadow: 0 0 0 2px rgba(var(--blue) / 0.15);
+  box-shadow: 0 0 0 1px rgba(var(--silver) / 0.15);
   animation: glow-pulse-silver 3s ease-in-out infinite;
 }
 
@@ -527,7 +529,7 @@ body {
   left: 50%;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--blue) / 0.5), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silverWarm) / 0.35), transparent);
   transition: width 0.4s ease, left 0.4s ease;
 }
 .silver-accent-line:hover::after {
@@ -540,8 +542,8 @@ body {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .silver-border-glow:hover {
-  border-color: rgba(var(--blue) / 0.2);
-  box-shadow: 0 0 15px rgba(var(--blue) / 0.06), 0 4px 30px rgba(var(--shadow) / 0.3);
+  border-color: rgba(var(--silverWarm) / 0.2);
+  box-shadow: 0 4px 30px rgba(var(--shadow) / 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -569,13 +571,13 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, rgba(var(--silverWarm) / 0.4), rgba(var(--blue) / 0.3), transparent);
+  background: linear-gradient(90deg, rgba(var(--silverWarm) / 0.4), rgba(var(--silverWarm2) / 0.2), transparent);
   border-radius: 1px;
 }
 
 /* ─── Input Styling — premium focus ring ─── */
 input:focus, textarea:focus, select:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--blue) / 0.4);
-  border-color: rgba(var(--blue) / 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(var(--focus) / 0.30);
+  border-color: rgba(var(--focus) / 0.40) !important;
 }

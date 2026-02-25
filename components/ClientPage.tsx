@@ -233,9 +233,9 @@ export function ClientPage(props: Props) {
           <div className="silver-ring-orbit absolute w-[700px] h-[700px] opacity-10" style={{ animationDirection: "reverse", animationDuration: "35s" }} />
         </div>
         {/* Floating pulse dots */}
-        <div className="absolute top-20 left-[15%] w-2 h-2 rounded-full bg-[rgb(var(--blue))] opacity-30" style={{ animation: "pulse-silver 3s ease-in-out infinite, float 6s ease-in-out infinite" }} aria-hidden="true" />
-        <div className="absolute top-40 right-[10%] w-1.5 h-1.5 rounded-full bg-[rgb(var(--blueBright))] opacity-20" style={{ animation: "pulse-silver 4s ease-in-out infinite 1s, float 8s ease-in-out infinite 2s" }} aria-hidden="true" />
-        <div className="absolute bottom-32 left-[25%] w-1 h-1 rounded-full bg-[rgb(var(--blue))] opacity-15" style={{ animation: "pulse-silver 5s ease-in-out infinite 2s, float 7s ease-in-out infinite 1s" }} aria-hidden="true" />
+        <div className="absolute top-20 left-[15%] w-2 h-2 rounded-full bg-[rgb(var(--silver))] opacity-25" style={{ animation: "pulse-silver 3s ease-in-out infinite, float 6s ease-in-out infinite" }} aria-hidden="true" />
+        <div className="absolute top-40 right-[10%] w-1.5 h-1.5 rounded-full bg-[rgb(var(--silver-bright))] opacity-15" style={{ animation: "pulse-silver 4s ease-in-out infinite 1s, float 8s ease-in-out infinite 2s" }} aria-hidden="true" />
+        <div className="absolute bottom-32 left-[25%] w-1 h-1 rounded-full bg-[rgb(var(--silver))] opacity-12" style={{ animation: "pulse-silver 5s ease-in-out infinite 2s, float 7s ease-in-out infinite 1s" }} aria-hidden="true" />
         <div className="relative glass-ultra rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl ornament-corner">
           {/* Multi-layer overlays */}
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none" />
@@ -516,7 +516,7 @@ export function ClientPage(props: Props) {
                                 type="checkbox"
                                 checked={!!selectedAddons[addon.id]}
                                 onChange={() => toggleAddon(addon.id)}
-                                className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
+                                className="accent-[rgb(var(--silver))] w-4 h-4 shrink-0"
                               />
                               <div className="min-w-0">
                                 <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
@@ -573,7 +573,7 @@ export function ClientPage(props: Props) {
 
                   {/* Final total line for Monthly (package after discount + add-ons) */}
                   {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                    <div className="rounded-lg border border-[rgb(var(--blue))]/20 bg-[rgb(var(--blue))]/[0.06] px-3 py-2">
+                    <div className="rounded-lg border border-white/12 bg-white/[0.04] px-3 py-2">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
                         <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
@@ -628,13 +628,13 @@ export function ClientPage(props: Props) {
       <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")} centered>
         <div className="relative">
           {/* Side ambient glows */}
-          <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--blue))]/[0.02] rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--blue))]/[0.02] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -left-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--silverWarm))]/[0.015] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-40 h-80 bg-[rgb(var(--silverWarm))]/[0.015] rounded-full blur-3xl pointer-events-none" />
           <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto ornament-corner">
             <ul className="space-y-4">
               {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
                 <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                  <span className="text-[rgb(var(--silverWarm))] mt-0.5 shrink-0">●</span>
                   {t(lang, key)}
                 </li>
               ))}
@@ -653,14 +653,14 @@ export function ClientPage(props: Props) {
       {/* ===== Why Work With Me section ===== */}
       <Section id="why-me" title={t(lang, "whyMeTitle")} centered>
         <div className="relative">
-          <div className="absolute -left-16 top-1/3 w-32 h-64 bg-[rgb(var(--blue))]/[0.02] rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -right-16 top-1/3 w-32 h-64 bg-[rgb(var(--blue))]/[0.02] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -left-16 top-1/3 w-32 h-64 bg-[rgb(var(--silverWarm))]/[0.015] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -right-16 top-1/3 w-32 h-64 bg-[rgb(var(--silverWarm))]/[0.015] rounded-full blur-3xl pointer-events-none" />
           <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto ornament-corner">
             <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
             <ul className="space-y-4">
               {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
                 <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">✔</span>
+                  <span className="text-[rgb(var(--silverWarm))] mt-0.5 shrink-0">✔</span>
                   {t(lang, key)}
                 </li>
               ))}
@@ -696,7 +696,7 @@ export function ClientPage(props: Props) {
         <div className="relative">
           {/* Ambient radial glow */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
-            <div className="w-[500px] h-[300px] bg-[rgb(var(--blue))]/[0.02] rounded-full blur-3xl" />
+            <div className="w-[500px] h-[300px] bg-[rgb(var(--silverWarm))]/[0.015] rounded-full blur-3xl" />
           </div>
           <div className="glass-ultra rounded-3xl p-6 sm:p-10 shadow-lg ornament-corner relative">
             <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
@@ -714,14 +714,14 @@ export function ClientPage(props: Props) {
                 href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-[rgb(var(--blue))]/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
               >
                 {t(lang, "contactInstagram")}
               </a>
 
               <a
                 href={`mailto:${props.settings.email}`}
-                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-[rgb(var(--blue))]/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
               >
                 {t(lang, "contactEmail")}
               </a>
@@ -729,7 +729,7 @@ export function ClientPage(props: Props) {
 
             <div className="mt-4 flex items-center gap-3">
               <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
-              <span className="text-xs text-[rgb(var(--blue))]/30">◆</span>
+              <span className="text-xs text-[rgb(var(--silverWarm))]/30">◆</span>
               <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
             </div>
           </div>

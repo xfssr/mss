@@ -26,7 +26,7 @@ export function CollabSection({ lang }: { lang: Lang }) {
             <ul className="space-y-3">
               {BULLETS.map((key) => (
                 <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-[rgb(var(--text))]/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                  <span className="text-[rgb(var(--silverWarm))] mt-0.5 shrink-0">●</span>
                   {t(lang, key)}
                 </li>
               ))}
@@ -49,11 +49,11 @@ export function CollabSection({ lang }: { lang: Lang }) {
 
           {/* Right: rules panel with glow rings */}
           <div className="lg:w-56 shrink-0 flex flex-row lg:flex-col gap-3">
-            <div className="flex-1 rounded-2xl border border-[rgb(var(--blue))]/12 bg-[rgb(var(--blue))]/[0.04] px-5 py-4 text-center glow-ring-silver">
-              <span className="block text-lg font-bold text-[rgb(var(--blueBright))]">{t(lang, "collabSpots")}</span>
+            <div className="flex-1 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-center glow-ring-silver">
+              <span className="block text-lg font-bold text-[rgb(var(--silver-bright))]">{t(lang, "collabSpots")}</span>
             </div>
-            <div className="flex-1 rounded-2xl border border-[rgb(var(--blue))]/12 bg-[rgb(var(--blue))]/[0.04] px-5 py-4 text-center glow-ring-silver" style={{ animationDelay: "1.5s" }}>
-              <span className="block text-lg font-bold text-[rgb(var(--blueBright))]">{t(lang, "collabApproval")}</span>
+            <div className="flex-1 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-center glow-ring-silver" style={{ animationDelay: "1.5s" }}>
+              <span className="block text-lg font-bold text-[rgb(var(--silver-bright))]">{t(lang, "collabApproval")}</span>
             </div>
           </div>
         </div>

@@ -17,7 +17,7 @@ export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] 
 ];
 
 const navLinkClass =
-  "px-3 py-2 text-sm text-[rgb(var(--text))]/70 hover:text-[rgb(var(--blue))] hover:bg-white/5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]";
+  "px-3 py-2 text-sm text-[rgb(var(--text))]/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)]";
 
 export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
   const isHe = props.lang === "he";
@@ -28,7 +28,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <a
           href="#top"
-          className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
+          className="flex items-center min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 rounded-lg px-2 py-1 transition-opacity hover:opacity-90"
           aria-label="Micro-Screen Studio"
         >
           <Logo variant="lockup" className="min-w-0 text-silver-gradient" />
@@ -53,7 +53,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           {/* Mobile hamburger button */}
           <button
             type="button"
-            className="md:hidden p-2 rounded-lg text-white/70 hover:text-[rgb(var(--blue))] hover:bg-white/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))]"
+            className="md:hidden p-2 rounded-lg text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)]"
             aria-label={t(props.lang, mobileOpen ? "menuClose" : "menuOpen")}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
@@ -101,7 +101,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
               item.useLink ? (
                 <Link
                   key={item.labelKey}
-                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--blue))] hover:bg-white/5 rounded-lg transition-all"
+                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all"
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                 >
@@ -110,7 +110,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
               ) : (
                 <a
                   key={item.labelKey}
-                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--blue))] hover:bg-white/5 rounded-lg transition-all"
+                  className="px-3 py-3 text-sm text-white/70 hover:text-[rgb(var(--silver-bright))] hover:bg-white/5 rounded-lg transition-all"
                   href={item.href}
                   onClick={() => setMobileOpen(false)}
                 >

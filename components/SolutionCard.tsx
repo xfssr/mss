@@ -36,7 +36,7 @@ export function SolutionCard(props: {
     <button
       type="button"
       onClick={onSelect}
-      className="group text-start cc-glass card-shine silver-accent-line rounded-2xl overflow-hidden transition-all duration-300 hover:border-[rgb(var(--blue))]/20 hover:bg-white/[0.08] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
+      className="group text-start cc-glass card-shine silver-accent-line rounded-2xl overflow-hidden transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:shadow-2xl hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50"
     >
       {item.cover && (
         <div className="relative aspect-[16/9] w-full overflow-hidden">
@@ -53,10 +53,10 @@ export function SolutionCard(props: {
       )}
       <div className="p-5 sm:p-6">
         <div className="flex items-center gap-3">
-          {/* Icon glow box */}
-          <span className="text-2xl shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-[rgb(var(--blue))]/[0.06] border border-[rgb(var(--blue))]/12 shadow-[0_0_10px_rgba(var(--blue)/0.06)] group-hover:shadow-[0_0_20px_rgba(var(--blue)/0.12)] transition-shadow duration-300">{icon}</span>
+          {/* Icon box */}
+          <span className="text-2xl shrink-0 flex items-center justify-center w-10 h-10 rounded-lg bg-white/[0.04] border border-white/10 transition-all duration-300">{icon}</span>
           <div className="min-w-0">
-            <h3 className="text-base sm:text-lg font-bold text-[rgb(var(--text))] group-hover:text-[rgb(var(--blue))] transition-colors">
+            <h3 className="text-base sm:text-lg font-bold text-[rgb(var(--text))] group-hover:text-[rgb(var(--silver-bright))] transition-colors">
               <Link
                 href={`/product/${item.slug}`}
                 onClick={(e) => e.stopPropagation()}
@@ -83,13 +83,13 @@ export function SolutionCard(props: {
 
         {/* Price range hint */}
         {item.pricingTiers.length > 0 && (
-          <div className="mt-2 text-[11px] text-[rgb(var(--blueBright))]">
+          <div className="mt-2 text-[11px] font-semibold text-[rgb(var(--blueBright))]">
             {t(lang, "fromPrice")}{pick(lang, item.pricingTiers[0].range)}
           </div>
         )}
 
         <div className="mt-4">
-          <span className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--blue))]/25 bg-[rgb(var(--blue))]/8 px-4 py-2 text-xs font-medium text-[rgb(var(--silver-bright))] group-hover:bg-[rgb(var(--blue))]/15 group-hover:border-[rgb(var(--blue))]/40 transition-all uppercase tracking-wider">
+          <span className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.05] px-4 py-2 text-xs font-medium text-[rgb(var(--silver-bright))] group-hover:bg-white/[0.10] group-hover:border-white/25 transition-all uppercase tracking-wider">
             {t(lang, "solutionView")} →
           </span>
         </div>

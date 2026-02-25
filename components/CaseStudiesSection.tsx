@@ -134,7 +134,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
           {cases.map((cs) => (
             <div
               key={cs.id}
-              className="group relative rounded-2xl border border-white/10 bg-[rgba(var(--panel)/0.04)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-[rgb(var(--blue))]/20 hover:shadow-[0_0_20px_rgba(var(--blue)/0.06)] silver-border-glow"
+              className="group relative rounded-2xl border border-white/10 bg-[rgba(var(--panel)/0.04)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 silver-border-glow"
             >
               {/* cinematic preview */}
               <a
@@ -199,7 +199,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 </div>
 
                 {/* insight */}
-                <p className="mt-3 text-[10px] text-[rgb(var(--muted))]/70 italic border-s-2 border-[rgb(var(--blue))]/20 ps-2">
+                <p className="mt-3 text-[10px] text-[rgb(var(--muted))]/70 italic border-s-2 border-white/15 ps-2">
                   {lang === "he" ? cs.insightHe : cs.insightEn}
                 </p>
 
