@@ -3,18 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --bg0: 18 18 20;
-  --bg1: 28 28 34;
-  --blue: 145 190 255;
+  --bg0: 10 12 18;
+  --bg1: 16 18 28;
+  --bg: 10 12 18;
+  --bg2: 16 18 28;
+  --panel: 255 255 255;
+  --panel2: 255 255 255;
+  --blue: 53 90 230;
+  --blueBright: 77 163 255;
+  --blueSoft: 77 163 255;  /* use at 0.18 opacity for subtle glow */
+  --focus: 77 163 255;     /* use at 0.35 opacity for focus rings */
   --red: 255 107 107;
-  --text: 235 235 242;
+  --text: 245 247 255;
+  --muted: 180 185 200;
   --stroke: 255 255 255;
+  --border: 255 255 255;
 
-  /* Gold palette */
-  --gold: 212 175 55;
-  --gold-bright: 255 215 0;
-  --gold-dark: 184 134 11;
-  --gold-intense: 218 165 32;
+  /* Warm-silver palette */
+  --silverWarm: 216 209 199;
+  --silverWarm2: 191 199 209;
+  --silver: 200 205 218;
+  --silver-bright: 230 232 242;
+  --silver-dark: 160 158 150;
+  --silver-intense: 185 190 205;
+  --shadow: 0 0 0;
 }
 
 html, body {
@@ -40,9 +52,7 @@ html {
 body {
   color: rgb(var(--text));
   background:
-    radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
-    radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
-    linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
+    linear-gradient(180deg, rgba(14, 16, 26, 1) 0%, rgba(8, 10, 16, 1) 40%, rgba(6, 7, 12, 1) 100%);
   background-attachment: fixed;
 }
 
@@ -54,7 +64,7 @@ body {
 }
 
 ::selection { 
-  background: rgba(var(--red) / 0.35);
+  background: rgba(var(--blue) / 0.35);
   color: rgb(var(--text));
 }
 
@@ -68,17 +78,28 @@ body {
   .cc-tilt { transform: none !important; transition: none !important; }
 }
 
-/* Dense glass for readability */
+/* Dense glass for readability (glossy premium) */
 .cc-glass {
-  background: rgba(11, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(var(--panel) / 0.05);
+  border: 1px solid rgba(var(--border) / 0.10);
+  backdrop-filter: blur(16px) saturate(1.3);
   transition: all 0.3s ease;
+  position: relative;
+}
+
+.cc-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .cc-glass:hover {
-  background: rgba(11, 15, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(var(--panel) / 0.08);
+  border-color: rgba(var(--border) / 0.16);
+  box-shadow: 0 4px 30px -10px rgba(var(--shadow) / 0.3);
 }
 
 
@@ -93,9 +114,9 @@ body {
 }
 
 .cc-glare {
-  opacity: 0.85;
-  background: radial-gradient(640px 340px at var(--mx) var(--my), rgba(255 255 255 / 0.14), rgba(255 255 255 / 0.00) 60%);
-  box-shadow: inset 0 1px 0 rgba(255 255 255 / 0.14), inset 0 -1px 0 rgba(0 0 0 / 0.35);
+  opacity: 0.9;
+  background: radial-gradient(640px 340px at var(--mx) var(--my), rgba(255 255 255 / 0.18), rgba(255 255 255 / 0.00) 60%);
+  box-shadow: inset 0 1px 0 rgba(255 255 255 / 0.16), inset 0 -1px 0 rgba(0 0 0 / 0.35);
   transition: opacity 220ms ease;
 }
 
@@ -110,25 +131,34 @@ body {
   .cc-z1, .cc-z2, .cc-z3 { transform: none !important; }
 }
 
-/* Package card glassmorphism — matching solution card (cc-glass) style */
+/* Package card glassmorphism — glossy premium card */
 .pkg-card {
-  background: rgba(11, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(var(--panel) / 0.04);
+  border: 1px solid rgba(var(--border) / 0.10);
   backdrop-filter: blur(12px) saturate(1.2);
   border-radius: 1rem;
   transition: transform 250ms ease, background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  position: relative;
+}
+.pkg-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 .pkg-card:hover {
   transform: scale(1.03);
-  background: rgba(11, 15, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.30);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+  background: rgba(var(--panel) / 0.08);
+  border-color: rgba(var(--border) / 0.20);
+  box-shadow: 0 25px 50px -12px rgba(var(--shadow) / 0.4);
 }
 
 /* Neutral package card styling — uses --blue accent like solution cards */
 .pkg-card--neutral { box-shadow: none; }
 .pkg-card--neutral:hover { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
-.pkg-accent--neutral { color: rgb(var(--blue)); }
+.pkg-accent--neutral { color: rgb(var(--silver-bright)); }
 .pkg-glow--neutral { background: none; }
 .pkg-border--neutral { border-color: rgba(255, 255, 255, 0.15); }
 
@@ -156,14 +186,14 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--gold) / 0.02), transparent 70%);
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(var(--silverWarm) / 0.01), transparent 70%);
   pointer-events: none;
 }
 
 /* Thin decorative divider between sections */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.2) 30%, rgba(var(--gold) / 0.2) 70%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--border) / 0.10) 30%, rgba(var(--border) / 0.10) 70%, transparent);
   margin: 0 auto;
   max-width: 72rem;
 }
@@ -180,7 +210,7 @@ body {
   transform: translateX(-50%);
   width: min(900px, 100vw);
   height: 600px;
-  background: radial-gradient(ellipse at center, rgba(var(--gold) / 0.06), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silverWarm) / 0.03), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -201,7 +231,7 @@ body {
   }
   
   .focus-ring {
-    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--blue))] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgba(var(--focus)/0.35)] focus-visible:ring-offset-2 focus-visible:ring-offset-black/50;
   }
 
   .safe-area-pb {
@@ -218,12 +248,12 @@ body {
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    line-height: 1.2;
+    line-height: 1.25;
     letter-spacing: -0.02em;
   }
   
   p {
-    line-height: 1.6;
+    line-height: 1.75;
   }
   
   button, a {
@@ -232,7 +262,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   LUXURY DESIGN SYSTEM — Gold palette, animations & effects
+   LUXURY DESIGN SYSTEM — Warm-silver + blue accent palette
    ═══════════════════════════════════════════════════════════ */
 
 /* ─── Keyframe Animations ─── */
@@ -241,14 +271,14 @@ body {
   100% { background-position: 200% 0; }
 }
 
-@keyframes pulse-gold {
-  0%, 100% { opacity: 0.5; box-shadow: 0 0 8px rgba(var(--gold) / 0.3); }
-  50% { opacity: 1; box-shadow: 0 0 20px rgba(var(--gold) / 0.6); }
+@keyframes pulse-silver {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 6px rgba(var(--silver) / 0.15); }
+  50% { opacity: 0.8; box-shadow: 0 0 12px rgba(var(--silver) / 0.25); }
 }
 
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(var(--gold) / 0.25), 0 0 30px rgba(var(--gold) / 0.1); }
-  50% { box-shadow: 0 0 20px rgba(var(--gold) / 0.45), 0 0 50px rgba(var(--gold) / 0.2); }
+@keyframes glow-pulse-silver {
+  0%, 100% { box-shadow: 0 0 8px rgba(var(--blue) / 0.08), 0 0 20px rgba(var(--blue) / 0.03); }
+  50% { box-shadow: 0 0 14px rgba(var(--blue) / 0.14), 0 0 30px rgba(var(--blue) / 0.06); }
 }
 
 @keyframes float {
@@ -284,15 +314,24 @@ body {
   100% { transform: translateX(200%) skewX(-15deg); }
 }
 
-/* ─── Glass Ultra — heavy blur with multi-layer glass ─── */
+/* ─── Glass Ultra — heavy blur with multi-layer glass (glossy premium) ─── */
 .glass-ultra {
-  background: linear-gradient(135deg, rgba(11, 15, 20, 0.7) 0%, rgba(15, 18, 28, 0.55) 50%, rgba(11, 15, 20, 0.7) 100%);
-  border: 1px solid rgba(var(--gold) / 0.12);
-  backdrop-filter: blur(30px) saturate(1.4);
+  background: rgba(var(--panel) / 0.04);
+  border: 1px solid rgba(var(--border) / 0.12);
+  backdrop-filter: blur(36px) saturate(1.5);
   box-shadow:
-    0 0 0 1px rgba(var(--gold) / 0.05) inset,
-    0 1px 0 rgba(255, 255, 255, 0.04) inset,
-    0 20px 60px -12px rgba(0, 0, 0, 0.5);
+    0 0 0 1px rgba(var(--border) / 0.04) inset,
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 20px 60px -12px rgba(var(--shadow) / 0.5);
+  position: relative;
+}
+.glass-ultra::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 /* ─── Card Shine — diagonal light sweep on hover ─── */
@@ -304,7 +343,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(105deg, transparent 40%, rgba(var(--gold) / 0.06) 45%, rgba(var(--gold) / 0.12) 50%, rgba(var(--gold) / 0.06) 55%, transparent 60%);
+  background: linear-gradient(105deg, transparent 38%, rgba(255, 255, 255, 0.04) 44%, rgba(255, 255, 255, 0.10) 50%, rgba(255, 255, 255, 0.04) 56%, transparent 62%);
   transform: translateX(-100%) skewX(-15deg);
   pointer-events: none;
   transition: none;
@@ -323,7 +362,7 @@ body {
   position: absolute;
   width: 24px;
   height: 24px;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--border) / 0.15);
   pointer-events: none;
 }
 .ornament-corner::before {
@@ -332,7 +371,7 @@ body {
   border-top: 1px solid;
   border-left: 1px solid;
   border-color: inherit;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--border) / 0.15);
 }
 .ornament-corner::after {
   bottom: -1px;
@@ -340,7 +379,7 @@ body {
   border-bottom: 1px solid;
   border-right: 1px solid;
   border-color: inherit;
-  border-color: rgba(var(--gold) / 0.3);
+  border-color: rgba(var(--border) / 0.15);
 }
 
 /* ─── Diamond Ornament — centered diamond separator ─── */
@@ -356,17 +395,17 @@ body {
   flex: 1;
   max-width: 80px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silverWarm) / 0.25), transparent);
 }
 .diamond-ornament-gem {
   width: 6px;
   height: 6px;
-  background: rgba(var(--gold) / 0.6);
+  background: rgba(var(--silverWarm) / 0.5);
   transform: rotate(45deg);
   flex-shrink: 0;
 }
 
-/* ─── Section Glow — radial gold ambient glow ─── */
+/* ─── Section Glow — radial ambient glow ─── */
 .section-glow {
   position: relative;
 }
@@ -378,7 +417,7 @@ body {
   transform: translateX(-50%);
   width: min(800px, 100vw);
   height: 500px;
-  background: radial-gradient(ellipse at center, rgba(var(--gold) / 0.06), transparent 70%);
+  background: radial-gradient(ellipse at center, rgba(var(--silverWarm) / 0.025), transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
@@ -401,14 +440,14 @@ body {
 
 /* ─── Luxury Background Alternating ─── */
 .luxury-bg-alt {
-  background: linear-gradient(180deg, rgba(5, 6, 10, 0.98) 0%, rgba(10, 12, 20, 0.95) 50%, rgba(5, 6, 10, 0.98) 100%);
+  background: linear-gradient(180deg, rgba(6, 8, 14, 0.98) 0%, rgba(10, 12, 20, 0.95) 50%, rgba(6, 8, 14, 0.98) 100%);
 }
 
 .luxury-gradient-mesh {
   background:
-    radial-gradient(600px 400px at 20% 30%, rgba(var(--gold) / 0.03), transparent 70%),
-    radial-gradient(500px 350px at 80% 60%, rgba(var(--gold) / 0.02), transparent 70%),
-    linear-gradient(180deg, rgba(5, 6, 10, 1), rgba(8, 10, 16, 1));
+    radial-gradient(600px 400px at 20% 30%, rgba(var(--silverWarm) / 0.015), transparent 70%),
+    radial-gradient(500px 350px at 80% 60%, rgba(var(--silverWarm) / 0.01), transparent 70%),
+    linear-gradient(180deg, rgba(6, 8, 14, 1), rgba(8, 10, 16, 1));
 }
 
 /* ─── Premium Scrollbar ─── */
@@ -416,85 +455,129 @@ body {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(5, 6, 10, 0.9);
+  background: rgba(6, 8, 14, 0.9);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(var(--gold) / 0.3), rgba(var(--gold) / 0.15));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.25), rgba(var(--silver) / 0.10));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(var(--gold) / 0.5), rgba(var(--gold) / 0.25));
+  background: linear-gradient(180deg, rgba(var(--silver) / 0.40), rgba(var(--silver) / 0.18));
 }
 
-/* ─── Gold Gradient Text ─── */
-.text-gold-gradient {
-  background: linear-gradient(135deg, rgb(var(--gold-bright)), rgb(var(--gold)), rgb(var(--gold-dark)));
+/* ─── Warm-Silver Gradient Text ─── */
+.text-silver-gradient {
+  background: linear-gradient(135deg, rgb(var(--silverWarm)), rgb(var(--silverWarm2)), rgb(var(--silver-dark)));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* ─── Gold Glow Button ─── */
-.btn-gold {
+/* ─── Silver-Blue Primary Button ─── */
+.btn-silver {
   position: relative;
-  border: 1px solid rgba(var(--gold) / 0.4);
-  background: rgba(var(--gold) / 0.12);
-  color: rgb(var(--gold-bright));
+  border: 1px solid rgba(var(--silverWarm) / 0.3);
+  background: rgba(var(--panel) / 0.06);
+  color: rgb(var(--silver-bright));
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
   transition: all 0.3s ease;
 }
-.btn-gold:hover {
-  background: rgba(var(--gold) / 0.2);
-  border-color: rgba(var(--gold) / 0.6);
-  box-shadow: 0 0 20px rgba(var(--gold) / 0.15), 0 0 40px rgba(var(--gold) / 0.05);
+.btn-silver:hover {
+  background: rgba(var(--panel) / 0.10);
+  border-color: rgba(var(--silverWarm) / 0.45);
+  box-shadow: 0 0 16px rgba(var(--blueSoft) / 0.12);
+  color: #fff;
 }
 
-/* ─── Hero Gold Ring Orbit ─── */
-.gold-ring-orbit {
-  border: 1px solid rgba(var(--gold) / 0.12);
+/* ─── Secondary Button ─── */
+.btn-secondary {
+  position: relative;
+  border: 1px solid rgba(var(--border) / 0.12);
+  background: transparent;
+  color: rgba(var(--text) / 0.7);
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover {
+  border-color: rgba(var(--silverWarm) / 0.3);
+  color: rgb(var(--blueBright));
+  background: transparent;
+}
+
+/* ─── Hero Ring Orbit ─── */
+.silver-ring-orbit {
+  border: 1px solid rgba(var(--border) / 0.06);
   border-radius: 50%;
   animation: rotate-slow 25s linear infinite;
 }
 
-/* ─── Pulsing Glow Ring (Process steps) ─── */
-.glow-ring {
-  box-shadow: 0 0 0 2px rgba(var(--gold) / 0.2);
-  animation: glow-pulse 3s ease-in-out infinite;
+/* ─── Pulsing Glow Ring (subtle accent) ─── */
+.glow-ring-silver {
+  box-shadow: 0 0 0 1px rgba(var(--silver) / 0.15);
+  animation: glow-pulse-silver 3s ease-in-out infinite;
 }
 
-/* ─── Expanding Gold Accent Line ─── */
-.gold-accent-line {
+/* ─── Expanding Accent Line ─── */
+.silver-accent-line {
   position: relative;
 }
-.gold-accent-line::after {
+.silver-accent-line::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
   width: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(var(--gold) / 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(var(--silverWarm) / 0.35), transparent);
   transition: width 0.4s ease, left 0.4s ease;
 }
-.gold-accent-line:hover::after {
+.silver-accent-line:hover::after {
   width: 80%;
   left: 10%;
 }
 
-/* ─── Gold Border Glow on hover ─── */
-.gold-border-glow {
+/* ─── Border Glow on hover ─── */
+.silver-border-glow {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.gold-border-glow:hover {
-  border-color: rgba(var(--gold) / 0.35);
-  box-shadow: 0 0 15px rgba(var(--gold) / 0.1), 0 4px 30px rgba(0, 0, 0, 0.3);
+.silver-border-glow:hover {
+  border-color: rgba(var(--silverWarm) / 0.2);
+  box-shadow: 0 4px 30px rgba(var(--shadow) / 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gold-ring-orbit { animation: none; }
-  .glow-ring { animation: none; }
+  .silver-ring-orbit { animation: none; }
+  .glow-ring-silver { animation: none; }
   .card-shine:hover::after { animation: none; }
   .grain-overlay::after { animation: none; }
+}
+
+/* ─── Price Highlight — bright blue for numbers/prices ─── */
+.price-highlight {
+  color: rgb(var(--blueBright));
+  font-weight: 700;
+}
+
+/* ─── Section Title Underline Accent ─── */
+.section-title-accent {
+  position: relative;
+  display: inline-block;
+}
+.section-title-accent::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(var(--silverWarm) / 0.4), rgba(var(--silverWarm2) / 0.2), transparent);
+  border-radius: 1px;
+}
+
+/* ─── Input Styling — premium focus ring ─── */
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(var(--focus) / 0.30);
+  border-color: rgba(var(--focus) / 0.40) !important;
 }
