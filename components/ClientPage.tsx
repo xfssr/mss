@@ -129,17 +129,50 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
   );
 }
 
-/* ─── Deliverable icons ─── */
-const DELIVERABLE_ICONS = ["🎬", "📸", "✂️", "📝", "🌐", "📱", "📢", "💬", "✨"];
+/* ─── Paired data: key + icon to prevent index-mismatch ─── */
+const DELIVERABLES = [
+  { key: "deliverable1", icon: "🎬" },
+  { key: "deliverable2", icon: "📸" },
+  { key: "deliverable3", icon: "✂️" },
+  { key: "deliverable4", icon: "📝" },
+  { key: "deliverable5", icon: "🌐" },
+  { key: "deliverable6", icon: "📱" },
+  { key: "deliverable7", icon: "📢" },
+  { key: "deliverable8", icon: "💬" },
+  { key: "deliverable9", icon: "✨" },
+] as const;
 
-/* ─── Industry icons ─── */
-const INDUSTRY_ICONS = ["🍽️", "🍸", "☕", "👨‍🍳", "🌸", "💄", "✒️", "🛍️", "🏠", "🏪"];
+const INDUSTRIES = [
+  { key: "industry1", icon: "🍽️" },
+  { key: "industry2", icon: "🍸" },
+  { key: "industry3", icon: "☕" },
+  { key: "industry4", icon: "👨‍🍳" },
+  { key: "industry5", icon: "🌸" },
+  { key: "industry6", icon: "💄" },
+  { key: "industry7", icon: "✒️" },
+  { key: "industry8", icon: "🛍️" },
+  { key: "industry9", icon: "🏠" },
+  { key: "industry10", icon: "🏪" },
+] as const;
 
-/* ─── Content service icons ─── */
-const CONTENT_SVC_ICONS = ["📸", "🎬", "🎭", "✂️", "📅", "🍽️", "📱"];
+const CONTENT_SVCS = [
+  { key: "contentSvc1", icon: "📸" },
+  { key: "contentSvc2", icon: "🎬" },
+  { key: "contentSvc3", icon: "🎭" },
+  { key: "contentSvc4", icon: "✂️" },
+  { key: "contentSvc5", icon: "📅" },
+  { key: "contentSvc6", icon: "🍽️" },
+  { key: "contentSvc7", icon: "📱" },
+] as const;
 
-/* ─── Growth solution icons ─── */
-const GROWTH_ICONS = ["📱", "👨‍🍳", "🍸", "💄", "🛍️", "⚡"];
+const GROWTH_ITEMS = [
+  { key: "growth1", icon: "📱" },
+  { key: "growth2", icon: "👨‍🍳" },
+  { key: "growth3", icon: "🍸" },
+  { key: "growth4", icon: "💄" },
+  { key: "growth5", icon: "🛍️" },
+  { key: "growth6", icon: "⚡" },
+] as const;
 
 export function ClientPage(props: Props) {
   const router = useRouter();
@@ -328,7 +361,7 @@ export function ClientPage(props: Props) {
             </p>
           </div>
           <div className="space-y-4">
-            {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key, i) => (
+            {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key) => (
               <div key={key} className="deliverable-item">
                 <span className="text-lg text-[rgb(var(--blue))]">{"▸"}</span>
                 <span className="text-sm text-white/75">{t(lang, key)}</span>
@@ -375,14 +408,10 @@ export function ClientPage(props: Props) {
       <Section id="deliverables" eyebrow={t(lang, "eyebrowDeliverables")} title={t(lang, "deliverablesTitle")} centered>
         <p className="text-sm sm:text-base text-white/60 text-center -mt-6 mb-10">{t(lang, "deliverablesSubtitle")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {([
-            "deliverable1", "deliverable2", "deliverable3",
-            "deliverable4", "deliverable5", "deliverable6",
-            "deliverable7", "deliverable8", "deliverable9",
-          ] as const).map((key, i) => (
-            <div key={key} className="deliverable-item">
-              <span className="text-xl shrink-0">{DELIVERABLE_ICONS[i]}</span>
-              <span className="text-sm text-white/75">{t(lang, key)}</span>
+          {DELIVERABLES.map((d) => (
+            <div key={d.key} className="deliverable-item">
+              <span className="text-xl shrink-0">{d.icon}</span>
+              <span className="text-sm text-white/75">{t(lang, d.key)}</span>
             </div>
           ))}
         </div>
@@ -402,13 +431,10 @@ export function ClientPage(props: Props) {
               <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "contentSvcTitle")}</h3>
               <p className="text-sm text-white/55 mb-6">{t(lang, "contentSvcSubtitle")}</p>
               <ul className="space-y-3">
-                {([
-                  "contentSvc1", "contentSvc2", "contentSvc3", "contentSvc4",
-                  "contentSvc5", "contentSvc6", "contentSvc7",
-                ] as const).map((key, i) => (
-                  <li key={key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0">{CONTENT_SVC_ICONS[i]}</span>
-                    {t(lang, key)}
+                {CONTENT_SVCS.map((svc) => (
+                  <li key={svc.key} className="flex items-center gap-3 text-sm text-white/70">
+                    <span className="text-lg shrink-0">{svc.icon}</span>
+                    {t(lang, svc.key)}
                   </li>
                 ))}
               </ul>
@@ -420,13 +446,10 @@ export function ClientPage(props: Props) {
               <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "growthTitle")}</h3>
               <p className="text-sm text-white/55 mb-6">{t(lang, "growthSubtitle")}</p>
               <ul className="space-y-3">
-                {([
-                  "growth1", "growth2", "growth3",
-                  "growth4", "growth5", "growth6",
-                ] as const).map((key, i) => (
-                  <li key={key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0">{GROWTH_ICONS[i]}</span>
-                    {t(lang, key)}
+                {GROWTH_ITEMS.map((g) => (
+                  <li key={g.key} className="flex items-center gap-3 text-sm text-white/70">
+                    <span className="text-lg shrink-0">{g.icon}</span>
+                    {t(lang, g.key)}
                   </li>
                 ))}
               </ul>
@@ -744,13 +767,10 @@ export function ClientPage(props: Props) {
           ═══════════════════════════════════════ */}
       <Section id="industries" eyebrow={t(lang, "eyebrowIndustries")} title={t(lang, "industriesTitle")} centered>
         <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-          {([
-            "industry1", "industry2", "industry3", "industry4", "industry5",
-            "industry6", "industry7", "industry8", "industry9", "industry10",
-          ] as const).map((key, i) => (
-            <div key={key} className="industry-pill">
-              <span>{INDUSTRY_ICONS[i]}</span>
-              <span>{t(lang, key)}</span>
+          {INDUSTRIES.map((ind) => (
+            <div key={ind.key} className="industry-pill">
+              <span>{ind.icon}</span>
+              <span>{t(lang, ind.key)}</span>
             </div>
           ))}
         </div>
