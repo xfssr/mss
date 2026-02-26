@@ -48,7 +48,6 @@ export function PackageExamplesFromApi(props: {
       .then((data) => {
         // Support both { ok, items } and raw array responses
         const arr: ExampleItem[] = Array.isArray(data) ? data : (data?.items ?? []);
-        console.log("[examples]", { tierKey, data });
         setItems(arr);
         setLoading(false);
       })
@@ -104,10 +103,10 @@ export function PackageExamplesFromApi(props: {
   return (
     <div className="mt-3">
       <p className="text-[10px] font-medium text-white/50 uppercase tracking-wider mb-1.5">
-        {t(lang, "pkgExamples")} ({items.length})
+        {t(lang, "pkgExamples")}
       </p>
-      <div className="flex gap-1.5 overflow-x-auto pb-1">
-        {items.map((item, idx) => {
+      <div className="flex gap-1.5">
+        {items.slice(0, 4).map((item, idx) => {
           const isVideo = item.kind === "video";
           const thumbSrc = isVideo ? (item.posterUrl || item.url) : item.url;
 
