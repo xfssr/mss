@@ -106,6 +106,74 @@ const PKG_CLASSES: Record<PkgAccent, { card: string; glow: string; accent: strin
   neutral: { card: "pkg-card--neutral", glow: "pkg-glow--neutral", accent: "pkg-accent--neutral", border: "pkg-border--neutral" },
 };
 
+/* ─── FAQ Accordion item ─── */
+function FaqItem({ question, answer }: { question: string; answer: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="faq-item">
+      <button
+        type="button"
+        className="faq-trigger"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+      >
+        <span>{question}</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="shrink-0 ms-4">
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <div className={`faq-answer ${open ? "open" : ""}`}>
+        <p className="text-sm text-white/60 leading-relaxed">{answer}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Paired data: key + icon to prevent index-mismatch ─── */
+const DELIVERABLES = [
+  { key: "deliverable1", icon: "🎬" },
+  { key: "deliverable2", icon: "📸" },
+  { key: "deliverable3", icon: "✂️" },
+  { key: "deliverable4", icon: "📝" },
+  { key: "deliverable5", icon: "🌐" },
+  { key: "deliverable6", icon: "📱" },
+  { key: "deliverable7", icon: "📢" },
+  { key: "deliverable8", icon: "💬" },
+  { key: "deliverable9", icon: "✨" },
+] as const;
+
+const INDUSTRIES = [
+  { key: "industry1", icon: "🍽️" },
+  { key: "industry2", icon: "🍸" },
+  { key: "industry3", icon: "☕" },
+  { key: "industry4", icon: "👨‍🍳" },
+  { key: "industry5", icon: "🌸" },
+  { key: "industry6", icon: "💄" },
+  { key: "industry7", icon: "✒️" },
+  { key: "industry8", icon: "🛍️" },
+  { key: "industry9", icon: "🏠" },
+  { key: "industry10", icon: "🏪" },
+] as const;
+
+const CONTENT_SVCS = [
+  { key: "contentSvc1", icon: "📸" },
+  { key: "contentSvc2", icon: "🎬" },
+  { key: "contentSvc3", icon: "🎭" },
+  { key: "contentSvc4", icon: "✂️" },
+  { key: "contentSvc5", icon: "📅" },
+  { key: "contentSvc6", icon: "🍽️" },
+  { key: "contentSvc7", icon: "📱" },
+] as const;
+
+const GROWTH_ITEMS = [
+  { key: "growth1", icon: "📱" },
+  { key: "growth2", icon: "👨‍🍳" },
+  { key: "growth3", icon: "🍸" },
+  { key: "growth4", icon: "💄" },
+  { key: "growth5", icon: "🛍️" },
+  { key: "growth6", icon: "⚡" },
+] as const;
+
 export function ClientPage(props: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -143,7 +211,6 @@ export function ClientPage(props: Props) {
 
   const slugFromUrl = searchParams.get("catalog");
 
-  // Exclude "restaurant-menu-website" from homepage portfolio catalog
   const portfolioCatalogs = useMemo(
     () => props.catalogs.filter((c) => c.slug !== "restaurant-menu-website"),
     [props.catalogs],
@@ -205,61 +272,55 @@ export function ClientPage(props: Props) {
     openWhatsApp(url);
   }
 
-  function SectionCta() {
-    return (
-      <div className="mt-8 flex flex-col sm:flex-row items-center gap-3">
-        <button
-          type="button"
-          onClick={onSendWhatsApp}
-          className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-6 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 hover:-translate-y-0.5 shadow-lg"
-        >
-          {t(lang, "sectionCtaWa")}
-        </button>
-        <span className="text-xs text-white/40">{t(lang, "ctaUrgency")}</span>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-dvh-safe bg-gradient-to-b from-[#0b0f14] via-[#0a0c10] to-[#06070a] text-white">
       <Navbar lang={lang} onSetLang={setLang} />
 
+      {/* ═══════════════════════════════════════
+          1. HERO SECTION
+          ═══════════════════════════════════════ */}
       <Section id="top">
         <div className="hero-glow">
-        <div className="relative cc-glass rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            {/* Text side */}
             <div className="lg:col-span-7">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[rgb(var(--blue))] leading-tight">{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadline")}</h1>
-              <p className="mt-6 text-base sm:text-lg text-white/75 leading-relaxed max-w-xl">{pickL10n(lang, props.settings.heroSubtitle) || t(lang, "heroSupporting")}</p>
+              <div className="text-xs sm:text-sm tracking-widest uppercase text-[rgb(var(--blue))]/70 font-medium mb-4">
+                {t(lang, "heroTagline")}
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight">
+                <span className="text-gradient">{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadlineNew")}</span>
+              </h1>
+              <p className="mt-6 text-base sm:text-lg text-white/65 leading-relaxed max-w-xl">
+                {pickL10n(lang, props.settings.heroSubtitle) || t(lang, "heroSubNew")}
+              </p>
 
               <div className="mt-8 flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+                  className="btn-primary text-base"
                 >
-                  {t(lang, "heroCtaWa")}
+                  {t(lang, "heroCtaWhatsAppNew")}
                 </button>
                 <a
                   href="#packages"
-                  className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/80 hover:bg-white/[0.12] hover:border-white/25 transition-all duration-200 hover:-translate-y-0.5"
+                  className="btn-secondary"
                 >
-                  {t(lang, "heroCtaAvailability")}
+                  {t(lang, "heroCtaPricingNew")}
                 </a>
               </div>
-              <p className="mt-3 text-xs text-white/40">{pickL10n(lang, props.settings.promoText) || t(lang, "ctaUrgency")}</p>
+              <p className="mt-3 text-xs text-white/35">{pickL10n(lang, props.settings.promoText) || t(lang, "ctaUrgency")}</p>
             </div>
 
+            {/* Visual side */}
             <div className="lg:col-span-5">
               <HeroSlider lang={lang} items={props.heroMedia} intervalMs={2400} />
             </div>
           </div>
         </div>
-        </div>
       </Section>
 
-      {/* Catalog section hidden from homepage but data kept for admin/media source */}
-
+      {/* Catalog modals (kept for URL-based deep links & admin) */}
       {selectedCatalog && panelOpen && selectedCategoryDetail ? (
         <CategoryDetailModal
           lang={lang}
@@ -286,402 +347,515 @@ export function ClientPage(props: Props) {
         />
       ) : null}
 
+      <div className="section-divider" />
 
-      {/* ===== Package selection section ===== */}
-      <div className="pkg-section-bg">
-      <Section id="packages" title={t(lang, "choosePackage")}>
+      {/* ═══════════════════════════════════════
+          2. ABOUT / STUDIO
+          ═══════════════════════════════════════ */}
+      <Section id="studio" eyebrow={t(lang, "eyebrowAbout")} title={t(lang, "studioTitle")}>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          <div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white/90 mb-4">{t(lang, "studioSubtitle")}</h3>
+            <p className="text-sm sm:text-base text-white/60 leading-relaxed whitespace-pre-line">
+              {pickL10n(lang, props.settings.aboutText) || t(lang, "studioBody")}
+            </p>
+          </div>
+          <div className="space-y-4">
+            {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key) => (
+              <div key={key} className="deliverable-item">
+                <span className="text-lg text-[rgb(var(--blue))]">{"▸"}</span>
+                <span className="text-sm text-white/75">{t(lang, key)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Section>
 
-        <div className="relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {PACKAGE_CARDS.map((pkg) => {
-            const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
-            const detail = props.packageDetails.find((d) => d.id === pkg.id);
-            const price = detail?.priceFrom ?? 0;
-            const isExpanded = expandedPkg === pkg.id;
-            const hasDiscount = props.discountConfig.enabled && price > 0;
-            const discountPercent = props.discountConfig.percent;
-            const finalPrice = hasDiscount ? Math.round(price * (1 - discountPercent / 100)) : price;
-            const isMonthly = pkg.id === "monthly";
-            const handleWhatsApp = () => {
-              const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
-              const icon = pkgIcon(detail);
-              const addonNames: string[] = [];
-              if (isMonthly) {
-                MONTHLY_ADDONS.forEach((a) => {
-                  if (selectedAddons[a.id]) {
-                    addonNames.push(t(lang, a.titleKey));
-                  }
-                });
-              }
-              const msg = buildWhatsAppMessage({
-                packageName: pkgLabel,
-                packageIcon: icon,
-                discountedPrice: hasDiscount ? finalPrice : undefined,
-                basePrice: price > 0 ? price : undefined,
-                selectedAddons: addonNames.length > 0 ? addonNames : undefined,
-                lang,
-              });
-              openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
-            };
-            const cls = PKG_CLASSES[pkg.accent];
-            return (
-            <div
-              key={pkg.id}
-              className={`pkg-card ${cls.card} overflow-hidden relative`}
-            >
-              {/* Subtle glow overlay at top */}
-              <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
-              <div className="relative p-6 sm:p-8">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{pkgIcon(detail)}</span>
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className={`text-lg sm:text-xl font-bold ${cls.accent}`}>
-                        <Link href={`/product/${pkg.id}`} className="hover:text-white transition-colors">
-                          {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
-                        </Link>
-                      </h3>
-                      {pkg.badge === "popular" ? (
-                        <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
-                          {t(lang, "popular")}
-                        </span>
-                      ) : null}
-                    </div>
-                    {price > 0 && (
-                      <div className="mt-1.5 flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
-                          {t(lang, "fromPrice")}₪{price.toLocaleString()}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                </div>
+      <div className="section-divider" />
 
-                {/* API-fetched examples — always visible */}
-                <PackageExamplesFromApi
-                  lang={lang}
-                  tierKey={`tier${packageIdToTier(pkg.id)}`}
-                  onThumbnailClick={openGallery}
-                />
+      {/* ═══════════════════════════════════════
+          3. HOW IT WORKS — 3 Steps
+          ═══════════════════════════════════════ */}
+      <section className="section-dark scroll-mt-24 px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="text-xs tracking-wider uppercase text-white/55 font-medium text-center">{t(lang, "eyebrowProcess")}</div>
+          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight text-center">{t(lang, "howTitle")}</h2>
+          <p className="mt-3 text-sm sm:text-base text-white/60 text-center max-w-2xl mx-auto">{t(lang, "howSubtitle")}</p>
 
-                {/* Best for + Delivery (always visible) */}
-                {detail && (
-                  <div className="mt-4 space-y-1.5 border-t border-white/[0.06] pt-4">
-                    <p className="text-[11px] text-white/50">
-                      <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
-                      {pickL10n(lang, detail.bestFor)}
-                    </p>
-                    <p className="text-[11px] text-white/50">
-                      <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
-                      {pickL10n(lang, detail.deliveryTime)}
-                    </p>
-                  </div>
-                )}
-
-                {/* Tag pills */}
-                {detail && detail.pills.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {detail.pills.map((pill, i) => (
-                      <span
-                        key={i}
-                        className={`text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70`}
-                      >
-                        {pickL10n(lang, pill)}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                {/* Action buttons — CTA position depends on expand state */}
-                <div className="mt-5 flex items-center gap-3">
-                  {!isExpanded && (
-                    <button
-                      type="button"
-                      onClick={handleWhatsApp}
-                      className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-                    >
-                      {t(lang, "pkgWhatsApp")}
-                    </button>
-                  )}
-                  {detail && (
-                    <button
-                      type="button"
-                      onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
-                      className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
-                    >
-                      {isExpanded ? t(lang, "less") : t(lang, "more")}
-                    </button>
-                  )}
+          <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {([
+              { num: "howStep1Num", label: "howStep1Label", text: "howStep1Text" },
+              { num: "howStep2Num", label: "howStep2Label", text: "howStep2Text" },
+              { num: "howStep3Num", label: "howStep3Label", text: "howStep3Text" },
+            ] as const).map((step) => (
+              <div key={step.num} className="step-card">
+                <div className="step-number">{t(lang, step.num)}</div>
+                <div className="relative">
+                  <h3 className="text-lg font-bold text-white/90 mb-2">{t(lang, step.label)}</h3>
+                  <p className="text-sm text-white/55 leading-relaxed">{t(lang, step.text)}</p>
                 </div>
               </div>
-
-              {/* Expandable accordion */}
-              {detail && isExpanded && (
-                <div className="border-t border-white/15 px-6 sm:px-8 py-5 space-y-4 text-sm animate-in slide-in-from-top-2 duration-200">
-                  {/* What you get */}
-                  <div>
-                    <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
-                      {t(lang, "sectionWhatYouGet")}
-                    </h4>
-                    <ul className="space-y-1">
-                      {detail.whatYouGet.map((item, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-white/75">
-                          <span className={`${cls.accent} mt-0.5 shrink-0`}>✓</span>
-                          {pickL10n(lang, item)}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Details grid — only shoot time + delivery */}
-                  <div className="grid grid-cols-2 gap-2">
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
-                      <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
-                    </div>
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
-                      <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
-                    </div>
-                  </div>
-
-                  {/* Add-ons */}
-                  {detail.addOns.length > 0 && (
-                    <div>
-                      <h4 className={`text-xs font-semibold ${cls.accent} mb-1`}>
-                        {t(lang, "addonsLabel")}
-                      </h4>
-                      <ul className="space-y-0.5">
-                        {detail.addOns.map((addon, i) => (
-                          <li key={i} className="text-xs text-white/60">+ {pickL10n(lang, addon)}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Monthly: selectable add-ons (only in expanded details) */}
-                  {isMonthly && (
-                    <div>
-                      <h4 className={`text-xs font-semibold ${cls.accent} mb-0.5`}>
-                        {t(lang, "monthlyAddonsTitle")}
-                      </h4>
-                      <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
-                      <div className="space-y-2">
-                        {MONTHLY_ADDONS.map((addon) => (
-                          <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                            <div className="flex items-center gap-2 min-w-0">
-                              <input
-                                type="checkbox"
-                                checked={!!selectedAddons[addon.id]}
-                                onChange={() => toggleAddon(addon.id)}
-                                className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
-                              />
-                              <div className="min-w-0">
-                                <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
-                                <span className="text-[10px] text-white/50 ms-2">— ₪{addon.price} {t(lang, "addonPerMonth")}</span>
-                              </div>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => setAddonDetailModal(addon)}
-                              className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
-                            >
-                              {t(lang, "addonDetails")}
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                      {addonsTotal > 0 && (
-                        <p className={`mt-2 text-xs font-medium ${cls.accent}`}>
-                          {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
-                        </p>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Starter/Business: add-ons availability note */}
-                  {!isMonthly && (
-                    <div>
-                      <p className="text-[11px] text-white/40 italic">
-                        {t(lang, "addonsAvailableOnlyMonthly")}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* First-order discount in card */}
-                  {props.discountConfig.enabled && (
-                    <div className="text-[11px] text-green-400/80">
-                      🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })} ({props.discountConfig.percent}%)
-                    </div>
-                  )}
-
-                  {/* Price after discount — shown only in expanded details */}
-                  {hasDiscount && (
-                    <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                      <div className="text-[10px] text-white/40 mb-1">{t(lang, "priceAfterDiscount")}</div>
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
-                        <span className={`text-sm font-bold ${cls.accent}`}>₪{finalPrice.toLocaleString()}</span>
-                        <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
-                          -{discountPercent}%
-                        </span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Final total line for Monthly (package after discount + add-ons) */}
-                  {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                    <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
-                        <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* WhatsApp CTA — shown at bottom when details are expanded */}
-                  <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
-                    <button
-                      type="button"
-                      onClick={handleWhatsApp}
-                      className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
-                    >
-                      {t(lang, "pkgWhatsApp")}
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* Collapsed summary when accordion is closed */}
-              {detail && !isExpanded && (
-                <div className="border-t border-white/10 px-6 sm:px-8 py-3">
-                  <p className="text-[11px] text-white/45">
-                    {t(lang, "pkgCollapsedSummary")}: {detail.pills.map((p) => pickL10n(lang, p)).join(", ")}
-                  </p>
-                </div>
-              )}
-            </div>
-            );
-          })}
-        </div>
-
-        {/* First-time discount note */}
-        {props.discountConfig.enabled && (
-          <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
-            🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
-            {" — "}
-            {props.discountConfig.percent}%
-          </p>
-        )}
-
-        {/* Section CTA */}
-        <SectionCta />
-        </div>
-      </Section>
-      </div>
-
-      <div className="section-divider" />
-
-      {/* ===== Who Is This For section ===== */}
-      <Section id="who-is-this-for" title={t(lang, "whoIsThisForTitle")} centered>
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
-          <ul className="space-y-4">
-            {(["whoIsThisFor1", "whoIsThisFor2", "whoIsThisFor3", "whoIsThisFor4", "whoIsThisFor5", "whoIsThisFor6", "whoIsThisFor7"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
-                {t(lang, key)}
-              </li>
             ))}
-          </ul>
+          </div>
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════════════════════════
+          4. WHAT CLIENTS GET
+          ═══════════════════════════════════════ */}
+      <Section id="deliverables" eyebrow={t(lang, "eyebrowDeliverables")} title={t(lang, "deliverablesTitle")} centered>
+        <p className="text-sm sm:text-base text-white/60 text-center -mt-6 mb-10">{t(lang, "deliverablesSubtitle")}</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {DELIVERABLES.map((d) => (
+            <div key={d.key} className="deliverable-item">
+              <span className="text-xl shrink-0">{d.icon}</span>
+              <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+            </div>
+          ))}
         </div>
       </Section>
 
       <div className="section-divider" />
 
-      {/* ===== Case Studies section ===== */}
+      {/* ═══════════════════════════════════════
+          5. CONTENT SERVICES vs GROWTH SOLUTIONS
+          ═══════════════════════════════════════ */}
+      <section id="services" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 py-20 sm:py-28 section-gradient-overlay">
+        <div className="mx-auto w-full max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+            {/* Content Services */}
+            <div className="service-block">
+              <div className="text-xs tracking-wider uppercase text-white/45 font-medium mb-2">{t(lang, "eyebrowContent")}</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "contentSvcTitle")}</h3>
+              <p className="text-sm text-white/55 mb-6">{t(lang, "contentSvcSubtitle")}</p>
+              <ul className="space-y-3">
+                {CONTENT_SVCS.map((svc) => (
+                  <li key={svc.key} className="flex items-center gap-3 text-sm text-white/70">
+                    <span className="text-lg shrink-0">{svc.icon}</span>
+                    {t(lang, svc.key)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Growth Solutions */}
+            <div className="service-block">
+              <div className="text-xs tracking-wider uppercase text-white/45 font-medium mb-2">{t(lang, "eyebrowGrowth")}</div>
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "growthTitle")}</h3>
+              <p className="text-sm text-white/55 mb-6">{t(lang, "growthSubtitle")}</p>
+              <ul className="space-y-3">
+                {GROWTH_ITEMS.map((g) => (
+                  <li key={g.key} className="flex items-center gap-3 text-sm text-white/70">
+                    <span className="text-lg shrink-0">{g.icon}</span>
+                    {t(lang, g.key)}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Solutions cards (if any exist in DB) */}
+          {props.solutions.length > 0 && (
+            <div className="mt-16">
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "sectionSolutions")}</h3>
+              <p className="text-sm text-white/55 mb-8">{t(lang, "solutionsIntro")}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {props.solutions.map((item) => (
+                  <SolutionCard
+                    key={item.slug}
+                    lang={lang}
+                    item={item}
+                    onSelect={() => setSelectedSolutionSlug(item.slug)}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════════════════════════
+          6. SELECTED WORK / PORTFOLIO
+          ═══════════════════════════════════════ */}
       <CaseStudiesSection lang={lang} />
 
       <div className="section-divider" />
 
-      {/* ===== Why Work With Me section ===== */}
-      <Section id="why-me" title={t(lang, "whyMeTitle")} centered>
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
-          <p className="text-sm sm:text-base text-white/70 whitespace-pre-line leading-relaxed mb-6">{pickL10n(lang, props.settings.aboutText) || t(lang, "whyMeIntro")}</p>
-          <ul className="space-y-4">
-            {(["whyMePoint1", "whyMePoint2", "whyMePoint3", "whyMePoint4", "whyMePoint5"] as const).map((key) => (
-              <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                <span className="text-green-400 mt-0.5 shrink-0">✔</span>
-                {t(lang, key)}
-              </li>
-            ))}
-          </ul>
+      {/* ═══════════════════════════════════════
+          7. PRICING / PACKAGES
+          ═══════════════════════════════════════ */}
+      <div className="pkg-section-bg">
+        <Section id="packages" eyebrow={t(lang, "eyebrowPricing")} title={t(lang, "choosePackage")}>
+          <div className="relative">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {PACKAGE_CARDS.map((pkg) => {
+                const keyBase = `pkg${pkg.id.charAt(0).toUpperCase() + pkg.id.slice(1)}`;
+                const detail = props.packageDetails.find((d) => d.id === pkg.id);
+                const price = detail?.priceFrom ?? 0;
+                const isExpanded = expandedPkg === pkg.id;
+                const hasDiscount = props.discountConfig.enabled && price > 0;
+                const discountPercent = props.discountConfig.percent;
+                const finalPrice = hasDiscount ? Math.round(price * (1 - discountPercent / 100)) : price;
+                const isMonthly = pkg.id === "monthly";
+                const handleWhatsApp = () => {
+                  const pkgLabel = detail ? pickL10n(lang, detail.title) : (PKG_LABELS[pkg.id]?.[lang] ?? pkg.id);
+                  const icon = pkgIcon(detail);
+                  const addonNames: string[] = [];
+                  if (isMonthly) {
+                    MONTHLY_ADDONS.forEach((a) => {
+                      if (selectedAddons[a.id]) {
+                        addonNames.push(t(lang, a.titleKey));
+                      }
+                    });
+                  }
+                  const msg = buildWhatsAppMessage({
+                    packageName: pkgLabel,
+                    packageIcon: icon,
+                    discountedPrice: hasDiscount ? finalPrice : undefined,
+                    basePrice: price > 0 ? price : undefined,
+                    selectedAddons: addonNames.length > 0 ? addonNames : undefined,
+                    lang,
+                  });
+                  openWhatsApp(buildWaMeUrl(WHATSAPP_PHONE, msg));
+                };
+                const cls = PKG_CLASSES[pkg.accent];
+                return (
+                  <div
+                    key={pkg.id}
+                    className={`pkg-card ${cls.card} overflow-hidden relative`}
+                  >
+                    <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
+                    <div className="relative p-6 sm:p-8">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{pkgIcon(detail)}</span>
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className={`text-lg sm:text-xl font-bold ${cls.accent}`}>
+                              <Link href={`/product/${pkg.id}`} className="hover:text-white transition-colors">
+                                {detail ? pickL10n(lang, detail.title) : t(lang, keyBase)}
+                              </Link>
+                            </h3>
+                            {pkg.badge === "popular" ? (
+                              <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                                {t(lang, "popular")}
+                              </span>
+                            ) : null}
+                          </div>
+                          {price > 0 && (
+                            <div className="mt-1.5 flex items-center gap-2 flex-wrap">
+                              <span className="text-sm font-semibold text-[rgb(var(--blue))]/80">
+                                {t(lang, "fromPrice")}₪{price.toLocaleString()}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <PackageExamplesFromApi
+                        lang={lang}
+                        tierKey={`tier${packageIdToTier(pkg.id)}`}
+                        onThumbnailClick={openGallery}
+                      />
+
+                      {detail && (
+                        <div className="mt-4 space-y-1.5 border-t border-white/[0.06] pt-4">
+                          <p className="text-[11px] text-white/50">
+                            <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
+                            {pickL10n(lang, detail.bestFor)}
+                          </p>
+                          <p className="text-[11px] text-white/50">
+                            <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
+                            {pickL10n(lang, detail.deliveryTime)}
+                          </p>
+                        </div>
+                      )}
+
+                      {detail && detail.pills.length > 0 && (
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {detail.pills.map((pill, i) => (
+                            <span
+                              key={i}
+                              className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
+                            >
+                              {pickL10n(lang, pill)}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mt-5 flex items-center gap-3">
+                        {!isExpanded && (
+                          <button
+                            type="button"
+                            onClick={handleWhatsApp}
+                            className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                          >
+                            {t(lang, "pkgWhatsApp")}
+                          </button>
+                        )}
+                        {detail && (
+                          <button
+                            type="button"
+                            onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
+                            className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
+                          >
+                            {isExpanded ? t(lang, "less") : t(lang, "more")}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Expandable accordion */}
+                    {detail && isExpanded && (
+                      <div className="border-t border-white/15 px-6 sm:px-8 py-5 space-y-4 text-sm animate-in slide-in-from-top-2 duration-200">
+                        <div>
+                          <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
+                            {t(lang, "sectionWhatYouGet")}
+                          </h4>
+                          <ul className="space-y-1">
+                            {detail.whatYouGet.map((item, i) => (
+                              <li key={i} className="flex items-start gap-2 text-xs text-white/75">
+                                <span className={`${cls.accent} mt-0.5 shrink-0`}>✓</span>
+                                {pickL10n(lang, item)}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                            <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
+                            <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
+                          </div>
+                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                            <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
+                            <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
+                          </div>
+                        </div>
+
+                        {detail.addOns.length > 0 && (
+                          <div>
+                            <h4 className={`text-xs font-semibold ${cls.accent} mb-1`}>
+                              {t(lang, "addonsLabel")}
+                            </h4>
+                            <ul className="space-y-0.5">
+                              {detail.addOns.map((addon, i) => (
+                                <li key={i} className="text-xs text-white/60">+ {pickL10n(lang, addon)}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
+                        {isMonthly && (
+                          <div>
+                            <h4 className={`text-xs font-semibold ${cls.accent} mb-0.5`}>
+                              {t(lang, "monthlyAddonsTitle")}
+                            </h4>
+                            <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
+                            <div className="space-y-2">
+                              {MONTHLY_ADDONS.map((addon) => (
+                                <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    <input
+                                      type="checkbox"
+                                      checked={!!selectedAddons[addon.id]}
+                                      onChange={() => toggleAddon(addon.id)}
+                                      className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
+                                    />
+                                    <div className="min-w-0">
+                                      <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
+                                      <span className="text-[10px] text-white/50 ms-2">— ₪{addon.price} {t(lang, "addonPerMonth")}</span>
+                                    </div>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => setAddonDetailModal(addon)}
+                                    className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
+                                  >
+                                    {t(lang, "addonDetails")}
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                            {addonsTotal > 0 && (
+                              <p className={`mt-2 text-xs font-medium ${cls.accent}`}>
+                                {t(lang, "addonsTotal")}: ₪{addonsTotal.toLocaleString()}
+                              </p>
+                            )}
+                          </div>
+                        )}
+
+                        {!isMonthly && (
+                          <div>
+                            <p className="text-[11px] text-white/40 italic">
+                              {t(lang, "addonsAvailableOnlyMonthly")}
+                            </p>
+                          </div>
+                        )}
+
+                        {props.discountConfig.enabled && (
+                          <div className="text-[11px] text-green-400/80">
+                            🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })} ({props.discountConfig.percent}%)
+                          </div>
+                        )}
+
+                        {hasDiscount && (
+                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                            <div className="text-[10px] text-white/40 mb-1">{t(lang, "priceAfterDiscount")}</div>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
+                              <span className={`text-sm font-bold ${cls.accent}`}>₪{finalPrice.toLocaleString()}</span>
+                              <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
+                                -{discountPercent}%
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
+                        {isMonthly && (hasDiscount || addonsTotal > 0) && (
+                          <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
+                              <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="pt-2" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
+                          <button
+                            type="button"
+                            onClick={handleWhatsApp}
+                            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                          >
+                            {t(lang, "pkgWhatsApp")}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {detail && !isExpanded && (
+                      <div className="border-t border-white/10 px-6 sm:px-8 py-3">
+                        <p className="text-[11px] text-white/45">
+                          {t(lang, "pkgCollapsedSummary")}: {detail.pills.map((p) => pickL10n(lang, p)).join(", ")}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {props.discountConfig.enabled && (
+              <p className="mt-4 text-xs text-[rgb(var(--blue))]/70">
+                🎁 {pickL10n(lang, { he: props.discountConfig.labelHe, en: props.discountConfig.labelEn })}
+                {" — "}
+                {props.discountConfig.percent}%
+              </p>
+            )}
+          </div>
+        </Section>
+      </div>
+
+      <div className="section-divider" />
+
+      {/* ═══════════════════════════════════════
+          8. INDUSTRIES / WHO IT'S FOR
+          ═══════════════════════════════════════ */}
+      <Section id="industries" eyebrow={t(lang, "eyebrowIndustries")} title={t(lang, "industriesTitle")} centered>
+        <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+          {INDUSTRIES.map((ind) => (
+            <div key={ind.key} className="industry-pill">
+              <span>{ind.icon}</span>
+              <span>{t(lang, ind.key)}</span>
+            </div>
+          ))}
         </div>
       </Section>
 
       <div className="section-divider" />
 
-      {/* Ready Solutions section - reusing existing /solutions data */}
-      {props.solutions.length > 0 && (
-        <Section id="solutions" title={t(lang, "sectionSolutions")} subtitle={t(lang, "solutionsIntro")}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {props.solutions.map((item) => (
-              <SolutionCard
-                key={item.slug}
-                lang={lang}
-                item={item}
-                onSelect={() => setSelectedSolutionSlug(item.slug)}
-              />
-            ))}
-          </div>
-        </Section>
-      )}
-
-      {/* ===== Collaboration section ===== */}
-      <CollabSection lang={lang} />
+      {/* ═══════════════════════════════════════
+          9. FAQ
+          ═══════════════════════════════════════ */}
+      <Section id="faq" eyebrow={t(lang, "eyebrowFaq")} title={t(lang, "faqTitle")} centered>
+        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg max-w-3xl mx-auto">
+          {([
+            { q: "faq1Q", a: "faq1A" },
+            { q: "faq2Q", a: "faq2A" },
+            { q: "faq3Q", a: "faq3A" },
+            { q: "faq4Q", a: "faq4A" },
+            { q: "faq5Q", a: "faq5A" },
+            { q: "faq6Q", a: "faq6A" },
+            { q: "faq7Q", a: "faq7A" },
+          ] as const).map((faq) => (
+            <FaqItem key={faq.q} question={t(lang, faq.q)} answer={t(lang, faq.a)} />
+          ))}
+        </div>
+      </Section>
 
       <div className="section-divider" />
 
-      <Section id="contact" title={t(lang, "sectionContact")}>
-        <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
-          <div className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed">{pickL10n(lang, props.settings.contactText)}</div>
+      {/* ═══════════════════════════════════════
+          10. FINAL CTA / CONTACT
+          ═══════════════════════════════════════ */}
+      <Section id="final-cta">
+        <div className="cta-gradient p-8 sm:p-12 lg:p-16 text-center">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">{t(lang, "finalCtaTitle")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-white/60 max-w-2xl mx-auto">{t(lang, "finalCtaSubtitle")}</p>
 
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
+          <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+              className="btn-primary text-base"
             >
-              {t(lang, "contactWhatsApp")}
+              {t(lang, "finalCtaWa")}
             </button>
+            <a href="#packages" className="btn-secondary">
+              {t(lang, "finalCtaPackage")}
+            </a>
+          </div>
 
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/40">
+            <span>{t(lang, "finalCtaContent")}</span>
+            <span>·</span>
+            <span>{t(lang, "finalCtaCustom")}</span>
+            <span>·</span>
+            <span>{t(lang, "finalCtaSolution")}</span>
+          </div>
+
+          {/* Contact info */}
+          <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
             <a
               href={`https://instagram.com/${props.settings.instagramHandle.replace("@", "")}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="btn-secondary text-sm"
             >
               {t(lang, "contactInstagram")}
             </a>
-
             <a
               href={`mailto:${props.settings.email}`}
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-6 py-4 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
+              className="btn-secondary text-sm"
             >
               {t(lang, "contactEmail")}
             </a>
           </div>
 
-          <div className="mt-4 flex items-center gap-3">
-            <div className="text-xs text-white/50">{t(lang, "replyTime")}</div>
-            <span className="text-xs text-white/35">·</span>
-            <div className="text-xs text-white/40">{t(lang, "ctaUrgency")}</div>
-          </div>
+          <p className="mt-4 text-xs text-white/35">{t(lang, "replyTime")}</p>
         </div>
       </Section>
 
+      {/* ===== Collaboration section ===== */}
+      <CollabSection lang={lang} />
+
       <Footer lang={lang} />
 
-      {/* Solution Detail Modal */}
+      {/* ─── Modals ─── */}
       {selectedSolution && (
         <SolutionDetailModal
           lang={lang}
@@ -692,7 +866,6 @@ export function ClientPage(props: Props) {
         />
       )}
 
-      {/* Catalog Preview Modal (booking-style) */}
       {catalogPreview && (
         <CatalogPreviewModal
           lang={lang}
@@ -701,7 +874,6 @@ export function ClientPage(props: Props) {
         />
       )}
 
-      {/* Package examples gallery viewer */}
       <ExamplesGalleryViewer
         lang={lang}
         open={galleryOpen}
@@ -710,7 +882,6 @@ export function ClientPage(props: Props) {
         onClose={closeGallery}
       />
 
-      {/* Add-on detail modal */}
       {addonDetailModal && (
         <AddOnDetailModal
           lang={lang}

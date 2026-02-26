@@ -9,11 +9,11 @@ import LogoIcon from "@/components/LogoIcon";
 
 /** Single source of truth for navigation items (used by both desktop and mobile). */
 export const NAV_ITEMS: { labelKey: string; href: string; useLink?: boolean }[] = [
+  { labelKey: "navAbout", href: "/#studio", useLink: true },
+  { labelKey: "navSolutions", href: "/#services", useLink: true },
   { labelKey: "navExamples", href: "/#case-studies", useLink: true },
-  { labelKey: "navSolutions", href: "/#solutions", useLink: true },
   { labelKey: "navPricing", href: "/#packages", useLink: true },
-  { labelKey: "navCollab", href: "/#collab", useLink: true },
-  { labelKey: "navContact", href: "#contact" },
+  { labelKey: "navContact", href: "#final-cta" },
 ];
 
 const navLinkClass =
