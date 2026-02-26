@@ -27,7 +27,6 @@ import { AddOnDetailModal } from "@/components/AddOnDetailModal";
 import { CaseStudiesSection } from "@/components/CaseStudiesSection";
 import { CollabSection } from "@/components/CollabSection";
 import { ExamplesGalleryViewer } from "@/components/ExamplesGalleryViewer";
-import { PackageExamples } from "@/components/PackageExamples";
 import { PackageExamplesFromApi } from "@/components/PackageExamplesFromApi";
 import { packageIdToTier } from "@/utils/tierExamples";
 import { MONTHLY_ADDONS, type AddonConfig } from "@/config/addons";
@@ -357,25 +356,6 @@ export function ClientPage(props: Props) {
                     )}
                   </div>
                 </div>
-
-                {/* Example thumbnails — always visible, before pills/details */}
-                {(() => {
-                  const exCatalog = props.catalogs.find((c) => c.slug === pkg.defaultCatalogSlug);
-                  if (!exCatalog) return null;
-                  const exItems = exCatalog.examples ?? [];
-                  return exItems.length > 0 ? (
-                    <PackageExamples
-                      lang={lang}
-                      examples={exItems}
-                      catalogs={props.catalogs}
-                      businessType={null}
-                      tier={packageIdToTier(pkg.id)}
-                      tierConfig={props.tierExamplesConfig}
-                      catalogSlug={exCatalog.slug}
-                      onThumbnailClick={openGallery}
-                    />
-                  ) : null;
-                })()}
 
                 {/* API-fetched examples — always visible */}
                 <PackageExamplesFromApi
