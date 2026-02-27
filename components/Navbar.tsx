@@ -66,7 +66,7 @@ export function Navbar(props: { lang: Lang; onSetLang: (l: Lang) => void }) {
           </button>
 
           {/* Language switcher (always visible) */}
-          <div className="ml-2 inline-flex rounded-xl border border-white/10 bg-black/30 p-1 backdrop-blur-sm" role="group" aria-label="Language">
+          <div className="ms-2 inline-flex rounded-xl border border-white/10 bg-black/30 p-1 backdrop-blur-sm" role="group" aria-label="Language">
             <button
               type="button"
               onClick={() => props.onSetLang("he")}

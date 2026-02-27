@@ -3,12 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --bg0: 18 18 20;
-  --bg1: 28 28 34;
-  --blue: 145 190 255;
-  --red: 255 107 107;
-  --text: 235 235 242;
+  --bg0: 12 14 18;
+  --bg1: 22 24 32;
+  --bg-card: 16 19 26;
+  --blue: 140 175 235;
+  --red: 235 95 95;
+  --text: 230 232 240;
+  --text-muted: 180 184 196;
   --stroke: 255 255 255;
+  --radius-card: 1.125rem;
+  --radius-pill: 100px;
+  --radius-btn: 0.75rem;
 }
 
 html, body {
@@ -54,7 +59,7 @@ body {
 
 @media (max-width: 640px) {
   .cc-glass {
-    background: rgba(11, 15, 20, 0.92) !important;
+    background: rgba(var(--bg-card) / 0.92) !important;
     backdrop-filter: blur(4px) !important;
   }
   .cc-glare { opacity: 0.18 !important; }
@@ -64,15 +69,15 @@ body {
 
 /* Dense glass for readability */
 .cc-glass {
-  background: rgba(11, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(var(--bg-card) / 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(1.15);
   transition: all 0.3s ease;
 }
 
 .cc-glass:hover {
-  background: rgba(11, 15, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(var(--bg-card) / 0.75);
+  border-color: rgba(255, 255, 255, 0.13);
 }
 
 
@@ -106,17 +111,17 @@ body {
 
 /* Package card glassmorphism — matching solution card (cc-glass) style */
 .pkg-card {
-  background: rgba(11, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(12px) saturate(1.2);
-  border-radius: 1rem;
+  background: rgba(var(--bg-card) / 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px) saturate(1.15);
+  border-radius: var(--radius-card);
   transition: transform 250ms ease, background 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
 }
 .pkg-card:hover {
-  transform: scale(1.03);
-  background: rgba(11, 15, 20, 0.65);
-  border-color: rgba(255, 255, 255, 0.30);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35), 0 8px 24px -4px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  background: rgba(var(--bg-card) / 0.75);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.35), 0 6px 20px -4px rgba(0, 0, 0, 0.2);
 }
 
 /* Neutral package card styling — uses --blue accent like solution cards */
@@ -137,7 +142,7 @@ body {
 
 /* Premium dark background for packages section */
 .pkg-section-bg {
-  background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(var(--bg0) / 0.97) 0%, rgba(var(--bg1) / 0.92) 50%, rgba(var(--bg0) / 0.97) 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.04);
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
@@ -212,12 +217,20 @@ body {
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
   }
+
+  h1 { line-height: 1.15; }
   
   p {
-    line-height: 1.6;
+    line-height: 1.7;
+  }
+
+  /* Hebrew body text gets slightly more generous line-height */
+  [lang="he"] p,
+  [dir="rtl"] p {
+    line-height: 1.75;
   }
   
   button, a {
@@ -237,23 +250,23 @@ body {
 
 /* Subtle section background variation */
 .section-dark {
-  background: linear-gradient(180deg, rgba(6, 8, 14, 0.95) 0%, rgba(10, 12, 18, 0.9) 50%, rgba(6, 8, 14, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(var(--bg0) / 0.97) 0%, rgba(var(--bg1) / 0.92) 50%, rgba(var(--bg0) / 0.97) 100%);
 }
 
 /* Step card with number accent */
 .step-card {
   position: relative;
-  background: rgba(11, 15, 20, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.25rem;
+  background: rgba(var(--bg-card) / 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-card);
   padding: 2rem;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .step-card:hover {
-  background: rgba(11, 15, 20, 0.6);
-  border-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+  background: rgba(var(--bg-card) / 0.65);
+  border-color: rgba(255, 255, 255, 0.13);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.35);
 }
 @media (max-width: 640px) {
   .step-card:hover { transform: none; }
@@ -285,21 +298,21 @@ body {
   align-items: center;
   gap: 0.75rem;
   padding: 1rem 1.25rem;
-  border-radius: 1rem;
+  border-radius: var(--radius-card);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(11, 15, 20, 0.35);
+  background: rgba(var(--bg-card) / 0.35);
   transition: all 0.25s ease;
 }
 .deliverable-item:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(11, 15, 20, 0.5);
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--bg-card) / 0.5);
 }
 
 /* Split service block */
 .service-block {
-  background: rgba(11, 15, 20, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.5rem;
+  background: rgba(var(--bg-card) / 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1.25rem;
   padding: 1.75rem;
   transition: all 0.3s ease;
 }
@@ -307,28 +320,28 @@ body {
   .service-block { padding: 2.5rem; }
 }
 .service-block:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.13);
+  box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.3);
 }
 
 /* Content service block — blue accent */
 .service-block--content {
-  border-color: rgb(var(--blue) / 0.15);
-  background: rgba(8, 14, 22, 0.45);
+  border-color: rgb(var(--blue) / 0.12);
+  background: rgba(var(--bg-card) / 0.5);
 }
 .service-block--content:hover {
-  border-color: rgb(var(--blue) / 0.3);
-  box-shadow: 0 15px 30px -10px rgb(var(--blue) / 0.08);
+  border-color: rgb(var(--blue) / 0.22);
+  box-shadow: 0 12px 28px -8px rgb(var(--blue) / 0.06);
 }
 
 /* Growth solution block — red/warm accent */
 .service-block--growth {
-  border-color: rgb(var(--red) / 0.15);
-  background: rgba(20, 10, 14, 0.45);
+  border-color: rgb(var(--red) / 0.12);
+  background: rgba(var(--bg-card) / 0.5);
 }
 .service-block--growth:hover {
-  border-color: rgb(var(--red) / 0.3);
-  box-shadow: 0 15px 30px -10px rgb(var(--red) / 0.08);
+  border-color: rgb(var(--red) / 0.22);
+  box-shadow: 0 12px 28px -8px rgb(var(--red) / 0.06);
 }
 
 /* Deliverables group heading */
@@ -361,10 +374,10 @@ body {
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.25rem;
-  border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(11, 15, 20, 0.35);
-  color: rgba(235, 235, 242, 0.75);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(var(--bg-card) / 0.35);
+  color: rgba(var(--text) / 0.7);
   font-size: 0.8125rem;
   font-weight: 500;
   transition: all 0.25s ease;
@@ -374,8 +387,8 @@ body {
   .industry-pill { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
 }
 .industry-pill:hover {
-  border-color: rgba(var(--blue) / 0.3);
-  background: rgba(var(--blue) / 0.08);
+  border-color: rgba(var(--blue) / 0.25);
+  background: rgba(var(--blue) / 0.06);
   color: rgb(var(--blue));
 }
 
@@ -394,7 +407,7 @@ body {
   padding: 1.25rem 0;
   font-size: 1rem;
   font-weight: 600;
-  color: rgba(235, 235, 242, 0.9);
+  color: rgba(var(--text) / 0.88);
   cursor: pointer;
   transition: color 0.2s;
   text-align: start;
@@ -426,9 +439,9 @@ body {
 
 /* Final CTA gradient background */
 .cta-gradient {
-  background: linear-gradient(135deg, rgba(var(--blue) / 0.08) 0%, rgba(var(--red) / 0.06) 100%);
+  background: linear-gradient(135deg, rgba(var(--blue) / 0.05) 0%, rgba(var(--red) / 0.04) 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 2rem;
+  border-radius: 1.5rem;
 }
 
 /* Premium button primary */
@@ -437,21 +450,21 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(var(--red) / 0.5);
-  background: rgba(var(--red) / 0.2);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-btn);
+  border: 1px solid rgba(var(--red) / 0.4);
+  background: rgba(var(--red) / 0.15);
   color: white;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   transition: all 0.25s ease;
   cursor: pointer;
 }
 .btn-primary:hover {
-  background: rgba(var(--red) / 0.35);
-  border-color: rgba(var(--red) / 0.7);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(var(--red) / 0.15);
+  background: rgba(var(--red) / 0.25);
+  border-color: rgba(var(--red) / 0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -4px rgba(var(--red) / 0.12);
 }
 @media (max-width: 640px) {
   .btn-primary:hover { transform: none; }
@@ -466,20 +479,20 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(235, 235, 242, 0.85);
+  padding: 0.875rem 2rem;
+  border-radius: var(--radius-btn);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(var(--text) / 0.8);
   font-weight: 500;
   font-size: 0.875rem;
   transition: all 0.25s ease;
   cursor: pointer;
 }
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-1px);
 }
 @media (max-width: 640px) {
   .btn-secondary:hover { transform: none; }
