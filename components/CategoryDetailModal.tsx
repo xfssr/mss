@@ -85,7 +85,7 @@ export function CategoryDetailModal(props: {
                 {detail.pills.map((pill, i) => (
                   <span
                     key={i}
-                    className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
+                    className="text-[11px] rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-white/60"
                   >
                     {pick(lang, pill)}
                   </span>
@@ -229,7 +229,7 @@ export function CategoryDetailModal(props: {
             <button
               type="button"
               onClick={onPrimary}
-              className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200"
+              className="flex-1 btn-primary text-sm py-3"
             >
               {pick(lang, detail.ctaPrimary)}
             </button>
@@ -237,7 +237,7 @@ export function CategoryDetailModal(props: {
               href={secondaryWaUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-4 py-3 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all duration-200"
+              className="btn-secondary text-sm py-3"
             >
               {pick(lang, detail.ctaSecondary)}
             </a>

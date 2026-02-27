@@ -149,7 +149,7 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
             {pkg.pills.map((pill, i) => (
               <span
                 key={i}
-                className="text-xs rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-white/70"
+                className="text-xs rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/60"
               >
                 {pick(lang, pill)}
               </span>
@@ -244,13 +244,13 @@ function PackagePage(props: { lang: Lang; pkg: PackageDetail }) {
           <button
             type="button"
             onClick={handleWhatsApp}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="flex-1 btn-primary text-sm"
           >
             {t(lang, "pkgWhatsApp")}
           </button>
           <Link
             href="/#packages"
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all"
+            className="flex-1 btn-secondary text-sm"
           >
             {t(lang, "choosePackage")}
           </Link>
@@ -299,7 +299,7 @@ function SolutionPage(props: {
           {sol.pills.map((pill, i) => (
             <span
               key={i}
-              className="text-xs rounded-full border border-white/15 bg-white/[0.06] px-3 py-1 text-white/70"
+              className="text-xs rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-white/60"
             >
               {pick(lang, pill)}
             </span>
@@ -492,7 +492,7 @@ function SolutionPage(props: {
           <button
             type="button"
             onClick={handlePrimary}
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="flex-1 btn-primary text-sm"
           >
             {pick(lang, sol.ctaPrimary)}
           </button>
@@ -500,7 +500,7 @@ function SolutionPage(props: {
             href={secondaryUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-3.5 text-sm font-medium text-white/90 hover:bg-white/[0.12] hover:border-white/20 transition-all"
+            className="flex-1 btn-secondary text-sm"
           >
             {pick(lang, sol.ctaSecondary)}
           </a>
