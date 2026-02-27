@@ -120,6 +120,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     >
       <div className="relative mx-auto w-full max-w-6xl">
         {/* header */}
+        <div className="text-xs tracking-wider uppercase text-white/55 font-medium">{lang === "he" ? "תיק עבודות" : "Selected Work"}</div>
         <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
           {tx.title}
         </h2>

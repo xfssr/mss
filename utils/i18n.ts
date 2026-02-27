@@ -379,6 +379,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     contentSvc6: "צילום אוכל / משקאות / מוצרים",
     contentSvc7: "תוכן מותאם לסושיאל",
 
+    // ─── Redesign: Services section header ───
+    servicesTitle: "שתי רמות שירות",
+    servicesSubtitle: "בחר את הרמה שמתאימה לצרכי העסק שלך",
+    contentSvcForLabel: "להפקת תוכן בלבד",
+    growthForLabel: "לצמיחה עסקית מלאה",
+
+    // ─── Redesign: Deliverables groups ───
+    deliverablesGroupContent: "הפקת תוכן",
+    deliverablesGroupSystems: "מערכות דיגיטליות",
+
     // ─── Redesign: Growth Solutions ───
     growthTitle: "פתרונות צמיחה",
     growthSubtitle: "יותר מתוכן — מערכת שלמה לפניות",
@@ -442,6 +452,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     eyebrowDeliverables: "תוצרים",
     eyebrowContent: "שירותי תוכן",
     eyebrowGrowth: "פתרונות צמיחה",
+    eyebrowServices: "השירותים שלנו",
     eyebrowPortfolio: "עבודות נבחרות",
     eyebrowPricing: "מחירים וחבילות",
     eyebrowIndustries: "תחומים",
@@ -822,6 +833,16 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     contentSvc6: "Food / drinks / product visuals",
     contentSvc7: "Social-ready content delivery",
 
+    // ─── Redesign: Services section header ───
+    servicesTitle: "Two Service Levels",
+    servicesSubtitle: "Choose the level that fits your business needs",
+    contentSvcForLabel: "For production only",
+    growthForLabel: "For complete business growth",
+
+    // ─── Redesign: Deliverables groups ───
+    deliverablesGroupContent: "Content Production",
+    deliverablesGroupSystems: "Digital Systems",
+
     // ─── Redesign: Growth Solutions ───
     growthTitle: "Growth Solutions",
     growthSubtitle: "More than content — a complete inquiry system",
@@ -885,6 +906,7 @@ export const STRINGS: Record<Lang, Record<string, string>> = {
     eyebrowDeliverables: "Deliverables",
     eyebrowContent: "Content Services",
     eyebrowGrowth: "Growth Solutions",
+    eyebrowServices: "Our Services",
     eyebrowPortfolio: "Selected Work",
     eyebrowPricing: "Pricing & Packages",
     eyebrowIndustries: "Industries",
