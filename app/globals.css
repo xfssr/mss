@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --bg0: 18 18 20;
-  --bg1: 28 28 34;
-  --blue: 145 190 255;
-  --red: 255 107 107;
-  --text: 235 235 242;
+  --bg0: 8 12 22;
+  --bg1: 20 28 45;
+  --blue: 205 174 112;
+  --red: 145 123 255;
+  --text: 236 234 229;
   --stroke: 255 255 255;
+  --font-body: "Segoe UI", "Arial", sans-serif;
+  --font-heading: "Avenir Next", "Georgia", serif;
 }
 
 html, body {
@@ -32,10 +34,11 @@ html {
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
+  font-family: var(--font-body);
   color: rgb(var(--text));
   background:
     radial-gradient(1200px 800px at 20% 0%, rgba(var(--bg1) / 0.9), rgba(var(--bg0) / 1)),
-    radial-gradient(1000px 700px at 90% 30%, rgba(35 45 70 / 0.35), rgba(var(--bg0) / 1)),
+    radial-gradient(1000px 700px at 90% 30%, rgba(var(--red) / 0.2), rgba(var(--bg0) / 1)),
     linear-gradient(180deg, rgba(var(--bg0) / 1), rgba(10 10 12 / 1));
   background-attachment: fixed;
 }
@@ -211,9 +214,10 @@ body {
 /* Improved typography */
 @layer base {
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-family: var(--font-heading);
+    font-weight: 700;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.028em;
   }
   
   p {
