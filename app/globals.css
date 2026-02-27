@@ -313,22 +313,22 @@ body {
 
 /* Content service block — blue accent */
 .service-block--content {
-  border-color: rgba(var(--blue) / 0.15);
+  border-color: rgb(var(--blue) / 0.15);
   background: rgba(8, 14, 22, 0.45);
 }
 .service-block--content:hover {
-  border-color: rgba(var(--blue) / 0.3);
-  box-shadow: 0 15px 30px -10px rgba(var(--blue) / 0.08);
+  border-color: rgb(var(--blue) / 0.3);
+  box-shadow: 0 15px 30px -10px rgb(var(--blue) / 0.08);
 }
 
 /* Growth solution block — red/warm accent */
 .service-block--growth {
-  border-color: rgba(var(--red) / 0.15);
+  border-color: rgb(var(--red) / 0.15);
   background: rgba(20, 10, 14, 0.45);
 }
 .service-block--growth:hover {
-  border-color: rgba(var(--red) / 0.3);
-  box-shadow: 0 15px 30px -10px rgba(var(--red) / 0.08);
+  border-color: rgb(var(--red) / 0.3);
+  box-shadow: 0 15px 30px -10px rgb(var(--red) / 0.08);
 }
 
 /* Deliverables group heading */
@@ -346,13 +346,13 @@ body {
 }
 .deliverables-group-title--content {
   color: rgb(var(--blue));
-  background: rgba(var(--blue) / 0.08);
-  border: 1px solid rgba(var(--blue) / 0.2);
+  background: rgb(var(--blue) / 0.08);
+  border: 1px solid rgb(var(--blue) / 0.2);
 }
 .deliverables-group-title--systems {
   color: rgb(var(--red));
-  background: rgba(var(--red) / 0.08);
-  border: 1px solid rgba(var(--red) / 0.2);
+  background: rgb(var(--red) / 0.08);
+  border: 1px solid rgb(var(--red) / 0.2);
 }
 
 /* Industry pill */
