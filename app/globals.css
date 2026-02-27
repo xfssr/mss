@@ -300,12 +300,59 @@ body {
   background: rgba(11, 15, 20, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.5rem;
-  padding: 2.5rem;
+  padding: 1.75rem;
   transition: all 0.3s ease;
+}
+@media (min-width: 640px) {
+  .service-block { padding: 2.5rem; }
 }
 .service-block:hover {
   border-color: rgba(255, 255, 255, 0.15);
   box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+/* Content service block — blue accent */
+.service-block--content {
+  border-color: rgb(var(--blue) / 0.15);
+  background: rgba(8, 14, 22, 0.45);
+}
+.service-block--content:hover {
+  border-color: rgb(var(--blue) / 0.3);
+  box-shadow: 0 15px 30px -10px rgb(var(--blue) / 0.08);
+}
+
+/* Growth solution block — red/warm accent */
+.service-block--growth {
+  border-color: rgb(var(--red) / 0.15);
+  background: rgba(20, 10, 14, 0.45);
+}
+.service-block--growth:hover {
+  border-color: rgb(var(--red) / 0.3);
+  box-shadow: 0 15px 30px -10px rgb(var(--red) / 0.08);
+}
+
+/* Deliverables group heading */
+.deliverables-group-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.9rem;
+  border-radius: 100px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.deliverables-group-title--content {
+  color: rgb(var(--blue));
+  background: rgb(var(--blue) / 0.08);
+  border: 1px solid rgb(var(--blue) / 0.2);
+}
+.deliverables-group-title--systems {
+  color: rgb(var(--red));
+  background: rgb(var(--red) / 0.08);
+  border: 1px solid rgb(var(--red) / 0.2);
 }
 
 /* Industry pill */
@@ -313,15 +360,18 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 100px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(11, 15, 20, 0.35);
   color: rgba(235, 235, 242, 0.75);
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   transition: all 0.25s ease;
   white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .industry-pill { padding: 0.75rem 1.5rem; font-size: 0.875rem; }
 }
 .industry-pill:hover {
   border-color: rgba(var(--blue) / 0.3);

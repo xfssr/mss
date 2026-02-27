@@ -353,18 +353,18 @@ export function ClientPage(props: Props) {
           2. ABOUT / STUDIO
           ═══════════════════════════════════════ */}
       <Section id="studio" eyebrow={t(lang, "eyebrowAbout")} title={t(lang, "studioTitle")}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white/90 mb-4">{t(lang, "studioSubtitle")}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-white/90 mb-5 leading-snug">{t(lang, "studioSubtitle")}</h3>
             <p className="text-sm sm:text-base text-white/60 leading-relaxed whitespace-pre-line">
               {pickL10n(lang, props.settings.aboutText) || t(lang, "studioBody")}
             </p>
           </div>
-          <div className="space-y-4">
-            {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key) => (
-              <div key={key} className="deliverable-item">
-                <span className="text-lg text-[rgb(var(--blue))]">{"▸"}</span>
-                <span className="text-sm text-white/75">{t(lang, key)}</span>
+          <div className="space-y-3 sm:space-y-4">
+            {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key, idx) => (
+              <div key={key} className="flex items-start gap-4 p-4 sm:p-5 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-200">
+                <span className="text-xs font-bold text-[rgb(var(--blue))]/60 mt-0.5 shrink-0 w-5 text-center">0{idx + 1}</span>
+                <span className="text-sm sm:text-base text-white/75 leading-snug">{t(lang, key)}</span>
               </div>
             ))}
           </div>
@@ -407,13 +407,35 @@ export function ClientPage(props: Props) {
           ═══════════════════════════════════════ */}
       <Section id="deliverables" eyebrow={t(lang, "eyebrowDeliverables")} title={t(lang, "deliverablesTitle")} centered>
         <p className="text-sm sm:text-base text-white/60 text-center -mt-6 mb-10">{t(lang, "deliverablesSubtitle")}</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {DELIVERABLES.map((d) => (
-            <div key={d.key} className="deliverable-item">
-              <span className="text-xl shrink-0">{d.icon}</span>
-              <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
+          {/* Content Production group */}
+          <div>
+            <div className="deliverables-group-title deliverables-group-title--content">
+              📸 {t(lang, "deliverablesGroupContent")}
             </div>
-          ))}
+            <div className="space-y-3">
+              {DELIVERABLES.slice(0, 4).map((d) => (
+                <div key={d.key} className="deliverable-item">
+                  <span className="text-xl shrink-0">{d.icon}</span>
+                  <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Digital Systems group */}
+          <div>
+            <div className="deliverables-group-title deliverables-group-title--systems">
+              🌐 {t(lang, "deliverablesGroupSystems")}
+            </div>
+            <div className="space-y-3">
+              {DELIVERABLES.slice(4).map((d) => (
+                <div key={d.key} className="deliverable-item">
+                  <span className="text-xl shrink-0">{d.icon}</span>
+                  <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -424,16 +446,23 @@ export function ClientPage(props: Props) {
           ═══════════════════════════════════════ */}
       <section id="services" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 py-20 sm:py-28 section-gradient-overlay">
         <div className="mx-auto w-full max-w-6xl">
+          {/* Section header */}
+          <div className="text-xs tracking-wider uppercase text-white/55 font-medium">{t(lang, "eyebrowServices")}</div>
+          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">{t(lang, "servicesTitle")}</h2>
+          <p className="mt-3 text-sm sm:text-base text-white/55 max-w-2xl mb-12 sm:mb-16">{t(lang, "servicesSubtitle")}</p>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Content Services */}
-            <div className="service-block">
-              <div className="text-xs tracking-wider uppercase text-white/45 font-medium mb-2">{t(lang, "eyebrowContent")}</div>
+            <div className="service-block service-block--content">
+              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-wider uppercase font-semibold text-[rgb(var(--blue))]/80 bg-[rgb(var(--blue))]/10 border border-[rgb(var(--blue))]/20 rounded-full px-3 py-1 mb-4">
+                {t(lang, "contentSvcForLabel")}
+              </div>
               <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "contentSvcTitle")}</h3>
               <p className="text-sm text-white/55 mb-6">{t(lang, "contentSvcSubtitle")}</p>
               <ul className="space-y-3">
                 {CONTENT_SVCS.map((svc) => (
                   <li key={svc.key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0">{svc.icon}</span>
+                    <span className="text-lg shrink-0 text-[rgb(var(--blue))]/70">{svc.icon}</span>
                     {t(lang, svc.key)}
                   </li>
                 ))}
@@ -441,14 +470,16 @@ export function ClientPage(props: Props) {
             </div>
 
             {/* Growth Solutions */}
-            <div className="service-block">
-              <div className="text-xs tracking-wider uppercase text-white/45 font-medium mb-2">{t(lang, "eyebrowGrowth")}</div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "growthTitle")}</h3>
+            <div className="service-block service-block--growth">
+              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-wider uppercase font-semibold text-[rgb(var(--red))]/80 bg-[rgb(var(--red))]/10 border border-[rgb(var(--red))]/20 rounded-full px-3 py-1 mb-4">
+                {t(lang, "growthForLabel")}
+              </div>
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--red))]/90 mb-2">{t(lang, "growthTitle")}</h3>
               <p className="text-sm text-white/55 mb-6">{t(lang, "growthSubtitle")}</p>
               <ul className="space-y-3">
                 {GROWTH_ITEMS.map((g) => (
                   <li key={g.key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0">{g.icon}</span>
+                    <span className="text-lg shrink-0 text-[rgb(var(--red))]/70">{g.icon}</span>
                     {t(lang, g.key)}
                   </li>
                 ))}

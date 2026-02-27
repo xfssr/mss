@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import type { Lang } from "@/utils/i18n";
+import { t } from "@/utils/i18n";
 
 /* ─── local translations ─── */
 const L = {
@@ -120,6 +121,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     >
       <div className="relative mx-auto w-full max-w-6xl">
         {/* header */}
+        <div className="text-xs tracking-wider uppercase text-white/55 font-medium">{t(lang, "eyebrowPortfolio")}</div>
         <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
           {tx.title}
         </h2>

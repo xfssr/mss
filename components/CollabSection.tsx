@@ -14,43 +14,43 @@ export function CollabSection({ lang }: { lang: Lang }) {
   };
 
   return (
-    <Section id="collab" title={t(lang, "collabTitle")} subtitle={t(lang, "collabSubtitle")}>
-      <div className="cc-glass rounded-3xl p-6 sm:p-10 shadow-lg">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+    <Section id="collab" title={t(lang, "collabTitle")} subtitle={t(lang, "collabSubtitle")} className="opacity-90">
+      <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] p-5 sm:p-8 max-w-3xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
           {/* Left: body + bullets */}
           <div className="flex-1 min-w-0">
-            <p className="text-sm sm:text-base text-white/80 whitespace-pre-line leading-relaxed mb-6">
+            <p className="text-sm text-white/65 whitespace-pre-line leading-relaxed mb-5">
               {t(lang, "collabBody")}
             </p>
 
-            <ul className="space-y-3">
+            <ul className="space-y-2">
               {BULLETS.map((key) => (
-                <li key={key} className="flex items-start gap-3 text-sm sm:text-base text-white/80">
-                  <span className="text-[rgb(var(--blue))] mt-0.5 shrink-0">●</span>
+                <li key={key} className="flex items-start gap-2.5 text-sm text-white/65">
+                  <span className="text-[rgb(var(--blue))]/60 mt-0.5 shrink-0 text-xs">●</span>
                   {t(lang, key)}
                 </li>
               ))}
             </ul>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <button
                 type="button"
                 onClick={handleCta}
-                className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/50 bg-[rgb(var(--red))]/25 px-7 py-4 text-base font-semibold text-white hover:bg-[rgb(var(--red))]/40 hover:border-[rgb(var(--red))]/70 transition-all duration-200 hover:-translate-y-0.5 shadow-lg hover:shadow-xl hover:shadow-[rgb(var(--red))]/10"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/[0.06] px-6 py-3 text-sm font-medium text-white/80 hover:bg-white/[0.10] hover:border-white/25 transition-all duration-200"
               >
                 {t(lang, "collabCta")}
               </button>
-              <p className="mt-3 text-xs text-white/40">{t(lang, "collabDisclaimer")}</p>
+              <p className="mt-2.5 text-xs text-white/35">{t(lang, "collabDisclaimer")}</p>
             </div>
           </div>
 
           {/* Right: rules panel */}
-          <div className="lg:w-56 shrink-0 flex flex-row lg:flex-col gap-3">
-            <div className="flex-1 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-center">
-              <span className="block text-lg font-bold text-[rgb(var(--blue))]">{t(lang, "collabSpots")}</span>
+          <div className="lg:w-44 shrink-0 flex flex-row lg:flex-col gap-2.5">
+            <div className="flex-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3 text-center">
+              <span className="block text-sm font-semibold text-white/60">{t(lang, "collabSpots")}</span>
             </div>
-            <div className="flex-1 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-center">
-              <span className="block text-lg font-bold text-[rgb(var(--blue))]">{t(lang, "collabApproval")}</span>
+            <div className="flex-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3 text-center">
+              <span className="block text-sm font-semibold text-white/60">{t(lang, "collabApproval")}</span>
             </div>
           </div>
         </div>
