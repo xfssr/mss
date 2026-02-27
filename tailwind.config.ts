@@ -10,6 +10,15 @@ export default {
     "./types/**/*.{js,ts}",
     "./lib/**/*.{js,ts}",
   ],
-  theme: { extend: {} },
+  theme: {
+    extend: {
+      colors: {
+        surface: "rgb(var(--bg-card) / <alpha-value>)",
+      },
+      borderRadius: {
+        card: "var(--radius-card)",
+      },
+    },
+  },
   plugins: [],
 } satisfies Config;

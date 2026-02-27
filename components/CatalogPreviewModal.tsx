@@ -187,7 +187,7 @@ export function CatalogPreviewModal(props: {
           <button
             type="button"
             onClick={scrollToPackages}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+            className="btn-primary w-full text-sm py-3"
           >
             {t(lang, "choosePackageBtn")}
           </button>

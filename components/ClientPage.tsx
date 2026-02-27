@@ -123,7 +123,7 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
         </svg>
       </button>
       <div className={`faq-answer ${open ? "open" : ""}`}>
-        <p className="text-sm text-white/60 leading-relaxed">{answer}</p>
+        <p className="text-sm text-white/55 leading-relaxed">{answer}</p>
       </div>
     </div>
   );
@@ -284,13 +284,13 @@ export function ClientPage(props: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Text side */}
             <div className="lg:col-span-7">
-              <div className="text-xs sm:text-sm tracking-widest uppercase text-[rgb(var(--blue))]/70 font-medium mb-4">
+              <div className="text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[rgb(var(--blue))]/60 font-medium mb-4">
                 {t(lang, "heroTagline")}
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] tracking-tight">
                 <span className="text-gradient">{pickL10n(lang, props.settings.heroTitle) || t(lang, "heroHeadlineNew")}</span>
               </h1>
-              <p className="mt-6 text-base sm:text-lg text-white/65 leading-relaxed max-w-xl">
+              <p className="mt-6 text-base sm:text-lg text-white/55 leading-relaxed max-w-xl">
                 {pickL10n(lang, props.settings.heroSubtitle) || t(lang, "heroSubNew")}
               </p>
 
@@ -298,7 +298,7 @@ export function ClientPage(props: Props) {
                 <button
                   type="button"
                   onClick={onSendWhatsApp}
-                  className="btn-primary text-base"
+                  className="btn-primary"
                 >
                   {t(lang, "heroCtaWhatsAppNew")}
                 </button>
@@ -309,7 +309,7 @@ export function ClientPage(props: Props) {
                   {t(lang, "heroCtaPricingNew")}
                 </a>
               </div>
-              <p className="mt-3 text-xs text-white/35">{pickL10n(lang, props.settings.promoText) || t(lang, "ctaUrgency")}</p>
+              <p className="mt-3 text-xs text-white/30">{pickL10n(lang, props.settings.promoText) || t(lang, "ctaUrgency")}</p>
             </div>
 
             {/* Visual side */}
@@ -355,16 +355,16 @@ export function ClientPage(props: Props) {
       <Section id="studio" eyebrow={t(lang, "eyebrowAbout")} title={t(lang, "studioTitle")}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
           <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white/90 mb-5 leading-snug">{t(lang, "studioSubtitle")}</h3>
-            <p className="text-sm sm:text-base text-white/60 leading-relaxed whitespace-pre-line">
+            <h3 className="text-xl sm:text-2xl font-bold text-white/85 mb-5 leading-snug">{t(lang, "studioSubtitle")}</h3>
+            <p className="text-sm sm:text-base text-white/55 leading-relaxed whitespace-pre-line">
               {pickL10n(lang, props.settings.aboutText) || t(lang, "studioBody")}
             </p>
           </div>
           <div className="space-y-3 sm:space-y-4">
             {(["studioPoint1", "studioPoint2", "studioPoint3", "studioPoint4"] as const).map((key, idx) => (
-              <div key={key} className="flex items-start gap-4 p-4 sm:p-5 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.05] hover:border-white/[0.12] transition-all duration-200">
-                <span className="text-xs font-bold text-[rgb(var(--blue))]/60 mt-0.5 shrink-0 w-5 text-center">0{idx + 1}</span>
-                <span className="text-sm sm:text-base text-white/75 leading-snug">{t(lang, key)}</span>
+              <div key={key} className="flex items-start gap-4 p-4 sm:p-5 rounded-card border border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/[0.1] transition-all duration-200">
+                <span className="text-xs font-bold text-[rgb(var(--blue))]/50 mt-0.5 shrink-0 w-5 text-center tabular-nums">{`0${idx + 1}`}</span>
+                <span className="text-sm sm:text-base text-white/70 leading-snug">{t(lang, key)}</span>
               </div>
             ))}
           </div>
@@ -378,9 +378,9 @@ export function ClientPage(props: Props) {
           ═══════════════════════════════════════ */}
       <section className="section-dark scroll-mt-24 px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
         <div className="mx-auto w-full max-w-6xl">
-          <div className="text-xs tracking-wider uppercase text-white/55 font-medium text-center">{t(lang, "eyebrowProcess")}</div>
-          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight text-center">{t(lang, "howTitle")}</h2>
-          <p className="mt-3 text-sm sm:text-base text-white/60 text-center max-w-2xl mx-auto">{t(lang, "howSubtitle")}</p>
+          <div className="text-[11px] tracking-[0.12em] uppercase text-white/50 font-medium text-center">{t(lang, "eyebrowProcess")}</div>
+          <h2 className="mt-2.5 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight text-center leading-snug">{t(lang, "howTitle")}</h2>
+          <p className="mt-3 text-sm sm:text-base text-white/55 text-center max-w-2xl mx-auto leading-relaxed">{t(lang, "howSubtitle")}</p>
 
           <div className="mt-12 sm:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {([
@@ -391,8 +391,8 @@ export function ClientPage(props: Props) {
               <div key={step.num} className="step-card">
                 <div className="step-number">{t(lang, step.num)}</div>
                 <div className="relative">
-                  <h3 className="text-lg font-bold text-white/90 mb-2">{t(lang, step.label)}</h3>
-                  <p className="text-sm text-white/55 leading-relaxed">{t(lang, step.text)}</p>
+                  <h3 className="text-lg font-bold text-white/85 mb-2">{t(lang, step.label)}</h3>
+                  <p className="text-sm text-white/50 leading-relaxed">{t(lang, step.text)}</p>
                 </div>
               </div>
             ))}
@@ -406,18 +406,18 @@ export function ClientPage(props: Props) {
           4. WHAT CLIENTS GET
           ═══════════════════════════════════════ */}
       <Section id="deliverables" eyebrow={t(lang, "eyebrowDeliverables")} title={t(lang, "deliverablesTitle")} centered>
-        <p className="text-sm sm:text-base text-white/60 text-center -mt-6 mb-10">{t(lang, "deliverablesSubtitle")}</p>
+        <p className="text-sm sm:text-base text-white/55 text-center -mt-6 mb-10 leading-relaxed">{t(lang, "deliverablesSubtitle")}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
           {/* Content Production group */}
           <div>
             <div className="deliverables-group-title deliverables-group-title--content">
-              📸 {t(lang, "deliverablesGroupContent")}
+              <span aria-hidden="true">📸</span> {t(lang, "deliverablesGroupContent")}
             </div>
             <div className="space-y-3">
               {DELIVERABLES.slice(0, 4).map((d) => (
                 <div key={d.key} className="deliverable-item">
-                  <span className="text-xl shrink-0">{d.icon}</span>
-                  <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+                  <span className="text-lg shrink-0" aria-hidden="true">{d.icon}</span>
+                  <span className="text-sm text-white/70">{t(lang, d.key)}</span>
                 </div>
               ))}
             </div>
@@ -425,13 +425,13 @@ export function ClientPage(props: Props) {
           {/* Digital Systems group */}
           <div>
             <div className="deliverables-group-title deliverables-group-title--systems">
-              🌐 {t(lang, "deliverablesGroupSystems")}
+              <span aria-hidden="true">🌐</span> {t(lang, "deliverablesGroupSystems")}
             </div>
             <div className="space-y-3">
               {DELIVERABLES.slice(4).map((d) => (
                 <div key={d.key} className="deliverable-item">
-                  <span className="text-xl shrink-0">{d.icon}</span>
-                  <span className="text-sm text-white/75">{t(lang, d.key)}</span>
+                  <span className="text-lg shrink-0" aria-hidden="true">{d.icon}</span>
+                  <span className="text-sm text-white/70">{t(lang, d.key)}</span>
                 </div>
               ))}
             </div>
@@ -447,22 +447,22 @@ export function ClientPage(props: Props) {
       <section id="services" className="scroll-mt-24 px-4 sm:px-6 lg:px-8 py-20 sm:py-28 section-gradient-overlay">
         <div className="mx-auto w-full max-w-6xl">
           {/* Section header */}
-          <div className="text-xs tracking-wider uppercase text-white/55 font-medium">{t(lang, "eyebrowServices")}</div>
-          <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight">{t(lang, "servicesTitle")}</h2>
-          <p className="mt-3 text-sm sm:text-base text-white/55 max-w-2xl mb-12 sm:mb-16">{t(lang, "servicesSubtitle")}</p>
+          <div className="text-[11px] tracking-[0.12em] uppercase text-white/50 font-medium">{t(lang, "eyebrowServices")}</div>
+          <h2 className="mt-2.5 text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight leading-snug">{t(lang, "servicesTitle")}</h2>
+          <p className="mt-3 text-sm sm:text-base text-white/50 max-w-2xl mb-12 sm:mb-16 leading-relaxed">{t(lang, "servicesSubtitle")}</p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
             {/* Content Services */}
             <div className="service-block service-block--content">
-              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-wider uppercase font-semibold text-[rgb(var(--blue))]/80 bg-[rgb(var(--blue))]/10 border border-[rgb(var(--blue))]/20 rounded-full px-3 py-1 mb-4">
+              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.1em] uppercase font-semibold text-[rgb(var(--blue))]/70 bg-[rgb(var(--blue))]/8 border border-[rgb(var(--blue))]/15 rounded-full px-3 py-1 mb-4">
                 {t(lang, "contentSvcForLabel")}
               </div>
               <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "contentSvcTitle")}</h3>
-              <p className="text-sm text-white/55 mb-6">{t(lang, "contentSvcSubtitle")}</p>
+              <p className="text-sm text-white/50 mb-6 leading-relaxed">{t(lang, "contentSvcSubtitle")}</p>
               <ul className="space-y-3">
                 {CONTENT_SVCS.map((svc) => (
-                  <li key={svc.key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0 text-[rgb(var(--blue))]/70">{svc.icon}</span>
+                  <li key={svc.key} className="flex items-center gap-3 text-sm text-white/65">
+                    <span className="text-base shrink-0 text-[rgb(var(--blue))]/60">{svc.icon}</span>
                     {t(lang, svc.key)}
                   </li>
                 ))}
@@ -471,15 +471,15 @@ export function ClientPage(props: Props) {
 
             {/* Growth Solutions */}
             <div className="service-block service-block--growth">
-              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-wider uppercase font-semibold text-[rgb(var(--red))]/80 bg-[rgb(var(--red))]/10 border border-[rgb(var(--red))]/20 rounded-full px-3 py-1 mb-4">
+              <div className="inline-flex items-center gap-1.5 text-[10px] tracking-[0.1em] uppercase font-semibold text-[rgb(var(--red))]/70 bg-[rgb(var(--red))]/8 border border-[rgb(var(--red))]/15 rounded-full px-3 py-1 mb-4">
                 {t(lang, "growthForLabel")}
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--red))]/90 mb-2">{t(lang, "growthTitle")}</h3>
-              <p className="text-sm text-white/55 mb-6">{t(lang, "growthSubtitle")}</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--red))]/85 mb-2">{t(lang, "growthTitle")}</h3>
+              <p className="text-sm text-white/50 mb-6 leading-relaxed">{t(lang, "growthSubtitle")}</p>
               <ul className="space-y-3">
                 {GROWTH_ITEMS.map((g) => (
-                  <li key={g.key} className="flex items-center gap-3 text-sm text-white/70">
-                    <span className="text-lg shrink-0 text-[rgb(var(--red))]/70">{g.icon}</span>
+                  <li key={g.key} className="flex items-center gap-3 text-sm text-white/65">
+                    <span className="text-base shrink-0 text-[rgb(var(--red))]/60">{g.icon}</span>
                     {t(lang, g.key)}
                   </li>
                 ))}
@@ -490,8 +490,8 @@ export function ClientPage(props: Props) {
           {/* Solutions cards (if any exist in DB) */}
           {props.solutions.length > 0 && (
             <div className="mt-16">
-              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2">{t(lang, "sectionSolutions")}</h3>
-              <p className="text-sm text-white/55 mb-8">{t(lang, "solutionsIntro")}</p>
+              <h3 className="text-xl sm:text-2xl font-bold text-[rgb(var(--blue))] mb-2 leading-snug">{t(lang, "sectionSolutions")}</h3>
+              <p className="text-sm text-white/50 mb-8 leading-relaxed">{t(lang, "solutionsIntro")}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                 {props.solutions.map((item) => (
                   <SolutionCard
@@ -562,7 +562,7 @@ export function ClientPage(props: Props) {
                     <div className={`${cls.glow} absolute inset-0 pointer-events-none`} />
                     <div className="relative p-6 sm:p-8">
                       <div className="flex items-center gap-3">
-                        <span className="text-2xl">{pkgIcon(detail)}</span>
+                        <span className="text-2xl shrink-0">{pkgIcon(detail)}</span>
                         <div className="min-w-0">
                           <div className="flex items-center gap-2 flex-wrap">
                             <h3 className={`text-lg sm:text-xl font-bold ${cls.accent}`}>
@@ -571,7 +571,7 @@ export function ClientPage(props: Props) {
                               </Link>
                             </h3>
                             {pkg.badge === "popular" ? (
-                              <span className="text-[10px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/90 font-medium shadow-sm">
+                              <span className="text-[10px] rounded-full border border-white/10 bg-white/[0.05] px-2.5 py-0.5 text-white/80 font-medium">
                                 {t(lang, "popular")}
                               </span>
                             ) : null}
@@ -593,16 +593,10 @@ export function ClientPage(props: Props) {
                       />
 
                       {detail && (
-                        <div className="mt-4 space-y-1.5 border-t border-white/[0.06] pt-4">
-                          <p className="text-[11px] text-white/50">
-                            <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
-                            {pickL10n(lang, detail.bestFor)}
-                          </p>
-                          <p className="text-[11px] text-white/50">
-                            <span className={`${cls.accent} opacity-70 font-medium`}>{t(lang, "pkgDelivery")}:</span>{" "}
-                            {pickL10n(lang, detail.deliveryTime)}
-                          </p>
-                        </div>
+                        <p className="mt-4 text-[11px] text-white/45 border-t border-white/[0.05] pt-4">
+                          <span className={`${cls.accent} opacity-60 font-medium`}>{t(lang, "pkgBestFor")}:</span>{" "}
+                          {pickL10n(lang, detail.bestFor)}
+                        </p>
                       )}
 
                       {detail && detail.pills.length > 0 && (
@@ -610,7 +604,7 @@ export function ClientPage(props: Props) {
                           {detail.pills.map((pill, i) => (
                             <span
                               key={i}
-                              className="text-[11px] rounded-full border border-white/15 bg-white/[0.06] px-2.5 py-0.5 text-white/70"
+                              className="text-[11px] rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-white/60"
                             >
                               {pickL10n(lang, pill)}
                             </span>
@@ -623,7 +617,7 @@ export function ClientPage(props: Props) {
                           <button
                             type="button"
                             onClick={handleWhatsApp}
-                            className="inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-2.5 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                            className="btn-primary text-sm py-2.5 px-5"
                           >
                             {t(lang, "pkgWhatsApp")}
                           </button>
@@ -632,7 +626,7 @@ export function ClientPage(props: Props) {
                           <button
                             type="button"
                             onClick={() => setExpandedPkg(isExpanded ? null : pkg.id)}
-                            className="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.06] px-5 py-2.5 text-sm font-medium text-white/70 hover:bg-white/[0.10] hover:border-white/20 transition-all"
+                            className="btn-secondary text-sm py-2.5 px-5"
                           >
                             {isExpanded ? t(lang, "less") : t(lang, "more")}
                           </button>
@@ -642,14 +636,14 @@ export function ClientPage(props: Props) {
 
                     {/* Expandable accordion */}
                     {detail && isExpanded && (
-                      <div className="border-t border-white/15 px-6 sm:px-8 py-5 space-y-4 text-sm animate-in slide-in-from-top-2 duration-200">
+                      <div className="border-t border-white/[0.06] px-6 sm:px-8 py-5 space-y-4 text-sm animate-in slide-in-from-top-2 duration-200">
                         <div>
                           <h4 className={`text-xs font-semibold ${cls.accent} mb-1.5`}>
                             {t(lang, "sectionWhatYouGet")}
                           </h4>
                           <ul className="space-y-1">
                             {detail.whatYouGet.map((item, i) => (
-                              <li key={i} className="flex items-start gap-2 text-xs text-white/75">
+                              <li key={i} className="flex items-start gap-2 text-xs text-white/70">
                                 <span className={`${cls.accent} mt-0.5 shrink-0`}>✓</span>
                                 {pickL10n(lang, item)}
                               </li>
@@ -658,13 +652,13 @@ export function ClientPage(props: Props) {
                         </div>
 
                         <div className="grid grid-cols-2 gap-2">
-                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                            <div className="text-[10px] text-white/40">{t(lang, "labelShootTime")}</div>
-                            <div className="text-xs text-white/80">{pickL10n(lang, detail.shootTime)}</div>
+                          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                            <div className="text-[10px] text-white/35">{t(lang, "labelShootTime")}</div>
+                            <div className="text-xs text-white/75">{pickL10n(lang, detail.shootTime)}</div>
                           </div>
-                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                            <div className="text-[10px] text-white/40">{t(lang, "labelDelivery")}</div>
-                            <div className="text-xs text-white/80">{pickL10n(lang, detail.deliveryTime)}</div>
+                          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                            <div className="text-[10px] text-white/35">{t(lang, "labelDelivery")}</div>
+                            <div className="text-xs text-white/75">{pickL10n(lang, detail.deliveryTime)}</div>
                           </div>
                         </div>
 
@@ -689,7 +683,7 @@ export function ClientPage(props: Props) {
                             <p className="text-[10px] text-white/40 mb-2">{t(lang, "monthlyAddonsHelper")}</p>
                             <div className="space-y-2">
                               {MONTHLY_ADDONS.map((addon) => (
-                                <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
+                                <div key={addon.id} className="flex items-center justify-between gap-2 rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
                                   <div className="flex items-center gap-2 min-w-0">
                                     <input
                                       type="checkbox"
@@ -698,14 +692,14 @@ export function ClientPage(props: Props) {
                                       className="accent-[rgb(var(--blue))] w-4 h-4 shrink-0"
                                     />
                                     <div className="min-w-0">
-                                      <span className="text-xs text-white/80 font-medium">{t(lang, addon.titleKey)}</span>
-                                      <span className="text-[10px] text-white/50 ms-2">— ₪{addon.price} {t(lang, "addonPerMonth")}</span>
+                                      <span className="text-xs text-white/75 font-medium">{t(lang, addon.titleKey)}</span>
+                                      <span className="text-[10px] text-white/40 ms-2">— ₪{addon.price} {t(lang, "addonPerMonth")}</span>
                                     </div>
                                   </div>
                                   <button
                                     type="button"
                                     onClick={() => setAddonDetailModal(addon)}
-                                    className="shrink-0 text-[10px] rounded-lg border border-white/10 bg-white/[0.05] px-2 py-1 text-white/60 hover:bg-white/[0.10] hover:text-white/80 transition-all"
+                                    className="shrink-0 text-[10px] rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-1 text-white/50 hover:bg-white/[0.08] hover:text-white/70 transition-all"
                                   >
                                     {t(lang, "addonDetails")}
                                   </button>
@@ -735,12 +729,12 @@ export function ClientPage(props: Props) {
                         )}
 
                         {hasDiscount && (
-                          <div className="rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2">
-                            <div className="text-[10px] text-white/40 mb-1">{t(lang, "priceAfterDiscount")}</div>
+                          <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2">
+                            <div className="text-[10px] text-white/35 mb-1">{t(lang, "priceAfterDiscount")}</div>
                             <div className="flex items-center gap-2 flex-wrap">
-                              <span className="text-xs text-white/40 line-through">₪{price.toLocaleString()}</span>
+                              <span className="text-xs text-white/35 line-through">₪{price.toLocaleString()}</span>
                               <span className={`text-sm font-bold ${cls.accent}`}>₪{finalPrice.toLocaleString()}</span>
-                              <span className="text-[10px] rounded-full bg-green-500/20 border border-green-400/30 px-2 py-0.5 text-green-400 font-medium">
+                              <span className="text-[10px] rounded-full bg-green-500/15 border border-green-400/20 px-2 py-0.5 text-green-400/80 font-medium">
                                 -{discountPercent}%
                               </span>
                             </div>
@@ -748,7 +742,7 @@ export function ClientPage(props: Props) {
                         )}
 
                         {isMonthly && (hasDiscount || addonsTotal > 0) && (
-                          <div className="rounded-lg border border-[rgb(var(--blue))]/30 bg-[rgb(var(--blue))]/10 px-3 py-2">
+                          <div className="rounded-lg border border-[rgb(var(--blue))]/20 bg-[rgb(var(--blue))]/6 px-3 py-2">
                             <div className="flex items-center justify-between">
                               <span className="text-xs font-semibold text-white/90">{t(lang, "finalTotalLabel")}:</span>
                               <span className={`text-sm font-bold ${cls.accent}`}>₪{(finalPrice + addonsTotal).toLocaleString()}</span>
@@ -760,7 +754,7 @@ export function ClientPage(props: Props) {
                           <button
                             type="button"
                             onClick={handleWhatsApp}
-                            className="w-full inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-3 text-sm font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all"
+                            className="btn-primary w-full text-sm"
                           >
                             {t(lang, "pkgWhatsApp")}
                           </button>
@@ -769,9 +763,9 @@ export function ClientPage(props: Props) {
                     )}
 
                     {detail && !isExpanded && (
-                      <div className="border-t border-white/10 px-6 sm:px-8 py-3">
-                        <p className="text-[11px] text-white/45">
-                          {t(lang, "pkgCollapsedSummary")}: {detail.pills.map((p) => pickL10n(lang, p)).join(", ")}
+                      <div className="border-t border-white/[0.05] px-6 sm:px-8 py-3">
+                        <p className="text-[11px] text-white/40 leading-relaxed">
+                          {pickL10n(lang, detail.bestFor)}
                         </p>
                       </div>
                     )}
@@ -835,14 +829,14 @@ export function ClientPage(props: Props) {
           ═══════════════════════════════════════ */}
       <Section id="final-cta">
         <div className="cta-gradient p-8 sm:p-12 lg:p-16 text-center">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">{t(lang, "finalCtaTitle")}</h2>
-          <p className="mt-4 text-base sm:text-lg text-white/60 max-w-2xl mx-auto">{t(lang, "finalCtaSubtitle")}</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight">{t(lang, "finalCtaTitle")}</h2>
+          <p className="mt-4 text-base sm:text-lg text-white/55 max-w-2xl mx-auto leading-relaxed">{t(lang, "finalCtaSubtitle")}</p>
 
           <div className="mt-10 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onSendWhatsApp}
-              className="btn-primary text-base"
+              className="btn-primary"
             >
               {t(lang, "finalCtaWa")}
             </button>
@@ -851,11 +845,11 @@ export function ClientPage(props: Props) {
             </a>
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/40">
+          <div className="mt-6 flex flex-wrap justify-center gap-4 text-sm text-white/35">
             <span>{t(lang, "finalCtaContent")}</span>
-            <span>·</span>
+            <span className="text-white/20">·</span>
             <span>{t(lang, "finalCtaCustom")}</span>
-            <span>·</span>
+            <span className="text-white/20">·</span>
             <span>{t(lang, "finalCtaSolution")}</span>
           </div>
 
@@ -877,7 +871,7 @@ export function ClientPage(props: Props) {
             </a>
           </div>
 
-          <p className="mt-4 text-xs text-white/35">{t(lang, "replyTime")}</p>
+          <p className="mt-4 text-xs text-white/30">{t(lang, "replyTime")}</p>
         </div>
       </Section>
 

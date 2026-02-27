@@ -121,19 +121,19 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
     >
       <div className="relative mx-auto w-full max-w-6xl">
         {/* header */}
-        <div className="text-xs tracking-wider uppercase text-white/55 font-medium">{t(lang, "eyebrowPortfolio")}</div>
-        <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight">
+        <div className="text-[11px] tracking-[0.12em] uppercase text-white/50 font-medium">{t(lang, "eyebrowPortfolio")}</div>
+        <h2 className="mt-2.5 text-2xl sm:text-3xl lg:text-4xl font-bold text-[rgb(var(--blue))] tracking-tight leading-snug">
           {tx.title}
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-white/60">{tx.subtitle}</p>
-        <p className="mt-1 text-sm text-white/50">{tx.desc}</p>
+        <p className="mt-3 text-sm sm:text-base text-white/55 leading-relaxed">{tx.subtitle}</p>
+        <p className="mt-1 text-sm text-white/45">{tx.desc}</p>
 
         {/* cards grid */}
-        <div className="mt-10 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
+        <div className="mt-10 sm:mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {cases.map((cs) => (
             <div
               key={cs.id}
-              className="group relative rounded-2xl border border-white/10 bg-[rgba(11,15,20,0.55)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/20 hover:shadow-2xl"
+              className="group relative rounded-card border border-white/[0.07] bg-[rgb(var(--bg-card)/0.6)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/[0.14] hover:shadow-2xl"
             >
               {/* cinematic preview */}
               <a
@@ -141,7 +141,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
-                className="relative block aspect-video rounded-2xl overflow-hidden border border-white/10"
+                className="relative block aspect-video rounded-card overflow-hidden border border-white/[0.07]"
               >
                 {/* blurred background */}
                 {cs.thumbnailUrl && (
@@ -155,7 +155,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 )}
                 {/* centered phone frame */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="relative aspect-[9/16] h-[85%] rounded-2xl border border-white/15 shadow-lg overflow-hidden">
+                  <div className="relative aspect-[9/16] h-[85%] rounded-2xl border border-white/10 shadow-lg overflow-hidden">
                     {cs.thumbnailUrl && (
                       <Image
                         src={cs.thumbnailUrl}
@@ -175,7 +175,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                 </div>
                 {/* For You badge */}
                 {cs.forYou && (
-                  <div className="absolute top-3 end-3 rounded-full bg-green-500/20 border border-green-400/30 px-2.5 py-0.5 text-[10px] font-medium text-green-400 backdrop-blur-sm">
+                  <div className="absolute top-3 end-3 rounded-full bg-green-500/15 border border-green-400/20 px-2.5 py-0.5 text-[10px] font-medium text-green-400/80 backdrop-blur-sm">
                     {tx.forYouBadge} {cs.forYou}
                   </div>
                 )}
@@ -213,7 +213,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={`${tx.cta} — ${lang === "he" ? cs.titleHe : cs.titleEn}`}
-                  className="mt-3 inline-flex items-center justify-center rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-4 py-2 text-xs font-medium text-white hover:bg-[rgb(var(--red))]/35 hover:border-[rgb(var(--red))]/60 transition-all duration-200 w-full"
+                  className="btn-primary mt-3 text-xs py-2 w-full"
                 >
                   {tx.cta}
                 </a>
@@ -229,12 +229,12 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
 /* ─── metric cell sub-component ─── */
 function MetricCell({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
-    <div className="rounded-lg border border-white/[0.06] bg-white/[0.03] px-2 py-1.5">
-      <div className="flex items-center gap-1 text-white/40">
+    <div className="rounded-lg border border-white/[0.05] bg-white/[0.02] px-2 py-1.5">
+      <div className="flex items-center gap-1 text-white/35">
         {icon}
         <span className="text-[8px] uppercase tracking-wider">{label}</span>
       </div>
-      <div className="mt-0.5 text-xs font-bold text-white/85">{value}</div>
+      <div className="mt-0.5 text-xs font-bold text-white/80">{value}</div>
     </div>
   );
 }

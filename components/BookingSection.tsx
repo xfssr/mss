@@ -278,7 +278,7 @@ export function BookingSection({
             type="button"
             onClick={onHold}
             disabled={hold.kind === "holding"}
-            className="w-full rounded-xl border border-[rgb(var(--red))]/40 bg-[rgb(var(--red))]/20 px-5 py-3 text-sm text-white hover:bg-[rgb(var(--red))]/30 disabled:opacity-50 transition-all"
+            className="btn-primary w-full text-sm py-3 disabled:opacity-50"
           >
             {hold.kind === "holding" ? s.holding : s.holdBtn}
           </button>
