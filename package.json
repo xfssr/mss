@@ -7,7 +7,8 @@
     "postinstall": "prisma generate",
     "vercel-build": "CHECKPOINT_DISABLE=1 prisma generate && next build",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test:ui": "tsx --test tests/**/*.test.ts tests/**/*.test.tsx"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
@@ -29,6 +30,7 @@
     "postcss": "8.4.39",
     "prisma": "^5.17.0",
     "tailwindcss": "3.4.7",
+    "ts-prune": "^0.10.3",
     "tsx": "4.21.0",
     "typescript": "5.5.3"
   }
