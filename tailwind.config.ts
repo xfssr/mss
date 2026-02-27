@@ -13,7 +13,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        surface: "rgba(var(--bg-card) / <alpha-value>)",
+        surface: "rgb(var(--bg-card) / <alpha-value>)",
       },
       borderRadius: {
         card: "var(--radius-card)",

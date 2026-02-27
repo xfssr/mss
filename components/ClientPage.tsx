@@ -411,12 +411,12 @@ export function ClientPage(props: Props) {
           {/* Content Production group */}
           <div>
             <div className="deliverables-group-title deliverables-group-title--content">
-              <span>📸</span> {t(lang, "deliverablesGroupContent")}
+              <span aria-hidden="true">📸</span> {t(lang, "deliverablesGroupContent")}
             </div>
             <div className="space-y-3">
               {DELIVERABLES.slice(0, 4).map((d) => (
                 <div key={d.key} className="deliverable-item">
-                  <span className="text-lg shrink-0">{d.icon}</span>
+                  <span className="text-lg shrink-0" aria-hidden="true">{d.icon}</span>
                   <span className="text-sm text-white/70">{t(lang, d.key)}</span>
                 </div>
               ))}
@@ -425,12 +425,12 @@ export function ClientPage(props: Props) {
           {/* Digital Systems group */}
           <div>
             <div className="deliverables-group-title deliverables-group-title--systems">
-              <span>🌐</span> {t(lang, "deliverablesGroupSystems")}
+              <span aria-hidden="true">🌐</span> {t(lang, "deliverablesGroupSystems")}
             </div>
             <div className="space-y-3">
               {DELIVERABLES.slice(4).map((d) => (
                 <div key={d.key} className="deliverable-item">
-                  <span className="text-lg shrink-0">{d.icon}</span>
+                  <span className="text-lg shrink-0" aria-hidden="true">{d.icon}</span>
                   <span className="text-sm text-white/70">{t(lang, d.key)}</span>
                 </div>
               ))}

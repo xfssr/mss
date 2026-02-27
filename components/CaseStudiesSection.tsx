@@ -133,7 +133,7 @@ export function CaseStudiesSection({ lang }: { lang: Lang }) {
           {cases.map((cs) => (
             <div
               key={cs.id}
-              className="group relative rounded-card border border-white/[0.07] bg-[rgba(var(--bg-card)/0.6)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/[0.14] hover:shadow-2xl"
+              className="group relative rounded-card border border-white/[0.07] bg-[rgb(var(--bg-card)/0.6)] backdrop-blur-xl shadow-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:border-white/[0.14] hover:shadow-2xl"
             >
               {/* cinematic preview */}
               <a
